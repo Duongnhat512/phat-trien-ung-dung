@@ -1,18 +1,14 @@
 package gui;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import javax.swing.border.MatteBorder;
 
 import commons.GradientPanel;
+import commons.MyButton;
 import commons.PanelButton;
 
 import java.awt.Font;
@@ -26,19 +22,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.awt.event.ActionEvent;
 
-import javax.imageio.ImageIO;
+import javax.swing.Box;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JOptionPane;
@@ -52,20 +43,22 @@ import java.awt.Component;
  */
 
 public class Test extends JFrame implements ActionListener{
-
+	
+	private final int WIDTH = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+	private final int HEIGHT = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 	private JPanel contentPane;
 	private PanelButton btnTrangChu;
 	private GradientPanel panelWest;
-	private PanelButton btnDangXuat;
 	private PanelButton btnHoTro;
-	private PanelButton btnTaiKhoan;
 	private PanelButton btnNhanVien;
 	private PanelButton btnCongNhan;
+	private MyButton btnTaiKhoan;
 	private int viTriButtonHienTai;
 	private ArrayList<PanelButton> listItem;
-	private JLabel lblLogo;
 	private JPanel listButton;
 	private JLabel lblTenNhanVien;
+	private JPanel panelCenter;
+	private JPanel panelCNort;
 	private static Test mainFrame = new Test();
 
 	/**
@@ -89,6 +82,9 @@ public class Test extends JFrame implements ActionListener{
 	 * Create the frame.
 	 */
 	public Test() {
+		int w = WIDTH;
+		int h = HEIGHT;
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1800, 800);
 		setExtendedState(Frame.MAXIMIZED_BOTH);
@@ -103,8 +99,8 @@ public class Test extends JFrame implements ActionListener{
 		
 		panelWest = new GradientPanel();
 		panelWest.setLayout(new BorderLayout());
-		panelWest.setSize(new Dimension(282, 871));
-		panelWest.setPreferredSize(new Dimension(282, 871));
+		panelWest.setSize(new Dimension((int)(w*0.18), this.getHeight()));
+		panelWest.setPreferredSize(new Dimension((int)(w*0.18), h));
 		panelWest.setkStartColor(Color.decode("#3494E6"));
 		panelWest.setkGradientFocus(200);
 		panelWest.setkEndColor(Color.decode("#EC6EAD"));
@@ -115,101 +111,32 @@ public class Test extends JFrame implements ActionListener{
 		listButton.setLayout(new GridLayout(10, 1, 0, 10));
 		panelWest.add(listButton, BorderLayout.CENTER);
 		
-		lblLogo = new JLabel();
-		Image logo = new ImageIcon(Test.class.getResource("/icon/logo.png")).getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+		Image logo = new ImageIcon(Test.class.getResource("/icon/logo.png")).getImage().getScaledInstance((int)(w*0.1), (int)(w*0.1), Image.SCALE_SMOOTH);
 		ImageIcon logoIcon = new ImageIcon(logo);
+		JPanel panelLogo = new JPanel();
+		panelLogo.setBackground(new Color(255, 255, 255));
+		panelLogo.setSize(new Dimension((int) (w*0.14), (int) (w*0.14)));
+		panelLogo.setPreferredSize(new Dimension((int) (w*0.18), (int) (w*0.1)));
+		panelLogo.setOpaque(false);
+		panelLogo.setLayout(new BorderLayout());
+		panelWest.add(panelLogo, BorderLayout.NORTH);
+		
+		JLabel lblLogo = new JLabel();
 		lblLogo.setIcon(logoIcon);
-//		lblLogo.setBounds(10, 10, 100, 100);
-//		lblLogo.setPreferredSize(new Dimension(282, 150));
-		lblLogo.setPreferredSize(new Dimension(panelWest.getWidth(), (int)(panelWest.getHeight()*0.2)));
-		panelWest.add(lblLogo, BorderLayout.NORTH);
-		btnTrangChu = new PanelButton();
-		btnTrangChu.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				setButtonColor(0);
-			}
-		});
-//		btnTrangChu.setBounds(0, 205, 282, 55);
-		listButton.add(btnTrangChu);
+//		lblLogo.setHorizontalAlignment(h)
+		panelLogo.add(lblLogo);
 		
-		btnCongNhan = new PanelButton();
-		btnCongNhan.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				setButtonColor(1);
-			}
-		});
-//		btnCongNhan.setBounds(0, 270, 282, 55);
-		listButton.add(btnCongNhan);
-		
-		btnNhanVien = new PanelButton();
-		btnNhanVien.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				setButtonColor(2);
-			}
-		});
-//		btnNhanVien.setBounds(0, 335, 282, 55);
-		listButton.add(btnNhanVien);
-		
-//		btnTaiKhoan = new PanelButton();
-//		btnTaiKhoan.addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mousePressed(MouseEvent e) {
-//				setButtonColor(3);
-//			}
-//		});
-//		listButton.add(btnTaiKhoan);
-		
-		btnHoTro = new PanelButton();
-		btnHoTro.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				setButtonColor(3);
-			}
-		});
-//		btnHoTro.setBounds(0, 465, 282, 55);
-		listButton.add(btnHoTro);
-		
-//		btnDangXuat = new PanelButton();
-//		btnDangXuat.addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mousePressed(MouseEvent e) {
-//				if((JOptionPane.showConfirmDialog(mainFrame, "Bạn có muốn thoát không?", "Hỏi nhắc", JOptionPane.YES_NO_OPTION))== JOptionPane.YES_NO_OPTION) {
-//					openLogin_GUI();
-//					mainFrame.dispose();
-//				}
-//				btnDangXuat.setSelected(false);
-//			}
-//		});
-//		btnDangXuat.setBounds(0, 695, 282, 55);
-//		panelButton.add(btnDangXuat);
-//		
-//		JLabel lblDangXuat = new JLabel("Đăng xuất");
-//		lblDangXuat.setBounds(98, 14, 122, 27);
-//		lblDangXuat.setFont(new Font("Segoe UI Semilight", Font.PLAIN, 20));
-//		lblDangXuat.setForeground(new Color(255, 255, 255));
-//		btnDangXuat.add(lblDangXuat);
-//		
-//		JLabel lblDangXuatIcon = new JLabel();
-//		lblDangXuatIcon.setIcon(new ImageIcon(Test.class.getResource("/icon/icons8_exit_40px_1.png")));
-//		lblDangXuatIcon.setBounds(25, 8, 40, 40);
-//		btnDangXuat.add(lblDangXuatIcon);
-		
-		
-		JPanel panelCenter = new JPanel();
-		panelCenter.setSize(new Dimension(1252, 763));
+		panelCenter = new JPanel();
+		panelCenter.setSize(new Dimension((int) (w*0.82), h));
 		
 		panelCenter.setLayout(new BorderLayout());
 		contentPane.add(panelCenter, BorderLayout.CENTER);
 		
-		JPanel panelCNort = new JPanel();
+		panelCNort = new JPanel();
 		panelCNort.setBorder(null);
 		panelCNort.setBackground(new Color(228, 228, 228));
-		panelCNort.setSize(1266, 40);
-//		panel_1_1.setSize(panel_1.getMaximumSize().width, 40);
-		panelCNort.setPreferredSize(new Dimension(panelCenter.getWidth(), (int)(panelCenter.getHeight()*0.06)));
+		panelCNort.setSize(panelCenter.getWidth(), (int)(h*0.06));
+		panelCNort.setPreferredSize(new Dimension(panelCenter.getWidth(), (int)(h*0.06)));
 		panelCenter.add(panelCNort, BorderLayout.NORTH);
 		panelCNort.setLayout(new BorderLayout());
 		
@@ -224,9 +151,51 @@ public class Test extends JFrame implements ActionListener{
 		
 		// Panel chứa nội dung 
 		JPanel panelContent = new JPanel();
-		panelContent.setBounds(0, 38, 1250, 725);
+		panelContent.setSize(panelCenter.getWidth(), panelCenter.getHeight() - panelCNort.getHeight());
 		panelCenter.add(panelContent, BorderLayout.CENTER);
 		
+		themButton();
+	}
+	
+	/**
+	 * Khởi tạo và thêm các button vào trong menu
+	 */
+	public void themButton() {
+		btnTrangChu = new PanelButton();
+		btnTrangChu.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				setButtonColor(0);
+			}
+		});
+		listButton.add(btnTrangChu);
+		
+		btnCongNhan = new PanelButton();
+		btnCongNhan.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				setButtonColor(1);
+			}
+		});
+		listButton.add(btnCongNhan);
+		
+		btnNhanVien = new PanelButton();
+		btnNhanVien.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				setButtonColor(2);
+			}
+		});
+		listButton.add(btnNhanVien);
+		
+		btnHoTro = new PanelButton();
+		btnHoTro.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				setButtonColor(3);
+			}
+		});
+		listButton.add(btnHoTro);
 		// Nút trang chủ
 		JLabel lblTrangChuIcon = new JLabel();
 		lblTrangChuIcon.setIcon(new ImageIcon(Test.class.getResource("/icon/home.png")));
@@ -263,18 +232,6 @@ public class Test extends JFrame implements ActionListener{
 		lblNhanVien.setBounds(100, 14, 122, 27);
 		btnNhanVien.add(lblNhanVien);
 		
-		// Nút tài khoản
-//		JLabel lblTaiKhoanIcon = new JLabel();
-//		lblTaiKhoanIcon.setIcon(new ImageIcon(Test.class.getResource("/icon/user.png")));
-//		lblTaiKhoanIcon.setBounds(20, 8, 40, 40);
-//		btnTaiKhoan.add(lblTaiKhoanIcon);
-//		
-//		JLabel lblTaiKhoan = new JLabel("Tài khoản");
-//		lblTaiKhoan.setForeground(Color.WHITE);
-//		lblTaiKhoan.setFont(new Font("Segoe UI Semilight", Font.PLAIN, 20));
-//		lblTaiKhoan.setBounds(100, 14, 122, 27);
-//		btnTaiKhoan.add(lblTaiKhoan);
-		
 		// Nút hỗ trợ
 		JLabel lblHoTroIcon = new JLabel();
 		lblHoTroIcon.setIcon(new ImageIcon(Test.class.getResource("/icon/icons8_help_40px.png")));
@@ -292,23 +249,20 @@ public class Test extends JFrame implements ActionListener{
 		listItem.add(btnTrangChu);
 		listItem.add(btnCongNhan);
 		listItem.add(btnNhanVien);
-//		listItem.add(btnTaiKhoan);
 		listItem.add(btnHoTro);
-		
 
 		viTriButtonHienTai = -1;
 		
-		
-		// Đăng ký sự kiện
-
-		
+		//Nút tài khoản
+		btnTaiKhoan = new MyButton();
+		btnTaiKhoan.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnTaiKhoan.setFocusPainted(false);
+		btnTaiKhoan.setRadius(50);
+		btnTaiKhoan.setPreferredSize(new Dimension(panelCNort.getHeight(), panelCNort.getHeight()));
+		Image avt = new ImageIcon(Test.class.getResource("/images/profile.png")).getImage().getScaledInstance(panelCNort.getHeight(), panelCNort.getHeight(), Image.SCALE_SMOOTH);
+		btnTaiKhoan.setIcon(new ImageIcon(avt));
+		panelCNort.add(btnTaiKhoan, BorderLayout.EAST);
 	}
-	
-//	public void resize() {
-//		panelWest.setSize(new Dimension((int)(mainFrame.getWidth()*0.18), mainFrame.getHeight()));
-//		lblLogo.setPreferredSize(new Dimension(panelWest.getWidth(), (int)(panelWest.getHeight()*0.4)));
-//		repaint();
-//	}
 	
 	/**
 	 * Mở login ui

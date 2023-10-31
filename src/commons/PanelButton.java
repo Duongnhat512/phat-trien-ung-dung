@@ -11,10 +11,14 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.ComponentUI;
+
+import gui.Main_GUI;
 
 public class PanelButton extends JPanel {
 	private Color mainColor;
@@ -22,13 +26,20 @@ public class PanelButton extends JPanel {
 	private Color clickColor;
 	private boolean over;
 	private boolean selected;
+	private String name;
+	private String icon;
 	
 	public PanelButton() {
+		
+	}
+	public PanelButton(String name, String icon) {
 		super();
-		setButton();
+		this.name = name;
+		this.icon = icon;
+		setButton(this.name, this.icon);
 	}
 	
-	public void setButton() {
+	public void setButton(String name, String icon) {
 		mainColor = new Color(0, 0, 0);
 		overColor = new Color(236, 236, 236);
 		
@@ -37,8 +48,16 @@ public class PanelButton extends JPanel {
 		setOpaque(false);
 		setBackground(mainColor);
 		setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		setForeground(Color.WHITE);
+		
+		JLabel lbl = new JLabel(name);
+		lbl.setFont(new Font("Segoe UI Semilight", Font.PLAIN, 20));
+		lbl.setBounds(100, 14, 122, 27);
+		JLabel lblIcon = new JLabel();
+		lblIcon.setIcon(new ImageIcon(this.getClass().getResource("/icon/" + icon + ".png")));
+		lblIcon.setBounds(20, 8, 40, 40);
+		add(lbl);
+		add(lblIcon);
 		
 		addMouseListener(new MouseAdapter() {
 			@Override
