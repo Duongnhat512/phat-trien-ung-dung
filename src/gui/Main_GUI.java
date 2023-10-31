@@ -20,11 +20,16 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.Cursor;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
@@ -53,7 +58,6 @@ public class Main_GUI extends JFrame implements ActionListener{
 	private JPanel contentPane;
 	private GradientPanel panelWest;
 	private MyButton btnTaiKhoan;
-	private int viTriButtonHienTai;
 	private JLabel lblTenNhanVien;
 	private JPanel panelCenter;
 	private JPanel panelCNort;
@@ -62,17 +66,9 @@ public class Main_GUI extends JFrame implements ActionListener{
 	private ChamCongCongNhan_Form chamCongCongNhan_Form = new ChamCongCongNhan_Form();
 	private JPanel panelContent;
 	private static Main_GUI mainFrame = new Main_GUI();
-
-	/**
-	 * Launch the application.
-	 */
+	
 	public static void main(String[] args) {
-		try {
-			mainFrame.setVisible(true);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		mainFrame.setVisible(true);
 	}
 	
 	public void openMain_GUI() {
@@ -150,12 +146,6 @@ public class Main_GUI extends JFrame implements ActionListener{
 		
 		// avt nhân viên
 		
-		// Nơi hiển thị tên nhân viên và chức vụ
-//		lblTenNhanVien = new JLabel("-");
-//		lblTenNhanVien.setFont(new Font("Segoe UI Semilight", Font.PLAIN, 20));
-//		lblTenNhanVien.setPreferredSize(new Dimension((int)(panelCNort.getWidth()*0.3), panelCNort.getHeight()));
-//		lblTenNhanVien.setHorizontalAlignment(SwingConstants.RIGHT);
-//		panelCNort.add(lblTenNhanVien, BorderLayout.EAST);
 		
 		// Panel chứa nội dung 
 		panelContent = new JPanel();
@@ -189,8 +179,17 @@ public class Main_GUI extends JFrame implements ActionListener{
 				setForm(chamCongCongNhan_Form);
 			}
 		}
-		panelContent.revalidate();
-		panelContent.repaint();
+		else if(index == 2) {
+			if (subIndex == 1) {
+				
+			}
+			else if(subIndex == 2){
+				
+			}
+		}
+		else if(index == 3 && subIndex == 0) {
+			moLinkHoTro();
+		}
 	}
 	
 	/**
@@ -201,6 +200,34 @@ public class Main_GUI extends JFrame implements ActionListener{
 		panelContent.add(component);
 		panelContent.repaint();
 		panelContent.revalidate();
+	}
+	
+	/**
+	 * Mở link hỗ trợ
+	 */
+	private void moLinkHoTro() {
+		// Tạo một đối tượng URL cho link
+        URL url = null;
+		try {
+			url = new URL("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+        // Tạo một đối tượng Desktop
+        Desktop desktop = Desktop.getDesktop();
+
+        // Sử dụng phương thức browse() của đối tượng Desktop để mở link
+        try {
+			desktop.browse(url.toURI());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Override

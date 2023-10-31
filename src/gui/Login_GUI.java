@@ -190,8 +190,8 @@ public class Login_GUI extends JFrame implements ActionListener{
 		// TODO Auto-generated method stub
 		Object o = e.getSource();
 		if(o.equals(btnDangNhap)) {
+			moTrangChu();
 			if(kiemTraDangNhap()) {
-				moTrangChu();
 			}
 		}
 	}
