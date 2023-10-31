@@ -116,7 +116,7 @@ public class Test extends JFrame implements ActionListener{
 		panelWest.add(listButton, BorderLayout.CENTER);
 		
 		lblLogo = new JLabel();
-		Image logo = new ImageIcon(Test.class.getResource("/icon/logo.png")).getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+		Image logo = new ImageIcon(Test.class.getResource("/icon/logo.png")).getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
 		ImageIcon logoIcon = new ImageIcon(logo);
 		lblLogo.setIcon(logoIcon);
 //		lblLogo.setBounds(10, 10, 100, 100);
@@ -166,7 +166,7 @@ public class Test extends JFrame implements ActionListener{
 		btnHoTro.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				setButtonColor(4);
+				setButtonColor(3);
 			}
 		});
 //		btnHoTro.setBounds(0, 465, 282, 55);
