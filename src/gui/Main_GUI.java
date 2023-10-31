@@ -8,8 +8,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 
 import commons.GradientPanel;
+import commons.MenuEvent;
 import commons.MyButton;
+import commons.MyMenu;
 import commons.PanelButton;
+import form.ChamCongCongNhan_Form;
 
 import java.awt.Font;
 import java.awt.Frame;
@@ -29,6 +32,7 @@ import javax.swing.Box;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenu;
@@ -47,18 +51,16 @@ public class Main_GUI extends JFrame implements ActionListener{
 	private final int WIDTH = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 	private final int HEIGHT = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 	private JPanel contentPane;
-	private PanelButton btnTrangChu;
 	private GradientPanel panelWest;
-	private PanelButton btnHoTro;
-	private PanelButton btnNhanVien;
-	private PanelButton btnCongNhan;
 	private MyButton btnTaiKhoan;
 	private int viTriButtonHienTai;
-	private ArrayList<PanelButton> listItem;
-	private JPanel listButton;
 	private JLabel lblTenNhanVien;
 	private JPanel panelCenter;
 	private JPanel panelCNort;
+	private MyMenu menu;
+	//Form
+	private ChamCongCongNhan_Form chamCongCongNhan_Form = new ChamCongCongNhan_Form();
+	private JPanel panelContent;
 	private static Main_GUI mainFrame = new Main_GUI();
 
 	/**
@@ -106,10 +108,16 @@ public class Main_GUI extends JFrame implements ActionListener{
 		panelWest.setkEndColor(Color.decode("#EC6EAD"));
 		contentPane.add(panelWest, BorderLayout.WEST);
 		
-		listButton = new JPanel();
-		listButton.setOpaque(false);
-		listButton.setLayout(new GridLayout(10, 1, 0, 10));
-		panelWest.add(listButton, BorderLayout.CENTER);
+		menu = new MyMenu();
+		panelWest.add(menu);
+		
+		//Đăng ký sự kiện cho menu
+		menu.setEvent(new MenuEvent() {
+			@Override
+			public void selected(int index, int subIndex) {
+				moForm(index, subIndex);
+			}
+		});
 		
 		Image logo = new ImageIcon(Main_GUI.class.getResource("/icon/logo.png")).getImage().getScaledInstance((int)(w*0.1), (int)(w*0.1), Image.SCALE_SMOOTH);
 		ImageIcon logoIcon = new ImageIcon(logo);
@@ -150,72 +158,12 @@ public class Main_GUI extends JFrame implements ActionListener{
 //		panelCNort.add(lblTenNhanVien, BorderLayout.EAST);
 		
 		// Panel chứa nội dung 
-		JPanel panelContent = new JPanel();
+		panelContent = new JPanel();
 		panelContent.setSize(panelCenter.getWidth(), panelCenter.getHeight() - panelCNort.getHeight());
 		panelCenter.add(panelContent, BorderLayout.CENTER);
 		
-		themButton();
 	}
-	
-	/**
-	 * Khởi tạo và thêm các button vào trong menu
-	 */
-	public void themButton() {
-		btnTrangChu = new PanelButton("Trang chủ", "home");
-		btnTrangChu.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				setButtonColor(0);
-			}
-		});
-		listButton.add(btnTrangChu);
-		
-		btnCongNhan = new PanelButton("Công nhân", "worker");
-		btnCongNhan.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				setButtonColor(1);
-			}
-		});
-		listButton.add(btnCongNhan);
-		
-		btnNhanVien = new PanelButton("Nhân viên", "person");
-		btnNhanVien.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				setButtonColor(2);
-			}
-		});
-		listButton.add(btnNhanVien);
-		
-		btnHoTro = new PanelButton("Hỗ trợ", "help");
-		btnHoTro.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				setButtonColor(3);
-			}
-		});
-		listButton.add(btnHoTro);
-		
-		// List button
-		listItem = new ArrayList<PanelButton>();
-		listItem.add(btnTrangChu);
-		listItem.add(btnCongNhan);
-		listItem.add(btnNhanVien);
-		listItem.add(btnHoTro);
 
-		viTriButtonHienTai = -1;
-		
-		//Nút tài khoản
-		btnTaiKhoan = new MyButton();
-		btnTaiKhoan.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnTaiKhoan.setFocusPainted(false);
-		btnTaiKhoan.setRadius(50);
-		btnTaiKhoan.setPreferredSize(new Dimension(panelCNort.getHeight(), panelCNort.getHeight()));
-		Image avt = new ImageIcon(Main_GUI.class.getResource("/images/profile.png")).getImage().getScaledInstance(panelCNort.getHeight(), panelCNort.getHeight(), Image.SCALE_SMOOTH);
-		btnTaiKhoan.setIcon(new ImageIcon(avt));	
-		panelCNort.add(btnTaiKhoan, BorderLayout.EAST);
-	}
 	
 	/**
 	 * Mở login ui
@@ -224,14 +172,35 @@ public class Main_GUI extends JFrame implements ActionListener{
 		Login_GUI.openLogin_GUI();
 	}
 	
-	private void setButtonColor(int viTri) {
-		PanelButton menuItem = new PanelButton();
-		if(viTriButtonHienTai != -1) {
-			menuItem = listItem.get(viTriButtonHienTai);
-			menuItem.setSelected(false);
-			repaint();
+	/**
+	 * Mở form
+	 * @param index
+	 * @param subIndex
+	 */
+	private void moForm(int index, int subIndex) {
+		if(index == 0 && subIndex == 0) {
+			
 		}
-		viTriButtonHienTai = viTri;
+		else if (index == 1) {
+			if (subIndex == 1) {
+				
+			}
+			else if(subIndex == 2){
+				setForm(chamCongCongNhan_Form);
+			}
+		}
+		panelContent.revalidate();
+		panelContent.repaint();
+	}
+	
+	/**
+	 * 
+	 */
+	private void setForm(JComponent component) {
+		panelContent.removeAll();
+		panelContent.add(component);
+		panelContent.repaint();
+		panelContent.revalidate();
 	}
 	
 	@Override

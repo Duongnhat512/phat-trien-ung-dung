@@ -1,6 +1,9 @@
 package commons;
 
 import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -52,7 +55,28 @@ public class MenuItem extends JButton {
     public void setLength(int length) {
         this.length = length;
     }
+    
+    public boolean isSelected() {
+		return selected;
+	}
 
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
+
+	public boolean isOver() {
+		return over;
+	}
+
+	public void setOver(boolean over) {
+		this.over = over;
+	}
+
+
+
+	private int height;
+    private boolean selected;
+    private boolean over;
     private RippleEffect rippleEffect;
     private BufferedImage shadow;
     private int shadowWidth;
@@ -68,11 +92,17 @@ public class MenuItem extends JButton {
         super(name);
         this.index = index;
         this.subMenuAble = subMenuAble;
+        selected = false;
+        over = false;
         setContentAreaFilled(false);
+        setFont(new Font("tahoma", Font.PLAIN, 16));
         setForeground(new Color(230, 230, 230));
         setHorizontalAlignment(SwingConstants.LEFT);
         setBorder(new EmptyBorder(9, 10, 9, 10));
+        setPreferredSize(new Dimension(50, 50));
         setIconTextGap(10);
+        setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        super.setFocusPainted(false);
         rippleEffect = new RippleEffect(this);
         rippleEffect.setRippleColor(new Color(220, 220, 220));
     }
@@ -93,7 +123,7 @@ public class MenuItem extends JButton {
         this.length = length;
         setBorder(new EmptyBorder(9, 33, 9, 10));
         setBackground(new Color(18, 99, 63));
-        setOpaque(true);
+        setOpaque(false);
     }
 
     @Override
@@ -102,7 +132,6 @@ public class MenuItem extends JButton {
         Graphics2D g2 = (Graphics2D) grphcs.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         if (length != 0) {
-            g2.setColor(new Color(43, 141, 98));
             if (subMenuIndex == 1) {
                 //  First Index
                 g2.drawImage(shadow, -shadowSize, -20, null);
@@ -129,8 +158,8 @@ public class MenuItem extends JButton {
             g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
             g2.draw(p);
         }
-        g2.dispose();
         rippleEffect.reder(grphcs, new Rectangle2D.Double(0, 0, getWidth(), getHeight()));
+        g2.dispose();
     }
 
     @Override

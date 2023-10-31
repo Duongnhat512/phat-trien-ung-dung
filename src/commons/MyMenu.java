@@ -43,7 +43,7 @@ public class MyMenu extends JComponent{
     private void init() {
         layout = new MigLayout("wrap 1, fillx, gapy 0, inset 2", "fill");
         setLayout(layout);
-        setOpaque(true);
+        setOpaque(false);
         //  Init MenuItem
         for (int i = 0; i < menuItem.length; i++) {
             addMenu(menuItem[i][0], i);
@@ -63,6 +63,7 @@ public class MyMenu extends JComponent{
     private void addMenu(String menuName, int index) {
         int length = menuItem[index].length;
         MenuItem item = new MenuItem(menuName, index, length > 1);
+        item.setOpaque(false);
         Icon icon = getIcon(index);
         if (icon != null) {
             item.setIcon(icon);
@@ -94,7 +95,8 @@ public class MyMenu extends JComponent{
     private void addSubMenu(MenuItem item, int index, int length, int indexZorder) {
         JPanel panel = new JPanel(new MigLayout("wrap 1, fillx, inset 0, gapy 0", "fill"));
         panel.setName(index + "");
-        panel.setBackground(new Color(18, 99, 63));
+//        panel.setBackground(new Color(18, 99, 63));
+        panel.setOpaque(false);
         for (int i = 1; i < length; i++) {
             MenuItem subItem = new MenuItem(menuItem[index][i], i, false);
             subItem.addActionListener(new ActionListener() {
@@ -106,6 +108,7 @@ public class MyMenu extends JComponent{
                 }
             });
             subItem.initSubMenu(i, length);
+//            subItem.setOpaque(false);
             panel.add(subItem);
         }
         add(panel, "h 0!", indexZorder + 1);
@@ -124,11 +127,11 @@ public class MyMenu extends JComponent{
         }
     }
 
-    @Override
-    protected void paintComponent(Graphics grphcs) {
-        Graphics2D g2 = (Graphics2D) grphcs.create();
-        g2.setColor(new Color(21, 110, 71));
-        g2.fill(new Rectangle2D.Double(0, 0, getWidth(), getHeight()));
-        super.paintComponent(grphcs);
-    }
+//    @Override
+//    protected void paintComponent(Graphics grphcs) {
+//        Graphics2D g2 = (Graphics2D) grphcs.create();
+//        g2.setColor(new Color(21, 110, 71));
+//        g2.fill(new Rectangle2D.Double(0, 0, getWidth(), getHeight()));
+//        super.paintComponent(grphcs);
+//    }
 }

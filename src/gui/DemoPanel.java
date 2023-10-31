@@ -13,6 +13,8 @@ import commons.MyButton;
 import commons.MyMenu;
 import form.ChamCongCongNhan_Form;
 import java.awt.BorderLayout;
+import java.awt.Color;
+
 import javax.swing.ImageIcon;
 import java.awt.Cursor;
 import javax.swing.JLabel;
@@ -56,6 +58,7 @@ public class DemoPanel extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(10, 154, 274, 599);
+		panel.setBackground(new Color(18, 99, 63));
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
