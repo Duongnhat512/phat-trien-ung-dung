@@ -161,7 +161,22 @@ public class MenuItem extends JButton {
         rippleEffect.reder(grphcs, new Rectangle2D.Double(0, 0, getWidth(), getHeight()));
         g2.dispose();
     }
-
+    
+//    @Override
+//    protected void paintChildren(Graphics g) {
+//    	if (selected || over) {
+//            Graphics2D g2 = (Graphics2D) g;
+//            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+//            if (selected) {
+//                g2.setColor(new Color(255, 255, 255, 80));
+//            } else {
+//                g2.setColor(new Color(255, 255, 255, 40));
+//            }
+//            g2.fillRoundRect(10, 0, getWidth() - 20, getHeight(), 5, 5);
+//        }
+//    	super.paintChildren(g);
+//    }
+    
     @Override
     public void setBounds(int i, int i1, int i2, int i3) {
         super.setBounds(i, i1, i2, i3);

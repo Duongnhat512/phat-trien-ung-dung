@@ -63,7 +63,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 	private JPanel panelCNort;
 	private MyMenu menu;
 	//Form
-	private ChamCongCongNhan_Form chamCongCongNhan_Form = new ChamCongCongNhan_Form();
+	private ChamCongCongNhan_Form chamCongCongNhan_Form;
 	private JPanel panelContent;
 	private static Main_GUI mainFrame = new Main_GUI();
 	
@@ -83,6 +83,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 		int w = WIDTH;
 		int h = HEIGHT;
 		
+		setTitle("Phần mềm quản lý lương sản phẩm");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1800, 800);
 		setExtendedState(Frame.MAXIMIZED_BOTH);
@@ -99,9 +100,9 @@ public class Main_GUI extends JFrame implements ActionListener{
 		panelWest.setLayout(new BorderLayout());
 		panelWest.setSize(new Dimension((int)(w*0.18), this.getHeight()));
 		panelWest.setPreferredSize(new Dimension((int)(w*0.18), h));
-		panelWest.setkStartColor(Color.decode("#3494E6"));
-		panelWest.setkGradientFocus(200);
-		panelWest.setkEndColor(Color.decode("#EC6EAD"));
+		panelWest.setkStartColor(Color.decode("#004e92"));
+		panelWest.setkGradientFocus(500);
+		panelWest.setkEndColor(Color.decode("#000428"));
 		contentPane.add(panelWest, BorderLayout.WEST);
 		
 		menu = new MyMenu();
@@ -149,8 +150,11 @@ public class Main_GUI extends JFrame implements ActionListener{
 		
 		// Panel chứa nội dung 
 		panelContent = new JPanel();
-		panelContent.setSize(panelCenter.getWidth(), panelCenter.getHeight() - panelCNort.getHeight());
+		panelContent.setBorder(new EmptyBorder(0, 10, 0, 10));
 		panelCenter.add(panelContent, BorderLayout.CENTER);
+		
+		//Khởi tạo các form
+		chamCongCongNhan_Form = new ChamCongCongNhan_Form(panelCenter.getWidth(), panelCenter.getHeight() - panelCNort.getHeight());
 		
 	}
 

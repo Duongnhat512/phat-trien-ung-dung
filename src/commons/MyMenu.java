@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.net.URL;
 
@@ -95,8 +97,7 @@ public class MyMenu extends JComponent{
     private void addSubMenu(MenuItem item, int index, int length, int indexZorder) {
         JPanel panel = new JPanel(new MigLayout("wrap 1, fillx, inset 0, gapy 0", "fill"));
         panel.setName(index + "");
-//        panel.setBackground(new Color(18, 99, 63));
-        panel.setOpaque(false);
+        panel.setBackground(new Color(0, 30, 70));
         for (int i = 1; i < length; i++) {
             MenuItem subItem = new MenuItem(menuItem[index][i], i, false);
             subItem.addActionListener(new ActionListener() {
@@ -106,6 +107,13 @@ public class MyMenu extends JComponent{
                         event.selected(index, subItem.getIndex());
                     }
                 }
+            });
+            subItem.addMouseListener(new MouseAdapter() {
+            	@Override
+            	public void mousePressed(MouseEvent e) {
+            		subItem.setSelected(true);
+            		super.mousePressed(e);
+            	}
             });
             subItem.initSubMenu(i, length);
 //            subItem.setOpaque(false);
