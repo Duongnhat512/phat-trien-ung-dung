@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Scrollbar;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -66,6 +67,15 @@ public class ChamCongCongNhan_Form extends JPanel {
 		tableChamCong.getColumnModel().getColumn(5).setPreferredWidth(115);
 		JScrollPane scrollPane1 = new JScrollPane(tableChamCong);
 		panelSouth.add(scrollPane1, BorderLayout.CENTER);
+		
+		//
+		JLabel lblCongNhan = new JLabel("Danh sách công nhân");
+		lblCongNhan.setPreferredSize(new Dimension((int)(this.width), (int)(this.height * 0.05)));
+		panelCenter.add(lblCongNhan, BorderLayout.NORTH);
+		
+		JLabel lblChamCong = new JLabel("Danh sách chấm công công nhân");
+		lblCongNhan.setPreferredSize(new Dimension((int)(this.width), (int)(this.height * 0.05)));
+		panelCenter.add(lblCongNhan, BorderLayout.NORTH);
 		
 		panelCCenter = new JPanel();
 		panelCenter.add(panelCCenter, BorderLayout.CENTER);

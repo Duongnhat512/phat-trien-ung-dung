@@ -23,14 +23,10 @@ public class MyMenu extends JComponent{
 
     private MenuEvent event;
 	private MigLayout layout;
-	private String [][] menuItem = new String[][] {
-		{"Trang chủ"},
-		{"Công nhân", "Quản lý công nhân", "Chấm công công nhân"},
-		{"Nhân viên", "Quản lý nhân viên", "Chấm công nhân viên"},
-		{"Hỗ trợ"}
-	};
+	private String [][] menuItem = new String[][] {};
 	
-	public MyMenu() {
+	public MyMenu(String[][] menu) {
+		this.menuItem = menu;
         init();
     }
 	

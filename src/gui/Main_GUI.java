@@ -65,6 +65,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 	//Form
 	private ChamCongCongNhan_Form chamCongCongNhan_Form;
 	private JPanel panelContent;
+	private MyButton btnAvt;
 	private static Main_GUI mainFrame = new Main_GUI();
 	
 	public static void main(String[] args) {
@@ -105,8 +106,8 @@ public class Main_GUI extends JFrame implements ActionListener{
 		panelWest.setkEndColor(Color.decode("#000428"));
 		contentPane.add(panelWest, BorderLayout.WEST);
 		
-		menu = new MyMenu();
-		panelWest.add(menu);
+		// Khởi tạo menu
+		initMenu();
 		
 		//Đăng ký sự kiện cho menu
 		menu.setEvent(new MenuEvent() {
@@ -146,7 +147,11 @@ public class Main_GUI extends JFrame implements ActionListener{
 		panelCNort.setLayout(new BorderLayout());
 		
 		// avt nhân viên
-		
+//		btnAvt = new MyButton();
+//		btnAvt.setPreferredSize(new Dimension(panelCNort.getHeight(), panelCNort.getHeight()));
+//		Image avtImage = new ImageIcon(Main_GUI.class.getResource("/images/profile.png")).getImage().getScaledInstance(btnAvt.getWidth(), btnAvt.getHeight(), Image.SCALE_SMOOTH);
+//		btnAvt.setIcon(logoIcon);
+//		panelCNort.add(btnAvt, BorderLayout.EAST);
 		
 		// Panel chứa nội dung 
 		panelContent = new JPanel();
@@ -164,6 +169,20 @@ public class Main_GUI extends JFrame implements ActionListener{
 	 */
 	private void openLogin_GUI() {
 		Login_GUI.openLogin_GUI();
+	}
+	
+	private void initMenu() {
+		String[][] menuAdmin = new String[][]{
+			{"Trang chủ"},
+			{"Công nhân", "Quản lý công nhân", "Chấm công công nhân", "Tính lương công nhân", "Thống kê lương", "Thống kê KPI"},
+			{"Nhân viên", "Quản lý nhân viên", "Chấm công nhân viên", "Tính lương nhân viên", "Thống kê lương"},
+			{"Hợp đồng"},
+			{"Sản phẩm"},
+			{"Hỗ trợ"}
+		};
+		menu = new MyMenu(menuAdmin);
+		panelWest.add(menu);
+		
 	}
 	
 	/**
