@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import form.ChamCongCongNhan_Form;
+
 public class Test extends JFrame {
 
 	private JPanel contentPane;
@@ -56,6 +58,8 @@ public class Test extends JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1000, Short.MAX_VALUE)
         );
+        
+        ChamCongCongNhan_Form chamCongCongNhan_Form = null;
 	}
 
 }

@@ -25,7 +25,7 @@ import java.net.URL;
 import java.util.Calendar;
 import java.awt.event.ActionEvent;
 
-public class TinhLuongNhanVien_Form extends JFrame {
+public class TinhLuongNhanVien_Form extends JPanel {
 	private int width = 1250;
 	private int height = 725;
 	private JTextField txtTenNV;
@@ -37,16 +37,12 @@ public class TinhLuongNhanVien_Form extends JFrame {
 	private JTable tableLuong;
 	private JLabel lblThue;
 
-	/**
-	 * Create the panel.
-	 */
-	public static void main(String[] args) {
-		new TinhLuongNhanVien_Form(1250, 725).setVisible(true);
-	}
-
 	public TinhLuongNhanVien_Form(int width, int height) {
-		setSize(new Dimension(this.width, this.height));
-		getContentPane().setLayout(null);
+		this.height = height;
+		this.width = width;
+		
+		setPreferredSize(new Dimension(this.width, this.height));
+		setLayout(null);
 		Calendar calendar = Calendar.getInstance();
         int currentMonth = calendar.get(Calendar.MONTH);
         int currentYear = calendar.get(Calendar.YEAR);
@@ -59,25 +55,25 @@ public class TinhLuongNhanVien_Form extends JFrame {
 		JComboBox cbbNam = new JComboBox(years);
 		cbbNam.setBounds(23, 23, 142, 30);
 		cbbNam.setSelectedItem(String.valueOf(currentYear));
-		getContentPane().add(cbbNam);
+		add(cbbNam);
 		
 		String[] months = {"Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"};
 		JComboBox cbbThang = new JComboBox(months);
 		cbbThang.setBounds(206, 23, 142, 30);
 		cbbThang.setSelectedIndex(currentMonth);
-		getContentPane().add(cbbThang);
+		add(cbbThang);
 		
 		JComboBox cbbPhongBan = new JComboBox();
 		cbbPhongBan.setBounds(383, 23, 142, 30);
-		getContentPane().add(cbbPhongBan);
+		add(cbbPhongBan);
 		
 		JComboBox cbbTenNV = new JComboBox();
 		cbbTenNV.setBounds(576, 23, 142, 30);
-		getContentPane().add(cbbTenNV);
+		add(cbbTenNV);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 64, 1214, 312);
-		getContentPane().add(scrollPane);
+		scrollPane.setBounds(10, 64, 1214, 378);
+		add(scrollPane);
 
 		tableLuong = new JTable();
 		tableLuong
@@ -103,8 +99,8 @@ public class TinhLuongNhanVien_Form extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(100, 149, 237));
-		panel.setBounds(10, 387, 1214, 288);
-		getContentPane().add(panel);
+		panel.setBounds(10, 452, 1214, 306);
+		add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblThngTinChung = new JLabel("Thông Tin Chung");
@@ -115,7 +111,7 @@ public class TinhLuongNhanVien_Form extends JFrame {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(100, 149, 237));
-		panel_1.setBounds(10, 50, 1194, 227);
+		panel_1.setBounds(10, 50, 1194, 268);
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -217,10 +213,10 @@ public class TinhLuongNhanVien_Form extends JFrame {
 		
 		JButton btnNewButton = new JButton("Xuất Excel");
 		btnNewButton.setBounds(829, 23, 112, 30);
-		getContentPane().add(btnNewButton);
+		add(btnNewButton);
 		
 		JButton btnGiEmailHng = new JButton("Gửi Email Hàng Loạt");
 		btnGiEmailHng.setBounds(993, 23, 158, 30);
-		getContentPane().add(btnGiEmailHng);
+		add(btnGiEmailHng);
 	}
 }

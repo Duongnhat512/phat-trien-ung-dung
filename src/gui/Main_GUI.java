@@ -64,8 +64,8 @@ public class Main_GUI extends JFrame implements ActionListener{
 	private JPanel panelCNort;
 	private MyMenu menu;
 	//Form
-	private ChamCongCongNhan_Form chamCongCongNhan_Form;
-	private TinhLuongNhanVien_Form tinhLuongNhanVien_Form;
+	private ChamCongCongNhan_Form chamCongCongNhan_Form = null;
+	private TinhLuongNhanVien_Form tinhLuongNhanVien_Form = null;
 	private JPanel panelContent;
 	private MyButton btnAvt;
 	private static Main_GUI mainFrame = new Main_GUI();
@@ -162,7 +162,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 		
 		//Khởi tạo các form
 		chamCongCongNhan_Form = new ChamCongCongNhan_Form(panelCenter.getWidth(), panelCenter.getHeight() - panelCNort.getHeight());
-		
+		tinhLuongNhanVien_Form = new TinhLuongNhanVien_Form(panelCenter.getWidth(), panelCenter.getHeight() - panelCNort.getHeight());
 	}
 
 	
@@ -179,7 +179,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 			{"Công nhân", "Quản lý công nhân", "Chấm công công nhân", "Tính lương công nhân", "Thống kê lương", "Thống kê KPI"},
 			{"Nhân viên", "Quản lý nhân viên", "Chấm công nhân viên", "Tính lương nhân viên", "Thống kê lương"},
 			{"Hợp đồng"},
-			{"Sản phẩm"},
+			{"Sản phẩm", "Quản lý sản phẩm", "Chia công đoạn sản phẩm"},
 			{"Hỗ trợ"}
 		};
 		menu = new MyMenu(menuAdmin);
@@ -211,7 +211,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 			else if(subIndex == 2){
 				
 			}else if(subIndex == 3){
-//				setForm(tinhLuongNhanVien_Form);
+				setForm(tinhLuongNhanVien_Form);
 			}
 		}
 		else if(index == 3 && subIndex == 0) {
