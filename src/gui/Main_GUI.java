@@ -211,6 +211,8 @@ public class Main_GUI extends JFrame implements ActionListener{
 			}
 		}
 		else if(index == 3 && subIndex == 0) {
+			
+		}else if(index == 5 && subIndex == 0) {
 			moLinkHoTro();
 		}
 	}
