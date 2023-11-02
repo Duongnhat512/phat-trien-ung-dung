@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import commons.ScrollBar;
+import commons.SystemColor;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -44,7 +46,7 @@ public class Table extends JTable {
     }
 
     public void fixTable(JScrollPane scroll) {
-        scroll.setBorder(null);
+//        scroll.setBorder(null);
         scroll.setVerticalScrollBar(new ScrollBar());
         scroll.getVerticalScrollBar().setBackground(Color.WHITE);
         scroll.getViewport().setBackground(Color.WHITE);
