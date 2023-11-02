@@ -13,6 +13,7 @@ import commons.MyButton;
 import commons.MyMenu;
 import commons.PanelButton;
 import form.ChamCongCongNhan_Form;
+import form.TinhLuongNhanVien_Form;
 
 import java.awt.Font;
 import java.awt.Frame;
@@ -64,6 +65,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 	private MyMenu menu;
 	//Form
 	private ChamCongCongNhan_Form chamCongCongNhan_Form;
+	private TinhLuongNhanVien_Form tinhLuongNhanVien_Form;
 	private JPanel panelContent;
 	private MyButton btnAvt;
 	private static Main_GUI mainFrame = new Main_GUI();
@@ -208,6 +210,8 @@ public class Main_GUI extends JFrame implements ActionListener{
 			}
 			else if(subIndex == 2){
 				
+			}else if(subIndex == 3){
+//				setForm(tinhLuongNhanVien_Form);
 			}
 		}
 		else if(index == 3 && subIndex == 0) {
