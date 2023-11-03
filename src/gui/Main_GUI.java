@@ -13,6 +13,8 @@ import commons.MyButton;
 import commons.MyMenu;
 import commons.PanelButton;
 import form.ChamCongCongNhan_Form;
+import form.ChamCongNhanVien_Form;
+import form.ThongKeKPI_Form;
 import form.TinhLuongNhanVien_Form;
 
 import java.awt.Font;
@@ -66,6 +68,8 @@ public class Main_GUI extends JFrame implements ActionListener{
 	//Form
 	private ChamCongCongNhan_Form chamCongCongNhan_Form = null;
 	private TinhLuongNhanVien_Form tinhLuongNhanVien_Form = null;
+	private ChamCongNhanVien_Form chamCongNhanVien_Form = null;
+	private ThongKeKPI_Form thongKeKPI_form = null;
 	private JPanel panelContent;
 	private MyButton btnAvt;
 	private static Main_GUI mainFrame = new Main_GUI();
@@ -163,6 +167,8 @@ public class Main_GUI extends JFrame implements ActionListener{
 		//Khởi tạo các form
 		chamCongCongNhan_Form = new ChamCongCongNhan_Form(panelCenter.getWidth(), panelCenter.getHeight() - panelCNort.getHeight());
 		tinhLuongNhanVien_Form = new TinhLuongNhanVien_Form(panelCenter.getWidth(), panelCenter.getHeight() - panelCNort.getHeight());
+		chamCongNhanVien_Form = new ChamCongNhanVien_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
+		thongKeKPI_form = new ThongKeKPI_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
 	}
 
 	
@@ -203,13 +209,18 @@ public class Main_GUI extends JFrame implements ActionListener{
 			else if(subIndex == 2){
 				setForm(chamCongCongNhan_Form);
 			}
+			else if(subIndex == 5)
+			{
+				setForm(thongKeKPI_form);
+			}
+				
 		}
 		else if(index == 2) {
 			if (subIndex == 1) {
 				
 			}
 			else if(subIndex == 2){
-				
+				setForm(chamCongNhanVien_Form);
 			}else if(subIndex == 3){
 				setForm(tinhLuongNhanVien_Form);
 			}
