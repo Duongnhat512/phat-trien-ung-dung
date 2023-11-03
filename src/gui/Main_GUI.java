@@ -135,8 +135,15 @@ public class Main_GUI extends JFrame implements ActionListener{
 		
 		JLabel lblLogo = new JLabel();
 		lblLogo.setIcon(logoIcon);
+<<<<<<< HEAD
 //		lblLogo.setHorizontalAlignment(h)
 		panelLogo.add(lblLogo);
+=======
+		lblLogo.setBounds(10, 10, 136, 130);
+		panel.add(lblLogo);
+
+		viTriButtonHienTai = -1;
+>>>>>>> Hiep
 		
 		panelCenter = new JPanel();
 		panelCenter.setSize(new Dimension((int) (w*0.82), h));
@@ -273,6 +280,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+         
 		
 	}
 }
