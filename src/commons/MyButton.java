@@ -1,9 +1,12 @@
 package commons;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 
@@ -20,8 +23,9 @@ public class MyButton extends JButton{
 		setColor(Color.WHITE);
 		setBorderColor(Color.WHITE);
 		setBorder(null);
-		
+		setCursor(new Cursor(Cursor.HAND_CURSOR));
 		setContentAreaFilled(false);
+
 	}
 
 	public boolean isOver() {
@@ -84,5 +88,6 @@ public class MyButton extends JButton{
 		g2d.fillRoundRect(1, 1, getWidth() - 4, getHeight() - 4, radius, radius);
 		super.paintComponent(g);
 	}
+
 	
 }

@@ -12,11 +12,13 @@ import java.awt.Color;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import commons.MyButton;
 import commons.RoundPanel;
 import commons.Table;
 
 import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
+import java.awt.Image;
 
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
@@ -28,6 +30,7 @@ import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
 
 public class ChamCongCongNhan_Form extends RoundPanel {
 	
@@ -36,13 +39,13 @@ public class ChamCongCongNhan_Form extends RoundPanel {
 	private int width = 1259;
 	private int height = 813;
 	private Table tableCongNhan;
-	private Table tableCongNhan_1;
 	private Table tableChamCong;
 	private RoundPanel panel;
 	private JLabel lblNewLabel;
 	private RoundPanel panel_1;
 	private JLabel lblNewLabel_1;
 	private JPanel panel_3;
+	private JTextField textNgayChamCong;
 
 	/**
 	 * Create the panel.
@@ -75,30 +78,100 @@ public class ChamCongCongNhan_Form extends RoundPanel {
 		panelCenter_1.setPreferredSize(new Dimension(1259, 325));
 		panelCenter_1.setBorder(new EmptyBorder(5, 5, 5, 5));
 		panelCenter_1.setBackground(new Color(255, 255, 255));
+		
+		JPanel panelNorth = new JPanel();
+		panelNorth.setOpaque(false);
+		panelNorth.setBackground(new Color(255, 255, 255));
+		panelNorth.setBorder(new EmptyBorder(0, 0, 0, 0));
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(23)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(panelSouth, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-							.addComponent(panelCenter, GroupLayout.PREFERRED_SIZE, 589, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(panelCenter_1, GroupLayout.PREFERRED_SIZE, 597, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(32, Short.MAX_VALUE))
+					.addContainerGap(34, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(panelNorth, Alignment.TRAILING, 0, 0, Short.MAX_VALUE)
+						.addGroup(Alignment.TRAILING, groupLayout.createParallelGroup(Alignment.LEADING, false)
+							.addComponent(panelSouth, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 1206, Short.MAX_VALUE)
+							.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+								.addComponent(panelCenter, GroupLayout.PREFERRED_SIZE, 591, GroupLayout.PREFERRED_SIZE)
+								.addGap(18)
+								.addComponent(panelCenter_1, GroupLayout.PREFERRED_SIZE, 597, GroupLayout.PREFERRED_SIZE))))
+					.addGap(19))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(20)
+					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(panelCenter, GroupLayout.PREFERRED_SIZE, 351, GroupLayout.PREFERRED_SIZE)
-						.addComponent(panelCenter_1, GroupLayout.PREFERRED_SIZE, 351, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addComponent(panelSouth, GroupLayout.PREFERRED_SIZE, 378, GroupLayout.PREFERRED_SIZE)
-					.addGap(24))
+						.addComponent(panelCenter_1, GroupLayout.PREFERRED_SIZE, 351, GroupLayout.PREFERRED_SIZE)
+						.addComponent(panelCenter, GroupLayout.PREFERRED_SIZE, 351, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(panelNorth, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(panelSouth, GroupLayout.PREFERRED_SIZE, 349, GroupLayout.PREFERRED_SIZE)
+					.addGap(42))
 		);
+		
+		JLabel lblNewLabel_2 = new JLabel("Ngày chấm công:");
+		lblNewLabel_2.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		
+		textNgayChamCong = new JTextField();
+		textNgayChamCong.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		textNgayChamCong.setColumns(10);
+		
+		MyButton btnChamCong = new MyButton();
+		btnChamCong.setBackground(new Color(255, 255, 255));
+		btnChamCong.setFocusPainted(false);
+		btnChamCong.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("/icon/update.png")).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)));
+		btnChamCong.setText("Cập nhật");
+		btnChamCong.setRadius(10);
+		btnChamCong.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		
+		MyButton btnChamCongAll = new MyButton();
+		btnChamCongAll.setBackground(new Color(255, 255, 255));
+		btnChamCongAll.setFocusPainted(false);
+		btnChamCongAll.setIcon(new ImageIcon(ChamCongCongNhan_Form.class.getResource("/icon/add.png")));
+		btnChamCongAll.setText("Chấm công hàng loạt");
+		btnChamCongAll.setRadius(10);
+		btnChamCongAll.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		
+		MyButton btnNewButton_2 = new MyButton();
+		btnNewButton_2.setBackground(new Color(255, 255, 255));
+		btnNewButton_2.setFocusPainted(false);
+		btnNewButton_2.setIcon(new ImageIcon(ChamCongCongNhan_Form.class.getResource("/icon/add.png")));
+		btnNewButton_2.setText("Chấm công");
+		btnNewButton_2.setRadius(10);
+		btnNewButton_2.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		
+		
+		GroupLayout gl_panelNorth = new GroupLayout(panelNorth);
+		gl_panelNorth.setHorizontalGroup(
+			gl_panelNorth.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panelNorth.createSequentialGroup()
+					.addGap(217)
+					.addComponent(btnNewButton_2, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
+					.addGap(50)
+					.addComponent(btnChamCongAll, GroupLayout.PREFERRED_SIZE, 207, GroupLayout.PREFERRED_SIZE)
+					.addGap(48)
+					.addComponent(btnChamCong, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+					.addComponent(lblNewLabel_2, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(textNgayChamCong, GroupLayout.PREFERRED_SIZE, 181, GroupLayout.PREFERRED_SIZE)
+					.addGap(62))
+		);
+		gl_panelNorth.setVerticalGroup(
+			gl_panelNorth.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelNorth.createSequentialGroup()
+					.addGroup(gl_panelNorth.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNewLabel_2)
+						.addComponent(textNgayChamCong, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnChamCong, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnNewButton_2, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnChamCongAll, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		panelNorth.setLayout(gl_panelNorth);
 		
 		RoundPanel panel_2 = new RoundPanel();
 		panel_2.setRound(10);
@@ -140,40 +213,24 @@ public class ChamCongCongNhan_Form extends RoundPanel {
 		setLayout(groupLayout);	
 		
 		// Bảng công nhân
+		
 		tableCongNhan = new Table();
-		tableCongNhan.setModel(new javax.swing.table.DefaultTableModel(
-	            new Object [][] {
-
-	            },
-	            new String [] {
-	            	"ID","Họ và tên","Ca làm","Sản phẩm","Công đoạn","Số lượng được giao"
-	            }
-	        ) {
-	            boolean[] canEdit = new boolean [] {
-	                false, false, false, false, false, false
-	            };
-
-	            public boolean isCellEditable(int rowIndex, int columnIndex) {
-	                return canEdit [columnIndex];
-	            }
-	        });
-		tableCongNhan_1 = new Table();
-        tableCongNhan_1.setOpaque(false);
-        tableCongNhan_1.setModel(new DefaultTableModel(
+        tableCongNhan.setOpaque(false);
+        tableCongNhan.setModel(new DefaultTableModel(
         	new Object[][] {
         	},
         	new String[] {
-        		"ID", "H\u1ECD v\u00E0 t\u00EAn", "Ca l\u00E0m", "Ph\u00E2n x\u01B0\u1EDFng", "S\u1EA3n ph\u1EA9m", "C\u00F4ng \u0111o\u1EA1n", "S\u1ED1 l\u01B0\u1EE3ng \u0111\u01B0\u1EE3c giao"
+        		"ID", "H\u1ECD v\u00E0 t\u00EAn", "Ca l\u00E0m", "Ph\u00E2n x\u01B0\u1EDFng", "S\u1EA3n ph\u1EA9m", "C\u00F4ng \u0111o\u1EA1n", "S\u1ED1 l\u01B0\u1EE3ng \u0111\u01B0\u1EE3c giao", "S\u1ED1 l\u01B0\u1EE3ng ho\u00E0n th\u00E0nh"
         	}
         ));
-        tableCongNhan_1.getColumnModel().getColumn(6).setPreferredWidth(136);
+        tableCongNhan.getColumnModel().getColumn(6).setPreferredWidth(136);
         
         JScrollPane scrollPane1 = new JScrollPane();
         scrollPane1.setBackground(new Color(255, 255, 255));
         scrollPane1.setBorder(new EmptyBorder(5, 5, 5, 5));
-        scrollPane1.setViewportView(tableCongNhan_1);
+        scrollPane1.setViewportView(tableCongNhan);
 		panelCenter.add(scrollPane1);
-		tableCongNhan_1.fixTable(scrollPane1);
+		tableCongNhan.fixTable(scrollPane1);
 		
 		// Khởi tạo panel chứa tiêu đề của bảng
 		panel = new RoundPanel();
@@ -219,5 +276,7 @@ public class ChamCongCongNhan_Form extends RoundPanel {
         lblNewLabel_1 = new JLabel("Danh sách chấm công");
         lblNewLabel_1.setFont(new Font("SansSerif", Font.PLAIN, 15));
         panel_1.add(lblNewLabel_1);
+        
+        
 	}
 }

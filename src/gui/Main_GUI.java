@@ -148,7 +148,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 		panelCenter.add(panelCNort, BorderLayout.NORTH);
 		panelCNort.setLayout(new BorderLayout());
 		
-		// avt nhân viên
+//		 avt nhân viên
 //		btnAvt = new MyButton();
 //		btnAvt.setPreferredSize(new Dimension(panelCNort.getHeight(), panelCNort.getHeight()));
 //		Image avtImage = new ImageIcon(Main_GUI.class.getResource("/images/profile.png")).getImage().getScaledInstance(btnAvt.getWidth(), btnAvt.getHeight(), Image.SCALE_SMOOTH);
