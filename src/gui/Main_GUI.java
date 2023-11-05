@@ -46,6 +46,7 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import java.awt.Component;
+import java.awt.Container;
 
 /**
  * 
@@ -72,6 +73,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 	private ThongKeKPI_Form thongKeKPI_form = null;
 	private JPanel panelContent;
 	private MyButton btnAvt;
+	private Container panel;
 	private static Main_GUI mainFrame = new Main_GUI();
 	
 	public static void main(String[] args) {
@@ -135,15 +137,10 @@ public class Main_GUI extends JFrame implements ActionListener{
 		
 		JLabel lblLogo = new JLabel();
 		lblLogo.setIcon(logoIcon);
-<<<<<<< HEAD
 //		lblLogo.setHorizontalAlignment(h)
 		panelLogo.add(lblLogo);
-=======
 		lblLogo.setBounds(10, 10, 136, 130);
-		panel.add(lblLogo);
-
-		viTriButtonHienTai = -1;
->>>>>>> Hiep
+//		panel.add(lblLogo);
 		
 		panelCenter = new JPanel();
 		panelCenter.setSize(new Dimension((int) (w*0.82), h));

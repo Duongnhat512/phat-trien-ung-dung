@@ -1,5 +1,12 @@
 package gui;
 
+/**
+ * 
+ * @author Nguyễn Gia Bảo, Ngô Quốc Đạt, Nguyễn Nhất Dương, Võ Văn Nghĩa Hiệp
+ * @version 1.0
+ *
+ */
+
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.EventQueue;
