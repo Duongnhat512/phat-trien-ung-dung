@@ -286,7 +286,7 @@ public class TinhLuongNhanVien_Form extends JPanel implements ActionListener {
 			JOptionPane.showConfirmDialog(this,"Không có dữ liệu để tính lương");
 		}
 		for (NhanVien nv : dsnv) {
-			LuongNhanVien l = bl_bus.getLuongNhanVien(nv.getIdNhanVien(), 10, 2023);
+			LuongNhanVien l = bl_bus.getLuongNhanVien(nv.getIdNhanVien(), thang, nam,phongBan);
 			DecimalFormat decimalFormat = new DecimalFormat("###,###,###.##");
 			String tongLuong = decimalFormat.format(l.getTongLuong())+ " VND";
 			String bhxh = decimalFormat.format(l.getThueBHXH()) + " VND";
