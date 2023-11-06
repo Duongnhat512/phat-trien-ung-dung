@@ -37,10 +37,24 @@ public class NhanVien {
 		this.phongBan = phongBan;
 		this.phuCap = phuCap;
 	}
+	
+	public NhanVien(String idNhanVien, String hoTen, boolean phai, PhongBan phongBan, double phuCap) {
+		super();
+		this.idNhanVien = idNhanVien;
+		this.hoTen = hoTen;
+		this.phai = phai;
+		this.phongBan = phongBan;
+		this.phuCap = phuCap;
+	}
 	public String getIdNhanVien() {
 		return idNhanVien;
 	}
 	public void setIdNhanVien(String idNhanVien) {
+		this.idNhanVien = idNhanVien;
+	}
+	
+	public NhanVien(String idNhanVien) {
+		super();
 		this.idNhanVien = idNhanVien;
 	}
 	public String getHoTen() {
@@ -111,8 +125,12 @@ public class NhanVien {
 	}
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+		return "NhanVien [idNhanVien=" + idNhanVien + ", hoTen=" + hoTen + ", phai=" + phai + ", ngaySinh=" + ngaySinh
+				+ ", ngayBatDauCongTac=" + ngayBatDauCongTac + ", ngayKetThucCongTac=" + ngayKetThucCongTac + ", email="
+				+ email + ", soDienThoai=" + soDienThoai + ", chucVu=" + chucVu + ", HESOBAOHIEMXAHOI="
+				+ HESOBAOHIEMXAHOI + ", LUONGCOBAN=" + LUONGCOBAN + ", taiKhoan=" + taiKhoan + ", phongBan=" + phongBan
+				+ ", phuCap=" + phuCap + "]";
 	}
+
 	
 }
