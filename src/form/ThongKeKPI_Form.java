@@ -101,9 +101,6 @@ public void showPieChart(){
        //changing pie chart blocks colors
         piePlot.setSectionPaint("Đạt KPI",new Color(255,255,102));
         piePlot.setSectionPaint("Không đạt", new Color(102,255,102));
-       
-      
-       
         piePlot.setBackgroundPaint(Color.white);
         
         //create chartPanel to display chart(graph)
@@ -150,74 +147,21 @@ public void showLineChart(){
 }
     public void initComponents()
     {
-      setPreferredSize(new Dimension(1250, 747));
-  	  setBackground(Color.white);
+      setPreferredSize(new Dimension(1250, 789));
+  	  setBackground(Color.decode("#004e92"));
 //  	  String col[] = {"ID Công nhân","Tên công nhân","Tên công đoạn","Số lượng được giao","Số lượng hoàn thành"};
 //  	  model = new DefaultTableModel(col,0);
   	  
   	  panelBarChart = new JPanel();
   	  panelBarChart.setBackground(new Color(255, 255, 255));
-  	  panelBarChart.setBounds(31, 364, 598, 407);
+  	  panelBarChart.setBounds(31, 364, 573, 407);
   	  
-  	   panelLineChart = new JPanel();
+  	  panelLineChart = new JPanel();
   	  panelLineChart.setBackground(new Color(255, 255, 255));
-  	  panelLineChart.setBounds(626, 364, 598, 383);
+  	  panelLineChart.setBounds(612, 364, 612, 407);
   	  setLayout(null);
   	  add(panelBarChart);
   	  add(panelLineChart);
-//      table_2 = new Table(new DefaultTableModel(
-//      	new Object[][] {
-//      		{"1", "3", "4", "5", "6"},
-//      		{"2", "7", "8", "9", null},
-//      		{"3", "4", "5", "6", "7"},
-//      		{"6", "6", "6", "7", "8"},
-//      		{"5", "4", "3", "2", "12"},
-//      		{"2", "2", "2", "2", "2"},
-//      		{"2", "2", "2", "2", "2"},
-//      		{"2", "2", "2", "2", "2"},
-//      		{null, "2", "2", "2", "2"},
-//      		{"5", "4", "3", "2", "12"},
-//      		{"2", "2", "2", "2", "2"},
-//      		{"2", "2", "2", "2", "2"},
-//      		{"2", "2", "2", "2", "2"},
-//      		{null, "2", "2", "2", "2"},
-//      		{"5", "4", "3", "2", "12"},
-//      		{"2", "2", "2", "2", "2"},
-//      		{"2", "2", "2", "2", "2"},
-//      		{"2", "2", "2", "2", "2"},
-//      		{null, "2", "2", "2", "2"},
-//      		{"5", "4", "3", "2", "12"},
-//      		{"2", "2", "2", "2", "2"},
-//      		{"2", "2", "2", "2", "2"},
-//      		{"2", "2", "2", "2", "2"},
-//      		{null, "2", "2", "2", "2"},
-//      	},
-//      	new String[] {
-//      		"ID C\u00F4ng nh\u00E2n", "T\u00EAn c\u00F4ng nh\u00E2n", "T\u00EAn c\u00F4ng \u0111o\u1EA1n", "S\u1ED1 l\u01B0\u1EE3ng \u0111\u01B0\u1EE3c giao", "S\u1ED1 l\u01B0\u1EE3ng ho\u00E0n th\u00E0nh"
-//      	}
-//      ));
-//      table_2.setModel(new DefaultTableModel(
-//          	new Object[][] {
-//          		
-//          	},
-//          	new String[] {
-//              		"ID C\u00F4ng nh\u00E2n", "T\u00EAn c\u00F4ng nh\u00E2n", "T\u00EAn c\u00F4ng \u0111o\u1EA1n", "S\u1ED1 l\u01B0\u1EE3ng \u0111\u01B0\u1EE3c giao", "S\u1ED1 l\u01B0\u1EE3ng ho\u00E0n th\u00E0nh"
-//          	}
-//          ));
-//      table_2.setShowVerticalLines(false);
-//      table_2.setSelectionBackground(new Color(232, 57, 95));
-//      table_2.setIntercellSpacing(new Dimension(0, 0));
-//      table_2.setFocusable(false);
-//      table_2.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
-//      table_2.setFont(new Font("Segoe UI", Font.BOLD, 12));
-//      table_2.getTableHeader().setFont(new Font("Segoe UI",Font.BOLD,12));
-//      table_2.getTableHeader().setOpaque(false);
-//      table_2.getTableHeader().setBackground(new Color(32,136,203));
-//      table_2.getTableHeader().setForeground(new Color(255,255,255));
-//      table_2.setRowHeight(25);
-//      JScrollPane pane = new JScrollPane(table_2);
-//      pane.setBounds(31, 73, 1198, 188);
-//      
    // Bảng chấm công
    		tableThongKe = new Table();
    		  tableThongKe.setOpaque(false);
@@ -240,7 +184,7 @@ public void showLineChart(){
            scrollPane_TK.setOpaque(false);
            scrollPane_TK.setBorder(new EmptyBorder(5, 5, 5, 5));
            scrollPane_TK.setViewportView(tableThongKe);
-           scrollPane_TK.setBounds(0, 0, 1198, 283);
+           scrollPane_TK.setBounds(10, 10, 1173, 259);
            tableThongKe.fixTable(scrollPane_TK);
            panelCenter = new RoundPanel();
    		   ((RoundPanel) panelCenter).setRound(20);
@@ -258,7 +202,7 @@ public void showLineChart(){
 //      add(pane);
       
       JPanel pNorth = new JPanel();
-      pNorth.setBounds(31, 10, 1198, 66);
+      pNorth.setBounds(31, 10, 1198, 55);
       add(pNorth);
       pNorth.setLayout(null);
       
@@ -282,10 +226,10 @@ public void showLineChart(){
       	public void actionPerformed(ActionEvent e) {
       	}
       });
-      btnThongKe.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(ThongKeKPI_Form.class.getResource("/icon/search.png")).getScaledInstance(30, 25,Image.SCALE_SMOOTH)));
+      btnThongKe.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(ThongKeKPI_Form.class.getResource("/icon/thongKe.png")).getScaledInstance(30, 25,Image.SCALE_SMOOTH)));
       
       
-      btnThongKe.setBounds(484, 10, 130, 38);
+      btnThongKe.setBounds(484, 10, 148, 38);
       pNorth.add(btnThongKe);
       
       JButton btnXuatExcel = new JButton("Xuất ra excel");

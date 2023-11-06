@@ -1,14 +1,20 @@
 package entities;
 
-import java.time.LocalTime;
+import java.time.LocalDate;
+import java.util.Objects;
 
 public class CaLam {
-	private int idCaLam;
-	private String tenCaLam;
-	private LocalTime thoiGianBatDau;
-	private LocalTime thoiGianKetThuc;
-	private double heSoLuong;
-	public CaLam(int idCaLam, String tenCaLam, LocalTime thoiGianBatDau, LocalTime thoiGianKetThuc, double heSoLuong) {
+	  enum TenCaLam
+	  {
+		  CaSang,CaChieu,CaToi;
+	  }
+      private String idCaLam;
+      private TenCaLam tenCaLam;
+      private LocalDate thoiGianBatDau;
+      private LocalDate thoiGianKetThuc;
+      private double heSoLuong;
+	public CaLam(String idCaLam, TenCaLam tenCaLam, LocalDate thoiGianBatDau, LocalDate thoiGianKetThuc,
+			double heSoLuong) {
 		super();
 		this.idCaLam = idCaLam;
 		this.tenCaLam = tenCaLam;
@@ -18,29 +24,34 @@ public class CaLam {
 	}
 	public CaLam() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
-	public int getIdCaLam() {
-		return idCaLam;
-	}
-	public void setIdCaLam(int idCaLam) {
+	public CaLam(String idCaLam) {
+		super();
 		this.idCaLam = idCaLam;
 	}
-	public String getTenCaLam() {
+	public String getIdCaLam() {
+		return idCaLam;
+	}
+	public void setIdCaLam(String idCaLam) {
+		this.idCaLam = idCaLam;
+	}
+	public TenCaLam getTenCaLam() {
 		return tenCaLam;
 	}
-	public void setTenCaLam(String tenCaLam) {
+	public void setTenCaLam(TenCaLam tenCaLam) {
 		this.tenCaLam = tenCaLam;
 	}
-	public LocalTime getThoiGianBatDau() {
+	public LocalDate getThoiGianBatDau() {
 		return thoiGianBatDau;
 	}
-	public void setThoiGianBatDau(LocalTime thoiGianBatDau) {
+	public void setThoiGianBatDau(LocalDate thoiGianBatDau) {
 		this.thoiGianBatDau = thoiGianBatDau;
 	}
-	public LocalTime getThoiGianKetThuc() {
+	public LocalDate getThoiGianKetThuc() {
 		return thoiGianKetThuc;
 	}
-	public void setThoiGianKetThuc(LocalTime thoiGianKetThuc) {
+	public void setThoiGianKetThuc(LocalDate thoiGianKetThuc) {
 		this.thoiGianKetThuc = thoiGianKetThuc;
 	}
 	public double getHeSoLuong() {
@@ -50,8 +61,21 @@ public class CaLam {
 		this.heSoLuong = heSoLuong;
 	}
 	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+	public int hashCode() {
+		return Objects.hash(idCaLam);
 	}
-}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CaLam other = (CaLam) obj;
+		return Objects.equals(idCaLam, other.idCaLam);
+	}
+      
+      
+      
+}  

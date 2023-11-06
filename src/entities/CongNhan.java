@@ -1,24 +1,27 @@
 package entities;
 
+import java.awt.Image;
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class CongNhan {
-	private String idCongNhan;
-	private String hoTen;
-	private boolean phai;
-	private LocalDate ngaySinh;
-	private LocalDate ngayBatDauCongTac;
-	private LocalDate ngayKetThucCongTac;
-	private PhanXuong phanXuong;
-	private String email;
-	private String soDienThoai;
-	private CaLam caLam;
-	private String tayNghe;
-	private TaiKhoan taiKhoan;
-	private String anhDaiDien;
+	 
+      private String idCongNhan;
+      private String hoTen;
+      private boolean phai;
+      private LocalDate ngaySinh;
+      private LocalDate ngayBatDauCongTac;
+      private LocalDate ngayKetThucCongTac;
+      private PhanXuong phanXuong;
+      private String email;
+      private String soDienThoai;
+      private CaLam caLam;
+      private String tayNghe;
+      private TaiKhoan taiKhoan;
+      private Image anhDaiDien;
 	public CongNhan(String idCongNhan, String hoTen, boolean phai, LocalDate ngaySinh, LocalDate ngayBatDauCongTac,
 			LocalDate ngayKetThucCongTac, PhanXuong phanXuong, String email, String soDienThoai, CaLam caLam,
-			String tayNghe, TaiKhoan taiKhoan, String anhDaiDien) {
+			String tayNghe, TaiKhoan taiKhoan, Image anhDaiDien) {
 		super();
 		this.idCongNhan = idCongNhan;
 		this.hoTen = hoTen;
@@ -36,6 +39,11 @@ public class CongNhan {
 	}
 	public CongNhan() {
 		super();
+		// TODO Auto-generated constructor stub
+	}
+	public CongNhan(String idCongNhan) {
+		super();
+		this.idCongNhan = idCongNhan;
 	}
 	public String getIdCongNhan() {
 		return idCongNhan;
@@ -109,16 +117,26 @@ public class CongNhan {
 	public void setTaiKhoan(TaiKhoan taiKhoan) {
 		this.taiKhoan = taiKhoan;
 	}
-	public String getAnhDaiDien() {
+	public Image getAnhDaiDien() {
 		return anhDaiDien;
 	}
-	public void setAnhDaiDien(String anhDaiDien) {
+	public void setAnhDaiDien(Image anhDaiDien) {
 		this.anhDaiDien = anhDaiDien;
 	}
-	
 	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+	public int hashCode() {
+		return Objects.hash(idCongNhan);
 	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CongNhan other = (CongNhan) obj;
+		return Objects.equals(idCongNhan, other.idCongNhan);
+	}
+      
 }
