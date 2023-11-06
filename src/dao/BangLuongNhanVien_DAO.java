@@ -16,7 +16,7 @@ import entities.NhanVien;
 import entities.PhongBan;
 
 public class BangLuongNhanVien_DAO {
-	public LuongNhanVien getAllTableTinhLuong(String idNhanVien,int nam,int thang){
+	public LuongNhanVien getAllTableTinhLuong(String idNhanVien,int nam,int thang,String pb){
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection();
 		CallableStatement cs = null;
@@ -29,7 +29,7 @@ public class BangLuongNhanVien_DAO {
 			cs.setString(1, idNhanVien);
 			cs.setInt(2, nam);
 			cs.setInt(3, thang);
-
+			cs.setString(4, pb);
 		    cs.registerOutParameter(4, Types.DECIMAL);
 		    cs.registerOutParameter(5, Types.DECIMAL);
 		    cs.registerOutParameter(6, Types.DECIMAL);
