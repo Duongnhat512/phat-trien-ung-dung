@@ -14,8 +14,12 @@ import commons.MyMenu;
 import commons.PanelButton;
 import form.ChamCongCongNhan_Form;
 import form.ChamCongNhanVien_Form;
+<<<<<<< HEAD
 import form.QuanLyCongNhan_Form;
 import form.QuanLyNhanVien_Form;
+=======
+import form.QuanLyHopDong_Form;
+>>>>>>> 87e1c3bbed8f1e0a9859b9ea67c5478971c4afb4
 import form.ThongKeKPI_Form;
 import form.TinhLuongNhanVien_Form;
 
@@ -72,6 +76,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 	private ChamCongCongNhan_Form chamCongCongNhan_Form = null;
 	private TinhLuongNhanVien_Form tinhLuongNhanVien_Form = null;
 	private ChamCongNhanVien_Form chamCongNhanVien_Form = null;
+	private QuanLyHopDong_Form quanLyHopDong_Form;
 	private ThongKeKPI_Form thongKeKPI_form = null;
 	private QuanLyCongNhan_Form quanLyCongNhan_Form = null;
 	private QuanLyNhanVien_Form quanLyNhanVien_Form = null;
@@ -176,10 +181,15 @@ public class Main_GUI extends JFrame implements ActionListener{
 		chamCongCongNhan_Form = new ChamCongCongNhan_Form(panelCenter.getWidth(), panelCenter.getHeight() - panelCNort.getHeight());
 		tinhLuongNhanVien_Form = new TinhLuongNhanVien_Form(panelCenter.getWidth(), panelCenter.getHeight() - panelCNort.getHeight());
 		chamCongNhanVien_Form = new ChamCongNhanVien_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
+<<<<<<< HEAD
 		thongKeKPI_form = new ThongKeKPI_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
 		quanLyCongNhan_Form = new QuanLyCongNhan_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
 		quanLyNhanVien_Form = new QuanLyNhanVien_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
 
+=======
+//		thongKeKPI_form = new ThongKeKPI_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
+		quanLyHopDong_Form = new QuanLyHopDong_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
+>>>>>>> 87e1c3bbed8f1e0a9859b9ea67c5478971c4afb4
 	}
 
 	
@@ -196,7 +206,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 			{"Công nhân", "Quản lý công nhân", "Chấm công công nhân", "Tính lương công nhân", "Thống kê lương", "Thống kê KPI"},
 			{"Nhân viên", "Quản lý nhân viên", "Chấm công nhân viên", "Tính lương nhân viên", "Thống kê lương"},
 			{"Hợp đồng"},
-			{"Sản phẩm", "Quản lý sản phẩm", "Chia công đoạn sản phẩm"},
+			{"Sản phẩm", "Quản lý sản phẩm", "Chia công đoạn cho sản phẩm", "Phân công cho công nhân"},
 			{"Hỗ trợ"}
 		};
 		menu = new MyMenu(menuAdmin);
@@ -222,7 +232,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 			}
 			else if(subIndex == 5)
 			{
-				setForm(thongKeKPI_form);
+//				setForm(thongKeKPI_form);
 			}
 				
 		}
@@ -237,7 +247,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 			}
 		}
 		else if(index == 3 && subIndex == 0) {
-			
+			setForm(quanLyHopDong_Form);
 		}else if(index == 5 && subIndex == 0) {
 			moLinkHoTro();
 		}

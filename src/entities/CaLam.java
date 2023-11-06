@@ -1,23 +1,31 @@
 package entities;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Objects;
 
+enum TenCaLam
+{
+	CaSang,CaChieu,CaToi;
+}
 public class CaLam {
-	  enum TenCaLam
-	  {
-		  CaSang,CaChieu,CaToi;
-	  }
-      private String idCaLam;
+      private int idCaLam;
       private TenCaLam tenCaLam;
-      private LocalDate thoiGianBatDau;
-      private LocalDate thoiGianKetThuc;
+      private LocalTime thoiGianBatDau;
+      private LocalTime thoiGianKetThuc;
       private double heSoLuong;
-	public CaLam(String idCaLam, TenCaLam tenCaLam, LocalDate thoiGianBatDau, LocalDate thoiGianKetThuc,
-			double heSoLuong) {
-		super();
+//	public CaLam(int idCaLam, TenCaLam tenCaLam, LocalTime thoiGianBatDau, LocalTime thoiGianKetThuc,
+//			double heSoLuong) {
+//		super();
+//		this.idCaLam = idCaLam;
+//		this.tenCaLam = tenCaLam;
+//		this.thoiGianBatDau = thoiGianBatDau;
+//		this.thoiGianKetThuc = thoiGianKetThuc;
+//		this.heSoLuong = heSoLuong;
+//	}
+	public CaLam(int idCaLam, LocalTime thoiGianBatDau, LocalTime thoiGianKetThuc, double heSoLuong) {
 		this.idCaLam = idCaLam;
-		this.tenCaLam = tenCaLam;
+		setTenCaLam();
 		this.thoiGianBatDau = thoiGianBatDau;
 		this.thoiGianKetThuc = thoiGianKetThuc;
 		this.heSoLuong = heSoLuong;
@@ -26,32 +34,32 @@ public class CaLam {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public CaLam(String idCaLam) {
+	public CaLam(int idCaLam) {
 		super();
 		this.idCaLam = idCaLam;
 	}
-	public String getIdCaLam() {
+	public int getIdCaLam() {
 		return idCaLam;
 	}
-	public void setIdCaLam(String idCaLam) {
+	public void setIdCaLam(int idCaLam) {
 		this.idCaLam = idCaLam;
 	}
 	public TenCaLam getTenCaLam() {
 		return tenCaLam;
 	}
-	public void setTenCaLam(TenCaLam tenCaLam) {
-		this.tenCaLam = tenCaLam;
+	public void setTenCaLam() {
+		this.tenCaLam = TenCaLam.values()[getIdCaLam() - 1];
 	}
-	public LocalDate getThoiGianBatDau() {
+	public LocalTime getThoiGianBatDau() {
 		return thoiGianBatDau;
 	}
-	public void setThoiGianBatDau(LocalDate thoiGianBatDau) {
+	public void setThoiGianBatDau(LocalTime thoiGianBatDau) {
 		this.thoiGianBatDau = thoiGianBatDau;
 	}
-	public LocalDate getThoiGianKetThuc() {
+	public LocalTime getThoiGianKetThuc() {
 		return thoiGianKetThuc;
 	}
-	public void setThoiGianKetThuc(LocalDate thoiGianKetThuc) {
+	public void setThoiGianKetThuc(LocalTime thoiGianKetThuc) {
 		this.thoiGianKetThuc = thoiGianKetThuc;
 	}
 	public double getHeSoLuong() {
