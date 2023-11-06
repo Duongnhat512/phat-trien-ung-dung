@@ -18,10 +18,10 @@ public class CongNhan {
       private CaLam caLam;
       private String tayNghe;
       private TaiKhoan taiKhoan;
-      private Image anhDaiDien;
+      private String anhDaiDien;
 	public CongNhan(String idCongNhan, String hoTen, boolean phai, LocalDate ngaySinh, LocalDate ngayBatDauCongTac,
 			LocalDate ngayKetThucCongTac, PhanXuong phanXuong, String email, String soDienThoai, CaLam caLam,
-			String tayNghe, TaiKhoan taiKhoan, Image anhDaiDien) {
+			String tayNghe, TaiKhoan taiKhoan, String anhDaiDien) {
 		super();
 		this.idCongNhan = idCongNhan;
 		this.hoTen = hoTen;
@@ -117,10 +117,10 @@ public class CongNhan {
 	public void setTaiKhoan(TaiKhoan taiKhoan) {
 		this.taiKhoan = taiKhoan;
 	}
-	public Image getAnhDaiDien() {
+	public String getAnhDaiDien() {
 		return anhDaiDien;
 	}
-	public void setAnhDaiDien(Image anhDaiDien) {
+	public void setAnhDaiDien(String anhDaiDien) {
 		this.anhDaiDien = anhDaiDien;
 	}
 	@Override

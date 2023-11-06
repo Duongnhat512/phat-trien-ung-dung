@@ -22,7 +22,8 @@ public class CaLam_DAO {
 				int idCaLam = rs.getInt(1);
 				LocalTime thoiGianBatDau = LocalTime.parse(rs.getString(3));
 				LocalTime thoiGianKetThuc = LocalTime.parse(rs.getString(4));
-				CaLam caLam = new CaLam(idCaLam, thoiGianBatDau, thoiGianKetThuc, idCaLam);
+				double heSoLuong = rs.getDouble(5);
+				CaLam caLam = new CaLam(idCaLam, thoiGianBatDau, thoiGianKetThuc, heSoLuong);
 				danhSachCaLam.add(caLam);
 			}
 		} catch (SQLException e) {
@@ -44,10 +45,10 @@ public class CaLam_DAO {
 			ResultSet rs = stm.executeQuery();
 			while(rs.next()) {
 				int idCaLam = rs.getInt(1);
-				String tenCaLam = rs.getString(2);
 				LocalTime thoiGianBatDau = LocalTime.parse(rs.getString(3));
 				LocalTime thoiGianKetThuc = LocalTime.parse(rs.getString(4));
-				
+				double heSoLuong = rs.getDouble(5);
+				caLam = new CaLam(idCaLam, thoiGianBatDau, thoiGianKetThuc, heSoLuong);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

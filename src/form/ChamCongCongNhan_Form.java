@@ -137,6 +137,10 @@ public class ChamCongCongNhan_Form extends RoundPanel {
 		btnChamCongAll.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		
 		MyButton btnNewButton_2 = new MyButton();
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnNewButton_2.setBackground(new Color(255, 255, 255));
 		btnNewButton_2.setFocusPainted(false);
 		btnNewButton_2.setIcon(new ImageIcon(ChamCongCongNhan_Form.class.getResource("/icon/add.png")));
@@ -149,17 +153,16 @@ public class ChamCongCongNhan_Form extends RoundPanel {
 		gl_panelNorth.setHorizontalGroup(
 			gl_panelNorth.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panelNorth.createSequentialGroup()
-					.addGap(217)
+					.addContainerGap(400, Short.MAX_VALUE)
 					.addComponent(btnNewButton_2, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
-					.addGap(50)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnChamCongAll, GroupLayout.PREFERRED_SIZE, 207, GroupLayout.PREFERRED_SIZE)
-					.addGap(48)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnChamCong, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+					.addGap(18)
 					.addComponent(lblNewLabel_2, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(textNgayChamCong, GroupLayout.PREFERRED_SIZE, 181, GroupLayout.PREFERRED_SIZE)
-					.addGap(62))
+					.addComponent(textNgayChamCong, GroupLayout.PREFERRED_SIZE, 181, GroupLayout.PREFERRED_SIZE))
 		);
 		gl_panelNorth.setVerticalGroup(
 			gl_panelNorth.createParallelGroup(Alignment.LEADING)
@@ -168,8 +171,8 @@ public class ChamCongCongNhan_Form extends RoundPanel {
 						.addComponent(lblNewLabel_2)
 						.addComponent(textNgayChamCong, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnChamCong, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnNewButton_2, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnChamCongAll, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE))
+						.addComponent(btnChamCongAll, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnNewButton_2, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		panelNorth.setLayout(gl_panelNorth);
@@ -281,5 +284,7 @@ public class ChamCongCongNhan_Form extends RoundPanel {
         
 	}
 	
-	
+	private void layDanhSachCongNhan() {
+		
+	}
 }

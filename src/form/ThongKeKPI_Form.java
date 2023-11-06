@@ -86,7 +86,7 @@ public class ThongKeKPI_Form extends JPanel{
 
            
     }
-public void showPieChart(){
+	public void showPieChart(){
         
         //create dataset
       DefaultPieDataset barDataset = new DefaultPieDataset( );
@@ -147,7 +147,7 @@ public void showLineChart(){
 }
     public void initComponents()
     {
-      setPreferredSize(new Dimension(1250, 789));
+      setPreferredSize(new Dimension(this.width, this.height));
   	  setBackground(Color.decode("#004e92"));
 //  	  String col[] = {"ID Công nhân","Tên công nhân","Tên công đoạn","Số lượng được giao","Số lượng hoàn thành"};
 //  	  model = new DefaultTableModel(col,0);
