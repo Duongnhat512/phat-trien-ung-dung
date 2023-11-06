@@ -20,10 +20,9 @@ public class CaLam_DAO {
 			ResultSet rs = stm.executeQuery("select * from CaLam");
 			while(rs.next()) {
 				int idCaLam = rs.getInt(1);
-				String tenCaLam = rs.getString(2);
 				LocalTime thoiGianBatDau = LocalTime.parse(rs.getString(3));
 				LocalTime thoiGianKetThuc = LocalTime.parse(rs.getString(4));
-				CaLam caLam = new ;
+				CaLam caLam = new CaLam(idCaLam, thoiGianBatDau, thoiGianKetThuc, idCaLam);
 				danhSachCaLam.add(caLam);
 			}
 		} catch (SQLException e) {

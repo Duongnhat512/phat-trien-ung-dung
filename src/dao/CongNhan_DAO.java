@@ -13,7 +13,8 @@ import entities.CongNhan;
 import entities.PhanXuong;
 
 public class CongNhan_DAO {
-	PhanXuong_DAO phanXuong_DAO = new PhanXuong_DAO();
+	private PhanXuong_DAO phanXuong_DAO = new PhanXuong_DAO();
+	private CaLam_DAO  caLam_DAO = new CaLam_DAO();
 	
 	public ArrayList<CongNhan> getDanhSachCongNhan() {
 		ArrayList<CongNhan> danhSachCongNhan = null;
@@ -32,7 +33,7 @@ public class CongNhan_DAO {
 				PhanXuong phanXuong = phanXuong_DAO.getPhanXuongTheoID(rs.getString(7));
 				String email = rs.getString(8);
 				String soDienThoai = rs.getString(9);
-				CaLam caLam = 
+				CaLam caLam = caLam_DAO.getCaLamTheoID(rs.getInt(10));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
