@@ -23,7 +23,7 @@ public class TaiKhoanNganHang_DAO {
 				String tenNganHang = rs.getString(2);
 				String chuTaiKhoan = rs.getString(3);
 				String chiNhanh = rs.getString(4);
-				tk = new TaiKhoanNganHang(soTaiKhoan, soTaiKhoan, chuTaiKhoan, chiNhanh);
+				tk = new TaiKhoanNganHang(soTaiKhoan, tenNganHang, chiNhanh);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

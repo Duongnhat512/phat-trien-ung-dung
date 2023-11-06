@@ -23,7 +23,7 @@ public class CaLam_DAO {
 				String tenCaLam = rs.getString(2);
 				LocalTime thoiGianBatDau = LocalTime.parse(rs.getString(3));
 				LocalTime thoiGianKetThuc = LocalTime.parse(rs.getString(4));
-				CaLam caLam = new CaLam(idCaLam, tenCaLam, thoiGianBatDau, thoiGianKetThuc, idCaLam);
+				CaLam caLam = new ;
 				danhSachCaLam.add(caLam);
 			}
 		} catch (SQLException e) {
