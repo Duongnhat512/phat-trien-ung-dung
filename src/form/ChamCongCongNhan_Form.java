@@ -58,7 +58,7 @@ public class ChamCongCongNhan_Form extends RoundPanel {
 	}
 	
 	private void initPanel() {
-		setPreferredSize(new Dimension(1259, 813));
+		setPreferredSize(new Dimension(this.width, this.height));
 		setRound(20);
 
 		panelCenter = new RoundPanel();
@@ -87,13 +87,13 @@ public class ChamCongCongNhan_Form extends RoundPanel {
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap(34, Short.MAX_VALUE)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(panelNorth, Alignment.TRAILING, 0, 0, Short.MAX_VALUE)
-						.addGroup(Alignment.TRAILING, groupLayout.createParallelGroup(Alignment.LEADING, false)
-							.addComponent(panelSouth, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 1206, Short.MAX_VALUE)
-							.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-								.addComponent(panelCenter, GroupLayout.PREFERRED_SIZE, 591, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(19, GroupLayout.PREFERRED_SIZE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(panelNorth, 0, 0, Short.MAX_VALUE)
+						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+							.addComponent(panelSouth, GroupLayout.DEFAULT_SIZE, 1206, Short.MAX_VALUE)
+							.addGroup(groupLayout.createSequentialGroup()
+								.addComponent(panelCenter, GroupLayout.PREFERRED_SIZE, 606, GroupLayout.PREFERRED_SIZE)
 								.addGap(18)
 								.addComponent(panelCenter_1, GroupLayout.PREFERRED_SIZE, 597, GroupLayout.PREFERRED_SIZE))))
 					.addGap(19))
@@ -116,6 +116,7 @@ public class ChamCongCongNhan_Form extends RoundPanel {
 		lblNewLabel_2.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		
 		textNgayChamCong = new JTextField();
+		textNgayChamCong.setBorder(null);
 		textNgayChamCong.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		textNgayChamCong.setColumns(10);
 		
@@ -279,4 +280,6 @@ public class ChamCongCongNhan_Form extends RoundPanel {
         
         
 	}
+	
+	
 }

@@ -14,6 +14,7 @@ import commons.MyMenu;
 import commons.PanelButton;
 import form.ChamCongCongNhan_Form;
 import form.ChamCongNhanVien_Form;
+import form.QuanLyHopDong_Form;
 import form.ThongKeKPI_Form;
 import form.TinhLuongNhanVien_Form;
 
@@ -70,6 +71,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 	private ChamCongCongNhan_Form chamCongCongNhan_Form = null;
 	private TinhLuongNhanVien_Form tinhLuongNhanVien_Form = null;
 	private ChamCongNhanVien_Form chamCongNhanVien_Form = null;
+	private QuanLyHopDong_Form quanLyHopDong_Form;
 	private ThongKeKPI_Form thongKeKPI_form = null;
 	private JPanel panelContent;
 	private MyButton btnAvt;
@@ -173,6 +175,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 		tinhLuongNhanVien_Form = new TinhLuongNhanVien_Form(panelCenter.getWidth(), panelCenter.getHeight() - panelCNort.getHeight());
 		chamCongNhanVien_Form = new ChamCongNhanVien_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
 		thongKeKPI_form = new ThongKeKPI_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
+		quanLyHopDong_Form = new QuanLyHopDong_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
 	}
 
 	
@@ -189,7 +192,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 			{"Công nhân", "Quản lý công nhân", "Chấm công công nhân", "Tính lương công nhân", "Thống kê lương", "Thống kê KPI"},
 			{"Nhân viên", "Quản lý nhân viên", "Chấm công nhân viên", "Tính lương nhân viên", "Thống kê lương"},
 			{"Hợp đồng"},
-			{"Sản phẩm", "Quản lý sản phẩm", "Chia công đoạn sản phẩm"},
+			{"Sản phẩm", "Quản lý sản phẩm", "Chia công đoạn cho sản phẩm", "Phân công cho công nhân"},
 			{"Hỗ trợ"}
 		};
 		menu = new MyMenu(menuAdmin);
@@ -230,7 +233,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 			}
 		}
 		else if(index == 3 && subIndex == 0) {
-			
+			setForm(quanLyHopDong_Form);
 		}else if(index == 5 && subIndex == 0) {
 			moLinkHoTro();
 		}

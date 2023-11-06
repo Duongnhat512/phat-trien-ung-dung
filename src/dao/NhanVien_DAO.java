@@ -22,8 +22,9 @@ public class NhanVien_DAO {
 				String hoTen = rs.getString(2);
 				boolean phai = true;
 				if(rs.getInt(3) == 0) {
-					
+					phai = false;
 				}
+				
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

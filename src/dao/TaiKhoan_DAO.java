@@ -8,8 +8,10 @@ import java.util.ArrayList;
 
 import connectDB.ConnectDB;
 import entities.TaiKhoan;
+import entities.TaiKhoanNganHang;
 
 public class TaiKhoan_DAO {
+	TaiKhoanNganHang_DAO taiKhoanNganHang_DAO = new TaiKhoanNganHang_DAO();
 	public TaiKhoan getTaiKhoan(String tenTaiKhoan) {
 		TaiKhoan tk = null;
 		ConnectDB.getInstance();
@@ -23,6 +25,7 @@ public class TaiKhoan_DAO {
 				String taiKhoan = rs.getString(1);
 				String matKhai = rs.getString(2);
 				String loaiTaiKhoan = rs.getString(3);
+				TaiKhoanNganHang taiKhoanNganHang = taiKhoanNganHang_DAO.getTaiKhoanNganHangTheoSTK(rs.getString(4));
 				tk = new TaiKhoan(taiKhoan, matKhai, loaiTaiKhoan);
 			}
 		} catch (SQLException e) {
