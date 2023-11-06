@@ -14,12 +14,11 @@ import commons.MyMenu;
 import commons.PanelButton;
 import form.ChamCongCongNhan_Form;
 import form.ChamCongNhanVien_Form;
-<<<<<<< HEAD
+
 import form.QuanLyCongNhan_Form;
 import form.QuanLyNhanVien_Form;
-=======
 import form.QuanLyHopDong_Form;
->>>>>>> 87e1c3bbed8f1e0a9859b9ea67c5478971c4afb4
+
 import form.ThongKeKPI_Form;
 import form.TinhLuongNhanVien_Form;
 
@@ -181,15 +180,14 @@ public class Main_GUI extends JFrame implements ActionListener{
 		chamCongCongNhan_Form = new ChamCongCongNhan_Form(panelCenter.getWidth(), panelCenter.getHeight() - panelCNort.getHeight());
 		tinhLuongNhanVien_Form = new TinhLuongNhanVien_Form(panelCenter.getWidth(), panelCenter.getHeight() - panelCNort.getHeight());
 		chamCongNhanVien_Form = new ChamCongNhanVien_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
-<<<<<<< HEAD
 		thongKeKPI_form = new ThongKeKPI_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
 		quanLyCongNhan_Form = new QuanLyCongNhan_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
 		quanLyNhanVien_Form = new QuanLyNhanVien_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
 
-=======
+
 //		thongKeKPI_form = new ThongKeKPI_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
 		quanLyHopDong_Form = new QuanLyHopDong_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
->>>>>>> 87e1c3bbed8f1e0a9859b9ea67c5478971c4afb4
+
 	}
 
 	

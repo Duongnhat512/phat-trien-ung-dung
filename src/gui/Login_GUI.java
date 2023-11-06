@@ -157,7 +157,7 @@ public class Login_GUI extends JFrame implements ActionListener{
 		pRight.add(lblThongBao);
 		
 		JLabel lbLogo = new JLabel("");
-		lbLogo.setIcon(new ImageIcon(Login_GUI.class.getResource("/images/logo_Login.png")));
+		lbLogo.setIcon(new ImageIcon(Login_GUI.class.getResource("/icon/logo_Login.png")));
 		lbLogo.setBounds(161, 143, 412, 363);
 		panel.add(lbLogo);
 		
