@@ -128,7 +128,5 @@ public class CongNhan_DAO {
 		return danhSachCongNhan;
 	}
 
-//	public ArrayList<CongNhan> getDanhSachCongNhanPhanXuong(String idPhanXuong){
-//		
-//	}
+	
 }
