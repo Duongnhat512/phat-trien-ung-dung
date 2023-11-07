@@ -12,6 +12,7 @@ import entities.TaiKhoanNganHang;
 public class TaiKhoanNganHang_DAO {
 	public TaiKhoanNganHang getTaiKhoanNganHangTheoSTK(String stk) {
 		TaiKhoanNganHang tk = null;
+		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection();
 		PreparedStatement stm = null;
 		try {

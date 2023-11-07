@@ -21,6 +21,7 @@ public class CongNhan_DAO {
 	
 	public ArrayList<CongNhan> getDanhSachCongNhan() {
 		ArrayList<CongNhan> danhSachCongNhan = new ArrayList<CongNhan>();
+		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection();
 		try {
 			Statement stm = con.createStatement();
@@ -32,7 +33,10 @@ public class CongNhan_DAO {
 				if(!rs.getBoolean(3)) phai = false;
 				LocalDate ngaySinh = LocalDate.parse(rs.getString(4));
 				LocalDate ngayBatDauCongTac = LocalDate.parse(rs.getString(5));
-				LocalDate ngayKetThucCongTac = LocalDate.parse(rs.getString(6));
+				LocalDate ngayKetThucCongTac = null;
+				if (rs.getString(6) != null) {
+					ngayKetThucCongTac = LocalDate.parse(rs.getString(6));
+				}
 				PhanXuong phanXuong = phanXuong_DAO.getPhanXuongTheoID(rs.getString(7));
 				String email = rs.getString(8);
 				String soDienThoai = rs.getString(9);
@@ -52,6 +56,7 @@ public class CongNhan_DAO {
 	
 	public CongNhan getCongNhanTheoID(String id) {
 		CongNhan congNhan = null;
+		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection();
 		PreparedStatement stm = null;
 		try {
@@ -65,7 +70,10 @@ public class CongNhan_DAO {
 				if(!rs.getBoolean(3)) phai = false;
 				LocalDate ngaySinh = LocalDate.parse(rs.getString(4));
 				LocalDate ngayBatDauCongTac = LocalDate.parse(rs.getString(5));
-				LocalDate ngayKetThucCongTac = LocalDate.parse(rs.getString(6));
+				LocalDate ngayKetThucCongTac = null;
+				if (rs.getString(6) != null) {
+					ngayKetThucCongTac = LocalDate.parse(rs.getString(6));
+				}
 				PhanXuong phanXuong = phanXuong_DAO.getPhanXuongTheoID(rs.getString(7));
 				String email = rs.getString(8);
 				String soDienThoai = rs.getString(9);
@@ -85,6 +93,7 @@ public class CongNhan_DAO {
 	
 	public ArrayList<CongNhan> getDanhSachCongNhanTheoCa(int idCaLam){
 		ArrayList<CongNhan> danhSachCongNhan = new ArrayList<CongNhan>();
+		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection();
 		PreparedStatement stm = null;
 		try {
@@ -98,7 +107,10 @@ public class CongNhan_DAO {
 				if(!rs.getBoolean(3)) phai = false;
 				LocalDate ngaySinh = LocalDate.parse(rs.getString(4));
 				LocalDate ngayBatDauCongTac = LocalDate.parse(rs.getString(5));
-				LocalDate ngayKetThucCongTac = LocalDate.parse(rs.getString(6));
+				LocalDate ngayKetThucCongTac = null;
+				if (rs.getString(6) != null) {
+					ngayKetThucCongTac = LocalDate.parse(rs.getString(6));
+				}
 				PhanXuong phanXuong = phanXuong_DAO.getPhanXuongTheoID(rs.getString(7));
 				String email = rs.getString(8);
 				String soDienThoai = rs.getString(9);
@@ -116,5 +128,7 @@ public class CongNhan_DAO {
 		return danhSachCongNhan;
 	}
 
-	public ArrayList<CongNhan> getDanhSachCongNhanTheoCa
+//	public ArrayList<CongNhan> getDanhSachCongNhanPhanXuong(String idPhanXuong){
+//		
+//	}
 }

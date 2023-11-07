@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src/icon/show_property.png</name>
+			<type>1</type>
+			<location>C:/Users/ADMIN/AppData/Local/Temp/icons8_show_property_30px.png</location>
+		</link>
+	</linkedResources>
 </projectDescription>

@@ -14,6 +14,7 @@ import entities.PhanXuong;
 public class PhanXuong_DAO {
 	public ArrayList<PhanXuong> getDanhSachPhanXuong() {
 		ArrayList<PhanXuong> danhSachPhanXuong = new ArrayList<PhanXuong>();
+		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection();
 		try {
 			Statement stm = con.createStatement();
@@ -34,6 +35,7 @@ public class PhanXuong_DAO {
 	
 	public PhanXuong getPhanXuongTheoID(String id) {
 		PhanXuong phanXuong = null;
+		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection();
 		PreparedStatement stm = null;
 		try {

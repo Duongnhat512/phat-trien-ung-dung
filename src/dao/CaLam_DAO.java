@@ -14,6 +14,7 @@ import entities.CaLam;
 public class CaLam_DAO {
 	public ArrayList<CaLam> getDanhSachCaLam() {
 		ArrayList<CaLam> danhSachCaLam = new ArrayList<CaLam>();
+		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection();
 		try {
 			Statement stm = con.createStatement();
@@ -37,6 +38,7 @@ public class CaLam_DAO {
 	
 	public CaLam getCaLamTheoID(int id) {
 		CaLam caLam = null;
+		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection();
 		PreparedStatement stm = null;
 		try {

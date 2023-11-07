@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
@@ -91,6 +92,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 	 * Create the frame.
 	 */
 	public Main_GUI() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Main_GUI.class.getResource("/icon/logo.png")));
 		int w = WIDTH;
 		int h = HEIGHT;
 		

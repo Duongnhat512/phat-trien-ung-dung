@@ -3,14 +3,10 @@ package entities;
 import java.util.Objects;
 
 public class ChucVu {
-	 enum TenChucVu
-	 {
-		 NhânViênHànhChánh , KếToán, TrưởngPhòngSảnXuất, TrưởngPhòngNhânSự 
-	 }
       private String idChucVu;
-      private TenChucVu tenChucVu;
+      private String tenChucVu;
       private double heSoLuong;
-	public ChucVu(String idChucVu, TenChucVu tenChucVu, double heSoLuong) {
+	public ChucVu(String idChucVu, String tenChucVu, double heSoLuong) {
 		super();
 		this.idChucVu = idChucVu;
 		this.tenChucVu = tenChucVu;
@@ -30,10 +26,10 @@ public class ChucVu {
 	public void setIdChucVu(String idChucVu) {
 		this.idChucVu = idChucVu;
 	}
-	public TenChucVu getTenChucVu() {
+	public String getTenChucVu() {
 		return tenChucVu;
 	}
-	public void setTenChucVu(TenChucVu tenChucVu) {
+	public void setTenChucVu(String tenChucVu) {
 		this.tenChucVu = tenChucVu;
 	}
 	public double getHeSoLuong() {

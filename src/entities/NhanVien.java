@@ -17,12 +17,13 @@ public class NhanVien {
 	private TaiKhoan taiKhoan;
 	private PhongBan phongBan;
 	private double phuCap;
+	private String anhDaiDien;
 	public NhanVien() {
 		super();
 	}
 	public NhanVien(String idNhanVien, String hoTen, boolean phai, LocalDate ngaySinh, LocalDate ngayBatDauCongTac,
 			LocalDate ngayKetThucCongTac, String email, String soDienThoai, ChucVu chucVu, TaiKhoan taiKhoan,
-			PhongBan phongBan, double phuCap) {
+			PhongBan phongBan, double phuCap, String anhDaiDien) {
 		super();
 		this.idNhanVien = idNhanVien;
 		this.hoTen = hoTen;
@@ -36,6 +37,7 @@ public class NhanVien {
 		this.taiKhoan = taiKhoan;
 		this.phongBan = phongBan;
 		this.phuCap = phuCap;
+		this.anhDaiDien = anhDaiDien;
 	}
 	
 	public NhanVien(String idNhanVien, String hoTen, boolean phai, PhongBan phongBan, double phuCap) {
@@ -122,6 +124,13 @@ public class NhanVien {
 	}
 	public void setPhuCap(double phuCap) {
 		this.phuCap = phuCap;
+	}
+	
+	public String getAnhDaiDien() {
+		return anhDaiDien;
+	}
+	public void setAnhDaiDien(String anhDaiDien) {
+		this.anhDaiDien = anhDaiDien;
 	}
 	@Override
 	public String toString() {

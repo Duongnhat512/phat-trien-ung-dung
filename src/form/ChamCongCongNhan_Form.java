@@ -24,11 +24,15 @@ import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingConstants;
+
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 
@@ -46,6 +50,8 @@ public class ChamCongCongNhan_Form extends RoundPanel {
 	private JLabel lblNewLabel_1;
 	private JPanel panel_3;
 	private JTextField textNgayChamCong;
+	
+	private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 	/**
 	 * Create the panel.
@@ -118,15 +124,17 @@ public class ChamCongCongNhan_Form extends RoundPanel {
 		textNgayChamCong = new JTextField();
 		textNgayChamCong.setBorder(null);
 		textNgayChamCong.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		textNgayChamCong.setText(dtf.format(LocalDate.now()));
+		textNgayChamCong.setHorizontalAlignment(SwingConstants.CENTER);
 		textNgayChamCong.setColumns(10);
 		
-		MyButton btnChamCong = new MyButton();
-		btnChamCong.setBackground(new Color(255, 255, 255));
-		btnChamCong.setFocusPainted(false);
-		btnChamCong.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("/icon/update.png")).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)));
-		btnChamCong.setText("Cập nhật");
-		btnChamCong.setRadius(10);
-		btnChamCong.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		MyButton btnCapNhat = new MyButton();
+		btnCapNhat.setBackground(new Color(255, 255, 255));
+		btnCapNhat.setFocusPainted(false);
+		btnCapNhat.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("/icon/update.png")).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)));
+		btnCapNhat.setText("Cập nhật");
+		btnCapNhat.setRadius(10);
+		btnCapNhat.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		
 		MyButton btnChamCongAll = new MyButton();
 		btnChamCongAll.setBackground(new Color(255, 255, 255));
@@ -136,43 +144,63 @@ public class ChamCongCongNhan_Form extends RoundPanel {
 		btnChamCongAll.setRadius(10);
 		btnChamCongAll.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		
-		MyButton btnNewButton_2 = new MyButton();
-		btnNewButton_2.addActionListener(new ActionListener() {
+		MyButton btnChamCong = new MyButton();
+		btnChamCong.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton_2.setBackground(new Color(255, 255, 255));
-		btnNewButton_2.setFocusPainted(false);
-		btnNewButton_2.setIcon(new ImageIcon(ChamCongCongNhan_Form.class.getResource("/icon/add.png")));
-		btnNewButton_2.setText("Chấm công");
-		btnNewButton_2.setRadius(10);
-		btnNewButton_2.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		btnChamCong.setBackground(new Color(255, 255, 255));
+		btnChamCong.setFocusPainted(false);
+		btnChamCong.setIcon(new ImageIcon(ChamCongCongNhan_Form.class.getResource("/icon/add.png")));
+		btnChamCong.setText("Chấm công");
+		btnChamCong.setRadius(10);
+		btnChamCong.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		
+		JComboBox cboCaLam = new JComboBox();
+		cboCaLam.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		
+		MyButton btnLocTheoCa = new MyButton();
+		btnLocTheoCa.setIcon(new ImageIcon(ChamCongCongNhan_Form.class.getResource("/icon/icons8_filter_25px_1.png")));
+		btnLocTheoCa.setText("Lọc ca");
+		btnLocTheoCa.setRadius(10);
+		btnLocTheoCa.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		btnLocTheoCa.setFocusPainted(false);
+		btnLocTheoCa.setBackground(Color.WHITE);
 		
 		
 		GroupLayout gl_panelNorth = new GroupLayout(panelNorth);
 		gl_panelNorth.setHorizontalGroup(
 			gl_panelNorth.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panelNorth.createSequentialGroup()
-					.addContainerGap(400, Short.MAX_VALUE)
-					.addComponent(btnNewButton_2, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnChamCongAll, GroupLayout.PREFERRED_SIZE, 207, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnChamCong, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
+					.addComponent(cboCaLam, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(btnLocTheoCa, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
+					.addGap(79)
+					.addComponent(btnChamCong, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
+					.addGap(33)
+					.addComponent(btnChamCongAll, GroupLayout.PREFERRED_SIZE, 207, GroupLayout.PREFERRED_SIZE)
+					.addGap(30)
+					.addComponent(btnCapNhat, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
 					.addComponent(lblNewLabel_2, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(textNgayChamCong, GroupLayout.PREFERRED_SIZE, 181, GroupLayout.PREFERRED_SIZE))
+					.addComponent(textNgayChamCong, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)
+					.addGap(88))
 		);
 		gl_panelNorth.setVerticalGroup(
 			gl_panelNorth.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelNorth.createSequentialGroup()
-					.addGroup(gl_panelNorth.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNewLabel_2)
-						.addComponent(textNgayChamCong, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnChamCong, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnChamCongAll, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnNewButton_2, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE))
+					.addGroup(gl_panelNorth.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panelNorth.createParallelGroup(Alignment.BASELINE)
+							.addComponent(lblNewLabel_2)
+							.addComponent(textNgayChamCong, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panelNorth.createParallelGroup(Alignment.BASELINE)
+							.addComponent(btnLocTheoCa, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+							.addComponent(cboCaLam, GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+							.addComponent(btnChamCong, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+							.addComponent(btnCapNhat, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addComponent(btnChamCongAll, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		panelNorth.setLayout(gl_panelNorth);
