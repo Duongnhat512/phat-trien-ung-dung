@@ -3,6 +3,7 @@ package entities;
 import java.util.Objects;
 
 public class ChucVu {
+	
       private String idChucVu;
       private String tenChucVu;
       private double heSoLuong;

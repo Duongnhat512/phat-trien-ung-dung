@@ -4,30 +4,81 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+
+import java.util.ArrayList;
 
 import connectDB.ConnectDB;
+
 import entities.PhongBan;
 
+
 public class PhongBan_DAO {
-	public PhongBan getPhongBanTheoID(String id) {
-		PhongBan phongBan = null;
-		ConnectDB.getInstance();
-		Connection con = ConnectDB.getConnection();
-		PreparedStatement stm = null;
+	public ArrayList<PhongBan> getdsPB() {
+		ArrayList<PhongBan> list = new ArrayList<PhongBan>();
 		try {
-			stm = con.prepareStatement("select * from PhongBan where idPhongBan = ?");
-			stm.setString(1, id);
-			ResultSet rs = stm.executeQuery();
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			String sql = "select*from PhongBan";
+			Statement statement = con.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
 			while(rs.next()) {
-				String idPhongBan = rs.getString(1);
-				String tenPhongBan = rs.getString(2);
-				phongBan = new PhongBan(idPhongBan, tenPhongBan);
+				
+				String id = rs.getString(1);
+				String tenPB = rs.getString(2);
+				PhongBan pb = new PhongBan(id, tenPB);
+				list.add(pb);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		return phongBan;
+		return list;
 	}
+	public PhongBan getPhongBanTheoID(String id) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement statement = null;
+		
+		try {	
+			String sql = "Select * from PhongBan where idPhongBan = ?";	
+			statement = con.prepareStatement(sql);
+			statement.setString(1,id);
+			ResultSet rs = statement.executeQuery();
+			
+			while(rs.next()) {
+				String idpb = rs.getString(1);
+				String tenpb = rs.getString(2);
+				PhongBan pb = new PhongBan(idpb, tenpb);
+				return pb;
+			}
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+			return null;
+	}
+	public PhongBan getPhongBanTheoTen(String ten) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement statement = null;
+		
+		try {	
+			String sql = "Select * from PhongBan where tenPhongBan = ?";	
+			statement = con.prepareStatement(sql);
+			statement.setString(1,ten);
+			ResultSet rs = statement.executeQuery();
+			
+			while(rs.next()) {
+				String idpb = rs.getString(1);
+				String tenpb = rs.getString(2);
+				PhongBan pb = new PhongBan(idpb, tenpb);
+				return pb;
+			}
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+			return null;
+	}
+
 }
