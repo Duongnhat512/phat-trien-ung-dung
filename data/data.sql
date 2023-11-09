@@ -1,5 +1,4 @@
-﻿
-create  database QLLuongSanPham
+﻿create  database QLLuongSanPham
 go
 use QLLuongSanPham
 go
@@ -159,7 +158,7 @@ create table BangChamCongNhanVienHC(
 )
 alter table BangChamCongNhanVienHC add constraint FK_BangChamCongNhanVienHC_NhanVien foreign key (idNhanVien) references NhanVien(idNhanVien)
 create table BangLuongNhanVien(
-	idLuongNVHC varchar(10),
+	idLuongNVHC varchar(10) primary key not null,
 	ngayTinhLuong date,
 	idNhanVien varchar(10),
 	thueLaoDong money,
@@ -171,8 +170,6 @@ alter table BangLuongNhanVien add constraint FK_BangLuongNhanVien_NhanVien forei
 
 insert into TaiKhoan values('admin', '1111', 'admin')
 go
-
-
 
 
 
