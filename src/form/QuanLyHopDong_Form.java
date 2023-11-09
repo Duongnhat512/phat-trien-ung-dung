@@ -13,6 +13,7 @@ import bus.HopDongSanPham_BUS;
 import commons.RoundPanel;
 import commons.RoundTextField;
 import commons.Table;
+import dialog.ThemHopDong_Dialog;
 import entities.HopDongSanPham;
 
 import javax.swing.GroupLayout;
@@ -28,12 +29,13 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.border.LineBorder;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class QuanLyHopDong_Form extends JPanel {
+public class QuanLyHopDong_Form extends JPanel implements ActionListener{
 
 	private int width = 1259;
 	private int height = 813;
@@ -42,6 +44,11 @@ public class QuanLyHopDong_Form extends JPanel {
 	
 	//
 	private HopDongSanPham_BUS hopDongSanPham_BUS = new HopDongSanPham_BUS();
+	private MyButton btnXemChiTiet;
+	private MyButton btnCapNhat;
+	private MyButton btnLoc;
+	private MyButton btnThem;
+	
 	
 	/**
 	 * Create the panel.
@@ -63,20 +70,20 @@ public class QuanLyHopDong_Form extends JPanel {
 		panel.setBorder(new EmptyBorder(0, 0, 0, 0));
 		panel.setBackground(new Color(255, 255, 255));
 		
-		MyButton btnThemHopDong = new MyButton();
-		btnThemHopDong.addActionListener(new ActionListener() {
+		btnThem = new MyButton();
+		btnThem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnThemHopDong.setForeground(new Color(255, 255, 255));
-		btnThemHopDong.setIcon(new ImageIcon(QuanLyHopDong_Form.class.getResource("/icon/icons8_plus_math_30px.png")));
-		btnThemHopDong.setText("Thêm");
-		btnThemHopDong.setRadius(10);
-		btnThemHopDong.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		btnThemHopDong.setFocusPainted(false);
-		btnThemHopDong.setBackground(new Color(82, 125, 254));
+		btnThem.setForeground(new Color(255, 255, 255));
+		btnThem.setIcon(new ImageIcon(QuanLyHopDong_Form.class.getResource("/icon/icons8_plus_math_30px.png")));
+		btnThem.setText("Thêm");
+		btnThem.setRadius(10);
+		btnThem.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		btnThem.setFocusPainted(false);
+		btnThem.setBackground(new Color(82, 125, 254));
 		
-		MyButton btnLoc = new MyButton();
+		btnLoc = new MyButton();
 		btnLoc.setIcon(new ImageIcon(QuanLyHopDong_Form.class.getResource("/icon/icons8_filter_25px_1.png")));
 		btnLoc.setText("Lọc");
 		btnLoc.setRadius(10);
@@ -84,7 +91,7 @@ public class QuanLyHopDong_Form extends JPanel {
 		btnLoc.setFocusPainted(false);
 		btnLoc.setBackground(Color.WHITE);
 		
-		MyButton btnCapNhat = new MyButton();
+		btnCapNhat = new MyButton();
 		btnCapNhat.setIcon(new ImageIcon(QuanLyHopDong_Form.class.getResource("/icon/update.png")));
 		btnCapNhat.setText("Cập nhật");
 		btnCapNhat.setRadius(10);
@@ -93,7 +100,7 @@ public class QuanLyHopDong_Form extends JPanel {
 		btnCapNhat.setBackground(Color.WHITE);
 		
 		textTimKiem = new RoundTextField(10);
-		textTimKiem.setText("Nhập mã sản phẩm cần tìm.....");
+		textTimKiem.setText("Nhập mã hợp đồng cần tìm.....");
 		textTimKiem.setBorder(new EmptyBorder(0, 15, 0, 0));
 		textTimKiem.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		textTimKiem.setForeground(Color.GRAY);
@@ -102,21 +109,21 @@ public class QuanLyHopDong_Form extends JPanel {
 			@Override
 			public void focusLost(FocusEvent e) {
 				if(textTimKiem.getText().isEmpty()) {
-					textTimKiem.setText("Nhập mã sản phẩm cần tìm.....");
+					textTimKiem.setText("Nhập mã hợp đồng cần tìm.....");
 					textTimKiem.setForeground(Color.GRAY);
 				}
 			}
 			
 			@Override
 			public void focusGained(FocusEvent e) {
-				if(textTimKiem.getText().equals("Nhập mã sản phẩm cần tìm.....")) {
+				if(textTimKiem.getText().equals("Nhập mã hợp đồng cần tìm.....")) {
 					textTimKiem.setText("");
 					textTimKiem.setForeground(Color.BLACK);
 				}
 			}
 		});
 		
-		MyButton btnXemChiTiet = new MyButton();
+		btnXemChiTiet = new MyButton();
 		btnXemChiTiet.setIcon(new ImageIcon(QuanLyHopDong_Form.class.getResource("/icon/show_property.png")));
 		btnXemChiTiet.setText("Xem chi tiết");
 		btnXemChiTiet.setRadius(10);
@@ -132,7 +139,7 @@ public class QuanLyHopDong_Form extends JPanel {
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnLoc, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED, 394, Short.MAX_VALUE)
-					.addComponent(btnThemHopDong, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
+					.addComponent(btnThem, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnXemChiTiet, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
@@ -146,7 +153,7 @@ public class QuanLyHopDong_Form extends JPanel {
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 							.addComponent(btnXemChiTiet, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-							.addComponent(btnThemHopDong, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE))
+							.addComponent(btnThem, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 							.addComponent(textTimKiem, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
 							.addComponent(btnCapNhat, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
@@ -234,6 +241,12 @@ public class QuanLyHopDong_Form extends JPanel {
         );
         panelSouth.setLayout(gl_panelSouth);
         
+        //Đăng ký sự kiện
+        btnCapNhat.addActionListener(this);
+        btnLoc.addActionListener(this);
+        btnThem.addActionListener(this);
+        btnXemChiTiet.addActionListener(this);
+        
         //
         docDuLieuLenTableHDSP();
 	}
@@ -247,6 +260,20 @@ public class QuanLyHopDong_Form extends JPanel {
 		DefaultTableModel dm = (DefaultTableModel) tableHopDong.getModel();
 		for(HopDongSanPham hd : list) {
 			dm.addRow(new Object[] {hd.getIdHopDong(), hd.getTenHopDong(), hd.getNgayBatDau(), hd.getNgayKetThuc(), hd.getNguoiQuanLy().getHoTen(), hd.getGhiChu()});
+		}
+	}
+	
+	private void moDialogThemHD() {
+		ThemHopDong_Dialog themHopDong_Dialog = new ThemHopDong_Dialog();
+		themHopDong_Dialog.openThemHopDong_Dialog((int) (this.width*0.75), this.height);
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object o = e.getSource();
+		if (o.equals(btnThem)) {
+			moDialogThemHD();
 		}
 	}
 }
