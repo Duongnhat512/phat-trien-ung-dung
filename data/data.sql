@@ -54,7 +54,8 @@ create table NhanVien(
 	tenTaiKhoan varchar(10),
 	idPhongBan varchar(10),
 	phuCap float,
-	anhDaiDien nvarchar(50)
+	anhDaiDien nvarchar(50),
+	cCCD varchar(15)
 )
 
 alter table NhanVien add constraint FK_tenTaiKhoan foreign key (tenTaiKhoan) references TaiKhoan(tenTaiKhoan) on delete cascade
@@ -77,7 +78,7 @@ create table CongNhan(
 
 )
 alter table CongNhan add constraint FK_tenTaiKhoan_CongNhan foreign key (tenTaiKhoan) references TaiKhoan(tenTaiKhoan) on delete cascade
-alter table CongNhan add constraint FK_CaLam_CongNhan foreign key (idCaLam) references CaLam(idCaLam) on delete cascade
+--alter table CongNhan add constraint FK_CaLam_CongNhan foreign key (idCaLam) references CaLam(idCaLam) on delete cascade
 alter table CongNhan add constraint FK_PhanXuong_CongNhan foreign key (idPhanXuong) references PhanXuong(idPhanXuong) on delete cascade
 create table HopDongSanPham(
 	idHopDong varchar(10) primary key not null,
@@ -85,6 +86,7 @@ create table HopDongSanPham(
 	ngayBatDau date,
 	ngayKetThuc date,
 	idNguoiQuanLy varchar(10),
+	tongTien money,
 	ghiChu nvarchar(max)
 )
 alter table HopDongSanPham add constraint FK_HopDongSanPham_NhanVien foreign key (idNguoiQuanLy) references NhanVien(idNhanVien)
@@ -92,10 +94,22 @@ create table SanPham(
 	idSanPham varchar(10) primary key not null,
 	tenSanPham nvarchar(50),
 	donGia money,
-	soLuong int,
-	idHopDongSanPham varchar(10)
+	chatLieu nvarchar(max),
+	donViTinh nvarchar(30),
+	ghiChu nvarchar(max),
+	anhSanPham varchar(max)
 )
-alter table SanPham add constraint FK_HopDongSanPham_SanPham foreign key (idHopDongSanPham) references HopDongSanPham(idHopDong) on delete cascade
+--alter table SanPham add constraint FK_HopDongSanPham_SanPham foreign key (idHopDongSanPham) references HopDongSanPham(idHopDong) on delete cascade
+create table ChiTietHopDong
+(
+	idHopDong varchar(10),
+	idSanPham varchar(10),
+	soLuong int,
+	thanhTien money
+)
+alter table ChiTietHopDong add constraint FK_ChiTietHopDong_HopDong foreign key (idHopDong) references HopDongSanPham(idHopDong) on delete cascade
+alter table ChiTietHopDong add constraint FK_ChiTietHopDong_SanPham foreign key (idSanPham) references SanPham(idSanPham) on delete cascade
+
 create table CongDoanSP(
 	idCongDoan varchar(10) primary key not null,
 	tenCongDoan nvarchar(50),
@@ -107,34 +121,41 @@ create table CongDoanSP(
 )
 alter table CongDoanSP add constraint FK_CongDoanSP_SanPham foreign key (idSanPham) references SanPham(idSanPham)
 create table CongDoanPhanCong(
+	idPhanCong varchar (10) primary key not null,
 	idCongDoan varchar(10) not null,
 	idCongNhan varchar(10) not null,
-	soLuongSPDuocGiao int
-	primary key (idCongDoan, idCongNhan)
+	soLuongSPDuocGiao int,
+	idCaLam int
 )
 alter table CongDoanPhanCong add constraint FK_CongDoanPhanCong_CongDoanSanPham foreign key (idCongDoan) references CongDoanSP(idCongDoan)
 alter table CongDoanPhanCong add constraint FK_CongDoanPhanCong_CongNhan foreign key (idCongNhan) references CongNhan(idCongNhan) on delete cascade
+alter table CongDoanPhanCong add constraint FK_CongDoanPhanCong_CaLam foreign key (idCaLam) references CaLam(idCaLam) on delete cascade
+
 create table BangChamCongCongNhan(
 	idNgayChamCong varchar(10) primary key not null,
 	ngayChamCong date,
 	soLuongHoanThanh int,
-	idCongDoan varchar(10),
-	idCongNhan varchar(10),
+	idPhanCong varchar(10),
 	heSoNgayLam float
 )
-alter table BangChamCongCongNhan add constraint FK_BangChamCongCongNhan_CongDoanPhanCong foreign key (idCongDoan,idCongNhan) references CongDoanPhanCong(idCongDoan,idCongNhan) on delete cascade
+--alter table BangChamCongCongNhan add constraint FK_BangChamCongCongNhan_CongDoanPhanCong foreign key (idCongDoan,idCongNhan) references CongDoanPhanCong(idCongDoan,idCongNhan) on delete cascade
+alter table BangChamCongCongNhan add constraint FK_BangChamCongCongNhan_CongDoanPhanCong foreign key (idPhanCong) references CongDoanPhanCong(idPhanCong) on delete cascade
+
 create table BangLuongCongNhan(
 	idLuongCN varchar(10) primary key not null,
 	ngayTinhLuong date,
 	idCongNhan varchar(10),
-	tongLuong money
+	tongLuong money,
+	thucLanh money
 )
 alter table BangLuongCongNhan add constraint FK_BangLuongCongNhan_CongNhan foreign key (idCongNhan) references CongNhan(idCongNhan)
+
 create table BangChamCongNhanVienHC(
 	idChamCong varchar(10) primary key not null,
 	ngayChamCong date,
 	trangThai nvarchar(10),
-	idNhanVien varchar(10)
+	idNhanVien varchar(10),
+	
 )
 alter table BangChamCongNhanVienHC add constraint FK_BangChamCongNhanVienHC_NhanVien foreign key (idNhanVien) references NhanVien(idNhanVien)
 create table BangLuongNhanVien(
@@ -143,7 +164,8 @@ create table BangLuongNhanVien(
 	idNhanVien varchar(10),
 	thueLaoDong money,
 	tienBaoHiemXaHoi money,
-	tongLuong money
+	tongLuong money,
+	thucLanh money
 )
 alter table BangLuongNhanVien add constraint FK_BangLuongNhanVien_NhanVien foreign key (idNhanVien) references NhanVien(idNhanVien)
 
