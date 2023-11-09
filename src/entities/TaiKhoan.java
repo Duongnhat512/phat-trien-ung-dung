@@ -7,6 +7,11 @@ public class TaiKhoan {
 	public TaiKhoan() {
 		super();
 	}
+	public TaiKhoan(String tenTK) {
+		super();
+		this.tenTaiKhoan = tenTK;
+		
+	}
 	public TaiKhoan(String tenTaiKhoan, String matKhau, String loaiTaiKhoan) {
 		super();
 		this.tenTaiKhoan = tenTaiKhoan;

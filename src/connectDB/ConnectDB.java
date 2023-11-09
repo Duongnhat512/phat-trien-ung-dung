@@ -9,7 +9,7 @@ public class ConnectDB {
 		return instance;
 	}
 	public void connect() throws SQLException, ClassNotFoundException {	
-		String url = "jdbc:sqlserver://localhost:1433;databasename=QLLuongSanPham";
+		String url = "jdbc:sqlserver://localhost:1433;databasename=ChuaXoaDc";
 		String user = "sa";
 		String password = "sapassword";
 		con = DriverManager.getConnection(url, user, password);

@@ -243,6 +243,7 @@ public class ChamCongNhanVien_Form extends JPanel {
 		panelCenterLeft.add(scrollListNV);
 		tableNhanVien.fixTable(scrollListNV);
 		
+		
 		// Khởi tạo panel chứa tiêu đề của bảng
 		panelNV = new RoundPanel();
 		panelNV.setBackground(new Color(155, 204, 255));

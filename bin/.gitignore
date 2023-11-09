@@ -1,9 +1,6 @@
-/bus/
-/commons/
 /connectDB/
+/bus/
 /dao/
-/entities/
 /form/
+/entities/
 /gui/
-/icon/
-/images/
