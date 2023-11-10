@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import commons.MyButton;
+import commons.RoundPanel;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -33,7 +34,7 @@ public class ThemSanPham_Dialog extends JDialog {
 	private MyButton btnThem;
 	private MyButton btnHuy;
 	private JPanel buttonPane;
-	private JPanel panel_1;
+	private RoundPanel panel_1;
 	private JTextArea textGhiChu;
 	private JLabel lblNewLabel;
 	private JLabel lblTnSnPhm;
@@ -48,7 +49,6 @@ public class ThemSanPham_Dialog extends JDialog {
 	private JTextField textDonViTinh;
 	private JPanel panelAnhSP;
 	private MyButton btnChonAnh;
-	private JLabel lblThongBaoID;
 	private JLabel lblThongBaoTen;
 	private JLabel lblThongBaoDonGia;
 	private JLabel lblThongBaoChatLieu;
@@ -151,7 +151,8 @@ public class ThemSanPham_Dialog extends JDialog {
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(buttonPane, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE))
 		);
-		panel_1 = new JPanel();
+		panel_1 = new RoundPanel();
+		panel_1.setRound(10);
 		panel_1.setOpaque(false);
 		textGhiChu = new JTextArea();
 		textGhiChu.setFont(new Font("SansSerif", Font.PLAIN, 15));
@@ -170,6 +171,7 @@ public class ThemSanPham_Dialog extends JDialog {
 		lblGhiCh.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		
 		textIDSP = new JTextField();
+		textIDSP.setEditable(false);
 		textIDSP.setEnabled(false);
 		textIDSP.setBackground(new Color(240, 240, 240));
 		textIDSP.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
@@ -218,15 +220,11 @@ public class ThemSanPham_Dialog extends JDialog {
 				.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 876, Short.MAX_VALUE)
 		);
 		gl_contentPanel.setVerticalGroup(
-			gl_contentPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPanel.createSequentialGroup()
-					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 447, GroupLayout.PREFERRED_SIZE)
+			gl_contentPanel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, gl_contentPanel.createSequentialGroup()
+					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
-		
-		lblThongBaoID = new JLabel();
-		lblThongBaoID.setForeground(new Color(255, 0, 0));
-		lblThongBaoID.setFont(new Font("SansSerif", Font.ITALIC, 15));
 		
 		lblThongBaoTen = new JLabel();
 		lblThongBaoTen.setForeground(Color.RED);
@@ -258,7 +256,6 @@ public class ThemSanPham_Dialog extends JDialog {
 							.addGap(61)
 							.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
 								.addComponent(textIDSP, GroupLayout.PREFERRED_SIZE, 274, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblThongBaoID, GroupLayout.PREFERRED_SIZE, 274, GroupLayout.PREFERRED_SIZE)
 								.addComponent(textTenSP, GroupLayout.PREFERRED_SIZE, 274, GroupLayout.PREFERRED_SIZE)
 								.addComponent(lblThongBaoTen, GroupLayout.PREFERRED_SIZE, 274, GroupLayout.PREFERRED_SIZE)
 								.addComponent(textDonGia, GroupLayout.PREFERRED_SIZE, 274, GroupLayout.PREFERRED_SIZE)
@@ -300,9 +297,7 @@ public class ThemSanPham_Dialog extends JDialog {
 							.addComponent(lblChtLiu))
 						.addGroup(gl_panel_1.createSequentialGroup()
 							.addComponent(textIDSP, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(10)
-							.addComponent(lblThongBaoID, GroupLayout.PREFERRED_SIZE, 13, GroupLayout.PREFERRED_SIZE)
-							.addGap(10)
+							.addGap(33)
 							.addComponent(textTenSP, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
 							.addGap(10)
 							.addComponent(lblThongBaoTen, GroupLayout.PREFERRED_SIZE, 13, GroupLayout.PREFERRED_SIZE)

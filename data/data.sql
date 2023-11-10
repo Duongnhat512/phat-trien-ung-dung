@@ -168,6 +168,7 @@ create table BangLuongNhanVien(
 )
 alter table BangLuongNhanVien add constraint FK_BangLuongNhanVien_NhanVien foreign key (idNhanVien) references NhanVien(idNhanVien)
 
+
 insert into TaiKhoan values('admin', '1111', 'admin')
 go
 
@@ -315,7 +316,7 @@ VALUES
     (3,N'Ca Tối', '18:00:00', '22:00:00', 1.5);
 
 -- Tạo 20 bảng Công Nhân
-INSERT INTO CongNhan (idCongNhan, heTen, phai, ngaySinh, ngayBatDauCongTac, ngayKetThucCongTac, idPhanXuong, email, soDienThoai, idCaLam, tayNghe, tenTaiKhoan,anhDaiDien)
+INSERT INTO CongNhan (idCongNhan, hoTen, phai, ngaySinh, ngayBatDauCongTac, ngayKetThucCongTac, idPhanXuong, email, soDienThoai, idCaLam, tayNghe, tenTaiKhoan,anhDaiDien)
 VALUES
 ('CN0001', N'Nguyễn Văn An', 1, '1980-01-01', '2005-05-10', NULL, 'PX001', 'nguyenvanan@gmail.com', '0123456789', 1, N'Giỏi', 'CN0001', 'avatar22.jpg'),
 ('CN0002', N'Phạm Thị Bình', 0, '1985-03-15', '2008-11-20', NULL, 'PX002', 'binhpham@yahoo.com', '0234567890', 2, N'Khá', 'CN0002', 'avatar23.jpg'),
@@ -353,87 +354,85 @@ VALUES
     ('HD0009', N'Hợp đồng Quần Áo Thể Thao', '2023-07-31', '2023-10-31', 'NV0003', N'Đã hoàn thành'),
     ('HD0010', N'Hợp đồng Áo Khoác Mùa Thu', '2023-10-10', '2024-01-10', 'NV0003', N'Đang tiến hành');
 
--- Thêm 10 sản phẩm 
-INSERT INTO SanPham (idSanPham, tenSanPham, donGia, soLuong, idHopDongSanPham)
+-- Thêm 10 sản phẩm
+INSERT INTO SanPham (idSanPham, tenSanPham, donGia, chatLieu, donViTinh, ghiChu, anhSanPham)
 VALUES
-    ('SP0001', N'Áo Khoác Đông ', 500000, 10000, 'HD0001'),
-    ('SP0002', N'Quần Jean Xuân ', 350000, 15000, 'HD0002'),
-    ('SP0003', N'Đầm Dự Tiệc ', 600000, 8000, 'HD0003'),
-    ('SP0004', N'Quần Kaki Hè ', 300000, 12000, 'HD0004'),
-    ('SP0005', N'Áo Thun Hè ', 150000, 20000, 'HD0005'),
-    ('SP0006', N'Áo Sơ Mi Xuân ', 250000, 9000, 'HD0006'),
-    ('SP0007', N'Áo Phông Hè ', 180000, 16000, 'HD0007'),
-    ('SP0008', N'Đầm Công Sở ', 450000, 7000, 'HD0008'),
-    ('SP0009', N'Quần Thể Thao ', 280000, 11000, 'HD0009'),
-    ('SP0010', N'Áo Khoác Thu ', 520000, 12000, 'HD0010');
+    ('SP0001', N'Áo Khoác Đông', 500000, N'Len', 'Cái', N'Áo khoác dành cho mùa Đông', 'path/to/anh1.jpg'),
+    ('SP0002', N'Quần Jean Xuân', 350000, N'Jean', 'Cái', N'Quần Jean phong cách Xuân', 'path/to/anh2.jpg'),
+    ('SP0003', N'Đầm Dự Tiệc', 600000, N'Vải Satin', 'Cái', N'Đầm dự tiệc sang trọng', 'path/to/anh3.jpg'),
+    ('SP0004', N'Quần Kaki Hè', 300000, N'Kaki', 'Cái', N'Quần kaki thích hợp cho mùa Hè', 'path/to/anh4.jpg'),
+    ('SP0005', N'Áo Thun Hè', 150000, N'Cotton', 'Cái', N'Áo thun mát mẻ cho mùa Hè', 'path/to/anh5.jpg'),
+    ('SP0006', N'Áo Sơ Mi Xuân', 250000, N'Vải lụa', 'Cái', N'Áo sơ mi thời trang cho mùa Xuân', 'path/to/anh6.jpg'),
+    ('SP0007', N'Áo Phông Hè', 180000, N'Cotton', 'Cái', N'Áo phông phong cách cho mùa Hè', 'path/to/anh7.jpg'),
+    ('SP0008', N'Đầm Công Sở', 450000, N'Vải công sở', 'Cái', N'Đầm phù hợp cho công sở', 'path/to/anh8.jpg'),
+    ('SP0009', N'Quần Thể Thao', 280000, N'Polyester', 'Cái', N'Quần thể thao cho mùa Xuân', 'path/to/anh9.jpg'),
+    ('SP0010', N'Áo Khoác Thu', 520000, N'Len', 'Cái', N'Áo khoác cho mùa Thu', 'path/to/anh10.jpg');
+
 
 --tHÊM 4 công đoạn
 
 INSERT INTO CongDoanSP (idCongDoan, tenCongDoan, soLuongSanPham, luongCongDoan, soLuongCongNhan, idSanPham, thuTuUuTien)
 VALUES
-    ('CDSP001', N'Cắt', 10000, 1500.00, 5, 'SP0001', 1),
-    ('CDSP002', N'May', 10000, 1800.00, 4, 'SP0001', 2),
-    ('CDSP003', N'Trang trí', 10000, 2000.00, 5, 'SP0001', 3),
-    ('CDSP004', N'Đóng gói', 10000, 1300.00, 6, 'SP0001', 4);
-
+    ('CDSP0001', N'Chuẩn bị nguyên vật liệu', 100, 500000, 5, 'SP0001', 1),
+    ('CDSP0002', N'Cắt vải', 120, 300000, 7, 'SP0001', 2),
+    ('CDSP0003', N'May áo khoác', 90, 350000, 6, 'SP0001', 3),
+    ('CDSP0004', N'Chuẩn bị vải jean', 130, 250000, 8, 'SP0002',1),
+    ('CDSP0005', N'Cắt vải jean', 110, 200000, 6, 'SP0002',2),
+    ('CDSP0006', N'May quần jean', 85, 300000, 6, 'SP0002',3),
+	('CDSP0007', N'Chuẩn bị vải satin', 80, 200000, 6, 'SP0003', 1),
+	('CDSP0008', N'Cắt vải satin', 70, 180000, 5, 'SP0003', 2),
+	('CDSP0009', N'May đầm dự tiệc', 50, 250000, 4, 'SP0003', 3);
 --THÊM CONG DOAN PHAN CONG
-INSERT INTO CongDoanPhanCong (idCongDoan, idCongNhan, soLuongSPDuocGiao)
-VALUES
-    ('CDSP001', 'CN0001', 2000),
-    ('CDSP001', 'CN0002', 2000),
-    ('CDSP001', 'CN0003', 2000),
-    ('CDSP001', 'CN0004', 2000),
-    ('CDSP001', 'CN0005', 2000),
-    ('CDSP002', 'CN0006', 2000),
-    ('CDSP002', 'CN0007', 2000),
-    ('CDSP002', 'CN0008', 2000),
-    ('CDSP002', 'CN0009', 2000),
-    ('CDSP002', 'CN0010', 2000),
-    ('CDSP003', 'CN0011', 2000),
-    ('CDSP003', 'CN0012', 2000),
-    ('CDSP003', 'CN0013', 2000),
-    ('CDSP003', 'CN0014', 2000),
-    ('CDSP003', 'CN0015', 2000),
-    ('CDSP004', 'CN0016', 2000),
-    ('CDSP004', 'CN0017', 2000),
-    ('CDSP004', 'CN0018', 2000),
-    ('CDSP004', 'CN0019', 2000),
-    ('CDSP004', 'CN0020', 2000);
+-- Bảng phân công cho sản phẩm SP0001
+-- Công đoạn 1
+INSERT INTO CongDoanPhanCong (idPhanCong, idCongDoan, idCongNhan, soLuongSPDuocGiao, idCaLam)
+VALUES 
+		('PC0001',  'CDSP0001', 'CN0001', 30, 1),
+		('PC0002', 'CDSP0002', 'CN0001', 20, 2),
+		('PC0003', 'CDSP0003', 'CN0001', 15, 3),
+		('PC0004', 'CDSP0001', 'CN0002', 25, 1),
+		('PC0005', 'CDSP0002', 'CN0002', 22, 2),
+		('PC0006', 'CDSP0003', 'CN0002', 18, 3),
+		('PC0007', 'CDSP0004', 'CN0003', 25, 1),
+		('PC0008', 'CDSP0005', 'CN0003', 20, 2),
+		('PC0009', 'CDSP0006', 'CN0003', 15, 3),
+		('PC0010', 'CDSP0007', 'CN0001', 10, 1),
+		('PC0011', 'CDSP0008', 'CN0002', 8, 2),
+		('PC0012', 'CDSP0009', 'CN0003', 7, 3);
 
---Thêm 1 công nhan đã làm 30 ngày 
-INSERT INTO BangChamCongCongNhan (idNgayChamCong, ngayChamCong, soLuongHoanThanh, idCongDoan, idCongNhan, heSoNgayLam)
+INSERT INTO BangChamCongCongNhan (idNgayChamCong, ngayChamCong, soLuongHoanThanh, idPhanCong, heSoNgayLam)
 VALUES
-    ('CCN0001', '2023-10-01', 30, 'CDSP001', 'CN0001', 1.35),
-    ('CCN0002', '2023-10-02', 30, 'CDSP001', 'CN0001', 1.0),
-	('CCN0003', '2023-10-03', 30, 'CDSP001', 'CN0001', 1.0),
-	('CCN0004', '2023-10-04', 30, 'CDSP001', 'CN0001', 1.0),
-	('CCN0005', '2023-10-05', 30, 'CDSP001', 'CN0001', 1.0),
-	('CCN0006', '2023-10-06', 30, 'CDSP001', 'CN0001', 1.0),
-	('CCN0007', '2023-10-07', 30, 'CDSP001', 'CN0001', 1.0),
-	('CCN0008', '2023-10-08', 30, 'CDSP001', 'CN0001', 1.35),
-	('CCN0009', '2023-10-09', 30, 'CDSP001', 'CN0001', 1.0),
-	('CCN0010', '2023-10-10', 30, 'CDSP001', 'CN0001', 1.0),
-	('CCN0011', '2023-10-11', 30, 'CDSP001', 'CN0001', 1.0),
-	('CCN0012', '2023-10-12', 30, 'CDSP001', 'CN0001', 1.0),
-	('CCN0013', '2023-10-13', 30, 'CDSP001', 'CN0001', 1.0),
-	('CCN0014', '2023-10-14', 30, 'CDSP001', 'CN0001', 1.0),
-	('CCN0015', '2023-10-15', 30, 'CDSP001', 'CN0001', 1.35),
-	('CCN0016', '2023-10-16', 30, 'CDSP001', 'CN0001', 1.0),
-	('CCN0017', '2023-10-17', 30, 'CDSP001', 'CN0001', 1.0),
-	('CCN0018', '2023-10-18', 30, 'CDSP001', 'CN0001', 1.0),
-	('CCN0019', '2023-10-19', 30, 'CDSP001', 'CN0001', 1.0),
-	('CCN0020', '2023-10-20', 30, 'CDSP001', 'CN0001', 1.0),
-	('CCN0021', '2023-10-21', 30, 'CDSP001', 'CN0001', 1.0),
-	('CCN0022', '2023-10-22', 30, 'CDSP001', 'CN0001', 1.35),
-	('CCN0023', '2023-10-23', 30, 'CDSP001', 'CN0001', 1.0),
-	('CCN0024', '2023-10-24', 30, 'CDSP001', 'CN0001', 1.0),
-	('CCN0025', '2023-10-25', 30, 'CDSP001', 'CN0001', 1.0),
-	('CCN0026', '2023-10-26', 30, 'CDSP001', 'CN0001', 1.0),
-	('CCN0027', '2023-10-27', 50, 'CDSP001', 'CN0001', 1.0),
-	('CCN0028', '2023-10-28', 50, 'CDSP001', 'CN0001', 1.0),
-	('CCN0029', '2023-10-29', 50, 'CDSP001', 'CN0001', 1.35),
-	('CCN0030', '2023-10-30', 50, 'CDSP001', 'CN0001', 1.0),
-	('CCN0031', '2023-10-31', 50, 'CDSP001', 'CN0001', 1.0);
+    ('CCN0001', '2023-10-01', 30, 'PC0001', 1.35),
+    ('CCN0002', '2023-10-02', 30, 'PC0002', 1.0),
+    ('CCN0003', '2023-10-03', 30, 'PC0003', 1.0),
+    ('CCN0004', '2023-10-04', 30, 'PC0004', 1.0),
+    ('CCN0005', '2023-10-05', 30, 'PC0005', 1.0),
+    ('CCN0006', '2023-10-06', 30, 'PC0006', 1.0),
+    ('CCN0007', '2023-10-07', 30, 'PC0007', 1.0),
+    ('CCN0008', '2023-10-08', 30, 'PC0008', 1.35),
+    ('CCN0009', '2023-10-09', 30, 'PC0009', 1.0),
+    ('CCN0010', '2023-10-10', 30, 'PC0010', 1.0),
+    ('CCN0011', '2023-10-11', 30, 'PC0011', 1.0),
+    ('CCN0012', '2023-10-12', 30, 'PC0012', 1.0),
+    ('CCN0013', '2023-10-13', 30, 'PC0001', 1.0),
+    ('CCN0014', '2023-10-14', 30, 'PC0002', 1.0),
+    ('CCN0015', '2023-10-15', 30, 'PC0003', 1.35),
+    ('CCN0016', '2023-10-16', 30, 'PC0004', 1.0),
+    ('CCN0017', '2023-10-17', 30, 'PC0005', 1.0),
+    ('CCN0018', '2023-10-18', 30, 'PC0006', 1.0),
+    ('CCN0019', '2023-10-19', 30, 'PC0007', 1.0),
+    ('CCN0020', '2023-10-20', 30, 'PC0008', 1.0),
+    ('CCN0021', '2023-10-21', 30, 'PC0009', 1.0),
+    ('CCN0022', '2023-10-22', 30, 'PC0010', 1.35),
+    ('CCN0023', '2023-10-23', 30, 'PC0011', 1.0),
+    ('CCN0024', '2023-10-24', 30, 'PC0012', 1.0),
+    ('CCN0025', '2023-10-25', 30, 'PC0001', 1.0),
+    ('CCN0026', '2023-10-26', 30, 'PC0002', 1.0),
+    ('CCN0027', '2023-10-27', 50, 'PC0003', 1.0),
+    ('CCN0028', '2023-10-28', 50, 'PC0004', 1.0),
+    ('CCN0029', '2023-10-29', 50, 'PC0005', 1.35),
+    ('CCN0030', '2023-10-30', 50, 'PC0006', 1.0),
+    ('CCN0031', '2023-10-31', 50, 'PC0007', 1.0);
 
 --Thêm 1 nhan vien đã làm 30 ngày 
 INSERT INTO BangChamCongNhanVienHC (idChamCong, ngayChamCong, trangThai, idNhanVien)
@@ -470,3 +469,130 @@ VALUES
 	('CNVHC0030', '2023-10-30', N'Có mặt', 'NV0001'),
 	('CNVHC0031', '2023-10-31', N'Có mặt', 'NV0001');
 
+select n.idNhanVien,n.idPhongBan,c.tenChucVu from NhanVien n join BangChamCongNhanVienHC l on n.idNhanVien=l.idNhanVien join ChucVu c on n.idChucVu = c.idChucVu
+go
+CREATE PROCEDURE TinhLuongNhanVien_proc (
+    @idNhanVien varchar(10),
+    @thang int,
+    @nam int,
+	@thue money output,
+	@bhxh money output,
+	@thuclanh money output,
+    @tongTienLuong money OUTPUT
+)
+AS
+BEGIN
+    DECLARE @luongCoBan money
+    DECLARE @heSoLuong float
+    DECLARE @soNgayLamThucTe int
+    DECLARE @soNgayLamQuyDinh int
+    DECLARE @phuCap float
+    DECLARE @heSoChucVu float
+    DECLARE @heSoBaoHiemXaHoi float
+    DECLARE @soNgayNghiKhongPhep int
+    DECLARE @tienBaoHiemXaHoi money
+    DECLARE @thueLaoDong money
+	declare @idChucVu varchar(10)
+
+    -- Lấy thông tin lương cơ bản của nhân viên
+    SELECT @luongCoBan = luongCoBan, @heSoChucVu = heSoLuong, @heSoBaoHiemXaHoi = heSoBaoHiemXaHoi,@idChucVu = n.idChucVu
+    FROM NhanVien n  join ChucVu c on n.idChucVu=c.idChucVu
+    WHERE idNhanVien = @idNhanVien
+
+    -- Lấy thông tin số ngày làm thực tế của nhân viên trong tháng
+    SELECT @soNgayLamThucTe = COUNT(*)
+    FROM BangChamCongNhanVienHC
+    WHERE idNhanVien = @idNhanVien AND MONTH(ngayChamCong) = @thang and YEAR(ngayChamCong) = @nam and trangThai = N'Có mặt'
+
+    -- Tính số ngày làm quy định trong tháng
+    SET @soNgayLamQuyDinh = DAY(EOMONTH( CAST(2021 AS NVARCHAR(50))+'-'+ CAST(12 AS NVARCHAR(50))+'-1')) - 5
+
+    -- Lấy thông tin phụ cấp của nhân viên
+    SELECT @phuCap = phuCap
+    FROM NhanVien
+    WHERE idNhanVien = @idNhanVien
+
+    -- Lấy thông tin số ngày nghỉ không phép trong tháng
+    SELECT @soNgayNghiKhongPhep = COUNT(*)
+    FROM BangChamCongNhanVienHC
+    WHERE idNhanVien = @idNhanVien  AND MONTH(ngayChamCong) = @thang and YEAR(ngayChamCong) = @nam and trangThai = N'Vắng Mặt'
+
+    -- Tính tiền bảo hiểm xã hội
+    SET @tienBaoHiemXaHoi = @luongCoBan * @heSoChucVu * @heSoBaoHiemXaHoi
+
+	declare @tongLuong money 
+	set @tongLuong = @luongCoBan * @heSoChucVu * @soNgayLamThucTe / @soNgayLamQuyDinh + @phuCap
+    -- Tính thuế lao động
+    SET @thueLaoDong = CASE
+        WHEN (@tongLuong <= 11000000) THEN 0
+        WHEN (@tongLuong > 11000000) AND (@idChucVu IN ('CV001', 'CV002')) THEN 0.05 * @tongLuong
+        WHEN (@tongLuong > 11000000) AND (@idChucVu IN ('CV003', 'CV004')) THEN 0.1 * @tongLuong
+    END
+
+    -- Tính tiền lương
+    SET @thuclanh = @tongLuong - @tienBaoHiemXaHoi - @thueLaoDong - (@soNgayNghiKhongPhep * 150000)
+	set @thue = @thueLaoDong
+	set @bhxh = @tienBaoHiemXaHoi
+	set @tongTienLuong = @tongLuong
+END
+
+CREATE PROCEDURE chiTietLuongNhanVien_proc (
+    @idNhanVien varchar(10),
+    @thang int,
+    @nam int,
+    @soNgayCongTrongThang int OUTPUT,
+    @soNgayDiLamThucTe int OUTPUT,
+    @soNgayNghiCoPhep int OUTPUT,
+    @soNgayNghiKhongPhep int OUTPUT,
+    @soTienNghiKhongPhep int OUTPUT
+)
+AS
+BEGIN
+    -- Lấy thông tin số ngày làm thực tế của nhân viên trong tháng
+    SELECT @soNgayDiLamThucTe = COUNT(*)
+    FROM BangChamCongNhanVienHC
+    WHERE idNhanVien = @idNhanVien AND MONTH(ngayChamCong) = @thang and YEAR(ngayChamCong) = @nam and trangThai = N'Có mặt'
+
+    -- Tính số ngày làm quy định trong tháng
+    SET @soNgayCongTrongThang = DAY(EOMONTH( CAST(2021 AS NVARCHAR(50))+'-'+ CAST(12 AS NVARCHAR(50))+'-1')) - 5
+
+    -- Lấy thông tin số ngày nghỉ không phép trong tháng
+    SELECT @soNgayNghiKhongPhep = COUNT(*)
+    FROM BangChamCongNhanVienHC
+    WHERE idNhanVien = @idNhanVien  AND MONTH(ngayChamCong) = @thang and YEAR(ngayChamCong) = @nam and trangThai = N'Vắng Mặt'
+
+    -- Số Tiền Nghỉ Làm Không Phép
+    SET @soTienNghiKhongPhep = @soNgayNghiKhongPhep * 150000
+
+    -- Số Ngày Nghỉ Có Phép
+    SELECT @soNgayNghiCoPhep = COUNT(*)
+    FROM BangChamCongNhanVienHC
+    WHERE idNhanVien = @idNhanVien  AND MONTH(ngayChamCong) = @thang and YEAR(ngayChamCong) = @nam and trangThai = N'Có phép'
+END
+
+
+select * from NhanVien n join ChucVu c on n.idChucVu = c.idChucVu where idNhanVien='NV0001'
+    SELECT COUNT(*)
+    FROM BangChamCongNhanVienHC
+    WHERE idNhanVien = 'NV0001' AND MONTH(ngayChamCong) = 10 and YEAR(ngayChamCong) = 2023  and trangThai = N'Có mặt'
+
+-- Gọi stored procedure và lưu kết quả vào biến @tienLuong
+EXEC TinhLuongNhanVien_proc 'NV0001',10,2023,@thue output,@bhxh output,@thuclanh output, @tongTienLuong OUTPUT;
+
+select n.idNhanVien, n.idPhongBan,hoTen,phai,ngaySinh,luongCoBan,phuCap from BangChamCongNhanVienHC b join NhanVien n on b.idNhanVien = n.idNhanVien 
+join PhongBan c on c.idPhongBan = n.idPhongBan 
+where YEAR(ngayChamCong) = 2023 and MONTH(ngayChamCong) = 10 and 
+LOWER(REPLACE('Phòng Kế Toán', ' ', '')) = LOWER(REPLACE('Phòng Kế Toán', ' ', '')) group by n.idNhanVien, n.idPhongBan,hoTen,phai,ngaySinh,luongCoBan,phuCap
+
+select * from PhongBan
+select * from NhanVien
+SELECT n.idNhanVien, n.idPhongBan, hoTen, phai, luongCoBan, phuCap
+FROM BangChamCongNhanVienHC b
+JOIN NhanVien n ON b.idNhanVien = n.idNhanVien
+JOIN PhongBan c ON c.idPhongBan = n.idPhongBan
+WHERE YEAR(ngayChamCong) = 2023
+AND MONTH(ngayChamCong) = 10
+AND c.tenPhongBan='Phòng Kế Toán'
+GROUP BY n.idNhanVien, n.idPhongBan, hoTen, phai, luongCoBan, phuCap;
+select * from ChucVu join NhanVien on ChucVu.idChucVu=NhanVien.idChucVu
+select * from NhanVien
