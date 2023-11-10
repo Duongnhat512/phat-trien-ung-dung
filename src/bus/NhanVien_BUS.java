@@ -13,4 +13,7 @@ public class NhanVien_BUS {
 	public NhanVien getNV(String id) {
 		return nv_DAO.getNhanVienTheoID(id); 
 	}
+	public boolean create(NhanVien nv) {
+		return nv_DAO.create(nv); 
+	}
 }

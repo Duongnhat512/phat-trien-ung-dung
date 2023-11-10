@@ -15,7 +15,7 @@ import connectDB.ConnectDB;
 import entities.ChucVu;
 import entities.NhanVien;
 import entities.PhongBan;
-
+import entities.SanPham;
 
 import java.awt.Font;
 import java.awt.Image;
@@ -45,6 +45,7 @@ import com.toedter.calendar.JDateChooser;
 import bus.ChucVu_BUS;
 import bus.NhanVien_BUS;
 import bus.PhongBan_BUS;
+import commons.MyImageIcon;
 import commons.RoundPanel;
 import commons.Table;
 
@@ -130,7 +131,9 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 
 	private JLabel hienThiAvatar;
 
-	private JFileChooser fileChooser;
+	private ImageIcon themAvatar;
+
+	private MyImageIcon mII;
 
 
 
@@ -139,6 +142,7 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 	 * Create the frame.
 	 */
 	    public QuanLyNhanVien_Form(int width, int height) {
+	    	
 			this.width = width;
 			this.height= height;
 			giaoDienNV();
@@ -256,21 +260,26 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 			panel_LyLich.add(panelLblLyLich);
 		
 			JLabel lbl_HienThiHoTen = new JLabel("Họ và tên:");
+			lbl_HienThiHoTen.setForeground(new Color(0, 0, 128));
+			lbl_HienThiHoTen.setBackground(new Color(255, 255, 255));
 			lbl_HienThiHoTen.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 			lbl_HienThiHoTen.setBounds(10, 64, 130, 25);
 			panel_LyLich.add(lbl_HienThiHoTen);
 			
 			JLabel lbl_HienThiCCCD = new JLabel("CCCD:");
+			lbl_HienThiCCCD.setForeground(new Color(0, 0, 128));
 			lbl_HienThiCCCD.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 			lbl_HienThiCCCD.setBounds(10, 244, 130, 25);
 			panel_LyLich.add(lbl_HienThiCCCD);
 			
 			JLabel lbl_HienThiPhai = new JLabel("Phái:");
+			lbl_HienThiPhai.setForeground(new Color(0, 0, 128));
 			lbl_HienThiPhai.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 			lbl_HienThiPhai.setBounds(10, 124, 130, 25);
 			panel_LyLich.add(lbl_HienThiPhai);
 			
 			JLabel lbl_HienThiNgaySinh = new JLabel("Ngày sinh:");
+			lbl_HienThiNgaySinh.setForeground(new Color(0, 0, 128));
 			lbl_HienThiNgaySinh.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 			lbl_HienThiNgaySinh.setBounds(10, 184, 130, 25);
 			panel_LyLich.add(lbl_HienThiNgaySinh);
@@ -280,7 +289,7 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 			txt_HienThiHoTen.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 			txt_HienThiHoTen.setBackground(null);
 			txt_HienThiHoTen.setBorder(null);
-			txt_HienThiHoTen.setBounds(142, 64, 358, 25);
+			txt_HienThiHoTen.setBounds(206, 64, 294, 25);
 			panel_LyLich.add(txt_HienThiHoTen);
 			txt_HienThiHoTen.setColumns(10);
 			
@@ -290,7 +299,7 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 			txt_HienThiPhai.setBackground(null);
 			txt_HienThiPhai.setBorder(null);
 			txt_HienThiPhai.setColumns(10);
-			txt_HienThiPhai.setBounds(142, 124, 358, 25);
+			txt_HienThiPhai.setBounds(206, 124, 294, 25);
 			panel_LyLich.add(txt_HienThiPhai);
 			
 			txt_HienThiCCCD = new JTextField();
@@ -299,7 +308,7 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 			txt_HienThiCCCD.setBackground(null);
 			txt_HienThiCCCD.setBorder(null);
 			txt_HienThiCCCD.setColumns(10);
-			txt_HienThiCCCD.setBounds(142, 244, 358, 25);
+			txt_HienThiCCCD.setBounds(206, 244, 294, 25);
 			panel_LyLich.add(txt_HienThiCCCD);
 			
 			txt_HienThiNgaySinh = new JTextField();
@@ -308,7 +317,7 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 			txt_HienThiNgaySinh.setBackground(null);
 			txt_HienThiNgaySinh.setBorder(null);
 			txt_HienThiNgaySinh.setColumns(10);
-			txt_HienThiNgaySinh.setBounds(142, 184, 358, 25);
+			txt_HienThiNgaySinh.setBounds(206, 184, 294, 25);
 			panel_LyLich.add(txt_HienThiNgaySinh);
 			JLabel lbl_LyLich = new JLabel("Lý lịch nhân viên");
 			lbl_LyLich.setBounds(49, 10, 430, 24);
@@ -343,15 +352,17 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 			txt_HienThiCV.setBackground(null);
 			txt_HienThiCV.setBorder(null);
 			txt_HienThiCV.setColumns(10);
-			txt_HienThiCV.setBounds(142, 244, 343, 25);
+			txt_HienThiCV.setBounds(191, 244, 294, 25);
 			panel_TT_Khac.add(txt_HienThiCV);
 			
 			JLabel lbl_HienThiChucVu = new JLabel("Chức vụ:");
+			lbl_HienThiChucVu.setForeground(new Color(0, 0, 128));
 			lbl_HienThiChucVu.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 			lbl_HienThiChucVu.setBounds(10, 244, 130, 25);
 			panel_TT_Khac.add(lbl_HienThiChucVu);
 			
 			JLabel lbl_HienThiPhongBan = new JLabel("Phòng ban:");
+			lbl_HienThiPhongBan.setForeground(new Color(0, 0, 128));
 			lbl_HienThiPhongBan.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 			lbl_HienThiPhongBan.setBounds(10, 184, 130, 25);
 			panel_TT_Khac.add(lbl_HienThiPhongBan);
@@ -362,7 +373,7 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 			txt_HienThiPB.setBackground(null);
 			txt_HienThiPB.setBorder(null);
 			txt_HienThiPB.setColumns(10);
-			txt_HienThiPB.setBounds(142, 184, 343, 25);
+			txt_HienThiPB.setBounds(191, 184, 294, 25);
 			panel_TT_Khac.add(txt_HienThiPB);
 			
 			txt_HienThiSDT = new JTextField();
@@ -371,15 +382,17 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 			txt_HienThiSDT.setBorder(null);
 			txt_HienThiSDT.setEditable(false);
 			txt_HienThiSDT.setColumns(10);
-			txt_HienThiSDT.setBounds(142, 124, 343, 25);
+			txt_HienThiSDT.setBounds(191, 124, 294, 25);
 			panel_TT_Khac.add(txt_HienThiSDT);
 			
 			JLabel lbl_HienThiSDT = new JLabel("Số điện thoại:");
+			lbl_HienThiSDT.setForeground(new Color(0, 0, 128));
 			lbl_HienThiSDT.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 			lbl_HienThiSDT.setBounds(10, 124, 130, 25);
 			panel_TT_Khac.add(lbl_HienThiSDT);
 			
 			JLabel lbl_HienThiEmail = new JLabel("Email:");
+			lbl_HienThiEmail.setForeground(new Color(0, 0, 128));
 			lbl_HienThiEmail.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 			lbl_HienThiEmail.setBounds(10, 64, 130, 25);
 			panel_TT_Khac.add(lbl_HienThiEmail);
@@ -390,10 +403,11 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 			txt_HienThiEmail.setBackground(null);
 			txt_HienThiEmail.setBorder(null);
 			txt_HienThiEmail.setColumns(10);
-			txt_HienThiEmail.setBounds(142, 64, 343, 25);
+			txt_HienThiEmail.setBounds(191, 64, 294, 25);
 			panel_TT_Khac.add(txt_HienThiEmail);
 			
 			JLabel lb_ID = new JLabel("ID:");
+			lb_ID.setForeground(new Color(0, 0, 128));
 			lb_ID.setBounds(10, 228, 89, 20);
 			lb_ID.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 			panel_Avt.add(lb_ID);
@@ -408,6 +422,7 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 			txt_HienThiID.setColumns(10);
 			
 			JLabel lb_TrangThai = new JLabel("Trạng thái:");
+			lb_TrangThai.setForeground(new Color(0, 0, 128));
 			lb_TrangThai.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 			lb_TrangThai.setBounds(10, 258, 89, 20);
 			panel_Avt.add(lb_TrangThai);
@@ -468,8 +483,7 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 			panel_0.setLocation(10, 10);
 			panel_0.setBackground(new Color(168, 211, 255));
 			panel_0.setRound(20);
-			panel_0.setLayout(new BorderLayout(0, 0));
-			lblChucNang = new JLabel("THÊM NHÂN VIÊN");
+			panel_0.setLayout(new BorderLayout(0, 0));		
 			lblChucNang.setBackground(new Color(162, 208, 255));
 			lblChucNang.setForeground(new Color(0, 0, 0));
 			lblChucNang.setHorizontalAlignment(SwingConstants.CENTER);
@@ -572,9 +586,9 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 			lbl_TayNghe.setBounds(440, 350, 150, 40);
 			panel_1.add(lbl_TayNghe);
 			
-			JLabel lbl_NgayKetThucCT = new JLabel("Ngày kết thúc công tác:");
+			JLabel lbl_NgayKetThucCT = new JLabel("Ngày kết thúc:");
 			lbl_NgayKetThucCT.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-			lbl_NgayKetThucCT.setBounds(440, 110, 189, 40);
+			lbl_NgayKetThucCT.setBounds(440, 110, 150, 40);
 			panel_1.add(lbl_NgayKetThucCT);
 			ButtonGroup group = new ButtonGroup();
 			rbtn_Nam = new JRadioButton("Nam");
@@ -721,6 +735,7 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 			panel_1.add(txtPhuCap);
 			btnChonAnh.addActionListener(this);
 			cb_ChucVu.addActionListener(this);
+			btnThemNhanVien.addActionListener(this);
 		}
 
 	  private void docDuLieuTuDataVaoTable() {
@@ -740,7 +755,7 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 						nv.getSoDienThoai(),
 						nv.getcCCD(),
 						nv.getNgayBatDauCongTac(),
-						(nv.getNgayKetThucCongTac()==null)?"Còn Làm":"Nghỉ làm"	
+						(nv.getNgayKetThucCongTac()==null)?"Đang làm":"Nghỉ làm"	
 						
 				});
 				
@@ -749,6 +764,7 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 		}
 	  private void hienThiPanelCapNhat(String maNV) {
 		  	panel_NhanVien.setVisible(false);
+		  	lblChucNang = new JLabel("CẬP NHẬT NHÂN VIÊN");
 			giaoDienThemCapNhatNV();
 			dateChooser_ngayKTCT.setEnabled(true);;
 			btnThemNhanVien.setVisible(false);
@@ -797,7 +813,7 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 	  }
 	  private void hienThiThongTinNV(NhanVien nv) {
 			txt_HienThiID.setText(nv.getIdNhanVien());
-			txt_HienThiTrangThai.setText((nv.getNgayKetThucCongTac()==null)?"Còn làm":"NghĨ làm");
+			txt_HienThiTrangThai.setText((nv.getNgayKetThucCongTac()==null)?"Đang làm":"Nghĩ làm");
 			txt_HienThiHoTen.setText(nv.getHoTen());
 			txt_HienThiNgaySinh.setText(nv.getNgaySinh().toString());
 			txt_HienThiPhai.setText((nv.isPhai()==true)?"Nam":"Nữ");
@@ -821,31 +837,56 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 	  }
 	  private void hienThiPanelThem() {
 		  	panel_NhanVien.setVisible(false);
+		    lblChucNang = new JLabel("THÊM NHÂN VIÊN");
+		    
 			giaoDienThemCapNhatNV();
+			String maNV = sinhMaNV();
+		    txtID.setText(maNV);
 			dateChooser_ngayKTCT.setEnabled(false);;
 			btnThemNhanVien.setVisible(true);
 			btnCapNhatNhanVien.setVisible(false);
 	  }
+		private String sinhMaNV() {
+			int stt = 1;
+			ArrayList<NhanVien>  list= nv_bus.getdsNV();
+			String id="NV" + String.format("%04d",  stt);
+			for (NhanVien nv : list) {
+				if(nv.getIdNhanVien().equals(id)) {
+					stt++;
+					id="NV" + String.format("%04d",  stt);
+				}
+			}
+			return id;
+		}
 	  private NhanVien layTTNVTuTextField() {
 		  String maVN = txtID.getText();
 		  String tenNV = txtHoTen.getText();
+		  
 		  Date nsDate = dateChooser_ngayCT.getDate();
-		  int yearNS = nsDate.getYear();
+
+		  int yearNS = nsDate.getYear()+1900;
+		  
 		  int monthNS = nsDate.getMonth();
+		
 		  int dayNS = nsDate.getDay();
-		  LocalDate ns = LocalDate.of(yearNS, monthNS, monthNS);
+		  LocalDate ns = LocalDate.of(yearNS, monthNS, dayNS);
+	
 		  
 		  Date ctDate = dateChooser_ngayCT.getDate();
-		  int yearCT = ctDate.getYear();
+		  int yearCT = ctDate.getYear()+1900;
 		  int monthCT = ctDate.getMonth();
 		  int dayCT = ctDate.getDay();
-		  LocalDate ct = LocalDate.of(yearCT, monthCT, monthCT);
+		  LocalDate ct = LocalDate.of(yearCT, monthCT, dayCT);
 		  
-		  Date ktctDate = dateChooser_ngayCT.getDate();
-		  int yearKTCT = nsDate.getYear();
-		  int monthKTCT = nsDate.getMonth();
-		  int dayKTCT = nsDate.getDay();
-		  LocalDate ktct = LocalDate.of(yearKTCT, monthKTCT, monthKTCT);
+		  LocalDate ktct=null;
+		  if(dateChooser_ngayKTCT.getDate()!=null) {
+			  Date ktctDate = dateChooser_ngayKTCT.getDate();
+			  int yearKTCT = ktctDate.getYear()+1900;
+			  int monthKTCT = ktctDate.getMonth();
+			  int dayKTCT = ktctDate.getDay();
+			  ktct = LocalDate.of(yearKTCT, monthKTCT, dayKTCT);
+		  }
+		  
 		  
 		  PhongBan pb = pb_bus.getPBTheoTen(cb_PhongBan.getSelectedItem().toString());
 		  ChucVu cv = cv_bus.getCVTheoTen(cb_ChucVu.getSelectedItem().toString());
@@ -855,24 +896,44 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 		  String cccd = txtCCCD.getText();
 		  double heSoBHXH =Double.parseDouble(txtHeSoBHXH.getText());
 		  double luongCb =Double.parseDouble(txtLuongCB.getText());
-		  NhanVien nv = new NhanVien(maVN, tenNV, phai, ns, ct, ktct, email, sdt,cv, null, pb,null, cccd);
+		  String avatar = mII.getImagePath();
+		  NhanVien nv = new NhanVien(maVN, tenNV, phai, ns, ct, null, email, sdt,cv, null, pb,avatar, cccd);
 		  return nv;
 	  }
-	  
+	  	
+	
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub'
 			Object o = e.getSource();
+			if(o.equals(btnThemNhanVien)){
+					
+				
+				 	NhanVien nv = layTTNVTuTextField();
+				 	nv_bus.create(nv);
+					panel_Them_SuaNhanVien.setVisible(false);
+			
+					String maNV = nv.getIdNhanVien();
+					NhanVien nv2 = nv_bus.getNV(maNV);
+					int m = nv_bus.getdsNV().indexOf(nv2);
+					giaoDienNV();
+					tableNhanVien.setRowSelectionInterval(m, m);
+					tableNhanVien.scrollRectToVisible(tableNhanVien.getCellRect(m, m, true));
+					hienThiThongTinNV(nv);	
+
+			}
 			if(o.equals(btnthem)){
+				
 				hienThiPanelThem();
 				
 				
 			}
 			if(o.equals(cb_ChucVu)){
-				
 				int n = cb_ChucVu.getSelectedIndex();
+				txtLuongCB.setText("800000");
+				txtHeSoBHXH.setText("0.05");
 				if(n==0) {
-				   txtPhuCap.setText("500000");
+				    txtPhuCap.setText("500000");
 				}
 				else if(n==1) {
 					txtPhuCap.setText("700000");
@@ -880,15 +941,12 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 				else {
 					txtPhuCap.setText("1000000");
 				}
-			
-				System.out.println(n);
-				
 			}
 			if(o.equals(btnHuyThem)){
 				int n = tableNhanVien.getSelectedRow();
 				panel_Them_SuaNhanVien.setVisible(false);
 				if (n!=-1) {
-					System.out.println(n);
+			
 					String maNV = tableNhanVien.getValueAt(n, 0).toString();
 					NhanVien nv = nv_bus.getNV(maNV);
 					int m = nv_bus.getdsNV().indexOf(nv);
@@ -930,22 +988,24 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 			    }
 				else {
 					String maNV = tableNhanVien.getValueAt(r, 0).toString();
+					
 					hienThiPanelCapNhat(maNV);
 				}
 			}
 			if(o.equals(btnChonAnh)) {
 				
-		            fileChooser = new JFileChooser();
-		            fileChooser.setDialogTitle("Chọn ảnh");
+		           
+		            JFileChooser fileChooser = new JFileChooser();
+					fileChooser.setDialogTitle("Chọn ảnh");
 		            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
 		            int result = fileChooser.showOpenDialog(null);
 
 		            if (result == JFileChooser.APPROVE_OPTION) {
 		                // Đoạn mã xử lý khi người dùng chọn tệp ảnh ở đây
-		            	ImageIcon themAvatar = new ImageIcon(fileChooser.getSelectedFile().getAbsolutePath()+"");
-		        
-		        
+		            	themAvatar = new ImageIcon(fileChooser.getSelectedFile().getAbsolutePath()+"");
+		            	mII = new MyImageIcon(fileChooser.getSelectedFile().getAbsolutePath());
+		            	
 		            	// Lấy kích thước mới của JLabel
 		                int labelWidth = avatarImage.getWidth();
 		                int labelHeight = avatarImage.getHeight();
@@ -953,6 +1013,7 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 		                // Chỉnh kích thước ảnh theo JLabel
 		                Image themAnh = themAvatar.getImage().getScaledInstance(labelWidth, labelHeight, Image.SCALE_SMOOTH);
 		                themAvatar = new ImageIcon(themAnh);
+		                
 		                avatarImage.setIcon(themAvatar);
 		            }
 		       

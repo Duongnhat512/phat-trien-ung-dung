@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
+
 import connectDB.ConnectDB;
 import entities.ChucVu;
 import entities.NhanVien;
@@ -100,8 +102,49 @@ public class NhanVien_DAO {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+		
 			return null;
 			
+	}
+	public boolean 	create(NhanVien nv) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stmt = null;
+		int n= 0;
+		try {
+			stmt =con.prepareStatement("insert into"+" NhanVien values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			
+			stmt.setString(1, nv.getIdNhanVien());
+			stmt.setString(2, nv.getHoTen());
+			stmt.setBoolean(3, nv.isPhai());
+			stmt.setString(4, nv.getNgaySinh()+"");
+			stmt.setString(5, nv.getNgayBatDauCongTac()+"");
+			stmt.setDate(6, null);
+			stmt.setString(7, nv.getEmail());
+			stmt.setString(8, nv.getSoDienThoai());
+			stmt.setString(9,nv.getChucVu().getIdChucVu());
+			stmt.setDouble(10, nv.getHESOBAOHIEMXAHOI());
+			stmt.setDouble(11, nv.getLUONGCOBAN());
+			stmt.setString(12, null);
+			stmt.setString(13, nv.getPhongBan().getIdPhongBan());
+			stmt.setDouble(14, nv.getPhuCap(nv.getChucVu()));
+			stmt.setString(15, nv.getAnhDaiDien());
+			stmt.setString(16, nv.getcCCD());
+			n = stmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				stmt.close();
+			} catch (SQLException e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}
+		return n > 0;
 	}
 }
 
