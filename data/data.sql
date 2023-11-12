@@ -113,7 +113,6 @@ alter table ChiTietHopDong add constraint FK_ChiTietHopDong_SanPham foreign key 
 create table CongDoanSP(
 	idCongDoan varchar(10) primary key not null,
 	tenCongDoan nvarchar(50),
-	soLuongSanPham int,
 	luongCongDoan money,
 	soLuongCongNhan int,
 	idSanPham varchar(10),
@@ -371,17 +370,17 @@ VALUES
 	go
 --tHÊM 4 công đoạn
 
-INSERT INTO CongDoanSP (idCongDoan, tenCongDoan, soLuongSanPham, luongCongDoan, soLuongCongNhan, idSanPham, thuTuUuTien)
+INSERT INTO CongDoanSP (idCongDoan, tenCongDoan, luongCongDoan, idSanPham, thuTuUuTien)
 VALUES
-    ('CDSP0001', N'Chuẩn bị nguyên vật liệu', 100, 500000, 5, 'SP0001', 1),
-    ('CDSP0002', N'Cắt vải', 120, 300000, 7, 'SP0001', 2),
-    ('CDSP0003', N'May áo khoác', 90, 350000, 6, 'SP0001', 3),
-    ('CDSP0004', N'Chuẩn bị vải jean', 130, 250000, 8, 'SP0002',1),
-    ('CDSP0005', N'Cắt vải jean', 110, 200000, 6, 'SP0002',2),
-    ('CDSP0006', N'May quần jean', 85, 300000, 6, 'SP0002',3),
-	('CDSP0007', N'Chuẩn bị vải satin', 80, 200000, 6, 'SP0003', 1),
-	('CDSP0008', N'Cắt vải satin', 70, 180000, 5, 'SP0003', 2),
-	('CDSP0009', N'May đầm dự tiệc', 50, 250000, 4, 'SP0003', 3);
+    ('CDSP0001', N'Chuẩn bị nguyên vật liệu',  500000, 'SP0001', 1),
+    ('CDSP0002', N'Cắt vải',  300000, 'SP0001', 2),
+    ('CDSP0003', N'May áo khoác',  350000, 'SP0001', 3),
+    ('CDSP0004', N'Chuẩn bị vải jean',  250000, 'SP0002',1),
+    ('CDSP0005', N'Cắt vải jean', 200000, 'SP0002',2),
+    ('CDSP0006', N'May quần jean', 300000, 'SP0002',3),
+	('CDSP0007', N'Chuẩn bị vải satin', 200000, 'SP0003', 1),
+	('CDSP0008', N'Cắt vải satin', 180000, 'SP0003', 2),
+	('CDSP0009', N'May đầm dự tiệc', 250000, 'SP0003', 3);
 go
 --THÊM CONG DOAN PHAN CONG
 -- Bảng phân công cho sản phẩm SP0001
