@@ -543,8 +543,7 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener{
 			txt_LuongCB.setColumns(10);
 			txt_LuongCB.setBounds(610, 500, 250, 40);
 			panel_Them_SuaNhanVien.add(txt_LuongCB);
-			
-			
+	
 	   
 		}
 

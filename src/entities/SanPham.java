@@ -6,29 +6,27 @@ public class SanPham {
        private String idSanPham;
        private String tenSanPham;
        private double donGia;
+       private String chatLieu;
        private String donViTinh;
-       private int soLuong;
-       private HopDongSanPham hopDongSanPham;
        private String ghiChu;
-	public SanPham(String idSanPham, String tenSanPham, double donGia, String donViTinh, int soLuong,
-			HopDongSanPham hopDongSanPham, String ghiChu) {
+       private String anhSanPham;
+       
+       
+	public SanPham() {
+		super();
+	}
+	public SanPham(String idSanPham, String tenSanPham, double donGia, String chatLieu, String donViTinh, String ghiChu,
+			String anhSanPham) {
 		super();
 		this.idSanPham = idSanPham;
 		this.tenSanPham = tenSanPham;
 		this.donGia = donGia;
+		this.chatLieu = chatLieu;
 		this.donViTinh = donViTinh;
-		this.soLuong = soLuong;
-		this.hopDongSanPham = hopDongSanPham;
 		this.ghiChu = ghiChu;
+		this.anhSanPham = anhSanPham;
 	}
-	public SanPham() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	public SanPham(String idSanPham) {
-		super();
-		this.idSanPham = idSanPham;
-	}
+	
 	public String getIdSanPham() {
 		return idSanPham;
 	}
@@ -47,29 +45,29 @@ public class SanPham {
 	public void setDonGia(double donGia) {
 		this.donGia = donGia;
 	}
+	public String getChatLieu() {
+		return chatLieu;
+	}
+	public void setChatLieu(String chatLieu) {
+		this.chatLieu = chatLieu;
+	}
 	public String getDonViTinh() {
 		return donViTinh;
 	}
 	public void setDonViTinh(String donViTinh) {
 		this.donViTinh = donViTinh;
 	}
-	public int getSoLuong() {
-		return soLuong;
-	}
-	public void setSoLuong(int soLuong) {
-		this.soLuong = soLuong;
-	}
-	public HopDongSanPham getHopDongSanPham() {
-		return hopDongSanPham;
-	}
-	public void setHopDongSanPham(HopDongSanPham hopDongSanPham) {
-		this.hopDongSanPham = hopDongSanPham;
-	}
 	public String getGhiChu() {
 		return ghiChu;
 	}
 	public void setGhiChu(String ghiChu) {
 		this.ghiChu = ghiChu;
+	}
+	public String getAnhSanPham() {
+		return anhSanPham;
+	}
+	public void setAnhSanPham(String anhSanPham) {
+		this.anhSanPham = anhSanPham;
 	}
 	@Override
 	public int hashCode() {

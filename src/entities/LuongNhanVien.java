@@ -25,7 +25,6 @@ public class LuongNhanVien {
 		}
 		public LuongNhanVien() {
 			super();
-			// TODO Auto-generated constructor stub
 		}
 		public LuongNhanVien(String idLuong) {
 			super();

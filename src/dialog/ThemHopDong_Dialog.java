@@ -196,25 +196,18 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 		btnBoChon.setRadius(10);
 		btnBoChon.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		btnBoChon.setFocusPainted(false);
-		panelSanPham.setLayout(null);
 		
 		lblIdSnPhm = new JLabel("ID Sản phẩm:");
 		lblIdSnPhm.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		lblIdSnPhm.setBounds(10, 10, 130, 20);
-		panelSanPham.add(lblIdSnPhm);
 		
 		txtIDSanPham = new JTextField();
 		txtIDSanPham.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		txtIDSanPham.setColumns(10);
 		txtIDSanPham.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		txtIDSanPham.setBackground(SystemColor.menu);
-		txtIDSanPham.setBounds(179, 10, 209, 21);
-		panelSanPham.add(txtIDSanPham);
 		
 		lblTnSnPhm = new JLabel("Tên sản phẩm:");
 		lblTnSnPhm.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		lblTnSnPhm.setBounds(10, 51, 130, 20);
-		panelSanPham.add(lblTnSnPhm);
 		
 		txtTenSP = new JTextField();
 		txtTenSP.setEnabled(false);
@@ -223,13 +216,9 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 		txtTenSP.setColumns(10);
 		txtTenSP.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		txtTenSP.setBackground(SystemColor.menu);
-		txtTenSP.setBounds(179, 51, 209, 21);
-		panelSanPham.add(txtTenSP);
 		
 		lblnGi = new JLabel("Đơn giá:");
 		lblnGi.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		lblnGi.setBounds(10, 96, 130, 20);
-		panelSanPham.add(lblnGi);
 		
 		txtDonGia = new JTextField();
 		txtDonGia.setEnabled(false);
@@ -238,23 +227,15 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 		txtDonGia.setColumns(10);
 		txtDonGia.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		txtDonGia.setBackground(SystemColor.menu);
-		txtDonGia.setBounds(179, 96, 209, 21);
-		panelSanPham.add(txtDonGia);
 		
 		lblChtLiu = new JLabel("Chất liệu:");
 		lblChtLiu.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		lblChtLiu.setBounds(453, 10, 130, 20);
-		panelSanPham.add(lblChtLiu);
 		
 		lblnVTnh = new JLabel("Đơn vị tính:");
 		lblnVTnh.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		lblnVTnh.setBounds(453, 51, 130, 20);
-		panelSanPham.add(lblnVTnh);
 		
 		lblSLngt = new JLabel("Số lượng đặt:");
 		lblSLngt.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		lblSLngt.setBounds(453, 96, 130, 20);
-		panelSanPham.add(lblSLngt);
 		
 		textField = new JTextField();
 		textField.setEnabled(false);
@@ -263,8 +244,6 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 		textField.setColumns(10);
 		textField.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		textField.setBackground(SystemColor.menu);
-		textField.setBounds(622, 96, 209, 21);
-		panelSanPham.add(textField);
 		
 		textField_1 = new JTextField();
 		textField_1.setEnabled(false);
@@ -273,8 +252,6 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 		textField_1.setColumns(10);
 		textField_1.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		textField_1.setBackground(SystemColor.menu);
-		textField_1.setBounds(622, 51, 209, 21);
-		panelSanPham.add(textField_1);
 		
 		textField_2 = new JTextField();
 		textField_2.setEnabled(false);
@@ -283,139 +260,73 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 		textField_2.setColumns(10);
 		textField_2.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		textField_2.setBackground(SystemColor.menu);
-		textField_2.setBounds(622, 10, 209, 21);
-		panelSanPham.add(textField_2);
 		
 		JLabel lblNewLabel = new JLabel("ID Hợp Đồng:");
+		lblNewLabel.setBounds(10, 10, 130, 20);
 		lblNewLabel.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		
 		lblTnHpng = new JLabel("Tên hợp đồng:");
+		lblTnHpng.setBounds(10, 49, 130, 20);
 		lblTnHpng.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		
 		lblNgyBtu = new JLabel("Ngày bắt đầu:");
+		lblNgyBtu.setBounds(10, 87, 130, 20);
 		lblNgyBtu.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		
 		lblNgyKtThc = new JLabel("Ngày kết thúc:");
+		lblNgyKtThc.setBounds(10, 127, 130, 20);
 		lblNgyKtThc.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		
 		txtID = new JTextField();
+		txtID.setBounds(179, 10, 209, 21);
+		txtID.setEnabled(false);
 		txtID.setEditable(false);
 		txtID.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		txtID.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		txtID.setColumns(10);
 		
 		txtTenHopDong = new JTextField();
+		txtTenHopDong.setBounds(179, 49, 209, 21);
 		txtTenHopDong.setBackground(new Color(240, 240, 240));
 		txtTenHopDong.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		txtTenHopDong.setColumns(10);
 		txtTenHopDong.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		
 		txtNgayBatDau = new JTextField();
+		txtNgayBatDau.setBounds(179, 88, 209, 21);
 		txtNgayBatDau.setBackground(new Color(240, 240, 240));
 		txtNgayBatDau.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		txtNgayBatDau.setColumns(10);
 		txtNgayBatDau.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		
 		txtNgayKetThuc = new JTextField();
+		txtNgayKetThuc.setBounds(179, 127, 209, 21);
 		txtNgayKetThuc.setBackground(new Color(240, 240, 240));
 		txtNgayKetThuc.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		txtNgayKetThuc.setColumns(10);
 		txtNgayKetThuc.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		
 		lblNhnVinPh = new JLabel("Nhân viên phụ trách:");
+		lblNhnVinPh.setBounds(442, 15, 151, 20);
 		lblNhnVinPh.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		
 		cboNhanVien = new JComboBox();
+		cboNhanVien.setBounds(597, 11, 215, 28);
 		cboNhanVien.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		
 		lblGhiCh = new JLabel("Ghi chú:");
+		lblGhiCh.setBounds(442, 59, 130, 20);
 		lblGhiCh.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		
 		JTextArea txtGhiChu = new JTextArea();
+		txtGhiChu.setBounds(442, 89, 424, 77);
 		txtGhiChu.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		txtGhiChu.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 		JLabel lblThongBao = new JLabel("");
+		lblThongBao.setBounds(10, 158, 378, 20);
 		lblThongBao.setForeground(new Color(255, 0, 0));
 		lblThongBao.setFont(new Font("SansSerif", Font.ITALIC, 15));
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
-							.addGap(39)
-							.addComponent(txtID, GroupLayout.PREFERRED_SIZE, 209, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(lblTnHpng, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
-							.addGap(39)
-							.addComponent(txtTenHopDong, GroupLayout.PREFERRED_SIZE, 209, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(lblNgyBtu, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
-							.addGap(39)
-							.addComponent(txtNgayBatDau, GroupLayout.PREFERRED_SIZE, 209, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(lblNgyKtThc, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
-							.addGap(39)
-							.addComponent(txtNgayKetThuc, GroupLayout.PREFERRED_SIZE, 209, GroupLayout.PREFERRED_SIZE))
-						.addComponent(lblThongBao, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-					.addGap(54)
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(lblNhnVinPh, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(cboNhanVien, GroupLayout.PREFERRED_SIZE, 215, GroupLayout.PREFERRED_SIZE))
-						.addComponent(lblGhiCh, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
-						.addComponent(txtGhiChu, GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE))
-					.addContainerGap())
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(11)
-							.addComponent(lblNewLabel))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addContainerGap()
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addComponent(txtID, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addGroup(gl_panel.createSequentialGroup()
-									.addGap(1)
-									.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-										.addComponent(lblNhnVinPh, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-										.addComponent(cboNhanVien, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))))
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(20)
-							.addComponent(lblGhiCh, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblTnHpng, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-								.addComponent(txtTenHopDong, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE))))
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(8)
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblNgyBtu, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-								.addGroup(gl_panel.createSequentialGroup()
-									.addGap(1)
-									.addComponent(txtNgayBatDau, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)))
-							.addGap(18)
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblNgyKtThc, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-								.addComponent(txtNgayKetThuc, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(lblThongBao, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(txtGhiChu, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE)))
-					.addGap(21))
-		);
-		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
 		panelCTHopDong.setLayout(new BorderLayout(0, 0));
 		
@@ -431,7 +342,7 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 		JScrollPane scrollPaneCTHD = new JScrollPane();
 		scrollPaneCTHD.setBorder(null);
 		scrollPaneCTHD.setViewportView(tableCTHopDong);
-		panelCTHopDong.add(scrollPaneCTHD);
+		panelCTHopDong.add(scrollPaneCTHD, BorderLayout.CENTER);
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
 		gl_contentPanel.setHorizontalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.TRAILING)
@@ -469,12 +380,83 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 						.addComponent(lblTngTinHp)
 						.addComponent(lblTongTien, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)))
 		);
+		panel.setLayout(null);
+		panel.add(lblNewLabel);
+		panel.add(txtID);
+		panel.add(lblTnHpng);
+		panel.add(txtTenHopDong);
+		panel.add(lblNgyBtu);
+		panel.add(txtNgayBatDau);
+		panel.add(lblNgyKtThc);
+		panel.add(txtNgayKetThuc);
+		panel.add(lblThongBao);
+		panel.add(lblNhnVinPh);
+		panel.add(cboNhanVien);
+		panel.add(lblGhiCh);
+		panel.add(txtGhiChu);
 		
 		lblThongBaoSL = new JLabel("");
 		lblThongBaoSL.setForeground(new Color(255, 0, 0));
 		lblThongBaoSL.setFont(new Font("SansSerif", Font.ITALIC, 15));
-		lblThongBaoSL.setBounds(453, 126, 378, 20);
-		panelSanPham.add(lblThongBaoSL);
+		GroupLayout gl_panelSanPham = new GroupLayout(panelSanPham);
+		gl_panelSanPham.setHorizontalGroup(
+			gl_panelSanPham.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelSanPham.createSequentialGroup()
+					.addGap(10)
+					.addComponent(lblIdSnPhm, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
+					.addGap(39)
+					.addComponent(txtIDSanPham, GroupLayout.PREFERRED_SIZE, 209, GroupLayout.PREFERRED_SIZE)
+					.addGap(65)
+					.addComponent(lblChtLiu, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
+					.addGap(39)
+					.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, 209, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_panelSanPham.createSequentialGroup()
+					.addGap(10)
+					.addComponent(lblTnSnPhm, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
+					.addGap(39)
+					.addComponent(txtTenSP, GroupLayout.PREFERRED_SIZE, 209, GroupLayout.PREFERRED_SIZE)
+					.addGap(65)
+					.addComponent(lblnVTnh, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
+					.addGap(39)
+					.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 209, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_panelSanPham.createSequentialGroup()
+					.addGap(10)
+					.addComponent(lblnGi, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
+					.addGap(39)
+					.addComponent(txtDonGia, GroupLayout.PREFERRED_SIZE, 209, GroupLayout.PREFERRED_SIZE)
+					.addGap(65)
+					.addComponent(lblSLngt, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
+					.addGap(39)
+					.addComponent(textField, GroupLayout.PREFERRED_SIZE, 209, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_panelSanPham.createSequentialGroup()
+					.addGap(453)
+					.addComponent(lblThongBaoSL, GroupLayout.PREFERRED_SIZE, 378, GroupLayout.PREFERRED_SIZE))
+		);
+		gl_panelSanPham.setVerticalGroup(
+			gl_panelSanPham.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelSanPham.createSequentialGroup()
+					.addGap(10)
+					.addGroup(gl_panelSanPham.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblIdSnPhm)
+						.addComponent(txtIDSanPham, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblChtLiu)
+						.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(20)
+					.addGroup(gl_panelSanPham.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblTnSnPhm)
+						.addComponent(txtTenSP, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblnVTnh)
+						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(24)
+					.addGroup(gl_panelSanPham.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblnGi)
+						.addComponent(txtDonGia, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblSLngt)
+						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(9)
+					.addComponent(lblThongBaoSL, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
+		);
+		panelSanPham.setLayout(gl_panelSanPham);
 		contentPanel.setLayout(gl_contentPanel);
 		
 		//

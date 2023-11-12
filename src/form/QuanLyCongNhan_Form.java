@@ -147,7 +147,7 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener{
 		//Panel danh sách công nhân
 	
 		JPanel panel_bangTTCN = new JPanel();
-		panel_bangTTCN.setBounds(10, 78, 1230, 312);
+		panel_bangTTCN.setBounds(10, 78, 1230, 339);
 		panel_bangTTCN.setBorder(new TitledBorder(null, "B\u1EA3ng th\u00F4ng tin c\u00F4ng nh\u00E2n", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_CongNhan.add(panel_bangTTCN);
 		panel_bangTTCN.setLayout(null);
@@ -177,7 +177,7 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener{
 		
 	
 		JPanel panel_ChiTietNV = new JPanel();
-		panel_ChiTietNV.setBounds(10, 400, 1230, 300);
+		panel_ChiTietNV.setBounds(10, 427, 1230, 300);
 		panel_CongNhan.add(panel_ChiTietNV);
 		panel_ChiTietNV.setLayout(null);
 		

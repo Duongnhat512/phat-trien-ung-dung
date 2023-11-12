@@ -25,7 +25,7 @@ public class MyButton extends JButton{
 		setBorder(null);
 		setCursor(new Cursor(Cursor.HAND_CURSOR));
 		setContentAreaFilled(false);
-
+		
 	}
 
 	public boolean isOver() {
@@ -75,6 +75,8 @@ public class MyButton extends JButton{
 	public void setRadius(int radius) {
 		this.radius = radius;
 	}
+	
+	
 	
 	@Override
 	protected void paintComponent(Graphics g) {

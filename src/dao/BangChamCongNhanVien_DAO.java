@@ -12,7 +12,7 @@ import entities.BangChamCongNhanVien;
 import entities.NhanVien;
 import entities.PhongBan;
 
-public class ChamCongNhanVien_DAO {
+public class BangChamCongNhanVien_DAO {
 	public ArrayList<NhanVien> getAllTableChamCong(int thang, int nam, String tenpb) {
 		ArrayList<NhanVien> dsnv = new ArrayList<>();
 		ConnectDB.getInstance();

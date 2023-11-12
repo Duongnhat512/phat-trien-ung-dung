@@ -46,7 +46,6 @@ public class QuanLyHopDong_Form extends JPanel implements ActionListener{
 	private HopDongSanPham_BUS hopDongSanPham_BUS = new HopDongSanPham_BUS();
 	private MyButton btnXemChiTiet;
 	private MyButton btnCapNhat;
-	private MyButton btnLoc;
 	private MyButton btnThem;
 	
 	
@@ -83,14 +82,6 @@ public class QuanLyHopDong_Form extends JPanel implements ActionListener{
 		btnThem.setFocusPainted(false);
 		btnThem.setBackground(new Color(82, 125, 254));
 		
-		btnLoc = new MyButton();
-		btnLoc.setIcon(new ImageIcon(QuanLyHopDong_Form.class.getResource("/icon/icons8_filter_25px_1.png")));
-		btnLoc.setText("Lọc");
-		btnLoc.setRadius(10);
-		btnLoc.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		btnLoc.setFocusPainted(false);
-		btnLoc.setBackground(Color.WHITE);
-		
 		btnCapNhat = new MyButton();
 		btnCapNhat.setIcon(new ImageIcon(QuanLyHopDong_Form.class.getResource("/icon/update.png")));
 		btnCapNhat.setText("Cập nhật");
@@ -100,7 +91,7 @@ public class QuanLyHopDong_Form extends JPanel implements ActionListener{
 		btnCapNhat.setBackground(Color.WHITE);
 		
 		textTimKiem = new RoundTextField(10);
-		textTimKiem.setText("Nhập mã hợp đồng cần tìm.....");
+		textTimKiem.setText("Nhập tên hợp đồng cần tìm.....");
 		textTimKiem.setBorder(new EmptyBorder(0, 15, 0, 0));
 		textTimKiem.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		textTimKiem.setForeground(Color.GRAY);
@@ -134,11 +125,9 @@ public class QuanLyHopDong_Form extends JPanel implements ActionListener{
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(83)
-					.addComponent(textTimKiem, GroupLayout.PREFERRED_SIZE, 297, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnLoc, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 394, Short.MAX_VALUE)
+					.addGap(31)
+					.addComponent(textTimKiem, GroupLayout.PREFERRED_SIZE, 349, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 480, Short.MAX_VALUE)
 					.addComponent(btnThem, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnXemChiTiet, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
@@ -156,8 +145,7 @@ public class QuanLyHopDong_Form extends JPanel implements ActionListener{
 							.addComponent(btnThem, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 							.addComponent(textTimKiem, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-							.addComponent(btnCapNhat, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-							.addComponent(btnLoc, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(btnCapNhat, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		panel.setLayout(gl_panel);
@@ -243,7 +231,6 @@ public class QuanLyHopDong_Form extends JPanel implements ActionListener{
         
         //Đăng ký sự kiện
         btnCapNhat.addActionListener(this);
-        btnLoc.addActionListener(this);
         btnThem.addActionListener(this);
         btnXemChiTiet.addActionListener(this);
         

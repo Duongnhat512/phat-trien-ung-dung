@@ -124,7 +124,8 @@ create table CongDoanPhanCong(
 	idCongDoan varchar(10) not null,
 	idCongNhan varchar(10) not null,
 	soLuongSPDuocGiao int,
-	idCaLam int
+	idCaLam int,
+	soLuongConLai int
 )
 alter table CongDoanPhanCong add constraint FK_CongDoanPhanCong_CongDoanSanPham foreign key (idCongDoan) references CongDoanSP(idCongDoan)
 alter table CongDoanPhanCong add constraint FK_CongDoanPhanCong_CongNhan foreign key (idCongNhan) references CongNhan(idCongNhan) on delete cascade
@@ -385,54 +386,54 @@ go
 --THÊM CONG DOAN PHAN CONG
 -- Bảng phân công cho sản phẩm SP0001
 -- Công đoạn 1
-INSERT INTO CongDoanPhanCong (idPhanCong, idCongDoan, idCongNhan, soLuongSPDuocGiao, idCaLam)
+INSERT INTO CongDoanPhanCong (idPhanCong, idCongDoan, idCongNhan, soLuongSPDuocGiao, idCaLam, soLuongConLai)
 VALUES 
-		('PC0001',  'CDSP0001', 'CN0001', 30, 1),
-		('PC0002', 'CDSP0002', 'CN0001', 20, 2),
-		('PC0003', 'CDSP0003', 'CN0001', 15, 3),
-		('PC0004', 'CDSP0001', 'CN0002', 25, 1),
-		('PC0005', 'CDSP0002', 'CN0002', 22, 2),
-		('PC0006', 'CDSP0003', 'CN0002', 18, 3),
-		('PC0007', 'CDSP0004', 'CN0003', 25, 1),
-		('PC0008', 'CDSP0005', 'CN0003', 20, 2),
-		('PC0009', 'CDSP0006', 'CN0003', 15, 3),
-		('PC0010', 'CDSP0007', 'CN0001', 10, 1),
-		('PC0011', 'CDSP0008', 'CN0002', 8, 2),
-		('PC0012', 'CDSP0009', 'CN0003', 7, 3);
+		('PC0001',  'CDSP0001', 'CN0001', 30, 1, 30),
+		('PC0002', 'CDSP0002', 'CN0001', 20, 2, 20),
+		('PC0003', 'CDSP0003', 'CN0001', 15, 3, 15),
+		('PC0004', 'CDSP0001', 'CN0002', 25, 1, 25),
+		('PC0005', 'CDSP0002', 'CN0002', 22, 2, 22),
+		('PC0006', 'CDSP0003', 'CN0002', 18, 3, 18),
+		('PC0007', 'CDSP0004', 'CN0003', 25, 1, 25),
+		('PC0008', 'CDSP0005', 'CN0003', 20, 2, 20),
+		('PC0009', 'CDSP0006', 'CN0003', 15, 3, 15),
+		('PC0010', 'CDSP0007', 'CN0001', 10, 1, 10),
+		('PC0011', 'CDSP0008', 'CN0002', 8, 2, 8),
+		('PC0012', 'CDSP0009', 'CN0003', 7, 3, 7);
 go
-INSERT INTO BangChamCongCongNhan (idNgayChamCong, ngayChamCong, soLuongHoanThanh, idPhanCong, heSoNgayLam)
-VALUES
-    ('CCN0001', '2023-10-01', 30, 'PC0001', 1.35),
-    ('CCN0002', '2023-10-02', 30, 'PC0002', 1.0),
-    ('CCN0003', '2023-10-03', 30, 'PC0003', 1.0),
-    ('CCN0004', '2023-10-04', 30, 'PC0004', 1.0),
-    ('CCN0005', '2023-10-05', 30, 'PC0005', 1.0),
-    ('CCN0006', '2023-10-06', 30, 'PC0006', 1.0),
-    ('CCN0007', '2023-10-07', 30, 'PC0007', 1.0),
-    ('CCN0008', '2023-10-08', 30, 'PC0008', 1.35),
-    ('CCN0009', '2023-10-09', 30, 'PC0009', 1.0),
-    ('CCN0010', '2023-10-10', 30, 'PC0010', 1.0),
-    ('CCN0011', '2023-10-11', 30, 'PC0011', 1.0),
-    ('CCN0012', '2023-10-12', 30, 'PC0012', 1.0),
-    ('CCN0013', '2023-10-13', 30, 'PC0001', 1.0),
-    ('CCN0014', '2023-10-14', 30, 'PC0002', 1.0),
-    ('CCN0015', '2023-10-15', 30, 'PC0003', 1.35),
-    ('CCN0016', '2023-10-16', 30, 'PC0004', 1.0),
-    ('CCN0017', '2023-10-17', 30, 'PC0005', 1.0),
-    ('CCN0018', '2023-10-18', 30, 'PC0006', 1.0),
-    ('CCN0019', '2023-10-19', 30, 'PC0007', 1.0),
-    ('CCN0020', '2023-10-20', 30, 'PC0008', 1.0),
-    ('CCN0021', '2023-10-21', 30, 'PC0009', 1.0),
-    ('CCN0022', '2023-10-22', 30, 'PC0010', 1.35),
-    ('CCN0023', '2023-10-23', 30, 'PC0011', 1.0),
-    ('CCN0024', '2023-10-24', 30, 'PC0012', 1.0),
-    ('CCN0025', '2023-10-25', 30, 'PC0001', 1.0),
-    ('CCN0026', '2023-10-26', 30, 'PC0002', 1.0),
-    ('CCN0027', '2023-10-27', 50, 'PC0003', 1.0),
-    ('CCN0028', '2023-10-28', 50, 'PC0004', 1.0),
-    ('CCN0029', '2023-10-29', 50, 'PC0005', 1.35),
-    ('CCN0030', '2023-10-30', 50, 'PC0006', 1.0),
-    ('CCN0031', '2023-10-31', 50, 'PC0007', 1.0);
+--INSERT INTO BangChamCongCongNhan (idNgayChamCong, ngayChamCong, soLuongHoanThanh, idPhanCong, heSoNgayLam)
+--VALUES
+--    ('CCN0001', '2023-10-01', 30, 'PC0001', 1.35),
+--    ('CCN0002', '2023-10-02', 30, 'PC0002', 1.0),
+--    ('CCN0003', '2023-10-03', 30, 'PC0003', 1.0),
+--    ('CCN0004', '2023-10-04', 30, 'PC0004', 1.0),
+--    ('CCN0005', '2023-10-05', 30, 'PC0005', 1.0),
+--    ('CCN0006', '2023-10-06', 30, 'PC0006', 1.0),
+--    ('CCN0007', '2023-10-07', 30, 'PC0007', 1.0),
+--    ('CCN0008', '2023-10-08', 30, 'PC0008', 1.35),
+--    ('CCN0009', '2023-10-09', 30, 'PC0009', 1.0),
+--    ('CCN0010', '2023-10-10', 30, 'PC0010', 1.0),
+--    ('CCN0011', '2023-10-11', 30, 'PC0011', 1.0),
+--    ('CCN0012', '2023-10-12', 30, 'PC0012', 1.0),
+--    ('CCN0013', '2023-10-13', 30, 'PC0001', 1.0),
+--    ('CCN0014', '2023-10-14', 30, 'PC0002', 1.0),
+--    ('CCN0015', '2023-10-15', 30, 'PC0003', 1.35),
+--    ('CCN0016', '2023-10-16', 30, 'PC0004', 1.0),
+--    ('CCN0017', '2023-10-17', 30, 'PC0005', 1.0),
+--    ('CCN0018', '2023-10-18', 30, 'PC0006', 1.0),
+--    ('CCN0019', '2023-10-19', 30, 'PC0007', 1.0),
+--    ('CCN0020', '2023-10-20', 30, 'PC0008', 1.0),
+--    ('CCN0021', '2023-10-21', 30, 'PC0009', 1.0),
+--    ('CCN0022', '2023-10-22', 30, 'PC0010', 1.35),
+--    ('CCN0023', '2023-10-23', 30, 'PC0011', 1.0),
+--    ('CCN0024', '2023-10-24', 30, 'PC0012', 1.0),
+--    ('CCN0025', '2023-10-25', 30, 'PC0001', 1.0),
+--    ('CCN0026', '2023-10-26', 30, 'PC0002', 1.0),
+--    ('CCN0027', '2023-10-27', 50, 'PC0003', 1.0),
+--    ('CCN0028', '2023-10-28', 50, 'PC0004', 1.0),
+--    ('CCN0029', '2023-10-29', 50, 'PC0005', 1.35),
+--    ('CCN0030', '2023-10-30', 50, 'PC0006', 1.0),
+--    ('CCN0031', '2023-10-31', 50, 'PC0007', 1.0);
 go
 --Thêm 1 nhan vien đã làm 30 ngày 
 INSERT INTO BangChamCongNhanVienHC (idChamCong, ngayChamCong, trangThai, idNhanVien)

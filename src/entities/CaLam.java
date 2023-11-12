@@ -4,13 +4,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
 
-enum TenCaLam
-{
-	CaSang,CaChieu,CaToi;
-}
 public class CaLam {
       private int idCaLam;
-      private TenCaLam tenCaLam;
+      private String tenCaLam;
       private LocalTime thoiGianBatDau;
       private LocalTime thoiGianKetThuc;
       private double heSoLuong;
@@ -23,17 +19,19 @@ public class CaLam {
 //		this.thoiGianKetThuc = thoiGianKetThuc;
 //		this.heSoLuong = heSoLuong;
 //	}
-	public CaLam(int idCaLam, LocalTime thoiGianBatDau, LocalTime thoiGianKetThuc, double heSoLuong) {
-		this.idCaLam = idCaLam;
-		setTenCaLam();
-		this.thoiGianBatDau = thoiGianBatDau;
-		this.thoiGianKetThuc = thoiGianKetThuc;
-		this.heSoLuong = heSoLuong;
-	}
+	
 	public CaLam() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	public CaLam(int idCaLam, String tenCaLam, LocalTime thoiGianBatDau, LocalTime thoiGianKetThuc, double heSoLuong) {
+	super();
+	this.idCaLam = idCaLam;
+	this.tenCaLam = tenCaLam;
+	this.thoiGianBatDau = thoiGianBatDau;
+	this.thoiGianKetThuc = thoiGianKetThuc;
+	this.heSoLuong = heSoLuong;
+}
 	public CaLam(int idCaLam) {
 		super();
 		this.idCaLam = idCaLam;
@@ -44,11 +42,11 @@ public class CaLam {
 	public void setIdCaLam(int idCaLam) {
 		this.idCaLam = idCaLam;
 	}
-	public TenCaLam getTenCaLam() {
+	public String getTenCaLam() {
 		return tenCaLam;
 	}
-	public void setTenCaLam() {
-		this.tenCaLam = TenCaLam.values()[getIdCaLam() - 1];
+	public void setTenCaLam(String tenCaLam) {
+		this.tenCaLam = tenCaLam;
 	}
 	public LocalTime getThoiGianBatDau() {
 		return thoiGianBatDau;
