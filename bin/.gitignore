@@ -1,11 +1,5 @@
-/icon/
-/images/
-/.gitignore
-/bus/
-/commons/
-/connectDB/
-/dao/
-/dialog/
-/entities/
 /form/
-/gui/
+/dao/
+/bus/
+/images/
+/entities/

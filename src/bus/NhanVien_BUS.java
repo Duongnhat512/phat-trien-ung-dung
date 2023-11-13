@@ -16,4 +16,7 @@ public class NhanVien_BUS {
 	public boolean create(NhanVien nv) {
 		return nv_DAO.create(nv); 
 	}
+	public boolean update(NhanVien nv) {
+		return nv_DAO.update(nv); 
+	}
 }

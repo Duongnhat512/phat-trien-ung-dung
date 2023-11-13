@@ -130,7 +130,7 @@ public class NhanVien {
 	public void setPhongBan(PhongBan phongBan) {
 		this.phongBan = phongBan;
 	}
-	public double getPhuCap(ChucVu cv) {
+	public double tinhPhuCap(ChucVu cv) {
 		if(cv.getIdChucVu().equals("CV003") || cv.getIdChucVu().equals("CV004")) {
 			return 1000000;
 		}
@@ -160,7 +160,7 @@ public class NhanVien {
 				+ ", ngayBatDauCongTac=" + ngayBatDauCongTac + ", ngayKetThucCongTac=" + ngayKetThucCongTac + ", email="
 				+ email + ", soDienThoai=" + soDienThoai + ", chucVu=" + chucVu + ", HESOBAOHIEMXAHOI="
 				+ HESOBAOHIEMXAHOI + ", LUONGCOBAN=" + LUONGCOBAN + ", taiKhoan=" + taiKhoan + ", phongBan=" + phongBan
-				+ ", phuCap=" + getPhuCap(chucVu) + "]";
+				+ ", phuCap=" + tinhPhuCap(chucVu) + "]";
 	}
 
 	

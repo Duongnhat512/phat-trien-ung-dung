@@ -13,6 +13,7 @@ import connectDB.ConnectDB;
 import entities.ChucVu;
 import entities.NhanVien;
 import entities.PhongBan;
+
 import entities.TaiKhoan;
 
 public class NhanVien_DAO {
@@ -48,7 +49,6 @@ public class NhanVien_DAO {
 				TaiKhoan tk = new TaiKhoan(idTK);
 				String pB = rs.getString(13);
 				PhongBan phongBan = new PhongBan(pB);
-				double phuCap = rs.getDouble(14);
 				String avatar = rs.getString(15);
 				String cccd = rs.getString(16);
 				NhanVien nv = new NhanVien(id, hoTen, phai, ngaySinh, ngayCT, ngayKTCT, email, sdt, cv, tk, phongBan, avatar,cccd);
@@ -92,11 +92,11 @@ public class NhanVien_DAO {
 				TaiKhoan tk = new TaiKhoan(idTK);
 				String pB = rs.getString(13);
 				PhongBan phongBan = new PhongBan(pB);
-				double phuCap = rs.getDouble(14);
+			
 				String avatar = rs.getString(15);
 				String cccd = rs.getString(16);
-				NhanVien nv  = new NhanVien(id, hoTen, phai, ngaySinh, ngayCT, ngayKTCT, email, sdt, cv, tk, phongBan, avatar,cccd);
-				 return nv;
+				NhanVien nv  = new NhanVien(idnv, hoTen, phai, ngaySinh, ngayCT, ngayKTCT, email, sdt, cv, tk, phongBan, avatar,cccd);
+				return nv;
 				}
 		} catch (SQLException e) {
 			// TODO: handle exception
@@ -127,12 +127,65 @@ public class NhanVien_DAO {
 			stmt.setDouble(11, nv.getLUONGCOBAN());
 			stmt.setString(12, null);
 			stmt.setString(13, nv.getPhongBan().getIdPhongBan());
-			stmt.setDouble(14, nv.getPhuCap(nv.getChucVu()));
+			stmt.setDouble(14, nv.tinhPhuCap(nv.getChucVu()));
 			stmt.setString(15, nv.getAnhDaiDien());
 			stmt.setString(16, nv.getcCCD());
 			n = stmt.executeUpdate();
 			
 		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				stmt.close();
+			} catch (SQLException e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}
+		return n > 0;
+	}
+	public boolean 	update(NhanVien nv) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stmt = null;
+		int n= 0;
+		try {
+			stmt =con.prepareStatement("update NhanVien set hoTen = ?, phai = ?, "
+					+ "ngaySinh = ?, ngayBatDauCongTac = ?, ngayKetThucCongTac = ?,email = ?,soDienThoai = ?, "
+					+ "idChucVu = ?, idPhongBan = ?, phuCap = ? , anhDaiDien =  ?,"
+					+ " CCCD = ? where idNhanVien = ?");
+			
+			
+			stmt.setString(1, nv.getHoTen());
+			stmt.setBoolean(2, nv.isPhai());
+			stmt.setString(3, nv.getNgaySinh()+"");
+			stmt.setString(4, nv.getNgayBatDauCongTac()+"");
+			if(nv.getNgayKetThucCongTac()!=null) {
+				stmt.setString(5, nv.getNgayKetThucCongTac()+"");
+			}
+			else {
+				stmt.setString(5, null);
+			}
+			
+			stmt.setString(6,nv.getEmail());
+			stmt.setString(7,nv.getSoDienThoai());
+			stmt.setString(8, nv.getChucVu().getIdChucVu());
+			stmt.setString(9, nv.getPhongBan().getIdPhongBan());
+			double phuCap = nv.tinhPhuCap(nv.getChucVu());
+			stmt.setDouble(10, phuCap);
+			if(nv.getAnhDaiDien()!=null) {
+				stmt.setString(11, nv.getAnhDaiDien());
+			}
+			else {
+				stmt.setString(11,null);
+			}
+			stmt.setString(12, nv.getcCCD());
+			stmt.setString(13, nv.getIdNhanVien());
+			n = stmt.executeUpdate();
+
+		}catch (SQLException e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
