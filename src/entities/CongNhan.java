@@ -15,13 +15,13 @@ public class CongNhan {
       private PhanXuong phanXuong;
       private String email;
       private String soDienThoai;
-      private CaLam caLam;
       private String tayNghe;
       private TaiKhoan taiKhoan;
       private String anhDaiDien;
+      private String cCCD;
 	public CongNhan(String idCongNhan, String hoTen, boolean phai, LocalDate ngaySinh, LocalDate ngayBatDauCongTac,
-			LocalDate ngayKetThucCongTac, PhanXuong phanXuong, String email, String soDienThoai, CaLam caLam,
-			String tayNghe, TaiKhoan taiKhoan, String anhDaiDien) {
+			LocalDate ngayKetThucCongTac, PhanXuong phanXuong, String email, String soDienThoai,
+			String tayNghe, TaiKhoan taiKhoan, String anhDaiDien, String cCCD) {
 		super();
 		this.idCongNhan = idCongNhan;
 		this.hoTen = hoTen;
@@ -32,18 +32,26 @@ public class CongNhan {
 		this.phanXuong = phanXuong;
 		this.email = email;
 		this.soDienThoai = soDienThoai;
-		this.caLam = caLam;
 		this.tayNghe = tayNghe;
 		this.taiKhoan = taiKhoan;
 		this.anhDaiDien = anhDaiDien;
+		this.cCCD = cCCD;
 	}
 	public CongNhan() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
 	public CongNhan(String idCongNhan) {
 		super();
 		this.idCongNhan = idCongNhan;
+	}
+	
+	public String getcCCD() {
+		return cCCD;
+	}
+	public void setcCCD(String cCCD) {
+		this.cCCD = cCCD;
 	}
 	public String getIdCongNhan() {
 		return idCongNhan;
@@ -98,12 +106,6 @@ public class CongNhan {
 	}
 	public void setSoDienThoai(String soDienThoai) {
 		this.soDienThoai = soDienThoai;
-	}
-	public CaLam getCaLam() {
-		return caLam;
-	}
-	public void setCaLam(CaLam caLam) {
-		this.caLam = caLam;
 	}
 	public String getTayNghe() {
 		return tayNghe;

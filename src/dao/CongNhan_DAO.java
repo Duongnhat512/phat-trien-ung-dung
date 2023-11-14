@@ -40,11 +40,11 @@ public class CongNhan_DAO {
 				PhanXuong phanXuong = phanXuong_DAO.getPhanXuongTheoID(rs.getString(7));
 				String email = rs.getString(8);
 				String soDienThoai = rs.getString(9);
-				CaLam caLam = caLam_DAO.getCaLamTheoID(rs.getInt(10));
-				String tayNghe = rs.getString(11);
+				String tayNghe = rs.getString(10);
 				TaiKhoan taiKhoan = taiKhoan_DAO.getTaiKhoan(idCongNhan);
 				String anhDaiDien = rs.getString(12);
-				CongNhan congNhan = new CongNhan(idCongNhan, hoTen, phai, ngaySinh, ngayBatDauCongTac, ngayKetThucCongTac, phanXuong, email, soDienThoai, caLam, tayNghe, taiKhoan, anhDaiDien);
+				String cCCD = rs.getString(13);
+				CongNhan congNhan = new CongNhan(idCongNhan, hoTen, phai, ngaySinh, ngayBatDauCongTac, ngayKetThucCongTac, phanXuong, email, soDienThoai, tayNghe, taiKhoan, anhDaiDien, cCCD);
 				danhSachCongNhan.add(congNhan);
 			}
 		} catch (SQLException e) {
@@ -77,11 +77,11 @@ public class CongNhan_DAO {
 				PhanXuong phanXuong = phanXuong_DAO.getPhanXuongTheoID(rs.getString(7));
 				String email = rs.getString(8);
 				String soDienThoai = rs.getString(9);
-				CaLam caLam = caLam_DAO.getCaLamTheoID(rs.getInt(10));
-				String tayNghe = rs.getString(11);
+				String tayNghe = rs.getString(10);
 				TaiKhoan taiKhoan = taiKhoan_DAO.getTaiKhoan(idCongNhan);
 				String anhDaiDien = rs.getString(12);
-				congNhan = new CongNhan(idCongNhan, hoTen, phai, ngaySinh, ngayBatDauCongTac, ngayKetThucCongTac, phanXuong, email, soDienThoai, caLam, tayNghe, taiKhoan, anhDaiDien);
+				String cCCD = rs.getString(13);
+				congNhan = new CongNhan(idCongNhan, hoTen, phai, ngaySinh, ngayBatDauCongTac, ngayKetThucCongTac, phanXuong, email, soDienThoai, tayNghe, taiKhoan, anhDaiDien, cCCD);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -114,11 +114,11 @@ public class CongNhan_DAO {
 				PhanXuong phanXuong = phanXuong_DAO.getPhanXuongTheoID(rs.getString(7));
 				String email = rs.getString(8);
 				String soDienThoai = rs.getString(9);
-				CaLam caLam = caLam_DAO.getCaLamTheoID(rs.getInt(10));
-				String tayNghe = rs.getString(11);
+				String tayNghe = rs.getString(10);
 				TaiKhoan taiKhoan = taiKhoan_DAO.getTaiKhoan(idCongNhan);
 				String anhDaiDien = rs.getString(12);
-				CongNhan congNhan = new CongNhan(idCongNhan, hoTen, phai, ngaySinh, ngayBatDauCongTac, ngayKetThucCongTac, phanXuong, email, soDienThoai, caLam, tayNghe, taiKhoan, anhDaiDien);
+				String cCCD = rs.getString(13);
+				CongNhan congNhan = new CongNhan(idCongNhan, hoTen, phai, ngaySinh, ngayBatDauCongTac, ngayKetThucCongTac, phanXuong, email, soDienThoai, tayNghe, taiKhoan, anhDaiDien, cCCD);
 				danhSachCongNhan.add(congNhan);
 			}
 		} catch (SQLException e) {

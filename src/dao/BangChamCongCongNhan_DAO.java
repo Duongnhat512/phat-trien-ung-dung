@@ -103,7 +103,7 @@ public class BangChamCongCongNhan_DAO {
 	}
 	
 	/**
-	 * Cập nhật số lượng hoàn thành 
+	 * Cập nhật số lượng hoàn thành
 	 * @param bangCC
 	 * @return
 	 */
