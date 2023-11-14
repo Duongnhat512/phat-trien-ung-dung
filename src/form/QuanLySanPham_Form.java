@@ -33,6 +33,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.FlowLayout;
 
 public class QuanLySanPham_Form extends JPanel implements ActionListener{
 
@@ -176,62 +177,19 @@ public class QuanLySanPham_Form extends JPanel implements ActionListener{
         panelSouth.add(scrollPane);
         
         tableSanPham.fixTable(scrollPane);
-        GroupLayout gl_panel_1_1 = new GroupLayout(panel_1_1);
-        gl_panel_1_1.setHorizontalGroup(
-        	gl_panel_1_1.createParallelGroup(Alignment.LEADING)
-        		.addGroup(gl_panel_1_1.createSequentialGroup()
-        			.addGap(540)
-        			.addComponent(lblNewLabel_1_1, GroupLayout.PREFERRED_SIZE, 159, GroupLayout.PREFERRED_SIZE)
-        			.addContainerGap(501, Short.MAX_VALUE))
-        );
-        gl_panel_1_1.setVerticalGroup(
-        	gl_panel_1_1.createParallelGroup(Alignment.LEADING)
-        		.addGroup(gl_panel_1_1.createSequentialGroup()
-        			.addGap(5)
-        			.addComponent(lblNewLabel_1_1)
-        			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        panel_1_1.setLayout(gl_panel_1_1);
-        GroupLayout gl_panelSouth = new GroupLayout(panelSouth);
-        gl_panelSouth.setHorizontalGroup(
-        	gl_panelSouth.createParallelGroup(Alignment.LEADING)
-        		.addGroup(gl_panelSouth.createSequentialGroup()
-        			.addGap(31)
-        			.addGroup(gl_panelSouth.createParallelGroup(Alignment.LEADING)
-        				.addComponent(panel_1_1, GroupLayout.PREFERRED_SIZE, 1200, GroupLayout.PREFERRED_SIZE)
-        				.addComponent(scrollPane))
-        			.addContainerGap())
-        );
-        gl_panelSouth.setVerticalGroup(
-        	gl_panelSouth.createParallelGroup(Alignment.LEADING)
-        		.addGroup(gl_panelSouth.createSequentialGroup()
-        			.addGap(8)
-        			.addComponent(panel_1_1, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-        			.addPreferredGap(ComponentPlacement.UNRELATED)
-        			.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
-        			.addContainerGap())
-        );
-        panelSouth.setLayout(gl_panelSouth);
         
         //
         btnThem.addActionListener(this);
         btnCapNhat.addActionListener(this);
         btnXemChiTiet.addActionListener(this);
-        GroupLayout groupLayout = new GroupLayout(this);
-        groupLayout.setHorizontalGroup(
-        	groupLayout.createParallelGroup(Alignment.LEADING)
-        		.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-        		.addComponent(panelSouth, GroupLayout.PREFERRED_SIZE, 1259, GroupLayout.PREFERRED_SIZE)
-        );
-        groupLayout.setVerticalGroup(
-        	groupLayout.createParallelGroup(Alignment.LEADING)
-        		.addGroup(groupLayout.createSequentialGroup()
-        			.addGap(10)
-        			.addComponent(panel, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
-        			.addGap(10)
-        			.addComponent(panelSouth, GroupLayout.PREFERRED_SIZE, 687, GroupLayout.PREFERRED_SIZE))
-        );
-        setLayout(groupLayout);
+        setLayout(new BorderLayout(0, 0));
+        add(panel, BorderLayout.NORTH);
+        add(panelSouth);
+        panelSouth.setLayout(new BorderLayout(0, 0));
+        panelSouth.add(scrollPane);
+        panelSouth.add(panel_1_1, BorderLayout.NORTH);
+        panel_1_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        panel_1_1.add(lblNewLabel_1_1);
 	}
 	
 	private void moThemSanPham_Dialog() {

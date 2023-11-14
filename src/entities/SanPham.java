@@ -27,6 +27,11 @@ public class SanPham {
 		this.anhSanPham = anhSanPham;
 	}
 	
+	
+	public SanPham(String idSanPham) {
+		super();
+		this.idSanPham = idSanPham;
+	}
 	public String getIdSanPham() {
 		return idSanPham;
 	}

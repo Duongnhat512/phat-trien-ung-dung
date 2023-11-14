@@ -56,6 +56,8 @@ import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import java.awt.Component;
 import java.awt.Container;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
 /**
  * 
@@ -180,8 +182,9 @@ public class Main_GUI extends JFrame implements ActionListener{
 		
 		// Panel chứa nội dung 
 		panelContent = new JPanel();
-		panelContent.setBorder(new EmptyBorder(0, 10, 0, 10));
+		panelContent.setBorder(new EmptyBorder(10, 10, 10, 10));
 		panelCenter.add(panelContent, BorderLayout.CENTER);
+		panelContent.setLayout(new BorderLayout(0, 0));
 		
 		// Kết nối đến database 
 		try {
