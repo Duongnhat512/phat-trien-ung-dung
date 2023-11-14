@@ -1,5 +1,7 @@
 package bus;
 
+import java.util.ArrayList;
+
 import dao.NhanVien_DAO;
 import entities.NhanVien;
 
@@ -8,5 +10,8 @@ public class NhanVien_BUS {
 	
 	public NhanVien getNhanVienTheoID(String id) {
 		return nhanVien_DAO.getNhanVienTheoID(id);
+	}
+	public ArrayList<NhanVien> getDanHSachNhanVienTheoChucVu(String idChucVu){
+		return nhanVien_DAO.getDanhSachNhanVienTheoChucVu(idChucVu);
 	}
 }

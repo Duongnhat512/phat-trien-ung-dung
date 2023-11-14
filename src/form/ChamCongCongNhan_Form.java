@@ -514,10 +514,11 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
       });
       
       // Xử lý sự kiện tìm kiếm
-      txtTimKiem.addKeyListener(new KeyListener() {
+      txtTimKiem.addKeyListener(new KeyAdapter() {
 			
+
 			@Override
-			public void keyTyped(KeyEvent e) {
+			public void keyReleased(KeyEvent e) {
 				tableCongNhan.clearSelection();
 				layDanhSachCongNhan();
 				if (txtTimKiem.getText().trim().isEmpty()) {
@@ -525,18 +526,6 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 					return;
 				}
 				locPhanCongTheoHoTen();
-			}
-			
-			@Override
-			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
 			}
 		});
         

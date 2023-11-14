@@ -19,12 +19,14 @@ public class NhanVien {
 	private PhongBan phongBan;
 	private double phuCap;
 	private String anhDaiDien;
+	private String cCCD;
 	public NhanVien() {
 		super();
 	}
+	
 	public NhanVien(String idNhanVien, String hoTen, boolean phai, LocalDate ngaySinh, LocalDate ngayBatDauCongTac,
 			LocalDate ngayKetThucCongTac, String email, String soDienThoai, ChucVu chucVu, TaiKhoan taiKhoan,
-			PhongBan phongBan, double phuCap, String anhDaiDien) {
+			PhongBan phongBan, double phuCap, String anhDaiDien, String cCCD) {
 		super();
 		this.idNhanVien = idNhanVien;
 		this.hoTen = hoTen;
@@ -39,8 +41,10 @@ public class NhanVien {
 		this.phongBan = phongBan;
 		this.phuCap = phuCap;
 		this.anhDaiDien = anhDaiDien;
+		this.cCCD = cCCD;
 	}
-	
+
+
 	public NhanVien(String idNhanVien, String hoTen, boolean phai, PhongBan phongBan, double phuCap) {
 		super();
 		this.idNhanVien = idNhanVien;
@@ -49,6 +53,15 @@ public class NhanVien {
 		this.phongBan = phongBan;
 		this.phuCap = phuCap;
 	}
+	
+	public String getcCCD() {
+		return cCCD;
+	}
+
+	public void setcCCD(String cCCD) {
+		this.cCCD = cCCD;
+	}
+
 	public String getIdNhanVien() {
 		return idNhanVien;
 	}

@@ -16,8 +16,10 @@ import commons.MyButton;
 import commons.Table;
 import entities.ChiTietHopDong;
 import entities.HopDongSanPham;
+import entities.NhanVien;
 import entities.SanPham;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -25,6 +27,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.border.MatteBorder;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.UndoableEditListener;
 import javax.swing.JTextField;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
@@ -32,14 +36,24 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import javax.swing.text.Element;
+import javax.swing.text.PlainDocument;
+import javax.swing.text.Position;
+import javax.swing.text.Segment;
 
 import bus.ChiTietHopDong_BUS;
 import bus.HopDongSanPham_BUS;
+import bus.NhanVien_BUS;
 import bus.SanPham_BUS;
 
 public class ThemHopDong_Dialog extends JDialog implements ActionListener{
@@ -77,14 +91,24 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 	private JTextField txtDonViTinh;
 	private JTextField txtChatLieu;
 	private JLabel lblThongBaoSP;
+	private MyButton btnBoChon;
+	private JLabel lblThongBao;
+	private JTextArea txtGhiChu;
+	private double tongTien = 0;
 	
+	//
 	private ArrayList<ChiTietHopDong> listCTHD;
 	private ArrayList<HopDongSanPham> listHD;
+	private ArrayList<NhanVien> listTPSanXuat;
+	
+	//
+	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	
 	//
 	private HopDongSanPham_BUS hopDongSanPham_BUS = new HopDongSanPham_BUS();
 	private ChiTietHopDong_BUS chiTietHopDong_BUS = new ChiTietHopDong_BUS();
 	private SanPham_BUS sanPham_BUS = new SanPham_BUS();
-	private MyButton btnBoChon;
+	private NhanVien_BUS nhanVien_BUS = new NhanVien_BUS();
 	
 	public void openThemHopDong_Dialog(int width, int height) {
 		this.width = width;
@@ -113,18 +137,22 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 			buttonPane.setPreferredSize(new Dimension(this.width, (int) (this.height*0.05)));
 			{
 				btnThem = new MyButton();
+				btnThem.setFocusTraversalKeysEnabled(false);
+				btnThem.setFocusable(false);
+				btnThem.setActionCommand("ADD");
 				btnThem.setRadius(10);
 				btnThem.setForeground(new Color(255, 255, 255));
 				btnThem.setIcon(new ImageIcon(ThemHopDong_Dialog.class.getResource("/icon/icons8_plus_math_30px.png")));
 				btnThem.setText("Thêm");
 				btnThem.setFont(new Font("SansSerif", Font.PLAIN, 15));
 				btnThem.setFocusPainted(false);
-				btnThem.setActionCommand("OK");
 				btnThem.setBackground(new Color(82, 125, 254));
 				getRootPane().setDefaultButton(btnThem);
 			}
 			{
 				btnHuy = new MyButton();
+				btnHuy.setFocusTraversalKeysEnabled(false);
+				btnHuy.setFocusable(false);
 				btnHuy.setRadius(10);
 				btnHuy.setIcon(new ImageIcon(ThemHopDong_Dialog.class.getResource("/icon/unavailable.png")));
 				btnHuy.setText("Hủy");
@@ -173,11 +201,13 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 		);
 		
 		JPanel panel = new JPanel();
+		panel.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(192, 192, 192)));
 		panel.setPreferredSize(new Dimension((int) (this.width*0.4), (int) (this.height*0.4)));
 		
 		JPanel panelCTHopDong = new JPanel();
 		
 		JPanel panelSanPham = new JPanel();
+		panelSanPham.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(192, 192, 192)));
 		
 		lblTngTinHp = new JLabel("Tổng tiền hợp đồng:");
 		lblTngTinHp.setFont(new Font("SansSerif", Font.PLAIN, 15));
@@ -186,6 +216,8 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 		lblTongTien.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		
 		btnThemSP = new MyButton();
+		btnThemSP.setFocusTraversalKeysEnabled(false);
+		btnThemSP.setFocusable(false);
 		btnThemSP.setIcon(new ImageIcon(ThemHopDong_Dialog.class.getResource("/icon/icons8_plus_math_30px.png")));
 		btnThemSP.setBackground(new Color(52, 254, 78));
 		btnThemSP.setBorderColor(new Color(255, 255, 255));
@@ -195,6 +227,8 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 		btnThemSP.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		
 		btnBoChon = new MyButton();
+		btnBoChon.setFocusTraversalKeysEnabled(false);
+		btnBoChon.setFocusable(false);
 		btnBoChon.setIcon(new ImageIcon(ThemHopDong_Dialog.class.getResource("/icon/Remove.png")));
 		btnBoChon.setBackground(new Color(255, 255, 255));
 		btnBoChon.setBorderColor(new Color(255, 255, 255));
@@ -208,9 +242,8 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 		
 		txtIDSanPham = new JTextField();
 		txtIDSanPham.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		txtIDSanPham.setColumns(10);
-		txtIDSanPham.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
-		txtIDSanPham.setBackground(SystemColor.menu);
+		txtIDSanPham.setBorder(new EmptyBorder(2, 4, 2, 4));
+		txtIDSanPham.setBackground(new Color(255, 255, 255));
 		
 		lblTnSnPhm = new JLabel("Tên sản phẩm:");
 		lblTnSnPhm.setFont(new Font("SansSerif", Font.PLAIN, 15));
@@ -248,8 +281,8 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 		txtSoLuong = new JTextField();
 		txtSoLuong.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		txtSoLuong.setColumns(10);
-		txtSoLuong.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
-		txtSoLuong.setBackground(SystemColor.menu);
+		txtSoLuong.setBorder(new EmptyBorder(2, 4, 2, 4));
+		txtSoLuong.setBackground(new Color(255, 255, 255));
 		
 		txtDonViTinh = new JTextField();
 		txtDonViTinh.setDisabledTextColor(new Color(0, 0, 0));
@@ -286,6 +319,8 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 		lblNgyKtThc.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		
 		txtIDHopDong = new JTextField();
+		txtIDHopDong.setBackground(new Color(240, 240, 240));
+		txtIDHopDong.setDisabledTextColor(new Color(0, 0, 0));
 		txtIDHopDong.setBounds(179, 10, 209, 21);
 		txtIDHopDong.setEnabled(false);
 		txtIDHopDong.setEditable(false);
@@ -295,24 +330,24 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 		
 		txtTenHopDong = new JTextField();
 		txtTenHopDong.setBounds(179, 49, 209, 21);
-		txtTenHopDong.setBackground(new Color(240, 240, 240));
+		txtTenHopDong.setBackground(new Color(255, 255, 255));
 		txtTenHopDong.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		txtTenHopDong.setColumns(10);
-		txtTenHopDong.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
+		txtTenHopDong.setBorder(new EmptyBorder(2, 4, 2, 4));
 		
 		txtNgayBatDau = new JTextField();
 		txtNgayBatDau.setBounds(179, 88, 209, 21);
-		txtNgayBatDau.setBackground(new Color(240, 240, 240));
+		txtNgayBatDau.setBackground(new Color(255, 255, 255));
 		txtNgayBatDau.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		txtNgayBatDau.setColumns(10);
-		txtNgayBatDau.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
+		txtNgayBatDau.setBorder(new EmptyBorder(2, 4, 2, 4));
 		
 		txtNgayKetThuc = new JTextField();
 		txtNgayKetThuc.setBounds(179, 127, 209, 21);
-		txtNgayKetThuc.setBackground(new Color(240, 240, 240));
+		txtNgayKetThuc.setBackground(new Color(255, 255, 255));
 		txtNgayKetThuc.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		txtNgayKetThuc.setColumns(10);
-		txtNgayKetThuc.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
+		txtNgayKetThuc.setBorder(new EmptyBorder(2, 4, 2, 4));
 		
 		lblNhnVinPh = new JLabel("Nhân viên phụ trách:");
 		lblNhnVinPh.setBounds(442, 15, 151, 20);
@@ -326,12 +361,12 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 		lblGhiCh.setBounds(442, 59, 130, 20);
 		lblGhiCh.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		
-		JTextArea txtGhiChu = new JTextArea();
+		txtGhiChu = new JTextArea();
 		txtGhiChu.setBounds(442, 89, 424, 77);
 		txtGhiChu.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		txtGhiChu.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
-		JLabel lblThongBao = new JLabel("");
+		lblThongBao = new JLabel("");
 		lblThongBao.setBounds(10, 158, 378, 20);
 		lblThongBao.setForeground(new Color(255, 0, 0));
 		lblThongBao.setFont(new Font("SansSerif", Font.ITALIC, 15));
@@ -353,6 +388,8 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 		panelCTHopDong.add(scrollPaneCTHD, BorderLayout.CENTER);
 		
 		MyButton btnCapNhat = new MyButton();
+		btnCapNhat.setFocusTraversalKeysEnabled(false);
+		btnCapNhat.setFocusable(false);
 		btnCapNhat.setIcon(new ImageIcon(ThemHopDong_Dialog.class.getResource("/icon/update.png")));
 		btnCapNhat.setText("Cập nhật");
 		btnCapNhat.setRadius(10);
@@ -481,23 +518,40 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 		panelSanPham.setLayout(gl_panelSanPham);
 		contentPanel.setLayout(gl_contentPanel);
 		
-		// Khởi tạo listCTHD
-		listCTHD = new ArrayList<ChiTietHopDong>();
+		lblTongTien.setText(String.format("%,.2f VND", tongTien));
 		
+		// Cài đặt giá trị mặc đinh cho txtNgayBatDau là ngày hiện hành
+		txtNgayBatDau.setText(dtf.format(LocalDate.now()));
+		
+		// 
+		listCTHD = new ArrayList<ChiTietHopDong>();
+		listTPSanXuat = new ArrayList<NhanVien>();
+		
+		//Đưa dữ liệu lên cboNhanVien
+		getDataTPSX();
 		//
 		listHD = hopDongSanPham_BUS.getAllHopDongSanPham();
+		
+//		 Hiển thị IDHopDong
+		txtIDHopDong.setText(String.format("HD%04d", listHD.size() + 1));
+		
 		
 		//
 		btnHuy.addActionListener(this);
 		btnThemSP.addActionListener(this);
 		btnBoChon.addActionListener(this);
+		
+		
 		btnThem.addActionListener(this);
 		
-		// Sự kiện nhấn enter sau khi nhập mã sản phẩm ở txtIDSanPham
+		// Sự kiện hiển thị thông tin sau khi nhập mã sản phẩm ở txtIDSanPham
 		txtIDSanPham.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+			public void keyReleased(KeyEvent e) {
+				if (txtIDSanPham.getText().trim().length() > 6) {
+					txtIDSanPham.setText(txtIDSanPham.getText().substring(0, 6));
+				}
+				if (txtIDSanPham.getText().trim().length() == 6) {
 					timSanPham();
 				}
 			}
@@ -505,10 +559,58 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 	}
 	
 	/**
+	 * Lấy dữ liệu trưởng phòng sản xuất
+	 */
+	private void getDataTPSX() {
+		listTPSanXuat = nhanVien_BUS.getDanHSachNhanVienTheoChucVu("CV003");
+		String[] item = new String[listTPSanXuat.size()];
+		int i = 0;
+		for (NhanVien nv : listTPSanXuat) {
+			item[i] = nv.getHoTen();
+			i++;
+		}
+		cboNhanVien.setModel(new DefaultComboBoxModel<>(item));
+		cboNhanVien.setSelectedIndex(0);
+	}
+	
+	/**
 	 * Kiểm tra dữ liệu nhập vào cho hợp đồng
 	 */
 	private boolean kiemTraDuLieuHopDong() {
-		
+		if (txtTenHopDong.getText().trim().isEmpty()) {
+			lblThongBao.setText("Tên hợp đồng không được để trống!");
+			txtTenHopDong.selectAll();
+			txtTenHopDong.requestFocus();
+			return false;
+		}
+		String tenHopDong = txtTenHopDong.getText();
+		if (!tenHopDong.matches("^[\\p{L}]+([\\s]+[\\p{L}]+)*")) {
+			lblThongBao.setText("Tên hợp đồng không được chứa ký tự đặc biệt!");
+			txtTenHopDong.selectAll();
+			txtTenHopDong.requestFocus();
+			return false;
+		}
+		if (txtNgayBatDau.getText().trim().isEmpty()) {
+			lblThongBao.setText("Ngày bắt đầu không được để trống");
+			txtNgayBatDau.selectAll();
+			txtNgayBatDau.requestFocus();
+			return false;
+		}
+		LocalDate ngayBatDau = LocalDate.parse(txtNgayBatDau.getText(), dtf);
+		if (txtNgayKetThuc.getText().trim().isEmpty()) {
+			lblThongBao.setText("Ngày kết thúc không được để trống");
+			txtNgayKetThuc.selectAll();
+			txtNgayKetThuc.requestFocus();
+			return false;
+		}
+		LocalDate ngayKetThuc = LocalDate.parse(txtNgayKetThuc.getText(), dtf);
+		if (!ngayKetThuc.isAfter(ngayBatDau)) {
+			lblThongBao.setText("Ngày kết thúc hợp đồng phải sau ngày bắt đầu!");
+			txtNgayKetThuc.selectAll();
+			txtNgayKetThuc.requestFocus();
+			return false;
+		}
+		lblThongBao.setText("");
 		return true;
 	}
 	
@@ -516,15 +618,45 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 	 * Thêm hợp đồng
 	 */
 	private void themHopDong() {
-		String idHopDong = String.format("HD%4d", listHD.size() + 1 + "");
-		LocalDate ngayBatDau = LocalDate.now();
+		if (listCTHD.size() == 0) {
+			JOptionPane.showMessageDialog(this, "Bạn chưa thêm sản phẩm nào vào hợp đồng!");
+			return;
+		}
+		if(kiemTraDuLieuHopDong()) {
+			String idHopDong = txtIDHopDong.getText();
+			String tenHopDong = txtTenHopDong.getText();
+			LocalDate ngayBatDau = LocalDate.parse(txtNgayBatDau.getText(), dtf);
+			LocalDate ngayKetThuc = LocalDate.parse(txtNgayKetThuc.getText(), dtf);
+			String ghiChu = null;
+			if (!txtGhiChu.getText().trim().isEmpty()) {
+				ghiChu = txtGhiChu.getText();
+			}
+			NhanVien nv = listTPSanXuat.get(cboNhanVien.getSelectedIndex());
+			double tongTien = 0;
+			for (ChiTietHopDong chiTietHopDong : listCTHD) {
+				tongTien+= chiTietHopDong.getThanhTien();
+			}
+			HopDongSanPham hd = new HopDongSanPham(idHopDong, tenHopDong, ngayBatDau, ngayKetThuc, nv, tongTien, ghiChu);
+			hopDongSanPham_BUS.themHopDong(hd);
+			for (ChiTietHopDong chiTietHopDong : listCTHD) {
+				chiTietHopDong.setHopDongSanPham(hd);
+				chiTietHopDong_BUS.themCTHopDong(chiTietHopDong);
+			}
+			JOptionPane.showMessageDialog(this, "Thêm hợp đồng thành công!");
+			this.dispose();
+		}
 		
 	}
 	
+	/**
+	 * Thêm sản phẩm vào chi tiết hợp đồng tạm thời
+	 */
 	private void themSanPhamVaoDanhSach() {
 		ChiTietHopDong ctHD = getDuLieuCTHopDong();
 		if (ctHD != null) {
 			listCTHD.add(ctHD);
+			tongTien+= ctHD.getThanhTien();
+			lblTongTien.setText(String.format("%,.2f VND", tongTien));
 		}
 	}
 	
@@ -533,7 +665,7 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 	 * @return
 	 */
 	private ChiTietHopDong getDuLieuCTHopDong() {
-		HopDongSanPham hopDongSanPham = hopDongSanPham_BUS.getHopDongSanPhamTheoID(txtIDHopDong.getText());
+		HopDongSanPham hopDongSanPham = new HopDongSanPham(txtIDHopDong.getText());
 		SanPham sp = sanPham_BUS.getSanPhamTheoID(txtIDSanPham.getText());
 		int soLuong = 0;
 		try {
@@ -581,7 +713,7 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 	 * Tìm sản phẩm theo mã sản phẩm đã nhập ở txtIDSanPham
 	 */
 	private void timSanPham() {
-		String idSP = txtIDSanPham.getText().toUpperCase();
+		String idSP = txtIDSanPham.getText().toUpperCase().trim();
 		SanPham sp = sanPham_BUS.getSanPhamTheoID(idSP);
 		hienThiThongTinSanPham(sp);
 	}
@@ -630,6 +762,9 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 		}
 		if (o.equals(btnBoChon)) {
 			boChonSanPham();
+		}
+		if (o.equals(btnThem)) {
+			themHopDong();
 		}
 		
 	}
