@@ -99,7 +99,28 @@ public class BangChamCongCongNhan_DAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		return n > 0;
+	}
+	
+	/**
+	 * Cập nhật số lượng hoàn thành 
+	 * @param bangCC
+	 * @return
+	 */
+	public boolean capNhatSoLuongHoanThanh(BangChamCongCongNhan bangCC) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stm = null;
+		int n = 0;
+		try {
+			stm = con.prepareStatement("update BangChamCongCongNhan set soLuongHoanThanh = ? where idNgayChamCong = ?");
+			stm.setInt(1, bangCC.getSoLuongHoanThanh());
+			stm.setString(2, bangCC.getIdNgayChamCong());
+			n = stm.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return n > 0;
 	}
 	

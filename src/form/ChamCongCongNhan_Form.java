@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Scrollbar;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -96,6 +97,7 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 	//
 	private ArrayList<CongDoanPhanCong> listPhanCong = new ArrayList<CongDoanPhanCong>();
 	private ArrayList<BangChamCongCongNhan> listChamCong = new ArrayList<BangChamCongCongNhan>();
+	private JComboBox cboCaLam;
 
 	/**
 	 * Create the panel.
@@ -150,7 +152,7 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 		textNgayChamCong.setHorizontalAlignment(SwingConstants.CENTER);
 		textNgayChamCong.setColumns(10);
 		
-		JComboBox cboCaLam = new JComboBox();
+		cboCaLam = new JComboBox();
 		cboCaLam.setBounds(311, 3, 117, 37);
 		cboCaLam.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		
@@ -335,7 +337,7 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
                 }
             ) {
                 boolean[] canEdit = new boolean [] {
-                    false, false, false, false, false, false
+                    false, false, false, false, false, true
                 };
 
                 public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -450,25 +452,7 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				indexCaLam = cboCaLam.getSelectedIndex();
-				tableCongNhan.clearSelection();
-        		if (indexCaLam == 3) {
-        			layDanhSachCongNhan();
-					if (!txtTimKiem.getText().equals("Nhập tên công nhân cần tìm...")) {
-						locPhanCongTheoHoTen();
-					}
-					else {
-						docDuLieuLenTablePhanCong(listPhanCong);
-					}
-					return;
-        		}
-        		locPhanCongTheoCaLam(indexCaLam + 1);
-        		if (!txtTimKiem.getText().equals("Nhập tên công nhân cần tìm...")) {
-					locPhanCongTheoHoTen();
-				}
-        		else {
-					docDuLieuLenTablePhanCong(listPhanCong);
-				}
+				kiemTraComboBoxCaLam();
 			}
 		});
         
@@ -564,6 +548,13 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 	 */
 	private void locPhanCongTheoCaLam(int caLam) {
 		listPhanCong = congDoanPhanCong_BUS.getDanhSachPhanCongTheoCaLam(caLam);
+		ArrayList<CongDoanPhanCong> temp = new ArrayList<CongDoanPhanCong>();
+		for(CongDoanPhanCong congDoanPhanCong : listPhanCong) {
+			if(congDoanPhanCong.getSoLuongConLai() > 0) {
+				temp.add(congDoanPhanCong);
+			}
+		}
+		listPhanCong = temp;
 		docDuLieuLenTablePhanCong(listPhanCong);
 	}
 	
@@ -678,9 +669,62 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 	}
 	
 	/**
+	 * Kiểm tra dữ liệu trong thanh tìm kiếm
+	 */
+	private void kiemTraThanhTimKiem() {
+		if (!txtTimKiem.getText().equals("Nhập tên công nhân cần tìm...")) {
+			locPhanCongTheoHoTen();
+		}
+		else {
+			docDuLieuLenTablePhanCong(listPhanCong);
+		}
+		return;
+	}
+	
+	/**
+	 * Kiểm tra combobox Ca làm để lọc dữ liệu
+	 */
+	private void kiemTraComboBoxCaLam() {
+		indexCaLam = cboCaLam.getSelectedIndex();
+		tableCongNhan.clearSelection();
+		if (indexCaLam == 3) {
+			layDanhSachCongNhan();
+			kiemTraThanhTimKiem();
+			return;
+		}
+		locPhanCongTheoCaLam(indexCaLam + 1);
+		kiemTraThanhTimKiem();
+	}
+	
+	/**
 	 * Chấm công cho tất cả công nhân
 	 */
 	public void chamCongHangLoat() {
+		if ((JOptionPane.showConfirmDialog(this, "Bạn có muốn chấm công cho toàn bộ công nhân?", "Hỏi nhắc!", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)) {
+			tableCongNhan.clearSelection();
+			layDanhSachCongNhan();
+			for (CongDoanPhanCong congDoanPhanCong : listPhanCong) {
+				String idChamCong = String.format("CCN%04d", bangChamCongCongNhan_BUS.getDanhSachChamCong().size() + 1);
+				LocalDate ngayChamCong =  LocalDate.parse(textNgayChamCong.getText(), dtf);
+				int soLuongConLai = congDoanPhanCong.getSoLuongConLai();
+				int soLuongHoanThanh = soLuongConLai;
+				double heSoNgayLam = 1;
+				if (ngayChamCong.getDayOfWeek() == DayOfWeek.SUNDAY) {
+					heSoNgayLam = 1.5;
+				}
+				BangChamCongCongNhan bangChamCongCongNhan = new BangChamCongCongNhan(idChamCong, ngayChamCong, soLuongHoanThanh, congDoanPhanCong, heSoNgayLam);
+				bangChamCongCongNhan_BUS.themChamCong(bangChamCongCongNhan);
+				congDoanPhanCong.setSoLuongConLai(soLuongConLai - soLuongHoanThanh);
+				congDoanPhanCong_BUS.capNhatSoLuongConLai(congDoanPhanCong);
+			}
+			JOptionPane.showMessageDialog(this, "Chấm công thành công!");
+		}
+	}
+	
+	/**
+	 * Cập nhật số lượng hoàn thành
+	 */
+	private void capNhatSoLuongHoanThanh() {
 		
 	}
 
@@ -689,13 +733,13 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 		Object o = e.getSource();
 		if (o.equals(btnChamCong)) {
 			chamCong();
-//			layDanhSachCongNhan();
-//			locPhanCongTheoHoTen();
-//			docDuLieuLenTablePhanCong(listPhanCong);
-//			locDuLieuChamCongTheoNgay();
+			kiemTraComboBoxCaLam();
+			locDuLieuChamCongTheoNgay();
 		}
 		if (o.equals(btnChamCongAll)) {
-			
+			chamCongHangLoat();
+			kiemTraComboBoxCaLam();
+			locDuLieuChamCongTheoNgay();
 		}
 		if (o.equals(btnCapNhat)) {
 			

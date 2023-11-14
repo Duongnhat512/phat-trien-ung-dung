@@ -17,4 +17,7 @@ public class BangChamCongCongNhan_BUS {
 	public boolean themChamCong(BangChamCongCongNhan ngayCong) {
 		return bangChamCongCongNhan_DAO.themChamCong(ngayCong);
 	}
+	public boolean capNhatSoLuongHoanThanh(BangChamCongCongNhan bangCC) {
+		return bangChamCongCongNhan_DAO.capNhatSoLuongHoanThanh(bangCC);
+	}
 }
