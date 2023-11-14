@@ -15,6 +15,10 @@ import entities.CongDoanPhanCong;
 public class BangChamCongCongNhan_DAO {
 	private CongDoanPhanCong_DAO congDoanPhanCong_DAO = new CongDoanPhanCong_DAO();
 	
+	/**
+	 * Lấy danh sách chấm công
+	 * @return
+	 */
 	public ArrayList<BangChamCongCongNhan> getDanhSachChamCong(){
 		ArrayList<BangChamCongCongNhan> list = new ArrayList<BangChamCongCongNhan>();
 		ConnectDB.getInstance();
@@ -39,6 +43,13 @@ public class BangChamCongCongNhan_DAO {
 		return list;
 	}
 	
+	/**
+	 * Lấy danh sách chấm công theo ngày, tháng, năm
+	 * @param ngay
+	 * @param thang
+	 * @param nam
+	 * @return
+	 */
 	public ArrayList<BangChamCongCongNhan> getDanhSachChamCongTheoNgay(int ngay, int thang, int nam){
 		ArrayList<BangChamCongCongNhan> list = new ArrayList<BangChamCongCongNhan>();
 		ConnectDB.getInstance();
@@ -65,4 +76,32 @@ public class BangChamCongCongNhan_DAO {
 		}
 		return list;
 	}
+	
+	/**
+	 * Thêm chấm công
+	 * @param ngayCong
+	 * @return
+	 */
+	public boolean themChamCong(BangChamCongCongNhan ngayCong) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stm = null;
+		int n = 0;
+		try {
+			stm = con.prepareStatement("insert into BangChamCongCongNhan values(?, ?, ?, ?, ?)");
+			stm.setString(1, ngayCong.getIdNgayChamCong());
+			stm.setString(2, ngayCong.getNgayChamCong().toString());
+			stm.setInt(3, ngayCong.getSoLuongHoanThanh());
+			stm.setString(4, ngayCong.getCongDoanPhanCong().getIdPhanCong());
+			stm.setDouble(5, ngayCong.getHeSoNgayLam());
+			n = stm.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return n > 0;
+	}
+	
+	
 }

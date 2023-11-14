@@ -17,4 +17,7 @@ public class CongDoanPhanCong_BUS {
 	public CongDoanPhanCong getPhanCongTheoID(String id) {
 		return congDoanPhanCong_DAO.getPhanCongTheoID(id);
 	}
+	public boolean capNhatSoLuongConLai(CongDoanPhanCong congDoanPhanCong) {
+		return congDoanPhanCong_DAO.capNhatSoLuongConLai(congDoanPhanCong);
+	}
 }

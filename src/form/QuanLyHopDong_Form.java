@@ -176,7 +176,7 @@ public class QuanLyHopDong_Form extends JPanel implements ActionListener{
 		
 		tableHopDong = new Table();
         tableHopDong.setOpaque(false);
-        // Cài đặt header cho table Chấm công
+        
         tableHopDong.setModel(new DefaultTableModel(
         	new Object[][] {
         	},

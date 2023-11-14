@@ -74,6 +74,11 @@ public class CongDoanPhanCong_DAO {
 		return list;
 	}
 	
+	/**
+	 * Lấy công đoạn phân công theo id
+	 * @param id
+	 * @return
+	 */
 	public CongDoanPhanCong getPhanCongTheoID(String id) {
 		CongDoanPhanCong phanCong = null;
 		ConnectDB.getInstance();
@@ -99,5 +104,27 @@ public class CongDoanPhanCong_DAO {
 		
 		
 		return phanCong;
+	}
+	
+	/**
+	 * Cập nhật số lượng còn lại
+	 * @param congDoanPhanCong
+	 * @return
+	 */
+	public boolean capNhatSoLuongConLai(CongDoanPhanCong congDoanPhanCong) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stm = null;
+		int n = 0;
+		try {
+			stm = con.prepareStatement("update CongDoanPhanCong set soLuongConLai = ? where idPhanCong = ?");
+			stm.setInt(1, congDoanPhanCong.getSoLuongConLai());
+			stm.setString(2, congDoanPhanCong.getIdPhanCong());
+			n = stm.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return n > 0;
 	}
 }

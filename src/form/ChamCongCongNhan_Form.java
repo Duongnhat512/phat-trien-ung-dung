@@ -48,14 +48,16 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import commons.RoundTextField;
 
-public class ChamCongCongNhan_Form extends RoundPanel {
+public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 	
 	private RoundPanel panelCenter;
 	private RoundPanel panelSouth;
@@ -76,7 +78,6 @@ public class ChamCongCongNhan_Form extends RoundPanel {
 	//
 	private BangChamCongCongNhan_BUS bangChamCongCongNhan_BUS = new BangChamCongCongNhan_BUS();
 	private CongDoanPhanCong_BUS congDoanPhanCong_BUS = new CongDoanPhanCong_BUS();
-	private ArrayList<CongDoanPhanCong> listPhanCong;
 	private RoundTextField txtTimKiem;
 	private JTextField txtSLHoanThanh;
 	private JLabel lblID;
@@ -88,6 +89,13 @@ public class ChamCongCongNhan_Form extends RoundPanel {
 	private JLabel lblSLDuocGiao;
 	private JLabel lblSLConLai;
 	private JLabel lblThongBao;
+	private MyButton btnChamCong;
+	private MyButton btnChamCongAll;
+	private MyButton btnCapNhat;
+	
+	//
+	private ArrayList<CongDoanPhanCong> listPhanCong = new ArrayList<CongDoanPhanCong>();
+	private ArrayList<BangChamCongCongNhan> listChamCong = new ArrayList<BangChamCongCongNhan>();
 
 	/**
 	 * Create the panel.
@@ -138,12 +146,12 @@ public class ChamCongCongNhan_Form extends RoundPanel {
 		textNgayChamCong.setBounds(694, 5, 93, 35);
 		textNgayChamCong.setBorder(null);
 		textNgayChamCong.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		textNgayChamCong.setText(dtf.format(LocalDate.now()));
+		textNgayChamCong.setText(dtf.format(LocalDate.now().minusDays(1)));
 		textNgayChamCong.setHorizontalAlignment(SwingConstants.CENTER);
 		textNgayChamCong.setColumns(10);
 		
 		JComboBox cboCaLam = new JComboBox();
-		cboCaLam.setBounds(18, 4, 117, 37);
+		cboCaLam.setBounds(311, 3, 117, 37);
 		cboCaLam.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		
 		RoundPanel panel_2 = new RoundPanel();
@@ -277,12 +285,21 @@ public class ChamCongCongNhan_Form extends RoundPanel {
 		tableCongNhan = new Table();
         tableCongNhan.setOpaque(false);
         tableCongNhan.setModel(new DefaultTableModel(
-        	new Object[][] {
-        	},
-        	new String[] {
-        		"ID", "H\u1ECD v\u00E0 t\u00EAn", "Ca l\u00E0m", "Ph\u00E2n x\u01B0\u1EDFng", "S\u1EA3n ph\u1EA9m", "C\u00F4ng \u0111o\u1EA1n", "S\u1ED1 l\u01B0\u1EE3ng \u0111\u01B0\u1EE3c giao", "Số lượng còn lại"
-        	}
-        ));
+                new Object [][] {
+
+                },
+                new String [] {
+                		"ID", "H\u1ECD v\u00E0 t\u00EAn", "Ca l\u00E0m", "Ph\u00E2n x\u01B0\u1EDFng", "S\u1EA3n ph\u1EA9m", "C\u00F4ng \u0111o\u1EA1n", "S\u1ED1 l\u01B0\u1EE3ng \u0111\u01B0\u1EE3c giao", "Số lượng còn lại"
+                }
+            ) {
+                boolean[] canEdit = new boolean [] {
+                    false, false, false, false, false, false, false, false
+                };
+
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    return canEdit [columnIndex];
+                }
+            });
         tableCongNhan.getColumnModel().getColumn(0).setPreferredWidth(30);
         tableCongNhan.getColumnModel().getColumn(6).setPreferredWidth(136);
         
@@ -310,12 +327,21 @@ public class ChamCongCongNhan_Form extends RoundPanel {
         tableChamCong.setOpaque(false);
         // Cài đặt header cho table Chấm công
         tableChamCong.setModel(new DefaultTableModel(
-        	new Object[][] {
-        	},
-        	new String[] {
-        		"ID c\u00F4ng nh\u00E2n", "Ng\u00E0y ch\u1EA5m c\u00F4ng", "Ph\u00E2n x\u01B0\u1EDFng", "S\u1EA3n ph\u1EA9m", "C\u00F4ng \u0111o\u1EA1n", "S\u1ED1 l\u01B0\u1EE3ng \u0111\u01B0\u1EE3c giao", "S\u1ED1 l\u01B0\u1EE3ng ho\u00E0n th\u00E0nh"
-        	}
-        ));
+                new Object [][] {
+
+                },
+                new String [] {
+                	"ID c\u00F4ng nh\u00E2n", "Ng\u00E0y ch\u1EA5m c\u00F4ng", "Ph\u00E2n x\u01B0\u1EDFng", "S\u1EA3n ph\u1EA9m", "C\u00F4ng \u0111o\u1EA1n", "S\u1ED1 l\u01B0\u1EE3ng ho\u00E0n th\u00E0nh"
+                }
+            ) {
+                boolean[] canEdit = new boolean [] {
+                    false, false, false, false, false, false
+                };
+
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    return canEdit [columnIndex];
+                }
+            });
         
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setBackground(new Color(255, 255, 255));
@@ -355,57 +381,15 @@ public class ChamCongCongNhan_Form extends RoundPanel {
         txtTimKiem.setFont(new Font("SansSerif", Font.PLAIN, 15));
         txtTimKiem.setColumns(10);
         txtTimKiem.setBorder(new EmptyBorder(0, 15, 0, 0));
-        txtTimKiem.setBounds(272, 5, 291, 35);
+        txtTimKiem.setBounds(10, 4, 291, 35);
         panelNorth.add(txtTimKiem);
         
         JComboBox cboPhanXuong = new JComboBox();
 //        cboPhanXuong.setSelectedIndex(3);
         cboPhanXuong.setFont(new Font("SansSerif", Font.PLAIN, 15));
-        cboPhanXuong.setBounds(145, 4, 117, 37);
+        cboPhanXuong.setBounds(438, 3, 117, 37);
         panelNorth.add(cboPhanXuong);
         
-        txtTimKiem.addFocusListener(new FocusAdapter() {
-        	@Override
-        	public void focusLost(FocusEvent e) {
-        		if (txtTimKiem.getText().isEmpty()) {
-        			 txtTimKiem.setText("Nhập tên công nhân cần tìm...");
-        			 txtTimKiem.setForeground(Color.GRAY);
-				}
-        		super.focusLost(e);
-        	}
-        	@Override
-        	public void focusGained(FocusEvent e) {
-        		if (txtTimKiem.getText().equalsIgnoreCase("Nhập tên công nhân cần tìm...")) {
-					txtTimKiem.setText("");
-					txtTimKiem.setForeground(Color.BLACK);
-				}
-        		super.focusGained(e);
-        	}
-        });
-        txtTimKiem.addKeyListener(new KeyListener() {
-			
-			@Override
-			public void keyTyped(KeyEvent e) {
-				tableCongNhan.clearSelection();
-				if (txtTimKiem.getText().trim().isEmpty()) {
-					docDuLieuLenTablePhanCong(listPhanCong);
-					return;
-				}
-				locPhanCongTheoHoTen();
-			}
-			
-			@Override
-			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
         add(panelSouth);
         add(panelCenter);
         add(panelCenter_1);
@@ -417,21 +401,21 @@ public class ChamCongCongNhan_Form extends RoundPanel {
         panelNorth_1.setBounds(19, 433, 1221, 45);
         add(panelNorth_1);
         
-        MyButton btnChamCong = new MyButton();
+        btnChamCong = new MyButton();
         btnChamCong.setText("Chấm công");
         btnChamCong.setRadius(10);
         btnChamCong.setFont(new Font("SansSerif", Font.PLAIN, 15));
         btnChamCong.setFocusPainted(false);
         btnChamCong.setBackground(Color.WHITE);
         
-        MyButton btnChamCongAll = new MyButton();
+        btnChamCongAll = new MyButton();
         btnChamCongAll.setText("Chấm công hàng loạt");
         btnChamCongAll.setRadius(10);
         btnChamCongAll.setFont(new Font("SansSerif", Font.PLAIN, 15));
         btnChamCongAll.setFocusPainted(false);
         btnChamCongAll.setBackground(Color.WHITE);
         
-        MyButton btnCapNhat = new MyButton();
+        btnCapNhat = new MyButton();
         btnCapNhat.setText("Cập nhật");
         btnCapNhat.setRadius(10);
         btnCapNhat.setFont(new Font("SansSerif", Font.PLAIN, 15));
@@ -461,7 +445,6 @@ public class ChamCongCongNhan_Form extends RoundPanel {
         panelNorth_1.setLayout(gl_panelNorth_1);
         
         //
-        listPhanCong = congDoanPhanCong_BUS.getDanhSachPhanCong();
         indexCaLam = 3;
         cboCaLam.addActionListener(new ActionListener() {
 			
@@ -470,10 +453,22 @@ public class ChamCongCongNhan_Form extends RoundPanel {
 				indexCaLam = cboCaLam.getSelectedIndex();
 				tableCongNhan.clearSelection();
         		if (indexCaLam == 3) {
-					docDuLieuLenTablePhanCong(congDoanPhanCong_BUS.getDanhSachPhanCong());
+        			layDanhSachCongNhan();
+					if (!txtTimKiem.getText().equals("Nhập tên công nhân cần tìm...")) {
+						locPhanCongTheoHoTen();
+					}
+					else {
+						docDuLieuLenTablePhanCong(listPhanCong);
+					}
 					return;
-				}
+        		}
         		locPhanCongTheoCaLam(indexCaLam + 1);
+        		if (!txtTimKiem.getText().equals("Nhập tên công nhân cần tìm...")) {
+					locPhanCongTheoHoTen();
+				}
+        		else {
+					docDuLieuLenTablePhanCong(listPhanCong);
+				}
 			}
 		});
         
@@ -486,6 +481,62 @@ public class ChamCongCongNhan_Form extends RoundPanel {
         	}
         });
         
+        // Đăng ký sự kiện cho ô tìm kiếm theo tên
+        
+        //Place holder
+        txtTimKiem.addFocusListener(new FocusAdapter() {
+        	@Override
+        	public void focusLost(FocusEvent e) {
+        		if (txtTimKiem.getText().isEmpty()) {
+        			 txtTimKiem.setText("Nhập tên công nhân cần tìm...");
+        			 txtTimKiem.setForeground(Color.GRAY);
+				}
+        		super.focusLost(e);
+        	}
+        	@Override
+        	public void focusGained(FocusEvent e) {
+        		if (txtTimKiem.getText().equalsIgnoreCase("Nhập tên công nhân cần tìm...")) {
+					txtTimKiem.setText("");
+					txtTimKiem.setForeground(Color.BLACK);
+				}
+        		super.focusGained(e);
+        	}
+        });
+        
+        // Xử lý sự kiện tìm kiếm
+        txtTimKiem.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				tableCongNhan.clearSelection();
+				layDanhSachCongNhan();
+				if (txtTimKiem.getText().trim().isEmpty()) {
+					docDuLieuLenTablePhanCong(listPhanCong);
+					return;
+				}
+				locPhanCongTheoHoTen();
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+        
+        btnChamCong.addActionListener(this);
+        btnChamCongAll.addActionListener(this);
+        btnCapNhat.addActionListener(this);
+        
+        //
+        layDanhSachCongNhan();
+        locDuLieuChamCongTheoNgay();
         // đọc dữ liệu lên table
         docDuLieuLenTablePhanCong(listPhanCong);
         locDuLieuChamCongTheoNgay();
@@ -500,11 +551,9 @@ public class ChamCongCongNhan_Form extends RoundPanel {
 		dm.getDataVector().removeAllElements();
 		
 		for(CongDoanPhanCong congDoanPhanCong : list) {
-			if (congDoanPhanCong.getSoLuongConLai() == 0) {
-				return;
-			}
 			dm.addRow(new Object[] {congDoanPhanCong.getCongNhan().getIdCongNhan(), congDoanPhanCong.getCongNhan().getHoTen(), congDoanPhanCong.getCaLam().getTenCaLam(), congDoanPhanCong.getCongNhan().getPhanXuong().getTenPhanXuong(), congDoanPhanCong.getCongDoanSP().getSanPham().getTenSanPham(), congDoanPhanCong.getCongDoanSP().getTenCongDoan(), congDoanPhanCong.getSoLuongSanPhamDuocGiao(), congDoanPhanCong.getSoLuongConLai()});
 		}
+		dm.fireTableDataChanged();
 		tableCongNhan.repaint();
 		tableCongNhan.revalidate();
 	}
@@ -516,26 +565,31 @@ public class ChamCongCongNhan_Form extends RoundPanel {
 	private void locPhanCongTheoCaLam(int caLam) {
 		listPhanCong = congDoanPhanCong_BUS.getDanhSachPhanCongTheoCaLam(caLam);
 		docDuLieuLenTablePhanCong(listPhanCong);
-		tableCongNhan.repaint();
-		tableCongNhan.revalidate();
 	}
 	
 	/**
 	 * Lọc danh sách phân công theo tên
 	 */
 	private void locPhanCongTheoHoTen() {
-		DefaultTableModel dm = (DefaultTableModel) tableCongNhan.getModel();
-		dm.getDataVector().removeAllElements();
+		ArrayList<CongDoanPhanCong> temp = new ArrayList<CongDoanPhanCong>();
 		for(CongDoanPhanCong congDoanPhanCong : listPhanCong) {
-			if (congDoanPhanCong.getSoLuongConLai() == 0) {
-				return;
-			}
 			if(congDoanPhanCong.getCongNhan().getHoTen().trim().toUpperCase().contains(txtTimKiem.getText().trim().toUpperCase())) {
-				dm.addRow(new Object[] {congDoanPhanCong.getCongNhan().getIdCongNhan(), congDoanPhanCong.getCongNhan().getHoTen(), congDoanPhanCong.getCaLam().getTenCaLam(), congDoanPhanCong.getCongNhan().getPhanXuong().getTenPhanXuong(), congDoanPhanCong.getCongDoanSP().getSanPham().getTenSanPham(), congDoanPhanCong.getCongDoanSP().getTenCongDoan(), congDoanPhanCong.getSoLuongSanPhamDuocGiao(), congDoanPhanCong.getSoLuongConLai()});
+				temp.add(congDoanPhanCong);
 			}
 		}
-		tableCongNhan.repaint();
-		tableCongNhan.revalidate();
+		listPhanCong = temp;
+		docDuLieuLenTablePhanCong(listPhanCong);
+	}
+	
+	private void layDanhSachCongNhan() {
+		ArrayList<CongDoanPhanCong> temp = new ArrayList<CongDoanPhanCong>();
+		listPhanCong = congDoanPhanCong_BUS.getDanhSachPhanCong();
+		for(CongDoanPhanCong congDoanPhanCong : listPhanCong) {
+			if (congDoanPhanCong.getSoLuongConLai() > 0) {
+				temp.add(congDoanPhanCong);
+			}
+		}
+		listPhanCong = temp;
 	}
 	
 	/**
@@ -556,10 +610,8 @@ public class ChamCongCongNhan_Form extends RoundPanel {
 	 */
 	private void locDuLieuChamCongTheoNgay() {
 		LocalDate date = LocalDate.parse(textNgayChamCong.getText(), dtf);
-		ArrayList<BangChamCongCongNhan> listChamCong = bangChamCongCongNhan_BUS.getDanhSachChamCongTheoNgay(date.getDayOfMonth(), date.getMonthValue(), date.getYear());
+		listChamCong  = bangChamCongCongNhan_BUS.getDanhSachChamCongTheoNgay(date.getDayOfMonth(), date.getMonthValue(), date.getYear());
 		docDuLieuLenTableChamCong(listChamCong);
-		tableChamCong.repaint();
-		tableChamCong.revalidate();
 	}
 	
 	/**
@@ -577,6 +629,76 @@ public class ChamCongCongNhan_Form extends RoundPanel {
 			lblSLDuocGiao.setText(tableCongNhan.getValueAt(row, 6).toString());
 			lblSLConLai.setText(tableCongNhan.getValueAt(row, 7).toString());
 			txtSLHoanThanh.setText(tableCongNhan.getValueAt(row, 7).toString());
+		}
+	}
+	
+	/**
+	 * Chấm công cho một công nhân
+	 */
+	public void chamCong() {
+		int row = tableCongNhan.getSelectedRow();
+		if (row == -1) {
+			return;
+		}
+		CongDoanPhanCong congDoanPhanCong = listPhanCong.get(row);
+		String idChamCong = String.format("CCN%04d", bangChamCongCongNhan_BUS.getDanhSachChamCong().size() + 1);
+		LocalDate ngayChamCong =  LocalDate.parse(textNgayChamCong.getText(), dtf);
+		int soLuongConLai = congDoanPhanCong.getSoLuongConLai();
+		int soLuongHoanThanh = 0;
+		try {
+			soLuongHoanThanh = Integer.parseInt(txtSLHoanThanh.getText());
+			if (soLuongHoanThanh <= 0) {
+				lblThongBao.setText("Số lượng hoàn thành nhập vào phải là số dương!");
+				txtSLHoanThanh.selectAll();
+				txtSLHoanThanh.requestFocus();
+				return;
+			}
+			if (soLuongConLai < soLuongHoanThanh) {
+				lblThongBao.setText("Số lượng hoàn thành nhập vào bé hơn số lượng còn lại!");
+				txtSLHoanThanh.selectAll();
+				txtSLHoanThanh.requestFocus();
+				return;
+			}
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			lblThongBao.setText("Số lượng hoàn thành nhập vào phải là chữ số!");
+			txtSLHoanThanh.selectAll();
+			txtSLHoanThanh.requestFocus();
+			return;
+		}
+		double heSoNgayLam = 1;
+		if (ngayChamCong.getDayOfWeek() == DayOfWeek.SUNDAY) {
+			heSoNgayLam = 1.5;
+		}
+		BangChamCongCongNhan bangChamCongCongNhan = new BangChamCongCongNhan(idChamCong, ngayChamCong, soLuongHoanThanh, congDoanPhanCong, heSoNgayLam);
+		bangChamCongCongNhan_BUS.themChamCong(bangChamCongCongNhan);
+		congDoanPhanCong.setSoLuongConLai(soLuongConLai - soLuongHoanThanh);
+		congDoanPhanCong_BUS.capNhatSoLuongConLai(congDoanPhanCong);
+		lblThongBao.setText("Chấm công thành công!");
+	}
+	
+	/**
+	 * Chấm công cho tất cả công nhân
+	 */
+	public void chamCongHangLoat() {
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object o = e.getSource();
+		if (o.equals(btnChamCong)) {
+			chamCong();
+//			layDanhSachCongNhan();
+//			locPhanCongTheoHoTen();
+//			docDuLieuLenTablePhanCong(listPhanCong);
+//			locDuLieuChamCongTheoNgay();
+		}
+		if (o.equals(btnChamCongAll)) {
+			
+		}
+		if (o.equals(btnCapNhat)) {
+			
 		}
 	}
 }

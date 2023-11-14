@@ -14,4 +14,7 @@ public class BangChamCongCongNhan_BUS {
 	public ArrayList<BangChamCongCongNhan> getDanhSachChamCongTheoNgay(int ngay, int thang, int nam){
 		return bangChamCongCongNhan_DAO.getDanhSachChamCongTheoNgay(ngay, thang, nam);
 	}
+	public boolean themChamCong(BangChamCongCongNhan ngayCong) {
+		return bangChamCongCongNhan_DAO.themChamCong(ngayCong);
+	}
 }
