@@ -19,40 +19,7 @@ public class CongNhan {
       private TaiKhoan taiKhoan;
       private String anhDaiDien;
       private String cCCD;
-	public CongNhan(String idCongNhan, String hoTen, boolean phai, LocalDate ngaySinh, LocalDate ngayBatDauCongTac,
-			LocalDate ngayKetThucCongTac, PhanXuong phanXuong, String email, String soDienThoai,
-			String tayNghe, TaiKhoan taiKhoan, String anhDaiDien, String cCCD) {
-		super();
-		this.idCongNhan = idCongNhan;
-		this.hoTen = hoTen;
-		this.phai = phai;
-		this.ngaySinh = ngaySinh;
-		this.ngayBatDauCongTac = ngayBatDauCongTac;
-		this.ngayKetThucCongTac = ngayKetThucCongTac;
-		this.phanXuong = phanXuong;
-		this.email = email;
-		this.soDienThoai = soDienThoai;
-		this.tayNghe = tayNghe;
-		this.taiKhoan = taiKhoan;
-		this.anhDaiDien = anhDaiDien;
-		this.cCCD = cCCD;
-	}
-	public CongNhan() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	
-	public CongNhan(String idCongNhan) {
-		super();
-		this.idCongNhan = idCongNhan;
-	}
-	
-	public String getcCCD() {
-		return cCCD;
-	}
-	public void setcCCD(String cCCD) {
-		this.cCCD = cCCD;
-	}
+      private double phuCap;
 	public String getIdCongNhan() {
 		return idCongNhan;
 	}
@@ -125,6 +92,12 @@ public class CongNhan {
 	public void setAnhDaiDien(String anhDaiDien) {
 		this.anhDaiDien = anhDaiDien;
 	}
+	public String getcCCD() {
+		return cCCD;
+	}
+	public void setcCCD(String cCCD) {
+		this.cCCD = cCCD;
+	}
 	@Override
 	public int hashCode() {
 		return Objects.hash(idCongNhan);
@@ -140,5 +113,60 @@ public class CongNhan {
 		CongNhan other = (CongNhan) obj;
 		return Objects.equals(idCongNhan, other.idCongNhan);
 	}
+	
+	public double getPhuCap() {
+		return phuCap;
+	}
+	public void setPhuCap(double phuCap) {
+		this.phuCap = phuCap;
+	}
+	public CongNhan(String idCongNhan, String hoTen, boolean phai, LocalDate ngaySinh, LocalDate ngayBatDauCongTac,
+			LocalDate ngayKetThucCongTac, PhanXuong phanXuong, String email, String soDienThoai, String tayNghe,
+			TaiKhoan taiKhoan, String anhDaiDien, String cCCD, double phuCap) {
+		super();
+		this.idCongNhan = idCongNhan;
+		this.hoTen = hoTen;
+		this.phai = phai;
+		this.ngaySinh = ngaySinh;
+		this.ngayBatDauCongTac = ngayBatDauCongTac;
+		this.ngayKetThucCongTac = ngayKetThucCongTac;
+		this.phanXuong = phanXuong;
+		this.email = email;
+		this.soDienThoai = soDienThoai;
+		this.tayNghe = tayNghe;
+		this.taiKhoan = taiKhoan;
+		this.anhDaiDien = anhDaiDien;
+		this.cCCD = cCCD;
+		this.phuCap = phuCap;
+	}
+	
+	public CongNhan(String idCongNhan, String hoTen, boolean phai, LocalDate ngaySinh, LocalDate ngayBatDauCongTac,
+			LocalDate ngayKetThucCongTac, PhanXuong phanXuong, String email, String soDienThoai, String tayNghe,
+			TaiKhoan taiKhoan, String anhDaiDien, String cCCD) {
+		super();
+		this.idCongNhan = idCongNhan;
+		this.hoTen = hoTen;
+		this.phai = phai;
+		this.ngaySinh = ngaySinh;
+		this.ngayBatDauCongTac = ngayBatDauCongTac;
+		this.ngayKetThucCongTac = ngayKetThucCongTac;
+		this.phanXuong = phanXuong;
+		this.email = email;
+		this.soDienThoai = soDienThoai;
+		this.tayNghe = tayNghe;
+		this.taiKhoan = taiKhoan;
+		this.anhDaiDien = anhDaiDien;
+		this.cCCD = cCCD;
+	}
+	public CongNhan() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public CongNhan(String idCongNhan) {
+		super();
+		// TODO Auto-generated constructor stub
+		this.idCongNhan = idCongNhan;
+	}
+	
       
 }

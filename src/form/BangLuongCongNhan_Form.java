@@ -352,7 +352,7 @@ public class BangLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 		dslcn = bl_bus.getAllTableTinhLuongTheoThang(phanXuong, thang, nam);
 		double tongThoiGianLamViec = 0, tongSoLuongSanPham = 0, tongLuongHanhChanh = 0, tongLuongTangCa = 0, tongPhuCap = 0, tongThucLanh = 0;
 		if(dslcn.isEmpty()) {
-			dscn = cccn_bus.getDSChamCongCongNhan(thang, nam, phanXuong);			
+			dscn = cccn_bus.getAllTableChamCong(thang, nam, phanXuong);			
 			if (dscn.isEmpty()) {
 				JOptionPane.showConfirmDialog(this, "Không có dữ liệu để tính lương");
 			}

@@ -23,9 +23,11 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 
 import bus.BangLuongNhanVien_BUS;
+import bus.CaLam_BUS;
 import bus.ChamCongNhanVien_BUS;
 import bus.ChucVu_BUS;
 import bus.NhanVien_BUS;
+import bus.PhongBan_BUS;
 import bus.TaiKhoan_BUS;
 import commons.RoundPanel;
 import commons.Table;
@@ -107,6 +109,8 @@ public class BangLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 	private JTable table_chiTiet1;
 	private JTable table_chiTiet2;
 	private TaiKhoan_BUS tk_bus;
+	private PhongBan_BUS phongBan_BUS = new PhongBan_BUS();
+	
 
 	public BangLuongNhanVien_Form(int width, int height) {
 		setBackground(new Color(240, 240, 240));
@@ -423,7 +427,7 @@ public class BangLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 
 	public void docDuLieuPhongBan() {
 		ArrayList<PhongBan> dspb = new ArrayList<>();
-		dspb = bl_bus.getAllPhongBan();
+		dspb = phongBan_BUS.getDSPB();
 		DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
 		for (PhongBan phongBan : dspb) {
 			comboBoxModel.addElement(phongBan.getTenPhongBan());
@@ -492,10 +496,10 @@ public class BangLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 			int tongSoLuong = dslnv.size();
 			String txtSearch = searchField.getText();
 			for (LuongNhanVien lnv : dslnv) {
-				NhanVien nv = nv_bus.getNV(lnv.getNhanVien().getIdNhanVien());
+				NhanVien nv = nv_bus.getNhanVienTheoID(lnv.getNhanVien().getIdNhanVien());
 				if (lnv.getIdLuong().contains(txtSearch) || nv.getIdNhanVien().contains(txtSearch) || nv.getHoTen().contains(txtSearch)) {
 					checkNV = true;
-					ChucVu c = cv_bus.getCV(nv.getChucVu().getIdChucVu());
+					ChucVu c = cv_bus.getChucVuTheoID(nv.getChucVu().getIdChucVu());
 					DecimalFormat decimalFormat = new DecimalFormat("###,###,###.##");
 					String tongLuong = decimalFormat.format(lnv.getTongLuong()) + " VND";
 					String bhxh = decimalFormat.format(lnv.getThueBHXH()) + " VND";

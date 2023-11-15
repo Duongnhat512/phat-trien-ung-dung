@@ -30,10 +30,12 @@ public class CongDoanSanPham_DAO {
 			while(rs.next()) {
 				String idCongDoan = rs.getString(1);
 				String tenCongDoan = rs.getString(2);
-				double luongCongDoan = rs.getDouble(3);
-				SanPham sp = sanPham_DAO.getSanPhamTheoID(idSanPham);
-				String thuTuUuTien = rs.getString(5);
-				CongDoanSanPham cd = new CongDoanSanPham(idCongDoan, tenCongDoan, luongCongDoan, sp, thuTuUuTien);
+				int soLuongSP = rs.getInt(3);
+				double luongCongDoan = rs.getDouble(4);
+				int soLuongCN = rs.getInt(5);
+				SanPham sp = sanPham_DAO.getSanPhamTheoID(rs.getString(6));
+				String thuTuUuTien = rs.getString(7); 
+				CongDoanSanPham cd = new CongDoanSanPham(idCongDoan, tenCongDoan, soLuongSP, luongCongDoan, soLuongCN, sp, thuTuUuTien);
 				list.add(cd);
 			}
 		} catch (SQLException e) {
@@ -60,10 +62,12 @@ public class CongDoanSanPham_DAO {
 			ResultSet rs = stm.executeQuery();
 			while(rs.next()) {
 				String tenCongDoan = rs.getString(2);
-				double luongCongDoan = rs.getDouble(3);
-				SanPham sp = sanPham_DAO.getSanPhamTheoID(rs.getString(4));
-				String thuTuUuTien = rs.getString(5); 
-				cd = new CongDoanSanPham(idCongDoan, tenCongDoan, luongCongDoan, sp, thuTuUuTien);
+				int soLuongSP = rs.getInt(3);
+				double luongCongDoan = rs.getDouble(4);
+				int soLuongCN = rs.getInt(5);
+				SanPham sp = sanPham_DAO.getSanPhamTheoID(rs.getString(6));
+				String thuTuUuTien = rs.getString(7); 
+				cd = new CongDoanSanPham(idCongDoan, tenCongDoan, soLuongSP, luongCongDoan, soLuongCN, sp, thuTuUuTien);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

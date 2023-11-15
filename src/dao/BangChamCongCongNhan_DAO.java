@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import connectDB.ConnectDB;
 import entities.BangChamCongCongNhan;
 import entities.CongDoanPhanCong;
+import entities.CongNhan;
+import entities.PhanXuong;
+import entities.TaiKhoan;
 
 public class BangChamCongCongNhan_DAO {
 	private CongDoanPhanCong_DAO congDoanPhanCong_DAO = new CongDoanPhanCong_DAO();
@@ -123,6 +126,52 @@ public class BangChamCongCongNhan_DAO {
 		}
 		return n > 0;
 	}
-	
+	public ArrayList<CongNhan> getAllTableChamCong(int thang, int nam, String tenpb) {
+		ArrayList<CongNhan> dscn = new ArrayList<>();
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		String sql = "SELECT CN.idCongNhan, CN.hoTen, CN.phai, CN.ngaySinh, CN.ngayBatDauCongTac, CN.ngayKetThucCongTac, CN.idPhanXuong, CN.email, CN.soDienThoai, CN.tayNghe, CN.anhDaiDien, CN.phuCap, CN.tenTaiKhoan "
+				+ "FROM CongNhan CN "
+				+ "JOIN PhanXuong PX ON CN.idPhanXuong = PX.idPhanXuong "
+				+ "JOIN CongDoanPhanCong PC ON CN.idCongNhan = PC.idCongNhan "
+				+ "JOIN BangChamCongCongNhan BC ON PC.idPhanCong = BC.idPhanCong "
+				+ "JOIN CongDoanSP CDSP ON PC.idCongDoan = CDSP.idCongDoan "
+				+ "JOIN CaLam CL ON PC.idCaLam = CL.idCaLam "
+				+ "WHERE MONTH(BC.ngayChamCong) = ? AND YEAR(BC.ngayChamCong) = ? AND PX.tenPhanXuong = ? "
+				+ "GROUP BY CN.idCongNhan, CN.hoTen, CN.phai, CN.ngaySinh, CN.ngayBatDauCongTac, CN.ngayKetThucCongTac, CN.idPhanXuong, CN.email, CN.soDienThoai, CN.tayNghe, CN.anhDaiDien, CN.phuCap, CN.tenTaiKhoan ";
+		try {
+			PreparedStatement st = null;
+			st = con.prepareStatement(sql);
+			st.setInt(1, thang);
+			st.setInt(2, nam);
+			st.setString(3, tenpb);
+			ResultSet r = st.executeQuery();
+			while (r.next()) {
+				String id = r.getString(1);
+				String tenCN = r.getString(2);
+				boolean phai = r.getBoolean(3);
+				LocalDate ngaySinh = r.getDate(4).toLocalDate();
+				LocalDate ngayBatDauCongTac = r.getDate(5).toLocalDate();
+				LocalDate ngayKetThucCongTac = r.getDate(6) != null ? r.getDate(6).toLocalDate() : null;
+				String idPhanXuong = r.getString(7);
+				String email = r.getString(8);
+				String soDienThoai = r.getString(9);
+				String tayNghe = r.getString(10);
+				String anhDaiDien = r.getString(11);
+				double phuCap = r.getDouble(12);
+				String taiKhoan = r.getString(13);
+				PhanXuong p = new PhanXuong(idPhanXuong);
+				TaiKhoan t = new TaiKhoan(taiKhoan);
+				String cccd = "";
+				// Tạo đối tượng CongNhan và thêm vào danh sách
+				CongNhan n = new CongNhan(id, tenCN, phai, ngaySinh, ngayBatDauCongTac, ngayKetThucCongTac, p, email, soDienThoai, tayNghe, t, anhDaiDien, cccd, phuCap);
+				dscn.add(n);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dscn;
+	}
 	
 }
