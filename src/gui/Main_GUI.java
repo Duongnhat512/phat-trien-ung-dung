@@ -1,63 +1,42 @@
 package gui;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
-
-import commons.GradientPanel;
-import commons.MenuEvent;
-import commons.MyButton;
-import commons.MyMenu;
-import commons.PanelButton;
-import connectDB.ConnectDB;
-import form.ChamCongCongNhan_Form;
-import form.ChamCongNhanVien_Form;
-import form.CongDoanPhanCong_Form;
-import form.QuanLyCongNhan_Form;
-import form.QuanLyNhanVien_Form;
-import form.QuanLySanPham_Form;
-import form.QuanLyHopDong_Form;
-
-import form.ThongKeKPI_Form;
-import form.TinhLuongNhanVien_Form;
-
-import java.awt.Font;
-import java.awt.Frame;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.awt.Cursor;
+import java.awt.Container;
 import java.awt.Desktop;
 import java.awt.Dimension;
+import java.awt.Frame;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.awt.event.ActionEvent;
 
-import javax.swing.Box;
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JMenu;
-import javax.swing.JOptionPane;
-import java.awt.Component;
-import java.awt.Container;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import commons.GradientPanel;
+import commons.MenuEvent;
+import commons.MyButton;
+import commons.MyMenu;
+import connectDB.ConnectDB;
+import form.BangLuongCongNhan_Form;
+import form.ChamCongCongNhan_Form;
+import form.ChamCongNhanVien_Form;
+import form.CongDoanPhanCong_Form;
+import form.QuanLyCongNhan_Form;
+import form.QuanLyHopDong_Form;
+import form.QuanLyNhanVien_Form;
+import form.QuanLySanPham_Form;
+import form.ThongKeKPI_Form;
 
 /**
  * 
@@ -79,7 +58,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 	private MyMenu menu;
 	//Form
 	private ChamCongCongNhan_Form chamCongCongNhan_Form = null;
-	private TinhLuongNhanVien_Form tinhLuongNhanVien_Form = null;
+	private BangLuongCongNhan_Form bangLuongNhanVien_Form = null;
 	private ChamCongNhanVien_Form chamCongNhanVien_Form = null;
 	private QuanLyHopDong_Form quanLyHopDong_Form;
 	private ThongKeKPI_Form thongKeKPI_form = null;
@@ -203,7 +182,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 		thongKeKPI_form = new ThongKeKPI_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
 		quanLyNhanVien_Form = new QuanLyNhanVien_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
 		chamCongNhanVien_Form = new ChamCongNhanVien_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
-		tinhLuongNhanVien_Form = new TinhLuongNhanVien_Form(panelCenter.getWidth(), panelCenter.getHeight() - panelCNort.getHeight());
+		tinhLuongNhanVien_Form = new BangLuongNhanVien_Form(panelCenter.getWidth(), panelCenter.getHeight() - panelCNort.getHeight());
 		quanLyHopDong_Form = new QuanLyHopDong_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
 		quanLySanPham_Form = new QuanLySanPham_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
 		congDoanPhanCong_Form = new CongDoanPhanCong_Form();
