@@ -312,11 +312,11 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 
                 },
                 new String [] {
-                	"ID c\u00F4ng nh\u00E2n", "Ng\u00E0y ch\u1EA5m c\u00F4ng", "Ph\u00E2n x\u01B0\u1EDFng", "S\u1EA3n ph\u1EA9m", "C\u00F4ng \u0111o\u1EA1n", "S\u1ED1 l\u01B0\u1EE3ng ho\u00E0n th\u00E0nh"
+                	"ID c\u00F4ng nh\u00E2n", "Ng\u00E0y ch\u1EA5m c\u00F4ng", "Ph\u00E2n x\u01B0\u1EDFng", "S\u1EA3n ph\u1EA9m", "C\u00F4ng \u0111o\u1EA1n", "Số lượng được giao", "S\u1ED1 l\u01B0\u1EE3ng ho\u00E0n th\u00E0nh"
                 }
             ) {
                 boolean[] canEdit = new boolean [] {
-                    false, false, false, false, false, true
+                    false, false, false, false, false, false, true
                 };
 
                 public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -471,8 +471,7 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
         			.addComponent(panelSouth, GroupLayout.PREFERRED_SIZE, 284, GroupLayout.PREFERRED_SIZE))
         );
         setLayout(groupLayout);
-        
-        
+      
       indexCaLam = 3;
       cboCaLam.addActionListener(new ActionListener() {
 			
@@ -528,13 +527,10 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 				locPhanCongTheoHoTen();
 			}
 		});
-        
         //
+      	locDuLieuChamCongTheoNgay();
         layDanhSachCongNhan();
-        locDuLieuChamCongTheoNgay();
-        // đọc dữ liệu lên table
         docDuLieuLenTablePhanCong(listPhanCong);
-        locDuLieuChamCongTheoNgay();
         
 	}
 	
@@ -544,11 +540,9 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 	private void docDuLieuLenTablePhanCong(ArrayList<CongDoanPhanCong> list) {
 		DefaultTableModel dm = (DefaultTableModel) tableCongNhan.getModel();
 		dm.getDataVector().removeAllElements();
-		
 		for(CongDoanPhanCong congDoanPhanCong : list) {
 			dm.addRow(new Object[] {congDoanPhanCong.getCongNhan().getIdCongNhan(), congDoanPhanCong.getCongNhan().getHoTen(), congDoanPhanCong.getCaLam().getTenCaLam(), congDoanPhanCong.getCongNhan().getPhanXuong().getTenPhanXuong(), congDoanPhanCong.getCongDoanSP().getSanPham().getTenSanPham(), congDoanPhanCong.getCongDoanSP().getTenCongDoan(), congDoanPhanCong.getSoLuongSanPhamDuocGiao(), congDoanPhanCong.getSoLuongConLai()});
 		}
-		dm.fireTableDataChanged();
 		tableCongNhan.repaint();
 		tableCongNhan.revalidate();
 	}
@@ -558,14 +552,13 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 	 * @param caLam
 	 */
 	private void locPhanCongTheoCaLam(int caLam) {
-		listPhanCong = congDoanPhanCong_BUS.getDanhSachPhanCongTheoCaLam(caLam);
-		ArrayList<CongDoanPhanCong> temp = new ArrayList<CongDoanPhanCong>();
-		for(CongDoanPhanCong congDoanPhanCong : listPhanCong) {
-			if(congDoanPhanCong.getSoLuongConLai() > 0) {
-				temp.add(congDoanPhanCong);
+		ArrayList<CongDoanPhanCong> temp = congDoanPhanCong_BUS.getDanhSachPhanCongTheoCaLam(caLam);
+		listPhanCong = new ArrayList<CongDoanPhanCong>();
+		for(CongDoanPhanCong congDoanPhanCong : temp) {
+			if(congDoanPhanCong.getSoLuongConLai() > 0 && !listChamCong.contains(new BangChamCongCongNhan(date, congDoanPhanCong))) {
+				listPhanCong.add(congDoanPhanCong);
 			}
 		}
-		listPhanCong = temp;
 		docDuLieuLenTablePhanCong(listPhanCong);
 	}
 	
@@ -573,25 +566,26 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 	 * Lọc danh sách phân công theo tên
 	 */
 	private void locPhanCongTheoHoTen() {
-		ArrayList<CongDoanPhanCong> temp = new ArrayList<CongDoanPhanCong>();
-		for(CongDoanPhanCong congDoanPhanCong : listPhanCong) {
+		ArrayList<CongDoanPhanCong> temp = congDoanPhanCong_BUS.getDanhSachPhanCong();
+		listPhanCong = new ArrayList<CongDoanPhanCong>();
+		for(CongDoanPhanCong congDoanPhanCong : temp) {
 			if(congDoanPhanCong.getCongNhan().getHoTen().trim().toUpperCase().contains(txtTimKiem.getText().trim().toUpperCase())) {
-				temp.add(congDoanPhanCong);
+				listPhanCong.add(congDoanPhanCong);
 			}
 		}
-		listPhanCong = temp;
 		docDuLieuLenTablePhanCong(listPhanCong);
 	}
 	
 	private void layDanhSachCongNhan() {
-		ArrayList<CongDoanPhanCong> temp = new ArrayList<CongDoanPhanCong>();
-		listPhanCong = congDoanPhanCong_BUS.getDanhSachPhanCong();
-		for(CongDoanPhanCong congDoanPhanCong : listPhanCong) {
+		ArrayList<CongDoanPhanCong> temp = congDoanPhanCong_BUS.getDanhSachPhanCong();
+		listPhanCong = new ArrayList<CongDoanPhanCong>();
+		for(CongDoanPhanCong congDoanPhanCong : temp) {
 			if (congDoanPhanCong.getSoLuongConLai() > 0) {
-				temp.add(congDoanPhanCong);
+				if (!listChamCong.contains(new BangChamCongCongNhan(date, congDoanPhanCong))) {
+					listPhanCong.add(congDoanPhanCong);
+				}
 			}
 		}
-		listPhanCong = temp;
 	}
 	
 	/**
@@ -601,8 +595,9 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 		DefaultTableModel dm = (DefaultTableModel) tableChamCong.getModel();
 		dm.getDataVector().removeAllElements();
 		for(BangChamCongCongNhan bangChamCongCongNhan : listChamCong) {
-			dm.addRow(new Object[] {bangChamCongCongNhan.getCongDoanPhanCong().getCongNhan().getIdCongNhan(), bangChamCongCongNhan.getNgayChamCong(), bangChamCongCongNhan.getCongDoanPhanCong().getCongNhan().getPhanXuong().getTenPhanXuong(), bangChamCongCongNhan.getCongDoanPhanCong().getCongDoanSP().getSanPham().getTenSanPham(), bangChamCongCongNhan.getCongDoanPhanCong().getCongDoanSP().getTenCongDoan(), bangChamCongCongNhan.getCongDoanPhanCong().getSoLuongSanPhamDuocGiao(), bangChamCongCongNhan.getSoLuongHoanThanh()});
+			dm.addRow(new Object[] {bangChamCongCongNhan.getCongDoanPhanCong().getCongNhan().getIdCongNhan(), dtf.format(bangChamCongCongNhan.getNgayChamCong()), bangChamCongCongNhan.getCongDoanPhanCong().getCongNhan().getPhanXuong().getTenPhanXuong(), bangChamCongCongNhan.getCongDoanPhanCong().getCongDoanSP().getSanPham().getTenSanPham(), bangChamCongCongNhan.getCongDoanPhanCong().getCongDoanSP().getTenCongDoan(), bangChamCongCongNhan.getCongDoanPhanCong().getSoLuongSanPhamDuocGiao(), bangChamCongCongNhan.getSoLuongHoanThanh()});
 		}
+		dm.fireTableDataChanged();
 		tableChamCong.repaint();
 		tableChamCong.revalidate();
 	}
@@ -701,6 +696,7 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 		if (indexCaLam == 3) {
 			layDanhSachCongNhan();
 			kiemTraThanhTimKiem();
+			docDuLieuLenTablePhanCong(listPhanCong);
 			return;
 		}
 		locPhanCongTheoCaLam(indexCaLam + 1);
@@ -759,13 +755,13 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 		Object o = e.getSource();
 		if (o.equals(btnChamCong)) {
 			chamCong();
-			kiemTraComboBoxCaLam();
 			locDuLieuChamCongTheoNgay();
+			kiemTraComboBoxCaLam();
 		}
 		if (o.equals(btnChamCongAll)) {
 			chamCongHangLoat();
-			kiemTraComboBoxCaLam();
 			locDuLieuChamCongTheoNgay();
+			kiemTraComboBoxCaLam();
 		}
 		if (o.equals(btnCapNhat)) {
 //			capNhatSoLuongHoanThanh();

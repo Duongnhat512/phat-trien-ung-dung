@@ -383,9 +383,11 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 		));
 		tableCTHopDong.getColumnModel().getColumn(1).setPreferredWidth(99);
 		JScrollPane scrollPaneCTHD = new JScrollPane();
-		scrollPaneCTHD.setBorder(null);
 		scrollPaneCTHD.setViewportView(tableCTHopDong);
 		panelCTHopDong.add(scrollPaneCTHD, BorderLayout.CENTER);
+		tableCTHopDong.setOpaque(false);
+		tableCTHopDong.setBorder(null);
+		tableCTHopDong.fixTable(scrollPaneCTHD);
 		
 		MyButton btnCapNhat = new MyButton();
 		btnCapNhat.setFocusTraversalKeysEnabled(false);

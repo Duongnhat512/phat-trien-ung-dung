@@ -386,21 +386,9 @@ go
 --THÊM CONG DOAN PHAN CONG
 -- Bảng phân công cho sản phẩm SP0001
 -- Công đoạn 1
-INSERT INTO CongDoanPhanCong (idPhanCong, idCongDoan, idCongNhan, soLuongSPDuocGiao, idCaLam, soLuongConLai)
-VALUES 
-		('PC0001',  'CDSP0001', 'CN0001', 30, 1, 30),
-		('PC0002', 'CDSP0002', 'CN0001', 20, 2, 20),
-		('PC0003', 'CDSP0003', 'CN0001', 15, 3, 15),
-		('PC0004', 'CDSP0001', 'CN0002', 25, 1, 25),
-		('PC0005', 'CDSP0002', 'CN0002', 22, 2, 22),
-		('PC0006', 'CDSP0003', 'CN0002', 18, 3, 18),
-		('PC0007', 'CDSP0004', 'CN0003', 25, 1, 25),
-		('PC0008', 'CDSP0005', 'CN0003', 20, 2, 20),
-		('PC0009', 'CDSP0006', 'CN0003', 15, 3, 15),
-		('PC0010', 'CDSP0007', 'CN0001', 10, 1, 10),
-		('PC0011', 'CDSP0008', 'CN0002', 8, 2, 8),
-		('PC0012', 'CDSP0009', 'CN0003', 7, 3, 7);
-go
+5
+delete from BangChamCongCongNhan
+delete from CongDoanPhanCong
 --INSERT INTO BangChamCongCongNhan (idNgayChamCong, ngayChamCong, soLuongHoanThanh, idPhanCong, heSoNgayLam)
 --VALUES
 --    ('CCN0001', '2023-10-01', 30, 'PC0001', 1.35),

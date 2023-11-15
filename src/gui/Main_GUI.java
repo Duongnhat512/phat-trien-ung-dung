@@ -15,7 +15,7 @@ import commons.PanelButton;
 import connectDB.ConnectDB;
 import form.ChamCongCongNhan_Form;
 import form.ChamCongNhanVien_Form;
-
+import form.CongDoanPhanCong_Form;
 import form.QuanLyCongNhan_Form;
 import form.QuanLyNhanVien_Form;
 import form.QuanLySanPham_Form;
@@ -86,6 +86,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 	private QuanLyCongNhan_Form quanLyCongNhan_Form = null;
 	private QuanLyNhanVien_Form quanLyNhanVien_Form = null;
 	private QuanLySanPham_Form quanLySanPham_Form = null;
+	private CongDoanPhanCong_Form congDoanPhanCong_Form = null;
 	//
 	private JPanel panelContent;
 	private MyButton btnAvt;
@@ -196,6 +197,16 @@ public class Main_GUI extends JFrame implements ActionListener{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		quanLyCongNhan_Form = new QuanLyCongNhan_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
+		chamCongCongNhan_Form = new ChamCongCongNhan_Form(panelCenter.getWidth(), panelCenter.getHeight() - panelCNort.getHeight());
+		thongKeKPI_form = new ThongKeKPI_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
+		quanLyNhanVien_Form = new QuanLyNhanVien_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
+		chamCongNhanVien_Form = new ChamCongNhanVien_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
+		tinhLuongNhanVien_Form = new TinhLuongNhanVien_Form(panelCenter.getWidth(), panelCenter.getHeight() - panelCNort.getHeight());
+		quanLyHopDong_Form = new QuanLyHopDong_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
+		quanLySanPham_Form = new QuanLySanPham_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
+		congDoanPhanCong_Form = new CongDoanPhanCong_Form();
 	}
 
 	
@@ -231,41 +242,41 @@ public class Main_GUI extends JFrame implements ActionListener{
 		}
 		else if (index == 1) {
 			if (subIndex == 1) {
-				quanLyCongNhan_Form = new QuanLyCongNhan_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
 				setForm(quanLyCongNhan_Form);
 			}
 			else if(subIndex == 2){
-				chamCongCongNhan_Form = new ChamCongCongNhan_Form(panelCenter.getWidth(), panelCenter.getHeight() - panelCNort.getHeight());
 				setForm(chamCongCongNhan_Form);
 			}
 			else if(subIndex == 5)
 			{
-				thongKeKPI_form = new ThongKeKPI_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
+				
 //				setForm(thongKeKPI_form);
 			}
 				
 		}
 		else if(index == 2) {
 			if (subIndex == 1) {
-				quanLyNhanVien_Form = new QuanLyNhanVien_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
 				setForm(quanLyNhanVien_Form);
 			}
 			else if(subIndex == 2){
-				chamCongNhanVien_Form = new ChamCongNhanVien_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
+				
 				setForm(chamCongNhanVien_Form);
 			}else if(subIndex == 3){
-				tinhLuongNhanVien_Form = new TinhLuongNhanVien_Form(panelCenter.getWidth(), panelCenter.getHeight() - panelCNort.getHeight());
+				
 				setForm(tinhLuongNhanVien_Form);
 			}
 		}
 		else if(index == 3 && subIndex == 0) {
-			quanLyHopDong_Form = new QuanLyHopDong_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
+			
 			setForm(quanLyHopDong_Form);
 		}
 		else if(index == 4){
 			if (subIndex == 1) {
-				quanLySanPham_Form = new QuanLySanPham_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
+				
 				setForm(quanLySanPham_Form);
+			}
+			if (subIndex == 3) {
+				setForm(congDoanPhanCong_Form);
 			}
 		}
 		else if(index == 5 && subIndex == 0) {
