@@ -5,7 +5,7 @@ import java.util.Objects;
 public class PhongBan {
       private String idPhongBan;
       private String tenPhongBan;
-	public PhongBan(String idPhongBan, String tenPhongBan) {
+	  public PhongBan(String idPhongBan, String tenPhongBan) {
 		super();
 		this.idPhongBan = idPhongBan;
 		this.tenPhongBan = tenPhongBan;

@@ -19,4 +19,15 @@ public class PhongBan_BUS {
 	public PhongBan getPBTheoTen(String ten){
 		return pb_dao.getPhongBanTheoTen(ten);
 	}
+	public PhongBan getPBtheoID(String id)
+	{
+		ArrayList<PhongBan> listPB = pb_dao.getdsPB();
+		for (PhongBan phongBan : listPB) {
+			if(phongBan.getIdPhongBan().equals(id))
+			{
+				return phongBan;
+			}
+		}
+		return null;
+	}
 }

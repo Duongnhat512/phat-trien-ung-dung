@@ -3,63 +3,41 @@ package form;
 
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-
-
 import java.awt.Color;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
-
 import connectDB.ConnectDB;
-import entities.ChucVu;
 import entities.CongNhan;
-import entities.PhongBan;
-
-
+import entities.PhanXuong;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
-
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
+import java.io.File;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.awt.event.ActionEvent;
-
-
-import java.awt.Container;
-
-
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-
 import com.toedter.calendar.JDateChooser;
-
-import bus.ChucVu_BUS;
 import bus.CongNhan_BUS;
-import bus.PhongBan_BUS;
+import bus.PhanXuong_BUS;
 import commons.RoundPanel;
 import commons.Table;
-
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.ButtonGroup;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
-
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.border.LineBorder;
 
 /**
  * 
@@ -84,8 +62,8 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 	private JTextField txt_HienThiSDT;
 	private JTextField txt_HienThiEmail;
 	private JTextField txt_HienThiTrangThai;
-	private  int width = 1250;
-	private  int height = 750;
+	private  int width = 1259;
+	private  int height = 813;
 	private JButton btnChonAnh;
 	private RoundPanel panel_Them_SuaCongNhan;
 	private JButton btnThemCongNhan;
@@ -95,8 +73,8 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 	private JTextField txtEmail;
 	private JTextField txtSDT;
 	private JDateChooser dateChooser_NgaySinh;
-	private JRadioButton rbtn_Nam;
-	private JRadioButton rbtnNu;
+	private JRadioButton rdNam;
+	private JRadioButton rdNu;
 	private JDateChooser dateChooser_ngayKTCT;
 	private JComboBox<String> cb_PhanXuong;
 	private JButton btnthem;
@@ -105,7 +83,7 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 	private JPanel panel_CongNhan;
 	private JLabel lbl_CCCD;
 	private JTextField txtCCCD;
-	private CongNhan_BUS CN_bus;
+	private CongNhan_BUS cn_bus;
 	private JTextField txtID;
 	private JComboBox<String> cb_TayNghe;
 	private RoundPanel panel_bangTTCN;
@@ -114,11 +92,10 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 	private java.sql.Date selectedDate;
 	private Table tableCongNhan;
 
-	private JLabel lblChucNang;
+	private JLabel lblChuCNang;
 
-	private PhongBan_BUS pb_bus;
 
-	private ChucVu_BUS cv_bus;
+
 
 
 
@@ -127,6 +104,12 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 	private JLabel hienThiAvatar;
 
 	private JFileChooser fileChooser;
+
+	private PhanXuong_BUS px_bus;
+
+	private JLabel lbl_NgayKetThucCT;
+
+	private String url;
 
 
 
@@ -142,8 +125,10 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 			
 		}
 	  private void giaoDienCN() {
+		  
+		  
 		  	setForeground(new Color(255, 255, 255));
-		  	setPreferredSize(new Dimension(1250,780));
+		  	setPreferredSize(new Dimension(1259,780));
 			
 		  	try {
 				ConnectDB.getInstance().connect();
@@ -155,16 +140,20 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 				e.printStackTrace();
 			}
 			
+		  	
+		  	
+		  	cn_bus = new CongNhan_BUS();
+		  	px_bus = new PhanXuong_BUS();
 			//Panel danh sách cong nhan
 			
 			panel_CongNhan = new JPanel();
-			panel_CongNhan.setBounds(0, 0, 1250,750);
+			panel_CongNhan.setBounds(0, 0, 1259,813);
 			panel_CongNhan.setLayout(null);
 			
 			panel_bangTTCN = new RoundPanel();
 			panel_bangTTCN.setRound(20);
 			panel_bangTTCN.setBackground(new Color(255, 255, 255));
-			panel_bangTTCN.setBounds(10, 78, 1230, 382);
+			panel_bangTTCN.setBounds(10, 78, 1230, 402);
 			panel_CongNhan.add(panel_bangTTCN);
 			panel_bangTTCN.setLayout(null);
 			
@@ -178,20 +167,14 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 			tieuDe.setHorizontalAlignment(SwingConstants.CENTER);
 			tieuDe.setFont(new Font("Times New Roman", Font.BOLD, 20));
 			panel_bangTTCN.add(panelTieuDe);
-			String[] headers = {"ID", "H\u1ECD v\u00E0 t\u00EAn", "Ph\u00E1i", "Ng\u00E0y sinh", "Ph\u00F2ng ban", "Ch\u1EE9c v\u1EE5", "Email", "S\u0110T", "CCCD", "Ngày công tác","Tr\u1EA1ng th\u00E1i"};
+			String[] headers = {"ID", "H\u1ECD v\u00E0 t\u00EAn", "Ph\u00E1i", "Ng\u00E0y sinh", "Ngày công tác", "Phân xưởng", "Tay nghề", "Email", "S\u0110T", "CCCD","Tr\u1EA1ng th\u00E1i"};
 			model = new DefaultTableModel(headers , 0);
 		
 
 			tableCongNhan = new Table();
 			tableCongNhan.setOpaque(false);
 	        // Cài đặt header cho table Chấm công
-			tableCongNhan.setModel(new DefaultTableModel(
-				new Object[][] {
-				},
-				new String[] {
-					"ID", "H\u1ECD v\u00E0 t\u00EAn", "Ph\u00E1i", "Ng\u00E0y sinh", "Ph\u00E2n x\u01B0\u1EDFng", "Tay ngh\u1EC1", "Email", "S\u0110T", "CCCD", "Tr\u1EA1ng th\u00E1i"
-				}
-			));
+			tableCongNhan.setModel(model);
 			tableCongNhan.getColumnModel().getColumn(8).setPreferredWidth(72);
 			
 					
@@ -201,19 +184,13 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 	        scrollPane.setOpaque(false);
 	        scrollPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 	        scrollPane.setViewportView(tableCongNhan);
-	        scrollPane.setBounds(10, 40, 1210, 332);
+	        scrollPane.setBounds(10, 40, 1210, 353);
 	        tableCongNhan.fixTable(scrollPane);
 	        panel_bangTTCN.add(scrollPane);
 			
 			
 			
-			
-//			scrollPane = new JScrollPane(table = new JTable(model));
-//			
-//
-//			scrollPane.setBounds(10, 40, 1210, 612);
-//			panel_bangTTCN.add(scrollPane);
-//			scrollPane.setViewportView(table);
+
 			
 			
 			
@@ -222,11 +199,12 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 		    RoundPanel panel_ChiTietCN = new RoundPanel();
 		    panel_ChiTietCN.setRound(20);
 			panel_ChiTietCN.setBackground(new Color(240, 240, 240));
-			panel_ChiTietCN.setBounds(10, 470, 1230, 300);
+			panel_ChiTietCN.setBounds(10, 481, 1230, 289);
 			panel_CongNhan.add(panel_ChiTietCN);
 			panel_ChiTietCN.setLayout(null);
 			
 			RoundPanel panel_Avt = new RoundPanel();
+			panel_Avt.setBorder(new LineBorder(new Color(0, 128, 255), 3, true));
 			panel_Avt.setRound(20);
 			panel_Avt.setBackground(new Color(255, 255, 255));
 			panel_Avt.setBounds(0, 10, 205, 280);
@@ -236,7 +214,7 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 	        panel_Avt.setLayout(null);
 
 	        hienThiAvatar = new JLabel();
-	        hienThiAvatar.setBounds(26, 18, 150, 200);
+	        hienThiAvatar.setBounds(26, 24, 150, 200);
 	        panel_Avt.add(hienThiAvatar);
 			
 			RoundPanel panel_LyLich = new RoundPanel();
@@ -423,7 +401,7 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 			JLabel lb_TrangThai = new JLabel("Trạng thái:");
 			lb_TrangThai.setForeground(new Color(0, 0, 128));
 			lb_TrangThai.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-			lb_TrangThai.setBounds(10, 258, 89, 20);
+			lb_TrangThai.setBounds(10, 253, 89, 22);
 			panel_Avt.add(lb_TrangThai);
 			
 			txt_HienThiTrangThai = new JTextField();
@@ -432,7 +410,7 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 			txt_HienThiTrangThai.setBorder(null);
 			txt_HienThiTrangThai.setBackground(null);
 			txt_HienThiTrangThai.setColumns(10);
-			txt_HienThiTrangThai.setBounds(109, 258, 86, 20);
+			txt_HienThiTrangThai.setBounds(109, 253, 86, 22);
 			panel_Avt.add(txt_HienThiTrangThai);
 			
 			btnthem = new JButton("Thêm công nhân");
@@ -463,13 +441,13 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 			btnTimKiem.addActionListener(this);
 			tableCongNhan.addMouseListener(this);
 			
-//			docDuLieuTuDataVaoTable();
+			docDuLieuTuDataVaoTable();
 			
 	  }
 	
 	  private void giaoDienThemCapNhatCN() {
 			setForeground(new Color(255, 255, 255));
-			setPreferredSize(new Dimension(1250,780));
+			setPreferredSize(new Dimension(1259,780));
 			setLayout(new BorderLayout(0, 0));
 
 			panel_Them_SuaCongNhan = new RoundPanel();
@@ -478,20 +456,14 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 			panel_Them_SuaCongNhan.setLayout(null);
 			
 			RoundPanel panel_0 = new RoundPanel();
-			panel_0.setSize(1230, 70);
+			panel_0.setSize(1239, 70);
 			panel_0.setLocation(10, 10);
 			panel_0.setBackground(new Color(168, 211, 255));
 			panel_0.setRound(20);
 			panel_0.setLayout(new BorderLayout(0, 0));
 			
-			lblChucNang.setBackground(new Color(162, 208, 255));
-			lblChucNang.setForeground(new Color(0, 0, 0));
-			lblChucNang.setHorizontalAlignment(SwingConstants.CENTER);
-			lblChucNang.setFont(new Font("Times New Roman", Font.BOLD, 30));
-			panel_0.add(lblChucNang);
-			
 			RoundPanel panel_1 = new RoundPanel();
-			panel_1.setSize(868, 560);
+			panel_1.setSize(877, 560);
 			panel_1.setLocation(10, 90);
 			panel_1.setBackground(new Color(255, 255, 255));
 			panel_1.setRound(20);
@@ -499,14 +471,14 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 			
 			
 			RoundPanel panel_2 = new RoundPanel();
-			panel_2.setLocation(888, 90);
+			panel_2.setLocation(897, 90);
 			panel_2.setSize(352, 560);
 			panel_2.setBackground(new Color(255, 255, 255));
 			panel_2.setRound(20);
 			panel_2.setLayout(null);
 			
 			RoundPanel panel_3 = new RoundPanel();
-			panel_3.setSize(1230, 110);
+			panel_3.setSize(1239, 110);
 			panel_3.setLocation(10, 660);
 			panel_3.setBackground(new Color(255, 255, 255));
 			panel_3.setRound(20);
@@ -568,48 +540,50 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 			dateChooser_NgaySinh.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 			dateChooser_NgaySinh.setSize(221, 40);
 			dateChooser_NgaySinh.setLocation(148, 220);
-	        dateChooser_NgaySinh.setDateFormatString("yyyy-MM-dd"); // Đặt định dạng ngày
+	        dateChooser_NgaySinh.setDateFormatString("dd/MM/yyyy"); // Đặt định dạng ngày
 	        panel_1.add(dateChooser_NgaySinh);
 			
 			JLabel lbl_PhanXuong = new JLabel("Phân xưởng:");
 			lbl_PhanXuong.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-			lbl_PhanXuong.setBounds(440, 300, 150, 40);
+			lbl_PhanXuong.setBounds(438, 220, 150, 40);
 			panel_1.add(lbl_PhanXuong);
 			
-			JLabel lbl_NgayKetThucCT = new JLabel("Ngày kết thúc:");
+			lbl_NgayKetThucCT = new JLabel("Ngày kết thúc:");
 			lbl_NgayKetThucCT.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-			lbl_NgayKetThucCT.setBounds(440, 220, 150, 40);
+			lbl_NgayKetThucCT.setBounds(438, 380, 150, 40);
+			lbl_NgayKetThucCT.setVisible(false);
 			panel_1.add(lbl_NgayKetThucCT);
 			ButtonGroup group = new ButtonGroup();
-			rbtn_Nam = new JRadioButton("Nam");
-			rbtn_Nam.setBackground(null);
-			rbtn_Nam.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-			rbtn_Nam.setBounds(144, 300, 100, 40);
-			panel_1.add(rbtn_Nam);
+			rdNam = new JRadioButton("Nam");
+			rdNam.setBackground(null);
+			rdNam.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+			rdNam.setBounds(144, 300, 100, 40);
+			rdNam.setSelected(true);
+			panel_1.add(rdNam);
 		    
-			rbtnNu = new JRadioButton("Nữ");
-			rbtnNu.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-			rbtnNu.setBounds(294, 300, 100, 40);
-			rbtnNu.setBackground(null);
-			panel_1.add(rbtnNu);
-			group.add(rbtn_Nam);
+			rdNu = new JRadioButton("Nữ");
+			rdNu.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+			rdNu.setBounds(294, 300, 100, 40);
+			rdNu.setBackground(null);
+			panel_1.add(rdNu);
+			group.add(rdNam);
 			
-			group.add(rbtnNu);
+			group.add(rdNu);
 			dateChooser_ngayKTCT = new JDateChooser();
 			dateChooser_ngayKTCT.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-			dateChooser_ngayKTCT.setDateFormatString("yyyy-MM-dd");
-			dateChooser_ngayKTCT.setBounds(627, 220, 219, 40);
+			dateChooser_ngayKTCT.setDateFormatString("dd/MM/yyyy");
+			dateChooser_ngayKTCT.setBounds(625, 380, 219, 40);
+			dateChooser_ngayKTCT.setVisible(false);
 			panel_1.add(dateChooser_ngayKTCT);
 			
 			cb_PhanXuong = new JComboBox<String>();
 			cb_PhanXuong.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-			cb_PhanXuong.setBounds(627, 300, 221, 40);
+			cb_PhanXuong.setBounds(625, 220, 221, 40);
 			panel_1.add(cb_PhanXuong);
-			
-			pb_bus = new PhongBan_BUS();
-			ArrayList<PhongBan> listPB = pb_bus.getDSPB();
-			for (PhongBan pb : listPB) {
-				cb_PhanXuong.addItem(pb.getTenPhongBan());
+			px_bus = new PhanXuong_BUS();
+			ArrayList<PhanXuong> list = px_bus.getdsPX();
+			for (PhanXuong px : list) {
+				cb_PhanXuong.addItem(px.getTenPhanXuong());
 			}
 		
 			
@@ -618,7 +592,16 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 	        avatarImage.setBounds(26, 35, 300, 400);
 	        panel_2.add(avatarImage);
 
-		
+	
+
+	        int labelWidth = avatarImage.getWidth();
+            int labelHeight = avatarImage.getHeight();
+
+            ImageIcon avatarIcon = new ImageIcon("src\\images\\Unknown_person.jpg");
+			// Chỉnh kích thước ảnh theo JLabel
+            Image avatar = avatarIcon .getImage().getScaledInstance(labelWidth, labelHeight, Image.SCALE_SMOOTH);
+            avatarIcon = new ImageIcon(avatar);
+            avatarImage.setIcon(avatarIcon);
 			
 			btnChonAnh = new JButton("Chọn ảnh");
 			btnChonAnh.setFont(new Font("Times New Roman", Font.PLAIN, 20));
@@ -636,7 +619,7 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 			btnHuyThem.setForeground(Color.BLACK);
 			btnHuyThem.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 			btnHuyThem.setBackground(new Color(255, 0, 0));
-			btnHuyThem.setBounds(750, 30, 150, 60);
+			btnHuyThem.setBounds(700, 30, 150, 60);
 			panel_3.add(btnHuyThem);
 			
 			
@@ -666,7 +649,7 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 			dateChooser_ngayCT = new JDateChooser();
 			
 			dateChooser_ngayCT.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-			dateChooser_ngayCT.setDateFormatString("yyyy-MM-dd");
+			dateChooser_ngayCT.setDateFormatString("dd/MM/yyyy");
 		
 			dateChooser_ngayCT.setBounds(627, 140, 221, 40);
 			panel_1.add(dateChooser_ngayCT);
@@ -680,88 +663,75 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 			txtID.setEditable(false);
 			txtID.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 			txtID.setColumns(10);
+			txtID.enable(false);
 			txtID.setBounds(148, 60, 221, 40);
 			panel_1.add(txtID);
 			
 			JLabel lbl_tayNghe = new JLabel("Tay nghề:");
 			lbl_tayNghe.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-			lbl_tayNghe.setBounds(440, 380, 150, 40);
+			lbl_tayNghe.setBounds(438, 300, 150, 40);
 			panel_1.add(lbl_tayNghe);
 			
 			cb_TayNghe = new JComboBox<String>();
+			cb_TayNghe.addItem("Giỏi");
+			cb_TayNghe.addItem("Khá");
+			cb_TayNghe.addItem("Trung bình");
 			cb_TayNghe.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-			cb_TayNghe.setBounds(627, 380, 219, 40);
+			cb_TayNghe.setBounds(625, 300, 219, 40);
 			panel_1.add(cb_TayNghe);
-			cv_bus = new ChucVu_BUS();
-			ArrayList<ChucVu> listCV = cv_bus.getDSCV();
-			for (ChucVu cv : listCV) {
-				cb_TayNghe.addItem(cv.getTenChucVu());
-			}
+			
+			lblChuCNang = new JLabel("THÊM CÔNG NHÂN");
+			lblChuCNang.setBounds(19, 10, 1230, 70);
+			panel_Them_SuaCongNhan.add(lblChuCNang);
+			lblChuCNang.setBackground(new Color(162, 208, 255));
+			lblChuCNang.setForeground(new Color(0, 0, 0));
+			lblChuCNang.setHorizontalAlignment(SwingConstants.CENTER);
+			lblChuCNang.setFont(new Font("Times New Roman", Font.BOLD, 30));
+			panel_0.add(lblChuCNang);
+			
+			btnThemCongNhan.addActionListener(this);
 			btnChonAnh.addActionListener(this);
-			cb_TayNghe.addActionListener(this);
+			btnCapNhatCongNhan.addActionListener(this);
+		
 			
 		}
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
 
 
-//	  private void docDuLieuTuDataVaoTable() {
-//		  	CN_bus = new CongNhan_BUS();
-//		  	pb_bus = new PhongBan_BUS();
-//		  	cv_bus = new ChucVu_BUS();
-//			ArrayList<CongNhan> list = CN_bus.getdsCN();
-//			for (CongNhan CN : list) {
-//				model.addRow(new Object[] {
-//						CN.getIdCongNhan(),
-//						CN.getHoTen(),
-//						CN.isPhai()?"Nam":"Nữ",
-//						CN.getNgaySinh(),
-//						pb_bus.getPB(CN.getPhongBan().getIdPhongBan()).getTenPhongBan(),
-//						cv_bus.getCV(CN.getChucVu().getIdChucVu()).getTenChucVu(),
-//						CN.getEmail(),
-//						CN.getSoDienThoai(),
-//						CN.getcCCD(),
-//						CN.getNgayBatDauCongTac(),
-//						(CN.getNgayKetThucCongTac()==null)?"Còn Làm":"Nghỉ làm"	
-//						
-//				});
-//				
-//			}
-//			
-//		}
+
+	  private void docDuLieuTuDataVaoTable() {
+		  	
+		  	
+			ArrayList<CongNhan> list = cn_bus.getDanhSachCongNhan();
+			for (CongNhan cn : list) {
+				model.addRow(new Object[] {
+						cn.getIdCongNhan(),
+						cn.getHoTen(),
+						cn.isPhai()?"Nam":"Nữ",
+								cn.getNgaySinh(),
+						cn.getNgayBatDauCongTac(),
+						px_bus.getdsPXtheoID(cn.getPhanXuong().getIdPhanXuong()).getTenPhanXuong(),
+						cn.getTayNghe(),
+						cn.getEmail(),
+						cn.getSoDienThoai(),
+						cn.getcCCD(),
+						(cn.getNgayKetThucCongTac()==null)?"Còn Làm":"Nghỉ làm"	
+						
+				});
+				
+			}
+			
+		}
 	  private void hienThiPanelCapNhat(String maCN) {
 		  	panel_CongNhan.setVisible(false);
 			giaoDienThemCapNhatCN();
-			dateChooser_ngayKTCT.setEnabled(true);;
+			lblChuCNang.setText("CẬP NHẬT CÔNG NHÂN");
+			lbl_NgayKetThucCT.setVisible(true);
+			dateChooser_ngayKTCT.setVisible(true);
 			btnThemCongNhan.setVisible(false);
 			btnCapNhatCongNhan.setVisible(true);
-//			CongNhan cn = CN_bus.getCN(maCN);
+			CongNhan cn = cn_bus.getCongNhanTheoID(maCN);
 			
-			CongNhan cn = new CongNhan(); 
-			// NHỚ XÓA NHA BẢO
+
 			
 			txtID.setText(cn.getIdCongNhan());
 			selectedDate = java.sql.Date.valueOf(cn.getNgaySinh());
@@ -781,152 +751,178 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 			txtEmail.setText(cn.getEmail());
 			txtSDT.setText(cn.getSoDienThoai());
 			if(cn.isPhai()) {
-				rbtn_Nam.setSelected(true);
+				rdNam.setSelected(true);
 			}
 			else {
-				rbtnNu.setSelected(true);
+				rdNu.setSelected(true);
 			}
-			ImageIcon themAvatar = new ImageIcon(cn.getAnhDaiDien());
+			cb_TayNghe.setSelectedItem(cn.getTayNghe());
+			cb_PhanXuong.setSelectedItem(px_bus.getdsPXtheoID(cn.getPhanXuong().getIdPhanXuong()).getTenPhanXuong());
 	        
-	        
+			ImageIcon hienThiImageIcon = new ImageIcon("src\\images\\Unknown_person.jpg");
+			if(cn.getAnhDaiDien()!=null) {
+				hienThiImageIcon = new ImageIcon("src\\images\\"+cn.getAnhDaiDien());
+			}
+	
         	// Lấy kích thước mới của JLabel
             int labelWidth = avatarImage.getWidth();
             int labelHeight = avatarImage.getHeight();
 
             // Chỉnh kích thước ảnh theo JLabel
-            Image themAnh = themAvatar.getImage().getScaledInstance(labelWidth, labelHeight, Image.SCALE_SMOOTH);
-            themAvatar = new ImageIcon(themAnh);
-            avatarImage.setIcon(themAvatar);
+            Image themAnh = hienThiImageIcon.getImage().getScaledInstance(labelWidth, labelHeight, Image.SCALE_SMOOTH);
+            hienThiImageIcon = new ImageIcon(themAnh);
+            avatarImage.setIcon(hienThiImageIcon);
 
 	  }
-//	  private void hienThiThongTinCN(CongNhan CN) {
-//			txt_HienThiID.setText(CN.getIdCongNhan());
-//			txt_HienThiTrangThai.setText((CN.getNgayKetThucCongTac()==null)?"Còn làm":"NghĨ làm");
-//			txt_HienThiHoTen.setText(CN.getHoTen());
-//			txt_HienThiNgaySinh.setText(CN.getNgaySinh().toString());
-//			txt_HienThiPhai.setText((CN.isPhai()==true)?"Nam":"Nữ");
-//			txt_HienThiCCCD.setText(CN.getcCCD());
-//			txt_HienThiSDT.setText(CN.getSoDienThoai());
-//			txt_HienThiEmail.setText(CN.getEmail());
-//			txt_HienThiCV.setText(cv_bus.getCV(CN.getChucVu().getIdChucVu()).getTenChucVu());
-//			txt_HienThiPB.setText(pb_bus.getPB(CN.getPhongBan().getIdPhongBan()).getTenPhongBan());
-//			ImageIcon hienThiImageIcon = new ImageIcon(CN.getAnhDaiDien());
-//		
-//        	
-//        	
-//        	// Lấy kích thước mới của JLabel
-//            int labelWidth = hienThiAvatar.getWidth();
-//            int labelHeight = hienThiAvatar.getHeight();
-//
-//            // Chỉnh kích thước ảnh theo JLabel
-//            Image themAnh = hienThiImageIcon.getImage().getScaledInstance(labelWidth, labelHeight, Image.SCALE_SMOOTH);
-//        	hienThiImageIcon = new ImageIcon(themAnh);
-//            hienThiAvatar.setIcon(hienThiImageIcon);
-//	  }
-	  private void hienThiPanelThem() {
+	  private void hienThiThongTinCN(CongNhan cn) {
+			txt_HienThiID.setText(cn.getIdCongNhan());
+			txt_HienThiTrangThai.setText((cn.getNgayKetThucCongTac()==null)?"Còn làm":"NghĨ làm");
+			txt_HienThiHoTen.setText(cn.getHoTen());
+			txt_HienThiNgaySinh.setText(cn.getNgaySinh().toString());
+			txt_HienThiPhai.setText((cn.isPhai()==true)?"Nam":"Nữ");
+			txt_HienThiCCCD.setText(cn.getcCCD());
+			txt_HienThiSDT.setText(cn.getSoDienThoai());
+			txt_HienThiEmail.setText(cn.getEmail());
+			txt_HienThiPX.setText(px_bus.getdsPXtheoID(cn.getPhanXuong().getIdPhanXuong()).getTenPhanXuong());
+			txt_HienThiTayNghe.setText(cn.getTayNghe());
+		
+			ImageIcon hienThiImageIcon = new ImageIcon("src\\images\\Unknown_person.jpg");
+			if(cn.getAnhDaiDien()!=null) {
+				hienThiImageIcon = new ImageIcon("src\\images\\"+cn.getAnhDaiDien());
+			}
+		
+        	// Lấy kích thước mới của JLabel
+            int labelWidth = hienThiAvatar.getWidth();
+            int labelHeight = hienThiAvatar.getHeight();
+
+            // Chỉnh kích thước ảnh theo JLabel
+            Image themAnh = hienThiImageIcon.getImage().getScaledInstance(labelWidth, labelHeight, Image.SCALE_SMOOTH);
+        	hienThiImageIcon = new ImageIcon(themAnh);
+            hienThiAvatar.setIcon(hienThiImageIcon);
+	  }
+	  private void hienThiGDThem() {
 		  	panel_CongNhan.setVisible(false);
-		  	lblChucNang = new JLabel("THÊM CÔNG NHÂN");
+		  	
 			giaoDienThemCapNhatCN();
-			dateChooser_ngayKTCT.setEnabled(false);;
+		
+			txtID.setText(sinhMaCN());
+			
 			btnThemCongNhan.setVisible(true);
 			btnCapNhatCongNhan.setVisible(false);
 	  }
-//	  private CongNhan layTTCNTuTextField() {
-//		  String maVN = txtID.getText();
-//		  String tenCN = txtHoTen.getText();
-//		  Date nsDate = dateChooser_ngayCT.getDate();
-//		  int yearNS = nsDate.getYear();
-//		  int monthNS = nsDate.getMonth();
-//		  int dayNS = nsDate.getDay();
-//		  LocalDate ns = LocalDate.of(yearNS, monthNS, monthNS);
-//		  
-//		  Date ctDate = dateChooser_ngayCT.getDate();
-//		  int yearCT = ctDate.getYear();
-//		  int monthCT = ctDate.getMonth();
-//		  int dayCT = ctDate.getDay();
-//		  LocalDate ct = LocalDate.of(yearCT, monthCT, monthCT);
-//		  
-//		  Date ktctDate = dateChooser_ngayCT.getDate();
-//		  int yearKTCT = nsDate.getYear();
-//		  int monthKTCT = nsDate.getMonth();
-//		  int dayKTCT = nsDate.getDay();
-//		  LocalDate ktct = LocalDate.of(yearKTCT, monthKTCT, monthKTCT);
-//		  
-//		  PhongBan pb = pb_bus.getPBTheoTen(cb_PhongBan.getSelectedItem().toString());
-//		  ChucVu cv = cv_bus.getCVTheoTen(cb_ChucVu.getSelectedItem().toString());
-//		  boolean phai = rbtn_Nam.isSelected();
-//		  String email = txtEmail.getText();
-//		  String sdt =  txtSDT.getText();
-//		  String cccd = txtCCCD.getText();
-//		  double heSoBHXH =Double.parseDouble(txtHeSoBHXH.getText());
-//		  double luongCb =Double.parseDouble(txtLuongCB.getText());
-//		  CongNhan CN = new CongNhan(maVN, tenCN, phai, ns, ct, ktct, email, sdt,cv, null, pb,null, cccd);
-//		  return CN;
-//	  }
-//	  
+	  private CongNhan layTTCNTuTextField() {
+		  String maCN = txtID.getText();
+		  String tenCN = txtHoTen.getText();
+		  
+		  Date nsDate = dateChooser_NgaySinh.getDate();
+
+		  int yearNS = nsDate.getYear()+1900;		  
+		  int monthNS = nsDate.getMonth()+1;		
+		  int dayNS = nsDate.getDate();
+		  LocalDate ns = LocalDate.of(yearNS, monthNS, dayNS);
+	      
+		  Date ctDate = dateChooser_ngayCT.getDate();
+		  int yearCT = ctDate.getYear()+1900;
+		  int monthCT = ctDate.getMonth()+1;
+		  int dayCT = ctDate.getDate();
+		  LocalDate ct = LocalDate.of(yearCT, monthCT, dayCT);
+		  
+		  LocalDate ktct=null;
+		  if(dateChooser_ngayKTCT.getDate()!=null) {
+			  Date ktctDate = dateChooser_ngayKTCT.getDate();
+			  int yearKTCT = ktctDate.getYear()+1900;
+			  int monthKTCT = ktctDate.getMonth()+1;
+			  int dayKTCT = ktctDate.getDate();
+			  ktct = LocalDate.of(yearKTCT, monthKTCT, dayKTCT);
+		  }
+		  
+		  String tenPX = cb_PhanXuong.getSelectedItem().toString();
+		  PhanXuong px = px_bus.getPXtheoTen(tenPX);
+		  boolean phai = rdNam.isSelected();
+		  String email = txtEmail.getText();
+		  String sdt =  txtSDT.getText();
+		  String cccd = txtCCCD.getText();
+		  String tayNghe = cb_TayNghe.getSelectedItem().toString();
+		  String avatar = null;
+		  if(url != null) {
+			  File absoluteFile = new File(url);
+			  avatar = absoluteFile.getName();
+
+		  }
+		  CongNhan cn = new CongNhan(maCN, tenCN, phai, ns, ct, ktct, px, email, sdt, tayNghe, null, avatar, cccd);
+		  return cn;
+	  }
+	  
+		private String sinhMaCN() {
+			int stt = 1;
+			ArrayList<CongNhan>  list= cn_bus.getDanhSachCongNhan();
+			String id="CN" + String.format("%04d",  stt);
+			for (CongNhan cn : list) {
+				if(cn.getIdCongNhan().equals(id)) {
+					stt++;
+					id="CN" + String.format("%04d",  stt);
+				}
+			}
+			return id;
+		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub'
 			Object o = e.getSource();
 			if(o.equals(btnthem)){
-				hienThiPanelThem();
+				hienThiGDThem();
 				
 				
 			}
-//			if(o.equals(cb_ChucVu)){
-//				
-//				int n = cb_ChucVu.getSelectedIndex();
-//				if(n==0) {
-//				   txtPhuCap.setText("500000");
-//				}
-//				else if(n==1) {
-//					txtPhuCap.setText("700000");
-//				}
-//				else {
-//					txtPhuCap.setText("1000000");
-//				}
-//			
-//				System.out.println(n);
-//				
-//			}
+			if(o.equals(btnThemCongNhan)) {
+				
+				CongNhan cn = layTTCNTuTextField();
+			 	cn_bus.create(cn);
+				panel_Them_SuaCongNhan.setVisible(false);
+				int m = cn_bus.getDanhSachCongNhan().indexOf(cn);
+				giaoDienCN();
+				tableCongNhan.setRowSelectionInterval(m, m);
+				tableCongNhan.scrollRectToVisible(tableCongNhan.getCellRect(m, m, true));
+				hienThiThongTinCN(cn);
+			}
+
 			if(o.equals(btnHuyThem)){
 				int n = tableCongNhan.getSelectedRow();
 				panel_Them_SuaCongNhan.setVisible(false);
 				if (n!=-1) {
-					System.out.println(n);
+		
 					String maCN = tableCongNhan.getValueAt(n, 0).toString();
-//					CongNhan CN = CN_bus.getCN(maCN);
-//					int m = CN_bus.getdsCN().indexOf(CN);
+//					CongNhan cn = cn_bus.getCN(maCN);
+//					int m = cn_bus.getdsCN().indexOf(cn);
 					giaoDienCN();
 //					tableCongNhan.setRowSelectionInterval(m, m);
 //					tableCongNhan.scrollRectToVisible(tableCongNhan.getCellRect(m, m, true));
-//					hienThiThongTinCN(CN);	
+//					hienThiThongTinCN(cn);	
 				}
 				else {
 					giaoDienCN();
 				}
 			}
-//			if(o.equals(btnTimKiem)) {
-//				String ma = textTimKiem.getText();
-//				CongNhan CN = CN_bus.getCN(ma);
-//				model.setRowCount(0);
-//				model.addRow(new Object[] {
-//						ma,
-//						CN.getHoTen(),
-//						CN.isPhai()?"Nam":"Nữ",
-//						CN.getNgaySinh(),
-//						pb_bus.getPB(CN.getPhongBan().getIdPhongBan()).getTenPhongBan(),
-//						cv_bus.getCV(CN.getChucVu().getIdChucVu()).getTenChucVu(),
-//						CN.getEmail(),
-//						CN.getSoDienThoai(),
-//						CN.getcCCD(),
-//						CN.getNgayBatDauCongTac(),
-//						(CN.getNgayKetThucCongTac()==null)?"Còn Làm":"Nghỉ làm"	
-//						
-//				});
-//				tableCongNhan.setRowSelectionInterval(0, 0);
-//				hienThiThongTinCN(CN);
-//			}
+			if(o.equals(btnTimKiem)) {
+				String ma = textTimKiem.getText();
+				CongNhan cn = cn_bus.getCongNhanTheoID(ma);
+				model.setRowCount(0);
+				model.addRow(new Object[] {
+						ma,
+						cn.getHoTen(),
+						cn.isPhai()?"Nam":"Nữ",
+						cn.getNgaySinh(),
+						px_bus.getdsPXtheoID(cn.getPhanXuong().getIdPhanXuong()).getTenPhanXuong(),
+						cn.getTayNghe(),
+						cn.getEmail(),
+						cn.getSoDienThoai(),
+						cn.getcCCD(),
+						(cn.getNgayKetThucCongTac()==null)?"Còn Làm":"Nghỉ làm"	
+						
+				});
+				tableCongNhan.setRowSelectionInterval(0, 0);
+				hienThiThongTinCN(cn);
+			}
 			if(o.equals(btnCapNhat)) {
 				int r = tableCongNhan.getSelectedRow();
 				if(r == -1) {
@@ -938,61 +934,76 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 					hienThiPanelCapNhat(maCN);
 				}
 			}
-//			if(o.equals(btnChonAnh)) {
-//				
-//		            fileChooser = new JFileChooser();
-//		            fileChooser.setDialogTitle("Chọn ảnh");
-//		            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-//
-//		            int result = fileChooser.showOpenDialog(null);
-//
-//		            if (result == JFileChooser.APPROVE_OPTION) {
-//		                // Đoạn mã xử lý khi người dùng chọn tệp ảnh ở đây
-//		            	ImageIcon themAvatar = new ImageIcon(fileChooser.getSelectedFile().getAbsolutePath()+"");
-//		        
-//		        
-//		            	// Lấy kích thước mới của JLabel
-//		                int labelWidth = avatarImage.getWidth();
-//		                int labelHeight = avatarImage.getHeight();
-//
-//		                // Chỉnh kích thước ảnh theo JLabel
-//		                Image themAnh = themAvatar.getImage().getScaledInstance(labelWidth, labelHeight, Image.SCALE_SMOOTH);
-//		                themAvatar = new ImageIcon(themAnh);
-//		                avatarImage.setIcon(themAvatar);
-//		            }
-//		       
-//			}
-//				
+			if(o.equals(btnCapNhatCongNhan)) {
+				CongNhan cn_new = layTTCNTuTextField();
+				cn_bus.update(cn_new);
+				panel_Them_SuaCongNhan.setVisible(false);
+				String maCN = cn_new.getIdCongNhan();
+				CongNhan cn2 = cn_bus.getCongNhanTheoID(maCN);
+				int m = cn_bus.getDanhSachCongNhan().indexOf(cn2);
+				giaoDienCN();
+				tableCongNhan.setRowSelectionInterval(m, m);
+				tableCongNhan.scrollRectToVisible(tableCongNhan.getCellRect(m, m, true));
+				hienThiThongTinCN(cn2);
+			}
+			if(o.equals(btnChonAnh)) {
+				
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setDialogTitle("Chọn ảnh");
+	            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+	            int result = fileChooser.showOpenDialog(null);
+
+	            if (result == JFileChooser.APPROVE_OPTION) {
+	                // Đoạn mã xử lý khi người dùng chọn tệp ảnh ở đây
+	            	url = fileChooser.getSelectedFile().getAbsolutePath();
+	            	ImageIcon avatarIcon = new ImageIcon(url);
+	            	
+	            	// Lấy kích thước mới của JLabel
+	                int labelWidth = avatarImage.getWidth();
+	                int labelHeight = avatarImage.getHeight();
+
+	                // Chỉnh kích thước ảnh theo JLabel
+	                Image avatar = avatarIcon.getImage().getScaledInstance(labelWidth, labelHeight, Image.SCALE_SMOOTH);
+	                avatarIcon = new ImageIcon(avatar);
+	                
+	                avatarImage.setIcon(avatarIcon);
+		       
+			}
+	        	
+	      }
+			
+				
 		}
-//		@Override
-//		public void mouseClicked(MouseEvent e) {
-////			// TODO Auto-generated method stub
-//			
-//			int n = tableCongNhan.getSelectedRow();
-//			String maCN = tableCongNhan.getValueAt(n, 0).toString();
-//			CongNhan CN = CN_bus.getCN(maCN);
-//			hienThiThongTinCN(CN);
-//			
-//			
-//		}
-//		@Override
-//		public void mousePressed(MouseEvent e) {
+		@Override
+		public void mouseClicked(MouseEvent e) {
 //			// TODO Auto-generated method stub
-//			
-//		}
-//		@Override
-//		public void mouseReleased(MouseEvent e) {
-//			// TODO Auto-generated method stub
-//			
-//		}
-//		@Override
-//		public void mouseEntered(MouseEvent e) {
-//			// TODO Auto-generated method stub
-//			
-//		}
-//		@Override
-//		public void mouseExited(MouseEvent e) {
-//			// TODO Auto-generated method stub
-//			
-//		}
+			
+			int n = tableCongNhan.getSelectedRow();
+			String maCN = tableCongNhan.getValueAt(n, 0).toString();
+			CongNhan cn = cn_bus.getCongNhanTheoID(maCN);
+			hienThiThongTinCN(cn);
+			
+			
+		}
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
 }

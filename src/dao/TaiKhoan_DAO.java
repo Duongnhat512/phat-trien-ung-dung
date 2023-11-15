@@ -26,7 +26,7 @@ public class TaiKhoan_DAO {
 				String matKhai = rs.getString(2);
 				String loaiTaiKhoan = rs.getString(3);
 				TaiKhoanNganHang taiKhoanNganHang = taiKhoanNganHang_DAO.getTaiKhoanNganHangTheoSTK(rs.getString(4));
-				tk = new TaiKhoan(taiKhoan, matKhai, loaiTaiKhoan);
+				tk = new TaiKhoan(taiKhoan, matKhai, loaiTaiKhoan,taiKhoanNganHang);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

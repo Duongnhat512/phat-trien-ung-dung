@@ -18,6 +18,13 @@ public class BangChamCongCongNhan {
 		this.congDoanPhanCong = congDoanPhanCong;
 		this.heSoNgayLam = heSoNgayLam;
 	}
+	
+	public BangChamCongCongNhan(LocalDate ngayChamCong, CongDoanPhanCong congDoanPhanCong) {
+		super();
+		this.ngayChamCong = ngayChamCong;
+		this.congDoanPhanCong = congDoanPhanCong;
+	}
+
 	public BangChamCongCongNhan() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -56,9 +63,24 @@ public class BangChamCongCongNhan {
 	public void setHeSoNgayLam(double heSoNgayLam) {
 		this.heSoNgayLam = heSoNgayLam;
 	}
+//	@Override
+//	public int hashCode() {
+//		return Objects.hash(idNgayChamCong);
+//	}
+//	@Override
+//	public boolean equals(Object obj) {
+//		if (this == obj)
+//			return true;
+//		if (obj == null)
+//			return false;
+//		if (getClass() != obj.getClass())
+//			return false;
+//		BangChamCongCongNhan other = (BangChamCongCongNhan) obj;
+//		return Objects.equals(idNgayChamCong, other.idNgayChamCong);
+//	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(idNgayChamCong);
+		return Objects.hash(congDoanPhanCong, ngayChamCong);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -69,10 +91,8 @@ public class BangChamCongCongNhan {
 		if (getClass() != obj.getClass())
 			return false;
 		BangChamCongCongNhan other = (BangChamCongCongNhan) obj;
-		return Objects.equals(idNgayChamCong, other.idNgayChamCong);
-	}
-       
-       
-       
+		return Objects.equals(congDoanPhanCong, other.congDoanPhanCong)
+				&& Objects.equals(ngayChamCong, other.ngayChamCong);
+	}  
        
 }

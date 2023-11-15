@@ -17,4 +17,10 @@ public class CongNhan_BUS {
 	public ArrayList<CongNhan> getDanhSachCongNhanTheoCa(int idCaLam){
 		return congNhan_DAO.getDanhSachCongNhanTheoCa(idCaLam);
 	}
+	public boolean create(CongNhan cn){
+		return congNhan_DAO.create(cn);
+	}
+	public boolean update(CongNhan cn){
+		return congNhan_DAO.update(cn);
+	}
 }

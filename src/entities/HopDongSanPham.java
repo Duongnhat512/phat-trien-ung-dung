@@ -9,7 +9,21 @@ public class HopDongSanPham {
       private LocalDate ngayBatDau;
       private LocalDate ngayKetThuc;
       private NhanVien nguoiQuanLy;
+      private double tongTien;
       private String ghiChu;
+	
+	public HopDongSanPham(String idHopDong, String tenHopDong, LocalDate ngayBatDau, LocalDate ngayKetThuc,
+			NhanVien nguoiQuanLy, double tongTien, String ghiChu) {
+		super();
+		this.idHopDong = idHopDong;
+		this.tenHopDong = tenHopDong;
+		this.ngayBatDau = ngayBatDau;
+		this.ngayKetThuc = ngayKetThuc;
+		this.nguoiQuanLy = nguoiQuanLy;
+		this.tongTien = tongTien;
+		this.ghiChu = ghiChu;
+	}
+	
 	public HopDongSanPham(String idHopDong, String tenHopDong, LocalDate ngayBatDau, LocalDate ngayKetThuc,
 			NhanVien nguoiQuanLy, String ghiChu) {
 		super();
@@ -20,6 +34,7 @@ public class HopDongSanPham {
 		this.nguoiQuanLy = nguoiQuanLy;
 		this.ghiChu = ghiChu;
 	}
+	
 	public HopDongSanPham() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -63,6 +78,13 @@ public class HopDongSanPham {
 	}
 	public void setGhiChu(String ghiChu) {
 		this.ghiChu = ghiChu;
+	}
+	
+	public double getTongTien() {
+		return tongTien;
+	}
+	public void tinhTongTien(double tongTien) {
+		this.tongTien = tongTien;
 	}
 	@Override
 	public int hashCode() {

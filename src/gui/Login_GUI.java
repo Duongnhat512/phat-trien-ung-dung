@@ -42,7 +42,6 @@ public class Login_GUI extends JFrame implements ActionListener{
 	private GradientPanel panel;
 	private JTextField textTenDangNhap;
 	private JPasswordField passwordField;
-	private JButton btnQuenMatKhau;
 	private JLabel lblThongBao;
 	private TaiKhoan_BUS taiKhoan_BUS = new TaiKhoan_BUS();
 	protected static Login_GUI frame;
@@ -76,6 +75,7 @@ public class Login_GUI extends JFrame implements ActionListener{
 		contentPane.setLayout(null);
 		
 		panel = new GradientPanel();
+		panel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panel.setBorder(null);
 		panel.setBounds(0, 0, 1149, 674);
 		panel.setLayout(null);
@@ -85,13 +85,16 @@ public class Login_GUI extends JFrame implements ActionListener{
 		panel.setkEndColor(Color.decode("#928DAB"));
 		contentPane.add(panel);
 		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(607, 134, 507, 372);
+		RoundPanel panel_2 = new RoundPanel();
+		panel_2.setBackground(new Color(255, 255, 255));
+		panel_2.setRound(40);
+		panel_2.setBorder(new EmptyBorder(5, 5, 5, 5));
+		panel_2.setBounds(597, 129, 517, 377);
 		panel.add(panel_2);
+		panel_2.setLayout(new BorderLayout(0, 0));
 		pRight = new JPanel();
 		
 		pRight.setBackground(new Color(255, 255, 255));
-		panel_2.setLayout(new BorderLayout(0, 0));
 //		panel_1.setBackground(new Color(255, 255, 255));
 		pRight.setBorder(new LineBorder(Color.WHITE));
 		pRight.setOpaque(true);
@@ -128,8 +131,8 @@ public class Login_GUI extends JFrame implements ActionListener{
 		btnDangNhap.setBackground(new Color(23, 191, 86));
 		btnDangNhap.setBorder(null);
 		btnDangNhap.setForeground(Color.WHITE);
-		btnDangNhap.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		btnDangNhap.setBounds(152, 251, 279, 36);
+		btnDangNhap.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		btnDangNhap.setBounds(152, 251, 279, 38);
 		btnDangNhap.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		pRight.add(btnDangNhap);
 		
@@ -139,22 +142,23 @@ public class Login_GUI extends JFrame implements ActionListener{
 		passwordField.setBounds(152, 172, 279, 30);
 		pRight.add(passwordField);
 		
-		btnQuenMatKhau = new JButton("Quên mật khẩu?");
-		btnQuenMatKhau.setForeground(new Color(255, 255, 255));
-		btnQuenMatKhau.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		btnQuenMatKhau.setBorder(null);
-		btnQuenMatKhau.setBackground(new Color(255, 0, 0));
-		btnQuenMatKhau.setBounds(319, 311, 115, 30);
-		btnQuenMatKhau.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnQuenMatKhau.setOpaque(true);
-		
-		pRight.add(btnQuenMatKhau);
-		
 		lblThongBao = new JLabel("");
 		lblThongBao.setFont(new Font("Segoe UI", Font.ITALIC, 12));
 		lblThongBao.setForeground(new Color(0, 0, 0));
 		lblThongBao.setBounds(152, 212, 279, 21);
 		pRight.add(lblThongBao);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(Login_GUI.class.getResource("/icon/icons8_eye_25px.png")));
+		lblNewLabel.setBounds(433, 182, 45, 13);
+		pRight.add(lblNewLabel);
+		
+		JLabel lbQMK = new JLabel("Quên mật khẩu?\r\n");
+		lbQMK.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lbQMK.setForeground(new Color(255, 0, 0));
+		lbQMK.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lbQMK.setBounds(314, 311, 125, 21);
+		pRight.add(lbQMK);
 		
 		JLabel lbLogo = new JLabel("");
 		lbLogo.setIcon(new ImageIcon(Login_GUI.class.getResource("/icon/logo_Login.png")));

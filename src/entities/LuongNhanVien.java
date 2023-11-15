@@ -11,9 +11,11 @@ public class LuongNhanVien {
         private double thueLaoDong;
         private double thueBHXH;
 		private double thucLanh;
-	
+		private int thang;
+		private int nam;
+		
 		public LuongNhanVien(String idLuong, LocalDate ngayTinhLuong, NhanVien nhanVien, double tongLuong,
-				double thueLaoDong, double thueBHXH, double thucLanh) {
+				double thueLaoDong, double thueBHXH, double thucLanh, int thang, int nam) {
 			super();
 			this.idLuong = idLuong;
 			this.ngayTinhLuong = ngayTinhLuong;
@@ -22,6 +24,8 @@ public class LuongNhanVien {
 			this.thueLaoDong = thueLaoDong;
 			this.thueBHXH = thueBHXH;
 			this.thucLanh = thucLanh;
+			this.thang = thang;
+			this.nam = nam;
 		}
 		public LuongNhanVien() {
 			super();

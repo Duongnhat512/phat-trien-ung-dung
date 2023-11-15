@@ -32,4 +32,25 @@ public class TaiKhoanNganHang_DAO {
 		}
 		return tk;
 	}
+	public TaiKhoanNganHang getTaiKhoanNganHangTheoIDCongNhan(String idCongNhan) {
+		TaiKhoanNganHang tk = null;
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stm = null;
+		try {
+			stm = con.prepareStatement("select tk.soTaiKhoan,tk.tenNganHang,tk.chiNhanh,tk.chuTaiKhoan from CongNhan c join TaiKhoan t on c.tenTaiKhoan=t.tenTaiKhoan join TaiKhoanNganHang tk on t.soTaiKhoan=tk.soTaiKhoan where c.idCongNhan= ?");
+			stm.setString(1, idCongNhan);
+			ResultSet rs = stm.executeQuery();
+			while(rs.next()) {
+				String soTaiKhoan = rs.getString(1);
+				String tenNganHang = rs.getString(2);
+				String chiNhanh = rs.getString(3);
+				String chuTaiKhoan = rs.getString(4);
+				tk = new TaiKhoanNganHang(soTaiKhoan, tenNganHang, chiNhanh);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return tk;
+	}
 }

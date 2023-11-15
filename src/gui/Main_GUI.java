@@ -4,6 +4,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import bus.CongDoanSanPham_BUS;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 
@@ -13,16 +15,21 @@ import commons.MyButton;
 import commons.MyMenu;
 import commons.PanelButton;
 import connectDB.ConnectDB;
+import dao.CongDoanSanPham_DAO;
 import form.ChamCongCongNhan_Form;
 import form.ChamCongNhanVien_Form;
-
+import form.CongDoanSanPham_Form;
 import form.QuanLyCongNhan_Form;
 import form.QuanLyNhanVien_Form;
 import form.QuanLySanPham_Form;
 import form.QuanLyHopDong_Form;
 
 import form.ThongKeKPI_Form;
+import form.ThongKeLuongCongNhan_Form;
+import form.ThongKeLuongNhanVien_Form;
+import form.TinhLuongCongNhan_Form;
 import form.TinhLuongNhanVien_Form;
+import form.TrangChu_Form;
 
 import java.awt.Font;
 import java.awt.Frame;
@@ -76,14 +83,19 @@ public class Main_GUI extends JFrame implements ActionListener{
 	private JPanel panelCNort;
 	private MyMenu menu;
 	//Form
+	private CongDoanSanPham_Form congDoanSanPham_Form = null;
+	private TrangChu_Form trangChu_Form = null;
 	private ChamCongCongNhan_Form chamCongCongNhan_Form = null;
 	private TinhLuongNhanVien_Form tinhLuongNhanVien_Form = null;
+	private TinhLuongCongNhan_Form tinhLuongCongNhan_Form = null;
 	private ChamCongNhanVien_Form chamCongNhanVien_Form = null;
 	private QuanLyHopDong_Form quanLyHopDong_Form;
 	private ThongKeKPI_Form thongKeKPI_form = null;
 	private QuanLyCongNhan_Form quanLyCongNhan_Form = null;
 	private QuanLyNhanVien_Form quanLyNhanVien_Form = null;
 	private QuanLySanPham_Form quanLySanPham_Form = null;
+	private ThongKeLuongNhanVien_Form thongKeLuongNhanVien_Form = null;
+	private ThongKeLuongCongNhan_Form thongKeLuongCongNhan_Form = null;
 	//
 	private JPanel panelContent;
 	private MyButton btnAvt;
@@ -193,8 +205,10 @@ public class Main_GUI extends JFrame implements ActionListener{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		trangChu_Form = new TrangChu_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
+		setForm(trangChu_Form);
 	}
-
+    
 	
 	/**
 	 * Mở login ui
@@ -224,7 +238,8 @@ public class Main_GUI extends JFrame implements ActionListener{
 	 */
 	private void moForm(int index, int subIndex) {
 		if(index == 0 && subIndex == 0) {
-			
+			trangChu_Form = new TrangChu_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
+			setForm(trangChu_Form);
 		}
 		else if (index == 1) {
 			if (subIndex == 1) {
@@ -235,11 +250,22 @@ public class Main_GUI extends JFrame implements ActionListener{
 				chamCongCongNhan_Form = new ChamCongCongNhan_Form(panelCenter.getWidth(), panelCenter.getHeight() - panelCNort.getHeight());
 				setForm(chamCongCongNhan_Form);
 			}
+			else if(subIndex == 3)
+			{
+				tinhLuongCongNhan_Form = new TinhLuongCongNhan_Form(panelCenter.getWidth(), panelCenter.getHeight() - panelCNort.getHeight());
+				setForm(tinhLuongCongNhan_Form);
+			}
+			else if(subIndex == 4)
+			{
+				thongKeLuongCongNhan_Form = new ThongKeLuongCongNhan_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
+				setForm(thongKeLuongCongNhan_Form);
+			}
 			else if(subIndex == 5)
 			{
 				thongKeKPI_form = new ThongKeKPI_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
-//				setForm(thongKeKPI_form);
+				setForm(thongKeKPI_form);
 			}
+			
 				
 		}
 		else if(index == 2) {
@@ -254,6 +280,11 @@ public class Main_GUI extends JFrame implements ActionListener{
 				tinhLuongNhanVien_Form = new TinhLuongNhanVien_Form(panelCenter.getWidth(), panelCenter.getHeight() - panelCNort.getHeight());
 				setForm(tinhLuongNhanVien_Form);
 			}
+			else if(subIndex == 4)
+			{
+				thongKeLuongNhanVien_Form = new ThongKeLuongNhanVien_Form(panelCenter.getWidth(), panelCenter.getHeight() - panelCNort.getHeight());
+				setForm(thongKeLuongNhanVien_Form);
+			}
 		}
 		else if(index == 3 && subIndex == 0) {
 			quanLyHopDong_Form = new QuanLyHopDong_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
@@ -264,6 +295,11 @@ public class Main_GUI extends JFrame implements ActionListener{
 				quanLySanPham_Form = new QuanLySanPham_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
 				setForm(quanLySanPham_Form);
 			}
+			else if (subIndex == 2) {
+				congDoanSanPham_Form = new CongDoanSanPham_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
+				setForm(congDoanSanPham_Form);
+			}
+			
 		}
 		else if(index == 5 && subIndex == 0) {
 			moLinkHoTro();

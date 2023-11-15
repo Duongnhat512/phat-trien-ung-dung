@@ -1,4 +1,4 @@
-package dao;
+	package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -52,5 +52,28 @@ public class PhanXuong_DAO {
 			e.printStackTrace();
 		}
 		return phanXuong;
+	}
+	public PhanXuong getPhanXuongTheoTen(String ten) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement statement = null;
+		
+		try {	
+			String sql = "Select * from PhanXuong where tenPhanXuong = ?";	
+			statement = con.prepareStatement(sql);
+			statement.setString(1,ten);
+			ResultSet rs = statement.executeQuery();
+			
+			while(rs.next()) {
+				String idpx = rs.getString(1);
+				String tenpx = rs.getString(2);
+				PhanXuong px = new PhanXuong(idpx, tenpx);
+				return px;
+			}
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+			return null;
 	}
 }

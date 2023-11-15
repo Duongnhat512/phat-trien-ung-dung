@@ -19,6 +19,7 @@ public class NhanVien {
 	private PhongBan phongBan;
 	private String anhDaiDien;
 	private String cCCD;
+	private double phuCap;
 	public String getcCCD() {
 		return cCCD;
 	}
@@ -37,6 +38,25 @@ public class NhanVien {
 	
 	public NhanVien(String idNhanVien, String hoTen, boolean phai, LocalDate ngaySinh, LocalDate ngayBatDauCongTac,
 			LocalDate ngayKetThucCongTac, String email, String soDienThoai, ChucVu chucVu, TaiKhoan taiKhoan,
+			PhongBan phongBan, String anhDaiDien, String cCCD, double phuCap) {
+		super();
+		this.idNhanVien = idNhanVien;
+		this.hoTen = hoTen;
+		this.phai = phai;
+		this.ngaySinh = ngaySinh;
+		this.ngayBatDauCongTac = ngayBatDauCongTac;
+		this.ngayKetThucCongTac = ngayKetThucCongTac;
+		this.email = email;
+		this.soDienThoai = soDienThoai;
+		this.chucVu = chucVu;
+		this.taiKhoan = taiKhoan;
+		this.phongBan = phongBan;
+		this.anhDaiDien = anhDaiDien;
+		this.cCCD = cCCD;
+		this.phuCap = phuCap;
+	}
+	public NhanVien(String idNhanVien, String hoTen, boolean phai, LocalDate ngaySinh, LocalDate ngayBatDauCongTac,
+			LocalDate ngayKetThucCongTac, String email, String soDienThoai, ChucVu chucVu, TaiKhoan taiKhoan,
 			PhongBan phongBan, String anhDaiDien, String cCCD) {
 		super();
 		this.idNhanVien = idNhanVien;
@@ -52,6 +72,15 @@ public class NhanVien {
 		this.phongBan = phongBan;
 		this.anhDaiDien = anhDaiDien;
 		this.cCCD = cCCD;
+	}
+	public NhanVien(String idNhanVien, String hoTen, boolean phai, PhongBan phongBan, double phuCap,ChucVu chucVu) {
+		super();
+		this.idNhanVien = idNhanVien;
+		this.hoTen = hoTen;
+		this.phai = phai;
+		this.phongBan = phongBan;
+		this.phuCap = phuCap;
+		this.chucVu = chucVu;
 	}
 	public String getIdNhanVien() {
 		return idNhanVien;
@@ -130,15 +159,19 @@ public class NhanVien {
 	public void setPhongBan(PhongBan phongBan) {
 		this.phongBan = phongBan;
 	}
-	public double getPhuCap(ChucVu cv) {
-		if(cv.getIdChucVu().equals("CV003") || cv.getIdChucVu().equals("CV004")) {
-			return 1000000;
+	public void tinhPhuCap() {
+		if(chucVu.getIdChucVu().equals("CV003") || chucVu.getIdChucVu().equals("CV004")) {
+			this.phuCap =  1000000;
 		}
-		if(cv.getIdChucVu().equals("CV002")) {
-			return 700000;
+		if(chucVu.getIdChucVu().equals("CV002")) {
+			this.phuCap =  700000;
 		}
-		return 500000;
+		this.phuCap =  500000;
 	}
+	public double getPhuCap() {
+		return phuCap;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(idNhanVien, phongBan);
@@ -154,14 +187,7 @@ public class NhanVien {
 		NhanVien other = (NhanVien) obj;
 		return Objects.equals(idNhanVien, other.idNhanVien) && Objects.equals(phongBan, other.phongBan);
 	}
-	@Override
-	public String toString() {
-		return "NhanVien [idNhanVien=" + idNhanVien + ", hoTen=" + hoTen + ", phai=" + phai + ", ngaySinh=" + ngaySinh
-				+ ", ngayBatDauCongTac=" + ngayBatDauCongTac + ", ngayKetThucCongTac=" + ngayKetThucCongTac + ", email="
-				+ email + ", soDienThoai=" + soDienThoai + ", chucVu=" + chucVu + ", HESOBAOHIEMXAHOI="
-				+ HESOBAOHIEMXAHOI + ", LUONGCOBAN=" + LUONGCOBAN + ", taiKhoan=" + taiKhoan + ", phongBan=" + phongBan
-				+ ", phuCap=" + getPhuCap(chucVu) + "]";
-	}
+
 
 	
 }

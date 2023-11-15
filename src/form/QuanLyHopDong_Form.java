@@ -34,8 +34,9 @@ import javax.swing.border.LineBorder;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.FlowLayout;
 
-public class QuanLyHopDong_Form extends JPanel implements ActionListener{
+public class QuanLyHopDong_Form extends RoundPanel implements ActionListener{
 
 	private int width = 1259;
 	private int height = 813;
@@ -46,7 +47,6 @@ public class QuanLyHopDong_Form extends JPanel implements ActionListener{
 	private HopDongSanPham_BUS hopDongSanPham_BUS = new HopDongSanPham_BUS();
 	private MyButton btnXemChiTiet;
 	private MyButton btnCapNhat;
-	private MyButton btnLoc;
 	private MyButton btnThem;
 	
 	
@@ -54,6 +54,8 @@ public class QuanLyHopDong_Form extends JPanel implements ActionListener{
 	 * Create the panel.
 	 */
 	public QuanLyHopDong_Form(int width, int height) {
+		setRound(20);
+		setBorder(new EmptyBorder(5, 0, 5, 0));
 		this.width = width;
 		this.height = height;
 		initPanel();
@@ -83,14 +85,6 @@ public class QuanLyHopDong_Form extends JPanel implements ActionListener{
 		btnThem.setFocusPainted(false);
 		btnThem.setBackground(new Color(82, 125, 254));
 		
-		btnLoc = new MyButton();
-		btnLoc.setIcon(new ImageIcon(QuanLyHopDong_Form.class.getResource("/icon/icons8_filter_25px_1.png")));
-		btnLoc.setText("Lọc");
-		btnLoc.setRadius(10);
-		btnLoc.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		btnLoc.setFocusPainted(false);
-		btnLoc.setBackground(Color.WHITE);
-		
 		btnCapNhat = new MyButton();
 		btnCapNhat.setIcon(new ImageIcon(QuanLyHopDong_Form.class.getResource("/icon/update.png")));
 		btnCapNhat.setText("Cập nhật");
@@ -100,7 +94,7 @@ public class QuanLyHopDong_Form extends JPanel implements ActionListener{
 		btnCapNhat.setBackground(Color.WHITE);
 		
 		textTimKiem = new RoundTextField(10);
-		textTimKiem.setText("Nhập mã hợp đồng cần tìm.....");
+		textTimKiem.setText("Nhập tên hợp đồng cần tìm.....");
 		textTimKiem.setBorder(new EmptyBorder(0, 15, 0, 0));
 		textTimKiem.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		textTimKiem.setForeground(Color.GRAY);
@@ -134,11 +128,9 @@ public class QuanLyHopDong_Form extends JPanel implements ActionListener{
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(83)
-					.addComponent(textTimKiem, GroupLayout.PREFERRED_SIZE, 297, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnLoc, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 394, Short.MAX_VALUE)
+					.addGap(31)
+					.addComponent(textTimKiem, GroupLayout.PREFERRED_SIZE, 349, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 480, Short.MAX_VALUE)
 					.addComponent(btnThem, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnXemChiTiet, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
@@ -156,26 +148,10 @@ public class QuanLyHopDong_Form extends JPanel implements ActionListener{
 							.addComponent(btnThem, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 							.addComponent(textTimKiem, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-							.addComponent(btnCapNhat, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-							.addComponent(btnLoc, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(btnCapNhat, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		panel.setLayout(gl_panel);
-		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addComponent(panel, GroupLayout.DEFAULT_SIZE, 1259, Short.MAX_VALUE)
-				.addComponent(panelSouth, GroupLayout.DEFAULT_SIZE, 1259, Short.MAX_VALUE)
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(panelSouth, GroupLayout.PREFERRED_SIZE, 687, GroupLayout.PREFERRED_SIZE)
-					.addGap(44))
-		);
 		
 		RoundPanel panel_1_1 = new RoundPanel();
 		panel_1_1.setRound(10);
@@ -184,18 +160,27 @@ public class QuanLyHopDong_Form extends JPanel implements ActionListener{
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Danh sách hợp đồng");
 		lblNewLabel_1_1.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		setLayout(groupLayout);
 		
 		tableHopDong = new Table();
         tableHopDong.setOpaque(false);
-        // Cài đặt header cho table Chấm công
+        
         tableHopDong.setModel(new DefaultTableModel(
-        	new Object[][] {
-        	},
-        	new String[] {
-        		"ID h\u1EE3p \u0111\u1ED3ng", "T\u00EAn h\u1EE3p \u0111\u1ED3ng", "Ng\u00E0y b\u1EAFt \u0111\u1EA7u", "Ng\u00E0y k\u1EBFt th\u00FAc", "Nh\u00E2n vi\u00EAn ph\u1EE5 tr\u00E1ch", "Ghi ch\u00FA"
-        	}
-        ));
+                new Object [][] {
+
+                },
+                new String [] {
+            		"ID h\u1EE3p \u0111\u1ED3ng", "T\u00EAn h\u1EE3p \u0111\u1ED3ng", "Ng\u00E0y b\u1EAFt \u0111\u1EA7u", "Ng\u00E0y k\u1EBFt th\u00FAc", "Nh\u00E2n vi\u00EAn ph\u1EE5 tr\u00E1ch", "T\u1ED5ng ti\u1EC1n h\u1EE3p \u0111\u1ED3ng", "Ghi ch\u00FA"
+                	
+                }
+            ) {
+                boolean[] canEdit = new boolean [] {
+                    false, false, false, false, false, false, false
+                };
+
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    return canEdit [columnIndex];
+                }
+            });
         tableHopDong.getColumnModel().getColumn(4).setPreferredWidth(120);
         
         JScrollPane scrollPane = new JScrollPane();
@@ -206,46 +191,19 @@ public class QuanLyHopDong_Form extends JPanel implements ActionListener{
         panelSouth.add(scrollPane);
         
         tableHopDong.fixTable(scrollPane);
-        GroupLayout gl_panel_1_1 = new GroupLayout(panel_1_1);
-        gl_panel_1_1.setHorizontalGroup(
-        	gl_panel_1_1.createParallelGroup(Alignment.LEADING)
-        		.addGroup(gl_panel_1_1.createSequentialGroup()
-        			.addGap(540)
-        			.addComponent(lblNewLabel_1_1, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE))
-        );
-        gl_panel_1_1.setVerticalGroup(
-        	gl_panel_1_1.createParallelGroup(Alignment.LEADING)
-        		.addGroup(gl_panel_1_1.createSequentialGroup()
-        			.addGap(5)
-        			.addComponent(lblNewLabel_1_1))
-        );
-        panel_1_1.setLayout(gl_panel_1_1);
-        GroupLayout gl_panelSouth = new GroupLayout(panelSouth);
-        gl_panelSouth.setHorizontalGroup(
-        	gl_panelSouth.createParallelGroup(Alignment.LEADING)
-        		.addGroup(gl_panelSouth.createSequentialGroup()
-        			.addGap(31)
-        			.addGroup(gl_panelSouth.createParallelGroup(Alignment.LEADING)
-        				.addComponent(panel_1_1, GroupLayout.PREFERRED_SIZE, 1200, GroupLayout.PREFERRED_SIZE)
-        				.addComponent(scrollPane))
-        			.addContainerGap())
-        );
-        gl_panelSouth.setVerticalGroup(
-        	gl_panelSouth.createParallelGroup(Alignment.LEADING)
-        		.addGroup(gl_panelSouth.createSequentialGroup()
-        			.addGap(8)
-        			.addComponent(panel_1_1, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-        			.addPreferredGap(ComponentPlacement.UNRELATED)
-        			.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
-        			.addContainerGap())
-        );
-        panelSouth.setLayout(gl_panelSouth);
         
         //Đăng ký sự kiện
         btnCapNhat.addActionListener(this);
-        btnLoc.addActionListener(this);
         btnThem.addActionListener(this);
         btnXemChiTiet.addActionListener(this);
+        setLayout(new BorderLayout(0, 0));
+        add(panel, BorderLayout.NORTH);
+        add(panelSouth);
+        panelSouth.setLayout(new BorderLayout(0, 0));
+        panelSouth.add(scrollPane);
+        panelSouth.add(panel_1_1, BorderLayout.NORTH);
+        panel_1_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        panel_1_1.add(lblNewLabel_1_1);
         
         //
         docDuLieuLenTableHDSP();
@@ -259,7 +217,7 @@ public class QuanLyHopDong_Form extends JPanel implements ActionListener{
 		ArrayList<HopDongSanPham> list = hopDongSanPham_BUS.getAllHopDongSanPham();
 		DefaultTableModel dm = (DefaultTableModel) tableHopDong.getModel();
 		for(HopDongSanPham hd : list) {
-			dm.addRow(new Object[] {hd.getIdHopDong(), hd.getTenHopDong(), hd.getNgayBatDau(), hd.getNgayKetThuc(), hd.getNguoiQuanLy().getHoTen(), hd.getGhiChu()});
+			dm.addRow(new Object[] {hd.getIdHopDong(), hd.getTenHopDong(), hd.getNgayBatDau(), hd.getNgayKetThuc(), hd.getNguoiQuanLy().getHoTen(), String.format("%,.2f", hd.getTongTien()), hd.getGhiChu()});
 		}
 	}
 	
