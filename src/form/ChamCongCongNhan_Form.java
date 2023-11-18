@@ -19,9 +19,15 @@ import commons.MyButton;
 import commons.RoundPanel;
 import commons.Table;
 import entities.BangChamCongCongNhan;
+import entities.CaLam;
 import entities.CongDoanPhanCong;
 
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 import java.awt.GridLayout;
 import java.awt.Image;
 
@@ -31,6 +37,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 
 import java.awt.Font;
@@ -434,11 +441,11 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
         txtTimKiem.setBorder(new EmptyBorder(0, 15, 0, 0));
         txtTimKiem.setBounds(10, 4, 291, 35);
         panelNorth.add(txtTimKiem);
-        
-        cboPhanXuong = new JComboBox();
-        cboPhanXuong.setFont(new Font("SansSerif", Font.PLAIN, 15));
-        cboPhanXuong.setBounds(438, 3, 117, 37);
-        panelNorth.add(cboPhanXuong);
+//        
+//        cboPhanXuong = new JComboBox();
+//        cboPhanXuong.setFont(new Font("SansSerif", Font.PLAIN, 15));
+//        cboPhanXuong.setBounds(438, 3, 117, 37);
+//        panelNorth.add(cboPhanXuong);
         GroupLayout groupLayout = new GroupLayout(this);
         groupLayout.setHorizontalGroup(
         	groupLayout.createParallelGroup(Alignment.LEADING)
@@ -472,6 +479,9 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
         );
         setLayout(groupLayout);
       
+        tableCongNhan.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tableChamCong.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
       indexCaLam = 3;
       cboCaLam.addActionListener(new ActionListener() {
 			
@@ -514,23 +524,16 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
       
       // Xử lý sự kiện tìm kiếm
       txtTimKiem.addKeyListener(new KeyAdapter() {
-			
-
 			@Override
 			public void keyReleased(KeyEvent e) {
-				tableCongNhan.clearSelection();
-				layDanhSachCongNhan();
-				if (txtTimKiem.getText().trim().isEmpty()) {
-					docDuLieuLenTablePhanCong(listPhanCong);
-					return;
-				}
-				locPhanCongTheoHoTen();
+				kiemTraComboBoxCaLam();
 			}
 		});
-        //
-      	locDuLieuChamCongTheoNgay();
-        layDanhSachCongNhan();
-        docDuLieuLenTablePhanCong(listPhanCong);
+      //
+	    //
+	  	locDuLieuChamCongTheoNgay();
+	    layDanhSachCongNhan();
+	    docDuLieuLenTablePhanCong(listPhanCong);
         
 	}
 	
@@ -552,28 +555,28 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 	 * @param caLam
 	 */
 	private void locPhanCongTheoCaLam(int caLam) {
-		ArrayList<CongDoanPhanCong> temp = congDoanPhanCong_BUS.getDanhSachPhanCongTheoCaLam(caLam);
+		ArrayList<CongDoanPhanCong> temp = new ArrayList<CongDoanPhanCong>();
+		temp.addAll(listPhanCong);
 		listPhanCong = new ArrayList<CongDoanPhanCong>();
 		for(CongDoanPhanCong congDoanPhanCong : temp) {
-			if(congDoanPhanCong.getSoLuongConLai() > 0 && !listChamCong.contains(new BangChamCongCongNhan(date, congDoanPhanCong))) {
+			if (congDoanPhanCong.getCaLam().getIdCaLam() == caLam) {
 				listPhanCong.add(congDoanPhanCong);
 			}
 		}
-		docDuLieuLenTablePhanCong(listPhanCong);
 	}
 	
 	/**
 	 * Lọc danh sách phân công theo tên
 	 */
 	private void locPhanCongTheoHoTen() {
-		ArrayList<CongDoanPhanCong> temp = congDoanPhanCong_BUS.getDanhSachPhanCong();
+		ArrayList<CongDoanPhanCong> temp = new ArrayList<CongDoanPhanCong>();
+		temp.addAll(listPhanCong);
 		listPhanCong = new ArrayList<CongDoanPhanCong>();
 		for(CongDoanPhanCong congDoanPhanCong : temp) {
 			if(congDoanPhanCong.getCongNhan().getHoTen().trim().toUpperCase().contains(txtTimKiem.getText().trim().toUpperCase())) {
 				listPhanCong.add(congDoanPhanCong);
 			}
 		}
-		docDuLieuLenTablePhanCong(listPhanCong);
 	}
 	
 	private void layDanhSachCongNhan() {
@@ -681,26 +684,20 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 		if (!txtTimKiem.getText().equals("Nhập tên công nhân cần tìm...")) {
 			locPhanCongTheoHoTen();
 		}
-		else {
-			docDuLieuLenTablePhanCong(listPhanCong);
-		}
-		return;
 	}
 	
 	/**
 	 * Kiểm tra combobox Ca làm để lọc dữ liệu
 	 */
 	private void kiemTraComboBoxCaLam() {
-		indexCaLam = cboCaLam.getSelectedIndex();
 		tableCongNhan.clearSelection();
-		if (indexCaLam == 3) {
-			layDanhSachCongNhan();
-			kiemTraThanhTimKiem();
-			docDuLieuLenTablePhanCong(listPhanCong);
-			return;
+		indexCaLam = cboCaLam.getSelectedIndex();
+		layDanhSachCongNhan();
+		if (indexCaLam != 3) {
+			locPhanCongTheoCaLam(indexCaLam + 1);
 		}
-		locPhanCongTheoCaLam(indexCaLam + 1);
 		kiemTraThanhTimKiem();
+		docDuLieuLenTablePhanCong(listPhanCong);
 	}
 	
 	/**
@@ -717,7 +714,7 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 				int soLuongHoanThanh = soLuongConLai;
 				double heSoNgayLam = 1;
 				if (ngayChamCong.getDayOfWeek() == DayOfWeek.SUNDAY) {
-					heSoNgayLam = 1.5;
+					heSoNgayLam = 1.35;
 				}
 				BangChamCongCongNhan bangChamCongCongNhan = new BangChamCongCongNhan(idChamCong, ngayChamCong, soLuongHoanThanh, congDoanPhanCong, heSoNgayLam);
 				bangChamCongCongNhan_BUS.themChamCong(bangChamCongCongNhan);
@@ -733,15 +730,25 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 	 */
 	private void capNhatSoLuongHoanThanh() {
 		int row = tableChamCong.getSelectedRow();
+		tableChamCong.editCellAt(row, 0);
 		if (row != -1) {
 			BangChamCongCongNhan bangCC = listChamCong.get(row);
 			int soLuongHoanThanh = 0;
 			try {
-				soLuongHoanThanh = Integer.parseInt(tableChamCong.getValueAt(row, 5).toString());
+				soLuongHoanThanh = Integer.parseInt(tableChamCong.getValueAt(row, 6).toString());
 			} catch (NumberFormatException e) {
 				JOptionPane.showMessageDialog(this, "Số lượng hoàn thành cần sửa phải là chữ số.");
-				tableChamCong.setValueAt("" + bangCC.getSoLuongHoanThanh(), row, 5);
+				tableChamCong.setValueAt("" + bangCC.getSoLuongHoanThanh(), row, 6);
 				return;
+			}
+			if (soLuongHoanThanh > (bangCC.getSoLuongHoanThanh() + bangCC.getCongDoanPhanCong().getSoLuongConLai())) {
+				JOptionPane.showMessageDialog(this, "Số lượng hoàn thành vượt quá số lượng còn lại của công nhân.");
+			}
+			else {
+				CongDoanPhanCong congDoanPhanCong = bangCC.getCongDoanPhanCong();
+				congDoanPhanCong.setSoLuongConLai(congDoanPhanCong.getSoLuongConLai() - (soLuongHoanThanh - bangCC.getSoLuongHoanThanh()));
+				bangCC.setSoLuongHoanThanh(soLuongHoanThanh);
+				bangChamCongCongNhan_BUS.capNhatSoLuongHoanThanh(bangCC);
 			}
 		}
 		else {
@@ -764,7 +771,8 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 			kiemTraComboBoxCaLam();
 		}
 		if (o.equals(btnCapNhat)) {
-//			capNhatSoLuongHoanThanh();
+			capNhatSoLuongHoanThanh();
 		}
 	}
+
 }

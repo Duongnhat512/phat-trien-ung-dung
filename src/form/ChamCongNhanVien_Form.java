@@ -533,7 +533,6 @@ public class ChamCongNhanVien_Form extends JPanel implements ActionListener, Mou
 			}
 			NhanVien nv = new NhanVien(idNV);
 			BangChamCongNhanVien bcc = new BangChamCongNhanVien("1", ngayChamCong, trangThai, nv);
-			System.out.println(bcc.getTrangThai() + "");
 			int row = tableNhanVien.getSelectedRow();
 			if (chamCongNhanVien_BUS.themChamCong(bcc)) {
 				modelNV.removeRow(row);
@@ -558,7 +557,6 @@ public class ChamCongNhanVien_Form extends JPanel implements ActionListener, Mou
 			String month = (dateChamCong.getDate().getMonth() + 1) + "";
 			String year = (dateChamCong.getDate().getYear() + 1900) + "";
 			String format = year + "-" + month + "-" + day;
-			System.out.println(format);
 			ArrayList<NhanVien> listCC = chamCongNhanVien_BUS.getListNVchuaChamCong(format);
 			for (NhanVien nhanVien : listCC) {
 				if (phongBan_BUS.getPBTheoTen(tenPB).getIdPhongBan().equals(nhanVien.getPhongBan().getIdPhongBan())) {
@@ -579,7 +577,6 @@ public class ChamCongNhanVien_Form extends JPanel implements ActionListener, Mou
 		String month = (dateChamCong.getDate().getMonth() + 1) + "";
 		String year = (dateChamCong.getDate().getYear() + 1900) + "";
 		String format = year + "-" + month + "-" + day;
-		System.out.println(format);
 		ArrayList<NhanVien> listCC = chamCongNhanVien_BUS.getListNVchuaChamCong(format);
 		for (NhanVien nhanVien : listCC) {
 			modelNV.addRow(new Object[] { nhanVien.getIdNhanVien(), nhanVien.getHoTen(),
@@ -674,7 +671,6 @@ public class ChamCongNhanVien_Form extends JPanel implements ActionListener, Mou
 					int selectedColumn = 3;
 					if (selectedRow != -1 && selectedColumn != -1) {
 						selectedValue = tableNhanVien.getValueAt(selectedRow, selectedColumn);
-						System.out.println(selectedValue);
 						if (tableNhanVien.getValueAt(selectedRow, 3).toString().equals("true")) {
 							radCoMat.setVisible(true);
 							radCoMat.setSelected(true);

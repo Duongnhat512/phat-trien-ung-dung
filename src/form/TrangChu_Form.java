@@ -7,10 +7,12 @@ import javax.swing.border.EmptyBorder;
 
 import bus.CongNhan_BUS;
 import bus.NhanVien_BUS;
+import bus.SanPham_BUS;
 import commons.RoundPanel;
 import connectDB.ConnectDB;
 import entities.CongNhan;
 import entities.NhanVien;
+import entities.SanPham;
 import gui.Main_GUI;
 
 import java.awt.Color;
@@ -152,11 +154,14 @@ public class TrangChu_Form extends JPanel{
 	}
 	private void hienThiGiaoDien()
 	{
+		SanPham_BUS sanPham_BUS = new SanPham_BUS();
 		ArrayList<NhanVien> listNV = nhanVien_BUS.getdsNV();
 		ArrayList<CongNhan> listCN = congNhan_BUS.getDanhSachCongNhan();
+		ArrayList<SanPham> listSP = sanPham_BUS.getAllSanPham();
 		
 		lbSLNV.setText(listNV.size()+"");
 		lbSLCN.setText(listCN.size()+"");
+		lbSLSP.setText(listSP.size() +"");
 	}
 	
 }

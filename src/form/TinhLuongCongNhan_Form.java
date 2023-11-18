@@ -354,7 +354,7 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 		if(dslcn.isEmpty()) {
 			dscn = cccn_bus.getDSChamCongCongNhan(thang, nam, phanXuong);			
 			if (dscn.isEmpty()) {
-				JOptionPane.showConfirmDialog(this, "Không có dữ liệu để tính lương");
+				JOptionPane.showMessageDialog(this, "Không có dữ liệu để tính lương");;
 			}
 			tongSoLuong = dscn.size();
 			for (CongNhan cn : dscn) {
@@ -522,7 +522,7 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 				}
 			}
 			if (!checkNV) {
-				JOptionPane.showConfirmDialog(this, "Không tìm thấy nhân viên");
+				JOptionPane.showMessageDialog(this, "Không tìm thấy nhân viên");
 				tongSoLuong=0;
 			}
 			docDuLieuVaoThongTinChung(tongSoLuong, tongThoiGianLamViec, tongSoLuongSanPham, tongLuongHanhChanh, tongLuongTangCa, tongPhuCap, tongThucLanh);

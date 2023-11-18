@@ -343,7 +343,7 @@ public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 		if(dslnv.isEmpty()) {
 			dsnv = ccnv_bus.getDSChamCongNhanVien(thang, nam, phongBan);
 			if (dsnv.isEmpty()) {
-				JOptionPane.showConfirmDialog(this, "Không có dữ liệu để tính lương");
+				JOptionPane.showMessageDialog(this, "Không có dữ liệu để tính lương");
 			}
 			tongSoLuong = dsnv.size();
 			for (NhanVien nv : dsnv) {
@@ -358,13 +358,13 @@ public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 				String thue = decimalFormat.format(l.getThueLaoDong()) + " VND";
 				String thuclanh = decimalFormat.format(l.getThucLanh()) + "VND";
 				String phuCap = decimalFormat.format(nv.getPhuCap()) + " VND";
-				String luongCB = decimalFormat.format(8000000) + " VND";
+				String luongCB = decimalFormat.format(nv.getLUONGCOBAN()) + " VND";
 				tongPhuCap += nv.getPhuCap();
 				tongThue += l.getThueLaoDong();
 				tongBhxh += l.getThueBHXH();
 				luongThucTe += l.getTongLuong();
 				tongThucLanh += l.getThucLanh();
-				luongCb += 8000000;
+				luongCb += nv.getLUONGCOBAN();
 				dftable.addRow(new Object[] { stt,l.getIdLuong(), l.getNgayTinhLuong(), phongBan, nv.getIdNhanVien(), nv.getHoTen(), c.getTenChucVu(), luongCB,
 						c.getHeSoLuong(), phuCap, tongLuong, bhxh, thue, thuclanh });
 				stt++;
@@ -380,13 +380,13 @@ public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 				String thue = decimalFormat.format(lnv.getThueLaoDong()) + " VND";
 				String thuclanh = decimalFormat.format(lnv.getThucLanh()) + "VND";
 				String phuCap = decimalFormat.format(nv.getPhuCap()) + " VND";
-				String luongCB = decimalFormat.format(8000000) + " VND";
+				String luongCB = decimalFormat.format(nv.getLUONGCOBAN()) + " VND";
 				tongPhuCap += nv.getPhuCap();
 				tongThue += lnv.getThueLaoDong();
 				tongBhxh += lnv.getThueBHXH();
 				luongThucTe += lnv.getTongLuong();
 				tongThucLanh += lnv.getThucLanh();
-				luongCb += 8000000;
+				luongCb += nv.getLUONGCOBAN();
 				dftable.addRow(new Object[] { stt,lnv.getIdLuong(), lnv.getNgayTinhLuong(), phongBan, nv.getIdNhanVien(), nv.getHoTen(), c.getTenChucVu(), luongCB,
 						c.getHeSoLuong(), phuCap, tongLuong, bhxh, thue, thuclanh });
 				stt++;
@@ -515,7 +515,7 @@ public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 				}
 			}
 			if (!checkNV) {
-				JOptionPane.showConfirmDialog(this, "Không tìm thấy nhân viên");
+				JOptionPane.showMessageDialog(this, "Không tìm thấy nhân viên");;
 				tongSoLuong=0;
 			}
 			docDuLieuVaoThongTinChung(tongSoLuong, luongCb, tongPhuCap, tongThue, tongBhxh, luongThucTe, tongThucLanh);

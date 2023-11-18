@@ -33,6 +33,7 @@ import commons.RoundPanel;
 import connectDB.ConnectDB;
 import entities.TaiKhoan;
 import java.awt.BorderLayout;
+import java.awt.Toolkit;
 
 public class Login_GUI extends JFrame implements ActionListener{
 
@@ -62,6 +63,7 @@ public class Login_GUI extends JFrame implements ActionListener{
 	 * Create the frame.
 	 */
 	public Login_GUI() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login_GUI.class.getResource("/icon/logo.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(1163, 711);
 		setLocationRelativeTo(null);
@@ -166,17 +168,18 @@ public class Login_GUI extends JFrame implements ActionListener{
 		panel.add(lbLogo);
 		
 		
+		textTenDangNhap.setText("admin");
+		passwordField.setText("1111");
 		
-		//
-//		try {
-//			ConnectDB.getInstance().connect();
-//		} catch (ClassNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		try {
+			ConnectDB.getInstance().connect();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		//Đăng ký sự kiện
 		btnDangNhap.addActionListener(this);
@@ -214,8 +217,8 @@ public class Login_GUI extends JFrame implements ActionListener{
 		// TODO Auto-generated method stub
 		Object o = e.getSource();
 		if(o.equals(btnDangNhap)) {
-//			moTrangChu();
 			if(kiemTraDangNhap()) {
+				moTrangChu();
 			}
 		}
 	}

@@ -43,7 +43,6 @@ public class BangLuongNhanVien_DAO {
             double 	bhxh = cs.getDouble(5);
             double thuclanh = cs.getDouble(6);
             double tongTienLuong = cs.getDouble(7);
-            System.out.println(bhxh);
             lnv = new LuongNhanVien("LNV0001",LocalDate.now() ,new NhanVien(idNhanVien), tongTienLuong, thue,bhxh,thuclanh, thang,nam);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
