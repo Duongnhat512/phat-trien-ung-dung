@@ -519,12 +519,8 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 			@Override
 			public void keyReleased(KeyEvent e) {
 				tableCongNhan.clearSelection();
-				layDanhSachCongNhan();
-				if (txtTimKiem.getText().trim().isEmpty()) {
-					docDuLieuLenTablePhanCong(listPhanCong);
-					return;
-				}
-				locPhanCongTheoHoTen();
+				kiemTraComboBoxCaLam();
+				return;
 			}
 		});
         //
@@ -552,28 +548,29 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 	 * @param caLam
 	 */
 	private void locPhanCongTheoCaLam(int caLam) {
-		ArrayList<CongDoanPhanCong> temp = congDoanPhanCong_BUS.getDanhSachPhanCongTheoCaLam(caLam);
+		ArrayList<CongDoanPhanCong> temp = new ArrayList<CongDoanPhanCong>();
+		temp.addAll(listPhanCong);
 		listPhanCong = new ArrayList<CongDoanPhanCong>();
 		for(CongDoanPhanCong congDoanPhanCong : temp) {
-			if(congDoanPhanCong.getSoLuongConLai() > 0 && !listChamCong.contains(new BangChamCongCongNhan(date, congDoanPhanCong))) {
+			if (congDoanPhanCong.getCaLam().getIdCaLam() == caLam) {
 				listPhanCong.add(congDoanPhanCong);
 			}
 		}
-		docDuLieuLenTablePhanCong(listPhanCong);
 	}
 	
 	/**
 	 * Lọc danh sách phân công theo tên
 	 */
 	private void locPhanCongTheoHoTen() {
-		ArrayList<CongDoanPhanCong> temp = congDoanPhanCong_BUS.getDanhSachPhanCong();
+		layDanhSachCongNhan();
+		ArrayList<CongDoanPhanCong> temp = new ArrayList<CongDoanPhanCong>();
+		temp.addAll(listPhanCong);
 		listPhanCong = new ArrayList<CongDoanPhanCong>();
 		for(CongDoanPhanCong congDoanPhanCong : temp) {
 			if(congDoanPhanCong.getCongNhan().getHoTen().trim().toUpperCase().contains(txtTimKiem.getText().trim().toUpperCase())) {
 				listPhanCong.add(congDoanPhanCong);
 			}
 		}
-		docDuLieuLenTablePhanCong(listPhanCong);
 	}
 	
 	private void layDanhSachCongNhan() {
@@ -628,6 +625,19 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 		}
 	}
 	
+	private void xoaDuLieuTrenTextField() {
+		tableCongNhan.clearSelection();
+		lblID.setText("");
+		lblHoTen.setText("");
+		lblCaLam.setText("");
+		lblPhanXuong.setText("");
+		lblTenSanPham.setText("");
+		lblCongDoan.setText("");
+		lblSLConLai.setText("");
+		lblSLDuocGiao.setText("");
+		txtSLHoanThanh.setText("");
+	}
+	
 	/**
 	 * Chấm công cho một công nhân
 	 */
@@ -672,6 +682,7 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 		congDoanPhanCong.setSoLuongConLai(soLuongConLai - soLuongHoanThanh);
 		congDoanPhanCong_BUS.capNhatSoLuongConLai(congDoanPhanCong);
 		lblThongBao.setText("Chấm công thành công!");
+		xoaDuLieuTrenTextField();
 	}
 	
 	/**
@@ -682,9 +693,8 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 			locPhanCongTheoHoTen();
 		}
 		else {
-			docDuLieuLenTablePhanCong(listPhanCong);
+			layDanhSachCongNhan();
 		}
-		return;
 	}
 	
 	/**
@@ -693,14 +703,12 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 	private void kiemTraComboBoxCaLam() {
 		indexCaLam = cboCaLam.getSelectedIndex();
 		tableCongNhan.clearSelection();
-		if (indexCaLam == 3) {
-			layDanhSachCongNhan();
-			kiemTraThanhTimKiem();
-			docDuLieuLenTablePhanCong(listPhanCong);
-			return;
-		}
-		locPhanCongTheoCaLam(indexCaLam + 1);
 		kiemTraThanhTimKiem();
+		if (indexCaLam != 3) {
+			locPhanCongTheoCaLam(indexCaLam + 1);
+		}
+		docDuLieuLenTablePhanCong(listPhanCong);
+
 	}
 	
 	/**
