@@ -131,5 +131,19 @@ public class CongNhan_DAO {
 		return danhSachCongNhan;
 	}
 
-	
+	public ArrayList<CongNhan> getDSCongNhanChuaPhanCong(){
+		ArrayList<CongNhan> list = new ArrayList<CongNhan>();
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stm = null;
+		
+		try {
+			stm = con.prepareStatement("select * from CongNhan");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
 }

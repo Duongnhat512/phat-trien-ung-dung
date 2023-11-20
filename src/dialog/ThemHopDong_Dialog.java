@@ -13,6 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import commons.MyButton;
+import commons.RoundPanel;
 import commons.Table;
 import entities.ChiTietHopDong;
 import entities.HopDongSanPham;
@@ -204,7 +205,10 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 		panel.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(192, 192, 192)));
 		panel.setPreferredSize(new Dimension((int) (this.width*0.4), (int) (this.height*0.4)));
 		
-		JPanel panelCTHopDong = new JPanel();
+		RoundPanel panelCTHopDong = new RoundPanel();
+		panelCTHopDong.setBackground(new Color(255, 255, 255));
+		panelCTHopDong.setBorder(new EmptyBorder(5, 5, 0, 5));
+		panelCTHopDong.setRound(20);
 		
 		JPanel panelSanPham = new JPanel();
 		panelSanPham.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(192, 192, 192)));
@@ -383,6 +387,8 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 		));
 		tableCTHopDong.getColumnModel().getColumn(1).setPreferredWidth(99);
 		JScrollPane scrollPaneCTHD = new JScrollPane();
+		scrollPaneCTHD.setOpaque(false);
+		scrollPaneCTHD.setBorder(new EmptyBorder(5, 5, 5, 5));
 		scrollPaneCTHD.setViewportView(tableCTHopDong);
 		panelCTHopDong.add(scrollPaneCTHD, BorderLayout.CENTER);
 		tableCTHopDong.setOpaque(false);
