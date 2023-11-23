@@ -23,4 +23,7 @@ public class CongNhan_BUS {
 	public boolean update(CongNhan cn){
 		return congNhan_DAO.update(cn);
 	}
+	public ArrayList<CongNhan> getDanhSachCongNhanChuaPhanCong(){
+		return congNhan_DAO.getDanhSachCongNhanChuaPhanCong();
+	}
 }

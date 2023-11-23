@@ -224,7 +224,6 @@ public class QuanLyHopDong_Form extends RoundPanel implements ActionListener{
 	private void moDialogThemHD() {
 		ThemHopDong_Dialog themHopDong_Dialog = new ThemHopDong_Dialog();
 		themHopDong_Dialog.openThemHopDong_Dialog((int) (this.width*0.75), this.height);
-
 	}
 
 	@Override

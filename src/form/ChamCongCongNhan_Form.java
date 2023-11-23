@@ -544,7 +544,11 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 		DefaultTableModel dm = (DefaultTableModel) tableCongNhan.getModel();
 		dm.getDataVector().removeAllElements();
 		for(CongDoanPhanCong congDoanPhanCong : list) {
-			dm.addRow(new Object[] {congDoanPhanCong.getCongNhan().getIdCongNhan(), congDoanPhanCong.getCongNhan().getHoTen(), congDoanPhanCong.getCaLam().getTenCaLam(), congDoanPhanCong.getCongNhan().getPhanXuong().getTenPhanXuong(), congDoanPhanCong.getCongDoanSP().getSanPham().getTenSanPham(), congDoanPhanCong.getCongDoanSP().getTenCongDoan(), congDoanPhanCong.getSoLuongSanPhamDuocGiao(), congDoanPhanCong.getSoLuongConLai()});
+			dm.addRow(new Object[] {congDoanPhanCong.getCongNhan().getIdCongNhan(), 
+					congDoanPhanCong.getCongNhan().getHoTen(), congDoanPhanCong.getCaLam().getTenCaLam(), 
+					congDoanPhanCong.getCongNhan().getPhanXuong().getTenPhanXuong(), congDoanPhanCong.getCongDoanSP().getSanPham().getTenSanPham(), 
+					congDoanPhanCong.getCongDoanSP().getTenCongDoan(), congDoanPhanCong.getSoLuongSanPhamDuocGiao(), 
+					congDoanPhanCong.getSoLuongConLai()});
 		}
 		tableCongNhan.repaint();
 		tableCongNhan.revalidate();
@@ -598,7 +602,10 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 		DefaultTableModel dm = (DefaultTableModel) tableChamCong.getModel();
 		dm.getDataVector().removeAllElements();
 		for(BangChamCongCongNhan bangChamCongCongNhan : listChamCong) {
-			dm.addRow(new Object[] {bangChamCongCongNhan.getCongDoanPhanCong().getCongNhan().getIdCongNhan(), dtf.format(bangChamCongCongNhan.getNgayChamCong()), bangChamCongCongNhan.getCongDoanPhanCong().getCongNhan().getPhanXuong().getTenPhanXuong(), bangChamCongCongNhan.getCongDoanPhanCong().getCongDoanSP().getSanPham().getTenSanPham(), bangChamCongCongNhan.getCongDoanPhanCong().getCongDoanSP().getTenCongDoan(), bangChamCongCongNhan.getCongDoanPhanCong().getSoLuongSanPhamDuocGiao(), bangChamCongCongNhan.getSoLuongHoanThanh()});
+			dm.addRow(new Object[] {bangChamCongCongNhan.getCongDoanPhanCong().getCongNhan().getIdCongNhan(), 
+						dtf.format(bangChamCongCongNhan.getNgayChamCong()), bangChamCongCongNhan.getCongDoanPhanCong().getCongNhan().getPhanXuong().getTenPhanXuong(), 
+						bangChamCongCongNhan.getCongDoanPhanCong().getCongDoanSP().getSanPham().getTenSanPham(), bangChamCongCongNhan.getCongDoanPhanCong().getCongDoanSP().getTenCongDoan(), 
+						bangChamCongCongNhan.getCongDoanPhanCong().getSoLuongSanPhamDuocGiao(), bangChamCongCongNhan.getSoLuongHoanThanh()});
 		}
 		dm.fireTableDataChanged();
 		tableChamCong.repaint();
@@ -670,7 +677,8 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 		if (ngayChamCong.getDayOfWeek() == DayOfWeek.SUNDAY) {
 			heSoNgayLam = 1.5;
 		}
-		BangChamCongCongNhan bangChamCongCongNhan = new BangChamCongCongNhan(idChamCong, ngayChamCong, soLuongHoanThanh, congDoanPhanCong, heSoNgayLam);
+		BangChamCongCongNhan bangChamCongCongNhan = new BangChamCongCongNhan(idChamCong, ngayChamCong, soLuongHoanThanh, 
+													congDoanPhanCong, heSoNgayLam);
 		bangChamCongCongNhan_BUS.themChamCong(bangChamCongCongNhan);
 		congDoanPhanCong.setSoLuongConLai(soLuongConLai - soLuongHoanThanh);
 		congDoanPhanCong_BUS.capNhatSoLuongConLai(congDoanPhanCong);

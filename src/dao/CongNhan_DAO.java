@@ -213,5 +213,45 @@ public class CongNhan_DAO {
 		}
 		return n > 0;
 	}
+	
+	public ArrayList<CongNhan> getDanhSachCongNhanChuaPhanCong(){
+		ArrayList<CongNhan> list = new ArrayList<CongNhan>();
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		try {
+			Statement stm = con.createStatement();
+			ResultSet rs = stm.executeQuery("select * from CongNhan "
+					+ "where idCongNhan not in "
+					+ "(select idCongNhan from CongDoanPhanCong where soLuongConLai > 0)");
+			while (rs.next()) {
+				String idCongNhan = rs.getString(1);
+				String hoTen = rs.getString(2);
+				boolean phai = true;
+				if (!rs.getBoolean(3))
+					phai = false;
+				LocalDate ngaySinh = LocalDate.parse(rs.getString(4));
+				LocalDate ngayBatDauCongTac = LocalDate.parse(rs.getString(5));
+				String ngayKetThucCongTacStr = rs.getString(6);
+				LocalDate ngayKetThucCongTac = (ngayKetThucCongTacStr != null) ? LocalDate.parse(ngayKetThucCongTacStr)
+						: null;
+				PhanXuong phanXuong = phanXuong_DAO.getPhanXuongTheoID(rs.getString(7));
+				String email = rs.getString(8);
+				String soDienThoai = rs.getString(9);
+				double phuCap = rs.getDouble(10);
+				String tayNghe = rs.getString(11);
+				TaiKhoan taiKhoan = taiKhoan_DAO.getTaiKhoan(idCongNhan);
+				String anhDaiDien = rs.getString(13);
+				String cccd = rs.getString(14);
+				CongNhan congNhan = new CongNhan(idCongNhan, hoTen, phai, ngaySinh, ngayBatDauCongTac,
+						ngayKetThucCongTac, phanXuong, email, soDienThoai, tayNghe, taiKhoan, anhDaiDien, cccd, phuCap);
+				list.add(congNhan);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+		
+	}
 
 }

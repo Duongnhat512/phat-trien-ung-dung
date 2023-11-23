@@ -15,6 +15,11 @@ public class ChiTietHopDong_DAO {
 	private HopDongSanPham_DAO hopDongSanPham_DAO = new HopDongSanPham_DAO();
 	private SanPham_DAO sanPham_DAO = new SanPham_DAO();
 	
+	/**
+	 * Lấy danh sách chi tiết hợp đồng dựa trên idHopDong
+	 * @param id
+	 * @return
+	 */
 	public ArrayList<ChiTietHopDong> getChiTietHopDongTheoIDHopDong(String id){
 		ArrayList<ChiTietHopDong> list = new ArrayList<ChiTietHopDong>();
 		ConnectDB.getInstance();
@@ -38,17 +43,23 @@ public class ChiTietHopDong_DAO {
 		
 		return list;
 	}
+	/**
+	 * Thêm chi tiết hợp đồng
+	 * @param chiTietHopDong
+	 * @return
+	 */
 	public boolean themCTHopDong(ChiTietHopDong chiTietHopDong) {
 		int n = 0;
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection();
 		PreparedStatement stm = null;
 		try {
-			stm = con.prepareStatement("insert into ChiTietHopDong values(?, ?, ?, ?)");
+			stm = con.prepareStatement("insert into ChiTietHopDong values(?, ?, ?, ?, ?)");
 			stm.setString(1, chiTietHopDong.getHopDongSanPham().getIdHopDong());
 			stm.setString(2, chiTietHopDong.getSanPham().getIdSanPham());
 			stm.setInt(3, chiTietHopDong.getSoLuong());
 			stm.setDouble(4, chiTietHopDong.getThanhTien());
+			stm.setBoolean(5, chiTietHopDong.isTrangThai());
 			n = stm.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -57,4 +68,16 @@ public class ChiTietHopDong_DAO {
 		
 		return n > 0;
 	}
+	
+	/**
+	 * Lấy danh sách các sản phẩm trong hợp đồng chưa được làm xong
+	 * @return
+	 */
+	public ArrayList<ChiTietHopDong> getChiTietHopDongChuaHoanThanh() {
+		ArrayList<ChiTietHopDong> list = new ArrayList<ChiTietHopDong>();
+		
+		
+		return list;
+	}
+	
 }

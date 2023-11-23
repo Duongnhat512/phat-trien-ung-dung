@@ -6,7 +6,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
+import bus.CongDoanPhanCong_BUS;
+import bus.CongDoanSanPham_BUS;
+import bus.CongNhan_BUS;
 import commons.Table;
+import entities.CongDoanPhanCong;
+import entities.CongDoanSanPham;
+import entities.CongNhan;
 
 import java.awt.BorderLayout;
 import javax.swing.border.EmptyBorder;
@@ -14,26 +20,38 @@ import commons.RoundPanel;
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import commons.MyButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.FlowLayout;
+import commons.RoundTextField;
 
 public class CongDoanPhanCong_Form extends JPanel {
 	private int width = 1259;
 	private int height = 813;
 	private Table tableCongNhan;
-	private Table tableCongDoan;
-	
+	private Table tableSanPham;
+	private MyButton btnPhanCong;
+	private MyButton btnCapNhat;
 	
 	//
-//	private 
+	private CongNhan_BUS congNhan_BUS = new CongNhan_BUS();
+	private CongDoanPhanCong_BUS congDoanPhanCong_BUS = new CongDoanPhanCong_BUS();
+	private CongDoanSanPham_BUS congDoanSanPham_BUS = new CongDoanSanPham_BUS();
+	
+	//
+	private ArrayList<CongNhan> listCongNhan = new ArrayList<CongNhan>();
+	private ArrayList<CongDoanSanPham> listCongDoan = new ArrayList<CongDoanSanPham>();
 	
 	/**
 	 * Create the panel.
 	 */
 	public CongDoanPhanCong_Form() {
+		setBorder(new EmptyBorder(0, 5, 0, 0));
 		initComponents();
 	}
 	
@@ -45,21 +63,24 @@ public class CongDoanPhanCong_Form extends JPanel {
 		panelNorth.setPreferredSize(new Dimension(this.width, (int)(this.height * 0.5)));
 		add(panelNorth, BorderLayout.NORTH);
 		
-		RoundPanel panel = new RoundPanel();
-		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		panel.setBounds(10, 64, 336, 332);
+		RoundPanel panelSanPham = new RoundPanel();
+		panelSanPham.setBackground(new Color(255, 255, 255));
+		panelSanPham.setRound(20);
+		panelSanPham.setBorder(new EmptyBorder(5, 5, 5, 5));
+		panelSanPham.setBounds(0, 64, 346, 332);
 		
-		RoundPanel panel_2 = new RoundPanel();
-		panel_2.setBounds(352, 64, 347, 332);
-		panel_2.setRound(10);
-		panel_2.setBorder(new EmptyBorder(2, 2, 2, 2));
+		RoundPanel panelCN = new RoundPanel();
+		panelCN.setBackground(new Color(255, 255, 255));
+		panelCN.setBounds(352, 64, 347, 332);
+		panelCN.setRound(20);
+		panelCN.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
-		RoundPanel panel_3 = new RoundPanel();
-		panel_3.setBounds(709, 64, 528, 332);
-		panel_3.setRound(20);
-		panel_3.setBorder(new EmptyBorder(5, 5, 5, 5));
-		panel_3.setBackground(new Color(255, 255, 255));
-		panel_2.setLayout(new BorderLayout(0, 0));
+		RoundPanel panelThongTin = new RoundPanel();
+		panelThongTin.setBounds(709, 64, 528, 332);
+		panelThongTin.setRound(20);
+		panelThongTin.setBorder(new EmptyBorder(5, 5, 5, 5));
+		panelThongTin.setBackground(new Color(255, 255, 255));
+		panelCN.setLayout(new BorderLayout(0, 0));
 		
 		RoundPanel panelCenter = new RoundPanel();
 		panelCenter.setRound(20);
@@ -108,9 +129,12 @@ public class CongDoanPhanCong_Form extends JPanel {
 		panel_1.add(lblNewLabel_1);
 		
 		JScrollPane scrollPane2 = new JScrollPane();
-		panel_2.add(scrollPane2);
+		scrollPane2.setOpaque(false);
+		scrollPane2.setBorder(new EmptyBorder(5, 5, 5, 5));
+		panelCN.add(scrollPane2);
 		
 		tableCongNhan = new Table();
+		tableCongNhan.setBorder(null);
 		tableCongNhan.setOpaque(false);
 		scrollPane2.setViewportView(tableCongNhan);
 		tableCongNhan.setModel(new DefaultTableModel(
@@ -118,35 +142,7 @@ public class CongDoanPhanCong_Form extends JPanel {
 
                 },
                 new String [] {
-                	"ID Công nhân", "Tên công nhân", "Ca làm", "Phân xưởng"
-                }
-            ) {
-                boolean[] canEdit = new boolean [] {
-                    false, false, false, false
-                };
-
-                public boolean isCellEditable(int rowIndex, int columnIndex) {
-                    return canEdit [columnIndex];
-                }
-            });
-		tableCongNhan.fixTable(scrollPane2);
-		panel.setLayout(new BorderLayout(0, 0));
-		
-		JScrollPane scrollPane3 = new JScrollPane();
-		scrollPane3.setBorder(null);
-		scrollPane3.setBackground(new Color(255, 255, 255));
-		panel.add(scrollPane3);
-		
-		tableCongDoan = new Table();
-		tableCongDoan.setBorder(null);
-		tableCongDoan.setOpaque(false);
-		scrollPane3.setViewportView(tableCongDoan);
-		tableCongDoan.setModel(new DefaultTableModel(
-                new Object [][] {
-
-                },
-                new String [] {
-                	"Tên sản phẩm", "Tên công đoạn", "Số lượng cần giao"
+                	"ID Công nhân", "Tên công nhân", "Phân xưởng"
                 }
             ) {
                 boolean[] canEdit = new boolean [] {
@@ -157,18 +153,66 @@ public class CongDoanPhanCong_Form extends JPanel {
                     return canEdit [columnIndex];
                 }
             });
-		tableCongDoan.fixTable(scrollPane3);
+		tableCongNhan.fixTable(scrollPane2);
 		panelNorth.setLayout(null);
-		panelNorth.add(panel);
-		panelNorth.add(panel_2);
-		panelNorth.add(panel_3);
-		panel_3.setLayout(new BorderLayout(0, 0));
+		panelNorth.add(panelSanPham);
+		panelSanPham.setLayout(new BorderLayout(0, 0));
+		
+		tableSanPham = new Table();
+		tableSanPham.setOpaque(false);
+		tableSanPham.setModel(new DefaultTableModel(
+                new Object [][] {
+
+                },
+                new String [] {
+                	"Tên sản phẩm", "Tên công đoạn", "Số lượng cần chia"
+                }
+            ) {
+                boolean[] canEdit = new boolean [] {
+                    false, false, false
+                };
+
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    return canEdit [columnIndex];
+                }
+            });
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setOpaque(false);
+		scrollPane_1.setBorder(new EmptyBorder(5, 5, 5, 5));
+		scrollPane_1.setBackground(Color.WHITE);
+		scrollPane_1.setViewportView(tableSanPham);
+		tableSanPham.fixTable(scrollPane_1);
+		panelSanPham.add(scrollPane_1, BorderLayout.CENTER);
+		
+		RoundPanel panelTitleSP = new RoundPanel();
+		panelTitleSP.setRound(10);
+		panelTitleSP.setOpaque(false);
+		panelTitleSP.setBackground(new Color(153, 204, 255));
+		panelSanPham.add(panelTitleSP, BorderLayout.NORTH);
+		
+		JLabel lblNewLabel_1_1_2 = new JLabel("Danh sách công đoạn sản phẩm");
+		lblNewLabel_1_1_2.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		panelTitleSP.add(lblNewLabel_1_1_2);
+		panelNorth.add(panelCN);
+		
+		RoundPanel panel_1_1_1 = new RoundPanel();
+		panel_1_1_1.setRound(10);
+		panel_1_1_1.setOpaque(false);
+		panel_1_1_1.setBackground(new Color(153, 204, 255));
+		panelCN.add(panel_1_1_1, BorderLayout.NORTH);
+		
+		JLabel lblNewLabel_1_1_1 = new JLabel("Danh sách công nhân");
+		lblNewLabel_1_1_1.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		panel_1_1_1.add(lblNewLabel_1_1_1);
+		panelNorth.add(panelThongTin);
+		panelThongTin.setLayout(new BorderLayout(0, 0));
 		
 		RoundPanel panel_1_1 = new RoundPanel();
 		panel_1_1.setRound(10);
 		panel_1_1.setOpaque(false);
 		panel_1_1.setBackground(new Color(153, 204, 255));
-		panel_3.add(panel_1_1, BorderLayout.NORTH);
+		panelThongTin.add(panel_1_1, BorderLayout.NORTH);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Thông tin phân công");
 		lblNewLabel_1_1.setFont(new Font("SansSerif", Font.PLAIN, 15));
@@ -176,7 +220,7 @@ public class CongDoanPhanCong_Form extends JPanel {
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setOpaque(false);
-		panel_3.add(panel_4, BorderLayout.CENTER);
+		panelThongTin.add(panel_4, BorderLayout.CENTER);
 		
 		JLabel lblNewLabel = new JLabel("New label");
 		GroupLayout gl_panel_4 = new GroupLayout(panel_4);
@@ -196,7 +240,7 @@ public class CongDoanPhanCong_Form extends JPanel {
 		);
 		panel_4.setLayout(gl_panel_4);
 		
-		MyButton btnCapNhat = new MyButton();
+		btnCapNhat = new MyButton();
 		btnCapNhat.setBounds(1096, 11, 141, 43);
 		panelNorth.add(btnCapNhat);
 		btnCapNhat.setText("Cập nhật");
@@ -205,7 +249,7 @@ public class CongDoanPhanCong_Form extends JPanel {
 		btnCapNhat.setFocusPainted(false);
 		btnCapNhat.setBackground(Color.WHITE);
 		
-		MyButton btnPhanCong = new MyButton();
+		btnPhanCong = new MyButton();
 		btnPhanCong.setBounds(949, 10, 141, 45);
 		panelNorth.add(btnPhanCong);
 		btnPhanCong.setText("Chấm công");
@@ -213,9 +257,46 @@ public class CongDoanPhanCong_Form extends JPanel {
 		btnPhanCong.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		btnPhanCong.setFocusPainted(false);
 		btnPhanCong.setBackground(Color.WHITE);
+		
+		RoundTextField txtTimKiemCN = new RoundTextField(10);
+		txtTimKiemCN.setText("Nhập tên công nhân cần tìm...");
+		txtTimKiemCN.setForeground(Color.GRAY);
+		txtTimKiemCN.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		txtTimKiemCN.setColumns(10);
+		txtTimKiemCN.setBorder(new EmptyBorder(0, 15, 0, 0));
+		txtTimKiemCN.setBounds(352, 19, 347, 35);
+		panelNorth.add(txtTimKiemCN);
+		
+		RoundTextField txtTimKiemCDSP = new RoundTextField(10);
+		txtTimKiemCDSP.setText("Nhập tên sản phẩm cần tìm...");
+		txtTimKiemCDSP.setForeground(Color.GRAY);
+		txtTimKiemCDSP.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		txtTimKiemCDSP.setColumns(10);
+		txtTimKiemCDSP.setBorder(new EmptyBorder(0, 15, 0, 0));
+		txtTimKiemCDSP.setBounds(10, 19, 336, 35);
+		panelNorth.add(txtTimKiemCDSP);
+		
+		layDanhSachCongNhan();
+		docDuLieuLenTableCongNhan(listCongNhan);
 	}
 	
-	private void layDuLieuCongDoanSP() {
+	/**
+	 * Lấy danh sách công nhân
+	 */
+	private void layDanhSachCongNhan() {
+		listCongNhan = congNhan_BUS.getDanhSachCongNhanChuaPhanCong();
+	}
+	
+	private void docDuLieuLenTableCongNhan(ArrayList<CongNhan> list) {
+		DefaultTableModel dm = (DefaultTableModel) tableCongNhan.getModel();
+		dm.getDataVector().removeAllElements();
+		
+		for(CongNhan cn : list) {
+			dm.addRow(new Object[] {cn.getIdCongNhan(), cn.getHoTen(), cn.getPhanXuong().getTenPhanXuong()});
+		}
+	}
+	
+	private void layDanhSachCongDoanSP() {
 		
 	}
 }

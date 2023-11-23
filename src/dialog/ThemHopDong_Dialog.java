@@ -95,6 +95,7 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 	private JLabel lblThongBao;
 	private JTextArea txtGhiChu;
 	private double tongTien = 0;
+	private boolean flag = false;
 	
 	//
 	private ArrayList<ChiTietHopDong> listCTHD;
@@ -642,9 +643,11 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 			hopDongSanPham_BUS.themHopDong(hd);
 			for (ChiTietHopDong chiTietHopDong : listCTHD) {
 				chiTietHopDong.setHopDongSanPham(hd);
+				chiTietHopDong.setTrangThai(false);
 				chiTietHopDong_BUS.themCTHopDong(chiTietHopDong);
 			}
 			JOptionPane.showMessageDialog(this, "Thêm hợp đồng thành công!");
+			flag = true;
 			this.dispose();
 		}
 		
@@ -717,7 +720,10 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 	private void timSanPham() {
 		String idSP = txtIDSanPham.getText().toUpperCase().trim();
 		SanPham sp = sanPham_BUS.getSanPhamTheoID(idSP);
-		hienThiThongTinSanPham(sp);
+		if (sp != null) {
+			hienThiThongTinSanPham(sp);
+			
+		}
 	}
 	
 	/**
@@ -732,6 +738,9 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 		txtSoLuong.setText("1");
 	}
 	
+	/**
+	 * Bỏ chọn sản phẩm
+	 */
 	private void boChonSanPham() {
 		int row = tableCTHopDong.getSelectedRow();
 		if (row == -1) {
@@ -742,6 +751,10 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 			listCTHD.remove(row);
 			docDuLieuLenBangCTHD();
 		}
+	}
+	
+	public boolean getFlag() {
+		return flag;
 	}
 	
 	@Override

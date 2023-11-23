@@ -105,7 +105,8 @@ create table ChiTietHopDong
 	idHopDong varchar(10),
 	idSanPham varchar(10),
 	soLuong int,
-	thanhTien money
+	thanhTien money,
+	trangThai bit
 )
 alter table ChiTietHopDong add constraint FK_ChiTietHopDong_HopDong foreign key (idHopDong) references HopDongSanPham(idHopDong) on delete cascade
 alter table ChiTietHopDong add constraint FK_ChiTietHopDong_SanPham foreign key (idSanPham) references SanPham(idSanPham) on delete cascade
@@ -632,3 +633,20 @@ BEGIN
     WHERE MONTH(BC.ngayChamCong) = @Thang AND YEAR(BC.ngayChamCong) = @Nam AND Cn.idCongNhan=@idCongNhan;
 
 END;
+
+go
+create trigger trigger_TinhTongTienHD
+on ChiTietHopDong
+after insert 
+as
+begin
+	declare @tongTien money
+	select @tongTien = sum(thanhTien)
+	from ChiTietHopDong
+	where idHopDong = (select idHopDong from inserted)
+	group by idHopDong
+	update HopDongSanPham
+	set tongTien = @tongTien
+	where idHopDong = (select idHopDong from inserted)
+end
+go
