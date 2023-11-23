@@ -75,7 +75,24 @@ public class ChiTietHopDong_DAO {
 	 */
 	public ArrayList<ChiTietHopDong> getChiTietHopDongChuaHoanThanh() {
 		ArrayList<ChiTietHopDong> list = new ArrayList<ChiTietHopDong>();
-		
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stm = null;
+		try {
+			stm = con.prepareStatement("select * from ChiTietHopDong where trangThai = 0");
+			ResultSet rs = stm.executeQuery();
+			while(rs.next()) {
+				HopDongSanPham hd = hopDongSanPham_DAO.getHopDongSanPhamTheoID(rs.getString(1));
+				SanPham sp = sanPham_DAO.getSanPhamTheoID(rs.getString(2));
+				int soLuong = rs.getInt(3);
+				boolean trangThai = rs.getBoolean(5);
+				ChiTietHopDong chiTietHopDong = new ChiTietHopDong(hd, sp, soLuong, trangThai);
+				list.add(chiTietHopDong);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return list;
 	}

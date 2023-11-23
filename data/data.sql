@@ -1,4 +1,7 @@
-﻿create database QLLuongSanPham
+﻿--use master
+--drop database QLLuongSanPham
+select * from CongDoanSP
+create database QLLuongSanPham
 go
 use QLLuongSanPham
 go
@@ -116,7 +119,6 @@ create table CongDoanSP(
 	tenCongDoan nvarchar(50),
 	soLuongSanPham int,
 	luongCongDoan money,
-	soLuongCongNhan int,
 	idSanPham varchar(10),
 	thuTuUuTien varchar(3)
 )
@@ -178,7 +180,20 @@ alter table BangLuongNhanVien add constraint FK_BangLuongNhanVien_NhanVien forei
 insert into TaiKhoan(tenTaiKhoan, matKhau, loaiTaiKhoan) values('admin', '1111', 'admin')
 go
 
-
+go
+create trigger trigger_CapNhatSoLuongSanPham
+on ChiTietHopDong
+after insert 
+as
+	begin
+		declare @soLuong int
+		select @soLuong = (select soLuong from inserted)
+		update CongDoanSP 
+		set soLuongSanPham = soLuongSanPham + @soLuong
+		where idCongDoan in (select idCongDoan 
+								from inserted inner join CongDoanSP on inserted.idSanPham = CongDoanSP.idSanPham)
+	end
+go
 
 -- Thêm các chức vụ
 INSERT INTO ChucVu (idChucVu, tenChucVu, heSoLuong)
@@ -377,17 +392,17 @@ VALUES
 	go
 --tHÊM 4 công đoạn
 
-INSERT INTO CongDoanSP (idCongDoan, tenCongDoan, soLuongSanPham, luongCongDoan, soLuongCongNhan, idSanPham, thuTuUuTien)
+INSERT INTO CongDoanSP (idCongDoan, tenCongDoan, soLuongSanPham, luongCongDoan, idSanPham, thuTuUuTien)
 VALUES
-    ('CDSP0001', N'Chuẩn bị nguyên vật liệu', 100, 50000, 5, 'SP0001', 1),
-    ('CDSP0002', N'Cắt vải', 120, 30000, 7, 'SP0001', 2),
-    ('CDSP0003', N'May áo khoác', 90, 35000, 6, 'SP0001', 3),
-    ('CDSP0004', N'Chuẩn bị vải jean', 130, 25000, 8, 'SP0002',1),
-    ('CDSP0005', N'Cắt vải jean', 110, 20000, 6, 'SP0002',2),
-    ('CDSP0006', N'May quần jean', 85, 30000, 6, 'SP0002',3),
-	('CDSP0007', N'Chuẩn bị vải satin', 80, 20000, 6, 'SP0003', 1),
-	('CDSP0008', N'Cắt vải satin', 70, 18000, 5, 'SP0003', 2),
-	('CDSP0009', N'May đầm dự tiệc', 50, 25000, 4, 'SP0003', 3);
+    ('CDSP0001', N'Chuẩn bị nguyên vật liệu', 0, 50000, 'SP0001', 1),
+    ('CDSP0002', N'Cắt vải', 0, 30000, 'SP0001', 2),
+    ('CDSP0003', N'May áo khoác', 0, 35000, 'SP0001', 3),
+    ('CDSP0004', N'Chuẩn bị vải jean', 0, 25000, 'SP0002',1),
+    ('CDSP0005', N'Cắt vải jean', 0, 20000, 'SP0002',2),
+    ('CDSP0006', N'May quần jean', 0, 30000, 'SP0002',3),
+	('CDSP0007', N'Chuẩn bị vải satin', 0, 20000, 'SP0003', 1),
+	('CDSP0008', N'Cắt vải satin', 0, 18000, 'SP0003', 2),
+	('CDSP0009', N'May đầm dự tiệc', 0, 25000, 'SP0003', 3);
 go
 --THÊM CONG DOAN PHAN CONG
 -- Bảng phân công cho sản phẩm SP0001

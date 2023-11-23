@@ -7,7 +7,6 @@ public class CongDoanSanPham {
 	private String tenCongDoan;
 	private int soLuongSanPham;
 	private double luongCongDoan;
-	private int soLuongCongNhan;
 	private SanPham sanPham;
 	private String thiTuUuTien;
 	
@@ -22,19 +21,20 @@ public class CongDoanSanPham {
 		this.luongCongDoan = luongCongDoan;
 		this.sanPham = sanPham;
 	}
-
+	
+	
+	
 	public CongDoanSanPham(String idCongDoan, String tenCongDoan, int soLuongSanPham, double luongCongDoan,
-			int soLuongCongNhan, SanPham sanPham, String thiTuUuTien) {
+			SanPham sanPham, String thiTuUuTien) {
 		super();
 		this.idCongDoan = idCongDoan;
 		this.tenCongDoan = tenCongDoan;
 		this.soLuongSanPham = soLuongSanPham;
 		this.luongCongDoan = luongCongDoan;
-		this.soLuongCongNhan = soLuongCongNhan;
 		this.sanPham = sanPham;
 		this.thiTuUuTien = thiTuUuTien;
 	}
-	
+
 	public String getIdCongDoan() {
 		return idCongDoan;
 	}
@@ -58,12 +58,6 @@ public class CongDoanSanPham {
 	}
 	public void setLuongCongDoan(double luongCongDoan) {
 		this.luongCongDoan = luongCongDoan;
-	}
-	public int getSoLuongCongNhan() {
-		return soLuongCongNhan;
-	}
-	public void setSoLuongCongNhan(int soLuongCongNhan) {
-		this.soLuongCongNhan = soLuongCongNhan;
 	}
 	public SanPham getSanPham() {
 		return sanPham;

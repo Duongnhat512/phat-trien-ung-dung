@@ -23,4 +23,10 @@ public class CongDoanSanPham_BUS {
 	public boolean update(CongDoanSanPham cdsp){
 		return cdsp_dao.update(cdsp);
 	}
+	public boolean updateSoLuongSanPham(String idCongDoan, int soLuongSanPham) {
+		return cdsp_dao.updateSoLuongSanPham(idCongDoan, soLuongSanPham);
+	}
+	public ArrayList<CongDoanSanPham> getDanhSachCongDoanChuaChiaXong(){
+		return cdsp_dao.getDanhSachCongDoanChuaChiaXong();
+	}
 }

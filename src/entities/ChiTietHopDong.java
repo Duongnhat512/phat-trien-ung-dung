@@ -16,8 +16,7 @@ public class ChiTietHopDong {
 		tinhThanhTien();
 	}
 	
-	public ChiTietHopDong(HopDongSanPham hopDongSanPham, SanPham sanPham, int soLuong, double thanhTien,
-			boolean trangThai) {
+	public ChiTietHopDong(HopDongSanPham hopDongSanPham, SanPham sanPham, int soLuong, boolean trangThai) {
 		super();
 		this.hopDongSanPham = hopDongSanPham;
 		this.sanPham = sanPham;

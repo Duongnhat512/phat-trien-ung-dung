@@ -61,10 +61,9 @@ public class CongDoanSanPham_DAO {
 				String tenCongDoan = rs.getString(2);
 				int soLuongSP = rs.getInt(3);
 				double luongCongDoan = rs.getDouble(4);
-				int soLuongCN = rs.getInt(5);
-				SanPham sp = sanPham_DAO.getSanPhamTheoID(rs.getString(6));
-				String thuTuUuTien = rs.getString(7); 
-				CongDoanSanPham cd = new CongDoanSanPham(idCongDoan, tenCongDoan, soLuongSP, luongCongDoan, soLuongCN, sp, thuTuUuTien);
+				SanPham sp = sanPham_DAO.getSanPhamTheoID(rs.getString(5));
+				String thuTuUuTien = rs.getString(6); 
+				CongDoanSanPham cd = new CongDoanSanPham(idCongDoan, tenCongDoan, soLuongSP, luongCongDoan, sp, thuTuUuTien);
 				list.add(cd);
 			}
 		} catch (SQLException e) {
@@ -93,10 +92,9 @@ public class CongDoanSanPham_DAO {
 				String tenCongDoan = rs.getString(2);
 				int soLuongSP = rs.getInt(3);
 				double luongCongDoan = rs.getDouble(4);
-				int soLuongCN = rs.getInt(5);
-				SanPham sp = sanPham_DAO.getSanPhamTheoID(rs.getString(6));
-				String thuTuUuTien = rs.getString(7); 
-				cd = new CongDoanSanPham(idCongDoan, tenCongDoan, soLuongSP, luongCongDoan, soLuongCN, sp, thuTuUuTien);
+				SanPham sp = sanPham_DAO.getSanPhamTheoID(rs.getString(5));
+				String thuTuUuTien = rs.getString(6); 
+				cd = new CongDoanSanPham(idCongDoan, tenCongDoan, soLuongSP, luongCongDoan, sp, thuTuUuTien);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -159,5 +157,66 @@ public class CongDoanSanPham_DAO {
 			}
 		}
 		return n > 0;
+	}
+	
+	/**
+	 * Cập nhật số lượng sản phẩm cho công đoạn
+	 * @param idCongDoan
+	 * @param soLuongSanPham
+	 * @return
+	 */
+	public boolean updateSoLuongSanPham(String idCongDoan, int soLuongSanPham) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stmt = null;
+		int n= 0;
+		try {
+			stmt =con.prepareStatement("update CongDoanSP set soLuongSanPham = ? where idCongDoan = ?");
+			stmt.setInt(1, soLuongSanPham);
+			stmt.setString(2, idCongDoan);
+			n = stmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				stmt.close();
+			} catch (SQLException e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}
+		return n > 0;
+	}
+	
+	/**
+	 * Lấy danh sách công đoạn chưa được chia xong
+	 * @return
+	 */
+	public ArrayList<CongDoanSanPham> getDanhSachCongDoanChuaChiaXong(){
+		ArrayList<CongDoanSanPham> list = new ArrayList<CongDoanSanPham>();
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stm = null;
+		try {
+			stm = con.prepareStatement("select * from CongDoanSP where soLuongConLai > 0");
+			ResultSet rs = stm.executeQuery();
+			while(rs.next()) {
+				String idCongDoan = rs.getString(1);
+				String tenCongDoan = rs.getString(2);
+				int soLuongSP = rs.getInt(3);
+				double luongCongDoan = rs.getDouble(4);
+				SanPham sp = sanPham_DAO.getSanPhamTheoID(rs.getString(5));
+				String thuTuUuTien = rs.getString(6); 
+				CongDoanSanPham cd = new CongDoanSanPham(idCongDoan, tenCongDoan, soLuongSP, luongCongDoan, sp, thuTuUuTien);
+				list.add(cd);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 }

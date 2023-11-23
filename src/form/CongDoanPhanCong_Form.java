@@ -10,6 +10,7 @@ import bus.CongDoanPhanCong_BUS;
 import bus.CongDoanSanPham_BUS;
 import bus.CongNhan_BUS;
 import commons.Table;
+import entities.ChiTietHopDong;
 import entities.CongDoanPhanCong;
 import entities.CongDoanSanPham;
 import entities.CongNhan;

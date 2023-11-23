@@ -320,10 +320,10 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 		lblNgyKtThc.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		
 		txtIDHopDong = new JTextField();
+		txtIDHopDong.setEnabled(false);
 		txtIDHopDong.setBackground(new Color(240, 240, 240));
 		txtIDHopDong.setDisabledTextColor(new Color(0, 0, 0));
 		txtIDHopDong.setBounds(179, 10, 209, 21);
-		txtIDHopDong.setEnabled(false);
 		txtIDHopDong.setEditable(false);
 		txtIDHopDong.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		txtIDHopDong.setFont(new Font("SansSerif", Font.PLAIN, 15));
@@ -707,7 +707,9 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 		dm.getDataVector().removeAllElements();
 		
 		for (ChiTietHopDong chiTietHopDong : listCTHD) {
-			dm.addRow(new Object[] {chiTietHopDong.getSanPham().getIdSanPham(), chiTietHopDong.getSanPham().getTenSanPham(), chiTietHopDong.getSoLuong(), chiTietHopDong.getSanPham().getDonGia(), chiTietHopDong.getThanhTien()});
+			dm.addRow(new Object[] {chiTietHopDong.getSanPham().getIdSanPham(), chiTietHopDong.getSanPham().getTenSanPham(), 
+					chiTietHopDong.getSoLuong(), chiTietHopDong.getSanPham().getDonGia(), 
+					String.format("%,.2f VND", chiTietHopDong.getThanhTien())});
 		}
 		tableCTHopDong.clearSelection();
 		tableCTHopDong.repaint();
