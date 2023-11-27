@@ -51,7 +51,38 @@ public class CongNhan_DAO {
 		}
 		return danhSachCongNhan;
 	}
-	
+	public ArrayList<CongNhan> getDanhSachCongNhanDangLam() {
+		ArrayList<CongNhan> danhSachCongNhan = new ArrayList<CongNhan>();
+		Connection con = ConnectDB.getConnection();
+		try {
+			Statement stm = con.createStatement();
+			ResultSet rs = stm.executeQuery("select * from CongNhan where ngayKetThucCongTac IS NULL");
+			while(rs.next()) {
+				String idCongNhan = rs.getString(1);
+				String hoTen = rs.getString(2);
+				boolean phai = true;
+				if(!rs.getBoolean(3)) phai = false;
+				LocalDate ngaySinh = LocalDate.parse(rs.getString(4));
+				LocalDate ngayBatDauCongTac = LocalDate.parse(rs.getString(5));
+				String ngayKetThucCongTacStr = rs.getString(6);
+				LocalDate ngayKetThucCongTac = (ngayKetThucCongTacStr != null) ? LocalDate.parse(ngayKetThucCongTacStr) : null;
+				PhanXuong phanXuong = phanXuong_DAO.getPhanXuongTheoID(rs.getString(7));
+				String email = rs.getString(8);
+				String soDienThoai = rs.getString(9);
+				double phuCap = rs.getDouble(10);
+				String tayNghe = rs.getString(11);
+				TaiKhoan taiKhoan = taiKhoan_DAO.getTaiKhoan(idCongNhan);
+				String anhDaiDien = rs.getString(13);
+				String cccd = rs.getString(14);
+				CongNhan congNhan = new CongNhan(idCongNhan, hoTen, phai, ngaySinh, ngayBatDauCongTac, ngayKetThucCongTac, phanXuong, email, soDienThoai, tayNghe, taiKhoan, anhDaiDien, cccd, phuCap);
+				danhSachCongNhan.add(congNhan);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return danhSachCongNhan;
+	}
 
 public CongNhan getCongNhanTheoID(String id) {
 	CongNhan congNhan = new CongNhan();
@@ -80,15 +111,51 @@ public CongNhan getCongNhanTheoID(String id) {
 			String anhDaiDien = rs.getString(13);
 			String cccd = rs.getString(14);
 			congNhan = new CongNhan(idCongNhan, hoTen, phai, ngaySinh, ngayBatDauCongTac, ngayKetThucCongTac, phanXuong, email, soDienThoai, tayNghe, taiKhoan, anhDaiDien, cccd, phuCap);
-			}
+			return congNhan;
+		}
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
 	
-	return congNhan;
+	return null;
 }
- 
+public CongNhan getCongNhanDangLamTheoID(String id) {
+	CongNhan congNhan = new CongNhan();
+	ConnectDB.getInstance();
+	Connection con = ConnectDB.getConnection();
+	PreparedStatement stm = null;
+	try {
+		stm = con.prepareStatement("select * from CongNhan where idCongNhan = ? and ngayKetThucCongTac IS NULL");
+		stm.setString(1, id);
+		ResultSet rs = stm.executeQuery();
+		while(rs.next()) {
+			String idCongNhan = rs.getString(1);
+			String hoTen = rs.getString(2);
+			boolean phai = true;
+			if(!rs.getBoolean(3)) phai = false;
+			LocalDate ngaySinh = LocalDate.parse(rs.getString(4));
+			LocalDate ngayBatDauCongTac = LocalDate.parse(rs.getString(5));
+			String ngayKetThucCongTacStr = rs.getString(6);
+			LocalDate ngayKetThucCongTac = (ngayKetThucCongTacStr != null) ? LocalDate.parse(ngayKetThucCongTacStr) : null;
+			PhanXuong phanXuong = phanXuong_DAO.getPhanXuongTheoID(rs.getString(7));
+			String email = rs.getString(8);
+			String soDienThoai = rs.getString(9);
+			double phuCap = rs.getDouble(10);
+			String tayNghe = rs.getString(11);
+			TaiKhoan taiKhoan = taiKhoan_DAO.getTaiKhoan(idCongNhan);
+			String anhDaiDien = rs.getString(13);
+			String cccd = rs.getString(14);
+			congNhan = new CongNhan(idCongNhan, hoTen, phai, ngaySinh, ngayBatDauCongTac, ngayKetThucCongTac, phanXuong, email, soDienThoai, tayNghe, taiKhoan, anhDaiDien, cccd, phuCap);
+			return congNhan;
+		}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	return null;
+}
 public ArrayList<CongNhan> getDanhSachCongNhanTheoCa(int idCaLam){
 	ArrayList<CongNhan> danhSachCongNhan = new ArrayList<CongNhan>();
 	ConnectDB.getInstance();
@@ -169,7 +236,7 @@ public boolean 	update(CongNhan cn) {
 	PreparedStatement stmt = null;
 	int n= 0;
 	try {
-		stmt =con.prepareStatement("update CongNhan set heTen = ?, phai = ?, "
+		stmt =con.prepareStatement("update CongNhan set hoTen = ?, phai = ?, "
 				+ "ngaySinh = ?, ngayBatDauCongTac = ?, ngayKetThucCongTac = ?,idPhanXuong = ?,email = ?,soDienThoai = ?, "
 				+ "tayNghe = ?, anhDaiDien =  ?,"
 				+ " CCCD = ? where idCongNhan = ?");

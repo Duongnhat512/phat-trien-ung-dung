@@ -1,0 +1,351 @@
+[33mcommit 980445a0f613811545201bc55c6e622931fdbf65[m[33m ([m[1;36mHEAD -> [m[1;32mBao[m[33m, [m[1;31morigin/Hiep[m[33m, [m[1;31morigin/Bao[m[33m, [m[1;32mHiep[m[33m)[m
+Author: unknown <vovannghiahiep15062003@gmail.com>
+Date:   Wed Nov 15 11:38:53 2023 +0700
+
+    update all
+
+[33mcommit fe2c773709b090f20ed62cead338bbe1f03ab787[m
+Author: Gia-Bao-2-0-0-3 <128208683+Gia-Bao-2-0-0-3@users.noreply.github.com>
+Date:   Fri Nov 10 09:58:50 2023 +0700
+
+    them su kien them nhan vien
+
+[33mcommit f5072dad7542057087d90e74a3dea70b937403b5[m
+Author: Gia-Bao-2-0-0-3 <128208683+Gia-Bao-2-0-0-3@users.noreply.github.com>
+Date:   Fri Nov 10 04:00:38 2023 +0700
+
+    Them su kien hien thi anh dai dien
+
+[33mcommit 2e19b5b913d757f85eb2b74b202cfedaaea6a404[m
+Author: Gia-Bao-2-0-0-3 <128208683+Gia-Bao-2-0-0-3@users.noreply.github.com>
+Date:   Fri Nov 10 02:06:18 2023 +0700
+
+    Fix xong lỗi can not find or load
+
+[33mcommit fca9818d54f3b3dca48c4df673dae6e9461ab84b[m
+Author: Gia-Bao-2-0-0-3 <128208683+Gia-Bao-2-0-0-3@users.noreply.github.com>
+Date:   Thu Nov 9 22:37:06 2023 +0700
+
+    giao dien nhan vien va 1 it su kien
+
+[33mcommit ebe9aa5b099bda67cef2983d64c8382f19fce10c[m
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Thu Nov 9 17:56:14 2023 +0700
+
+    sửa bảng dưới database
+
+[33mcommit c8f3fb27d004bb61fd952073688d4f1aeee26b79[m
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Thu Nov 9 17:48:02 2023 +0700
+
+    sửa bảng dưới database
+
+[33mcommit 36c171c14d864f197fbe81209b6ce30aba197fa8[m
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Thu Nov 9 17:31:00 2023 +0700
+
+    modal Thêm sản phẩm ver 1
+
+[33mcommit 5417304069d8f45e196f94adc762234d7f5886f2[m[33m ([m[1;31morigin/Dat_1[m[33m)[m
+Merge: a9faad9 d67b6fb
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Tue Nov 7 10:24:57 2023 +0700
+
+    30% giao diện quản lý hợp đồng
+
+[33mcommit a9faad9944588b6cb04eefb0abb6d83ae52b4cf2[m
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Tue Nov 7 10:21:55 2023 +0700
+
+    30% giao diện quản lý hợp đồng
+
+[33mcommit d67b6fb79018414288bdda669cd8902e7e5acf08[m
+Merge: 87e1c3b d8c83b9
+Author: HiepChippo <146634792+HiepChippo@users.noreply.github.com>
+Date:   Mon Nov 6 19:06:35 2023 +0700
+
+    Merge pull request #4 from Duongnhat512/Hiep
+    
+    Hiep
+
+[33mcommit d8c83b9e386c47710fcf7cbf83a6643e9cd68d6d[m
+Author: unknown <vovannghiahiep15062003@gmail.com>
+Date:   Mon Nov 6 17:00:35 2023 +0700
+
+    fix cac lỗi
+
+[33mcommit 3965a21c2ad59fcdef73ff2e031fcc3f572dfaf0[m
+Merge: 1f0ac6e 87e1c3b
+Author: unknown <vovannghiahiep15062003@gmail.com>
+Date:   Mon Nov 6 16:51:55 2023 +0700
+
+    them cac bang moi
+
+[33mcommit 1f0ac6e7f29d00869fc6a58ba0bac7fa17c36717[m
+Author: unknown <vovannghiahiep15062003@gmail.com>
+Date:   Mon Nov 6 16:45:47 2023 +0700
+
+    doi anh
+
+[33mcommit 87e1c3bbed8f1e0a9859b9ea67c5478971c4afb4[m
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Mon Nov 6 16:22:15 2023 +0700
+
+    hoàn thành CongNhan_DAO
+
+[33mcommit 45392b0825f5dad1f1b3c3e69ff1d85fd096f5f5[m
+Author: unknown <vovannghiahiep15062003@gmail.com>
+Date:   Mon Nov 6 16:16:39 2023 +0700
+
+    chỉnh lại login _ thêm form qlNV, qlcn
+
+[33mcommit 2d98b09ba9b06b6d1fc305fc176817d555ecb74e[m
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Mon Nov 6 15:41:14 2023 +0700
+
+    sửa đối tượng CaLam
+
+[33mcommit c75bf2fc60ec5efef94ad81daddcd948b65e1d66[m
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Mon Nov 6 15:05:14 2023 +0700
+
+    Fix các đối tượng
+
+[33mcommit 45db7844ab1e5dac3083f7876d3111195b1ba08a[m
+Merge: d0b1dcc ccba0e0
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Mon Nov 6 14:58:20 2023 +0700
+
+    quản lý sản phẩm ver 1
+
+[33mcommit d0b1dcc00742f52f63b78d92132cc38d57c44ffd[m
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Mon Nov 6 14:46:38 2023 +0700
+
+    quản lý sản phẩm ver 1
+
+[33mcommit ccba0e02b5b285f0ce0ac62728841ae7449fae46[m
+Merge: b0e4e0d 0dbeaa0
+Author: HiepChippo <146634792+HiepChippo@users.noreply.github.com>
+Date:   Mon Nov 6 14:35:43 2023 +0700
+
+    Merge pull request #2 from Duongnhat512/Hiep
+    
+    them anh
+
+[33mcommit 0dbeaa09b46cb92c12e3ae21bc5c40717b8bdb6f[m
+Author: unknown <vovannghiahiep15062003@gmail.com>
+Date:   Mon Nov 6 14:34:10 2023 +0700
+
+    them anh
+
+[33mcommit b0e4e0d663c05cb4f4fa1a933e8e4918b18f162c[m
+Merge: 66f22f6 73b411e
+Author: HiepChippo <146634792+HiepChippo@users.noreply.github.com>
+Date:   Mon Nov 6 14:26:55 2023 +0700
+
+    Merge pull request #1 from Duongnhat512/Hiep
+    
+    them cac bang moi
+
+[33mcommit 73b411ed06cc35e7965d5ec0a56afa986389ff38[m
+Author: unknown <vovannghiahiep15062003@gmail.com>
+Date:   Mon Nov 6 14:25:22 2023 +0700
+
+    them cac bang moi
+
+[33mcommit 66f22f64d8e882ee6bcec1e40ca76a9a0a65206f[m
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Sun Nov 5 20:38:47 2023 +0700
+
+    Fix toàn bộ file
+
+[33mcommit b2f40558552eda090a9f1e7afa15efca83742e61[m
+Merge: 16db611 9ee11b2
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Sat Nov 4 18:04:40 2023 +0700
+
+    tạo class entity
+
+[33mcommit 16db611160c8f4789b74be6bf11133a48e060173[m
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Sat Nov 4 18:00:54 2023 +0700
+
+    Tạo các entity
+
+[33mcommit 9ee11b2b68318b918cee538d11b1ff7f9cdd71cd[m
+Merge: 34da57b feb2bfc
+Author: unknown <vovannghiahiep15062003@gmail.com>
+Date:   Fri Nov 3 14:42:19 2023 +0700
+
+    done
+
+[33mcommit feb2bfca43663b2c98fceedd0504c1f68da597e1[m
+Author: unknown <vovannghiahiep15062003@gmail.com>
+Date:   Fri Nov 3 14:32:23 2023 +0700
+
+    them ne
+
+[33mcommit ed7a683a2f2fc61e222e0c1c2e12979b38896f9c[m
+Author: unknown <vovannghiahiep15062003@gmail.com>
+Date:   Fri Nov 3 14:29:59 2023 +0700
+
+    them ne
+
+[33mcommit 34da57b9fbd74dbc8c608ec881d346e3392ae013[m
+Author: unknown <vovannghiahiep15062003@gmail.com>
+Date:   Fri Nov 3 14:17:59 2023 +0700
+
+    thêm các bảng thống kê
+
+[33mcommit 02e77be9f761efc60cc4c89ef4f26cc8ded5d9a8[m
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Thu Nov 2 23:06:18 2023 +0700
+
+    hoàn thành 2 bảng cho giao diện chấm công
+
+[33mcommit b10c9be0871953802195c480bd9a0f96d9b1e4ea[m
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Thu Nov 2 20:38:55 2023 +0700
+
+    Sửa lại giao diện chấm công
+
+[33mcommit 3012fa9b0762015d715ac2241b8f38bcd704fdb7[m
+Merge: 2078c04 13ab2d3
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Thu Nov 2 09:31:41 2023 +0700
+
+    Cham cong cong nhan ver 1
+
+[33mcommit 2078c04bd6b54966320ee750ba65a64d3e46d636[m
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Thu Nov 2 09:20:17 2023 +0700
+
+    Cham cong cong nhan ver 1
+
+[33mcommit 13ab2d3c83d867924a45a716c7b3862221c83199[m
+Author: NgoDat2003 <ngodat200319@gmail.com>
+Date:   Thu Nov 2 09:01:19 2023 +0700
+
+     giao dien tinh luong nhan vien
+
+[33mcommit ce4bca037f0aca9df1cccae2d60c4212dfac8f21[m
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Wed Nov 1 13:25:33 2023 +0700
+
+    main_gui cua admin
+
+[33mcommit f482850a13e7813fbf3f491a2aecc7e67305b898[m
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Wed Nov 1 12:33:48 2023 +0700
+
+    thay doi mau nen menu main_gui
+
+[33mcommit 4b40c192f14065d8070057db02fdbbd5abb85030[m
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Wed Nov 1 01:12:16 2023 +0700
+
+    main gui ver 2
+
+[33mcommit 5990e012a36059a4ff194fab14528edc2135d9e0[m
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Wed Nov 1 00:41:58 2023 +0700
+
+    main gui ver 2
+
+[33mcommit 07a2258eb6e821c7602536d830ff1b70dc832ab8[m
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Tue Oct 31 20:28:05 2023 +0700
+
+    ChcamCongCongNhan_Form ver1
+
+[33mcommit 0b88c99af19ae72e698435ec88f555f2e4a63113[m
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Tue Oct 31 12:11:10 2023 +0700
+
+    fix .classpath
+
+[33mcommit ce38018c474e2737d6ed4266d189bc1c1f72cfe8[m
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Tue Oct 31 12:04:42 2023 +0700
+
+    fix classpath
+
+[33mcommit 4599af84b8a3b0d23392fd952fb0e79c1e02c725[m
+Merge: b059b8f e8ddeaa
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Tue Oct 31 11:59:11 2023 +0700
+
+    Merge branch 'code' of https://github.com/Duongnhat512/phat-trien-ung-dung into code
+
+[33mcommit b059b8fb2c370fc6ac39476f0fa2706068e33c45[m
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Tue Oct 31 11:58:38 2023 +0700
+
+    Bang cham cong cong nhan ver1
+
+[33mcommit e8ddeaaf016c3940db1e0b3595b42a6dd489d198[m
+Author: unknown <ngodat200319@gmaiil.com>
+Date:   Tue Oct 31 11:49:47 2023 +0700
+
+    '.'
+
+[33mcommit de5b3108d4d98718fe92ec2645de052bff50b38b[m
+Author: unknown <vovannghiahiep15062003@gmail.com>
+Date:   Tue Oct 31 11:44:09 2023 +0700
+
+    h
+
+[33mcommit c590c6d776e6e3d40195ec798f128a95d5bc9916[m
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Tue Oct 31 10:17:25 2023 +0700
+
+    l
+
+[33mcommit 47ca6749ae2210889ddb429d2a9136fbfbd21c6f[m
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Sun Oct 29 10:55:12 2023 +0700
+
+    main gui ver1
+
+[33mcommit 3509d80e52564f9428b864630cb9ab0fb6fe71fa[m
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Fri Oct 27 08:12:26 2023 +0700
+
+    main gui ver 1
+
+[33mcommit 995139c1cf9f8ca8424d46a56f5b0ed990dbd539[m
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Thu Oct 26 23:03:49 2023 +0700
+
+    90% main gui
+
+[33mcommit 9dc8dae6bddce102008b539b15d4a53bb6fedea2[m
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Thu Oct 26 09:46:02 2023 +0700
+
+    Them phan menu cho main gui
+
+[33mcommit 9dd7a6d2524ba3278a35ccc4ef27aefa7cedcd35[m
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Wed Oct 25 14:15:40 2023 +0700
+
+    to mau login gui
+
+[33mcommit 10d078cee6904ec07afb59d6bc1f48939b67eb25[m
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Tue Oct 24 19:41:38 2023 +0700
+
+    bat dau giao dien login
+
+[33mcommit 57a1b301ba3b7018f5a400f226bc40de3c31461f[m
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Tue Oct 24 18:46:14 2023 +0700
+
+    first commit
+
+[33mcommit 244ac869f302f20795de64e28b7dfd371b28a66f[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: Duongnhat512 <duongnhat512@gmail.com>
+Date:   Tue Oct 24 18:41:48 2023 +0700
+
+    first commit

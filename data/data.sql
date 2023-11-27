@@ -1,4 +1,7 @@
-﻿﻿create database QLLuongSanPham
+﻿
+
+go
+﻿create database QLLuongSanPham
 go
 use QLLuongSanPham
 go
