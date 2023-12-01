@@ -10,4 +10,8 @@ public class ThongKeKPI_BUS {
        {
     	   return thongKeKPI_DAO.getListCongNhanKPI(month, year);
        }
+       public ArrayList<String> getKPICN(String macn)
+       {
+    	   return thongKeKPI_DAO.getDoanhSoCongNhan(macn);
+       }
 }

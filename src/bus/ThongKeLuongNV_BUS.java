@@ -11,4 +11,8 @@ public class ThongKeLuongNV_BUS {
       {
     	  return thongKeLuongNhanVien_DAO.getListLuongTheoPhongBan(month, year);
       }
+      public ArrayList<String> getListLuongPB(String manv, int year)
+      {
+    	  return thongKeLuongNhanVien_DAO.getListLuongNhanVien(manv, year);
+      }
 }

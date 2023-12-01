@@ -10,6 +10,11 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -31,12 +36,15 @@ import connectDB.ConnectDB;
 import entities.CongNhan;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.Color;
 
 import gui.Main_GUI;
+import net.miginfocom.swing.MigLayout;
 
 import javax.print.DocFlavor.URL;
 import javax.swing.Box;
@@ -47,10 +55,17 @@ import javax.swing.JButton;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.lang.reflect.Array;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Vector;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import java.awt.Button;
@@ -64,11 +79,13 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Cursor;
+import java.awt.Desktop;
+
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import java.awt.FlowLayout;
 
-public class ThongKeKPI_Form extends JPanel implements ActionListener{
+public class ThongKeKPI_Form extends JPanel implements ActionListener,MouseListener{
      
 
 	private JPanel panelNorth;
@@ -79,8 +96,8 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener{
     private Table table_2;
     private Table tableThongKe;
 	private JTextField textField;
-	private JPanel panelBarChart;
-	private JPanel panelLineChart;
+	private RoundPanel panelBarChart;
+	private RoundPanel panelLineChart;
 	private JComponent lblNewLabel_1;
 	private JComponent panelCenter;
 	private RoundPanel panelListTK;
@@ -90,6 +107,7 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener{
 	private JComboBox cbThang;
 	private JComboBox cbNam;
 	private CongNhan_BUS congNhan_BUS;
+	private JButton btnPrint;
 	
 	public ThongKeKPI_Form(int width, int height)
     { 
@@ -130,8 +148,8 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener{
         ChartPanel barChartPanel = new ChartPanel(piechart);
         barChartPanel.setBounds(0, 0, 423, 388);
         panelBarChart.removeAll();
-        panelBarChart.setLayout(new FlowLayout());
-        panelBarChart.add(barChartPanel);
+        panelBarChart.setLayout(new MigLayout("", "[414px]", "[407px]"));
+        panelBarChart.add(barChartPanel, "cell 0 0,grow");
         barChartPanel.setLayout(new BorderLayout(0, 0));
         panelBarChart.validate();
     }
@@ -169,28 +187,29 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener{
     ChartPanel lineChartPanel = new ChartPanel(linechart);
     lineChartPanel.setPreferredSize(new Dimension(HEIGHT, 410));
     panelLineChart.removeAll();
-    panelLineChart.setLayout(new BorderLayout());
-    panelLineChart.add(lineChartPanel);
-    lineChartPanel.setLayout(null);
+    panelLineChart.setLayout(new MigLayout("", "[774px]", "[372px]"));
+    panelLineChart.add(lineChartPanel, "cell 0 0,grow");
+    lineChartPanel.setLayout(new BorderLayout(0, 0));
     panelLineChart.validate();
 }
     public void initComponents()
     {
-      setPreferredSize(new Dimension(this.width, this.height));
+      setPreferredSize(new Dimension(1250, 780));
   	  setBackground(Color.decode("#004e92"));
 //  	  String col[] = {"ID Công nhân","Tên công nhân","Tên công đoạn","Số lượng được giao","Số lượng hoàn thành"};
 //  	  model = new DefaultTableModel(col,0);
   	  
-  	  panelBarChart = new JPanel();
+  	  panelBarChart = new RoundPanel();
+  	  panelBarChart.setRound(20);
   	  panelBarChart.setBackground(new Color(255, 255, 255));
-  	  panelBarChart.setBounds(31, 364, 414, 407);
-  	  panelLineChart = new JPanel();
+  	  panelBarChart.setBounds(10, 364, 435, 406);
+  	  panelLineChart = new RoundPanel();
+      panelLineChart.setRound(20);
   	  panelLineChart.setBackground(new Color(255, 255, 255));
-  	  panelLineChart.setBounds(455, 364, 774, 407);
+  	  panelLineChart.setBounds(455, 364, 785, 406);
   	  setLayout(null);
   	  add(panelBarChart);
   	  add(panelLineChart);
-  	  panelLineChart.setLayout(new BorderLayout(0, 0));
 
    // Bảng chấm công
    		tableThongKe = new Table();
@@ -218,7 +237,7 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener{
    		   ((RoundPanel) panelCenter).setRound(20);
    		   panelCenter.setBackground(new Color(255, 255, 255));
    		   panelCenter.setBorder(new EmptyBorder(5, 15, 10, 10));
-   		   panelCenter.setBounds(31, 75, 1193, 279);
+   		   panelCenter.setBounds(10, 75, 1230, 279);
            add(panelCenter);
            panelCenter.setLayout(new BorderLayout(0, 0));
            panelCenter.add(scrollPane_TK,BorderLayout.CENTER);
@@ -239,8 +258,10 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener{
 //      
 //      add(pane);
       
-      JPanel pNorth = new JPanel();
-      pNorth.setBounds(31, 10, 1198, 55);
+      RoundPanel pNorth = new RoundPanel();
+      pNorth.setBackground(new Color(255, 255, 255));
+      pNorth.setRound(20);
+      pNorth.setBounds(10, 10, 1230, 55);
       add(pNorth);
       pNorth.setLayout(null);
       
@@ -249,6 +270,7 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener{
       cbThang.setBounds(93, 15, 83, 28);
       String data[] = {"1","2","3","4","5","6","7","8","9","10","11","12"};
       cbThang.setModel(new DefaultComboBoxModel<String>(data));
+      cbThang.setSelectedItem(LocalDate.now().getMonthValue()+"");
       pNorth.add(cbThang);
       
        cbNam = new JComboBox();
@@ -256,26 +278,18 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener{
       cbNam.setBounds(272, 15, 181, 28);
       String data_1[] = {"2023"};
       cbNam.setModel(new DefaultComboBoxModel(new String[] {"2010", "2011", "2012", "2013", "2014", "2015", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030"}));
+      cbNam.setSelectedItem(LocalDate.now().getYear()+"");
       pNorth.add(cbNam);
       
-       btnThongKe = new JButton("Thống kê");
-      btnThongKe.setFont(new Font("Tahoma", Font.PLAIN, 15));
-      btnThongKe.addActionListener(new ActionListener() {
-      	public void actionPerformed(ActionEvent e) {
-      	}
-      });
-      btnThongKe.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(ThongKeKPI_Form.class.getResource("/icon/thongKe.png")).getScaledInstance(30, 25,Image.SCALE_SMOOTH)));
+     
       
-      
-      btnThongKe.setBounds(484, 10, 148, 38);
-      pNorth.add(btnThongKe);
-      
-      JButton btnXuatExcel = new JButton("Xuất ra excel");
-      btnXuatExcel.setFont(new Font("Tahoma", Font.PLAIN, 15));
-      btnXuatExcel.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(ThongKeKPI_Form.class.getResource("/icon/excel.png")).getScaledInstance(30, 25,Image.SCALE_SMOOTH)));
+      btnPrint = new JButton("Xuất ra excel");
+      btnPrint.setFont(new Font("Tahoma", Font.PLAIN, 15));
+      btnPrint.setIcon(new ImageIcon(ThongKeKPI_Form.class.getResource("/icon/excel.png")));
 
-      btnXuatExcel.setBounds(663, 10, 160, 38);
-      pNorth.add(btnXuatExcel);
+      btnPrint.setBounds(663, 10, 160, 38);
+      pNorth.add(btnPrint);
+      btnPrint.addActionListener(this);
       
       JLabel lbthang = new JLabel("Tháng:");
       lbthang.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -288,20 +302,35 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener{
       lbNam.setFont(new Font("Tahoma", Font.PLAIN, 15));
       lbNam.setBounds(215, 19, 58, 20);
       pNorth.add(lbNam);
-    
+      tableThongKe.addMouseListener(this);
       cbNam.setSelectedIndex(14);
       cbThang.setSelectedIndex(10);
-      btnThongKe.addActionListener(this);
+      cbThang.addActionListener(this);
+      cbNam.addActionListener(this);
 //      tinhTangTruong(Integer.parseInt(cbNam.getSelectedItem().toString()));
       tinhTangTruong(Integer.parseInt(cbNam.getSelectedItem().toString()));
+      thongKeTungNhanVienBieuDoTron(0);
+      thongKeTungNhanVienBieuDoTangTruong(0);
     }
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		Object o = e.getSource();
-		if(o.equals(btnThongKe))
+		if(o.equals(cbThang) || o.equals(cbNam))
 		{
 			hienThibieuDo();
+		}
+		if (o.equals(btnPrint)) {
+			String projectDirectory = System.getProperty("user.dir");
+			String filePath = projectDirectory + "\\file\\file.xlsx";
+			if (model.getRowCount() > 0) {
+				if (exportToExcelAndCreateUI(tableThongKe, filePath)) {
+					openExcelFile(filePath); // Mở tệp Excel nếu xuất thành công
+				}
+			} else {
+				JOptionPane.showMessageDialog(this, "Không có dữ liệu để xuất file");
+			}
+
 		}
 	}
 	private void hienThiDSThongKe() {
@@ -321,7 +350,7 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener{
 		double[] t = new double[20];
 		String col[] = {"idCong Nhan","Hoten","PhanXuong","soLuongDG","SoLuongHT"};
 		DefaultTableModel modeltest = new DefaultTableModel(col,0);
-		JTable tableTest = new JTable(model);
+		JTable tableTest = new JTable(modeltest);
 		for(int i = 1 ;i <= 12;i++)
 		{
 			modeltest.setRowCount(0);
@@ -368,6 +397,120 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener{
     	
         double tyle = (soLuongCNdatKPI / soLuongCN)*100;
     	showPieChart(tyle);
+	}
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		int row = tableThongKe.getSelectedRow();
+		if(row!=-1)
+		{
+			thongKeTungNhanVienBieuDoTron(row);
+			thongKeTungNhanVienBieuDoTangTruong(row);
+		}
+	}
+	private void thongKeTungNhanVienBieuDoTron(int row)
+	{	
+		    hienThiDSThongKe();
+    		int soLuongSPDC = Integer.parseInt(tableThongKe.getValueAt(row, 3).toString());
+    		int soLuongSPHT = Integer.parseInt(tableThongKe.getValueAt(row, 4).toString());
+    	
+        double tyle = ((soLuongSPHT*1.0) /(soLuongSPDC*1.0))*100;
+    	showPieChart(tyle);
+	}
+	private void thongKeTungNhanVienBieuDoTangTruong(int row)
+	{
+		double[] t = new double[20];
+		ArrayList<String> getListKPI = thongKeKPI_BUS.getKPICN(tableThongKe.getValueAt(row, 0).toString());
+		String col[] = {"idCong Nhan","Hoten","thang","soLuongHT","SoLuongDG"};
+		DefaultTableModel model = new DefaultTableModel(col,0);
+	    JTable table = new JTable(model);
+	    for (String string : getListKPI) {
+			model.addRow(string.split(";"));
+		}
+	    	for(int j = 0 ;j < table.getRowCount();j++)
+	    	{
+	    	   int thang = Integer.parseInt(table.getValueAt(j, 2).toString());
+	    	   int slht = Integer.parseInt(table.getValueAt(j, 3).toString());
+	    	   int sldg = Integer.parseInt(table.getValueAt(j, 4).toString());
+	           double tyle = ((slht*1.0)/(sldg*1.0))*100;
+	           t[thang-1] = tyle;
+	         }
+	    	showLineChart(t);
+	}
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	private boolean exportToExcelAndCreateUI(JTable table, String filePath) {
+		Workbook workbook = new XSSFWorkbook();
+		Sheet sheet = workbook.createSheet("Sheet1");
+		// Thêm dòng tiêu đề từ JTable vào tệp Excel
+		Vector<String> header = new Vector<>();
+		for (int i = 0; i < table.getColumnCount(); i++) {
+			header.add(table.getColumnName(i));
+		}
+		Row headerRow = sheet.createRow(0);
+		for (int i = 0; i < header.size(); i++) {
+			Cell cell = headerRow.createCell(i);
+			cell.setCellValue(header.get(i));
+		}
+
+		// Thêm dữ liệu từ JTable vào tệp Excel
+		for (int i = 0; i < table.getRowCount(); i++) {
+			Row row = sheet.createRow(i + 1);
+			for (int j = 0; j < table.getColumnCount(); j++) {
+				Object value = table.getValueAt(i, j);
+				Cell cell = row.createCell(j);
+				if (value != null) {
+					cell.setCellValue(value.toString());
+				}
+			}
+		}
+
+		try (FileOutputStream outputStream = new FileOutputStream(filePath)) {
+			workbook.write(outputStream);
+			workbook.close();
+			int option = JOptionPane.showConfirmDialog(null, "Xuất Excel thành công . Bạn có muốn mở file không",
+					"Xác nhận", JOptionPane.YES_NO_OPTION);
+			if (option == JOptionPane.YES_OPTION) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(this, "File đang được mở");
+			return false;
+		}
+	}
+
+	// Hàm mở tệp Excel
+	private void openExcelFile(String filePath) {
+		File file = new File(filePath);
+		if (file.exists()) {
+			try {
+				Desktop.getDesktop().open(file); // Mở tệp Excel bằng ứng dụng mặc định
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			System.out.println("File not found: " + filePath);
+		}
 	}
 }
 

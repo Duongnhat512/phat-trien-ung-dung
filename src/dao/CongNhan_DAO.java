@@ -169,7 +169,7 @@ public boolean 	update(CongNhan cn) {
 	PreparedStatement stmt = null;
 	int n= 0;
 	try {
-		stmt =con.prepareStatement("update CongNhan set heTen = ?, phai = ?, "
+		stmt =con.prepareStatement("update CongNhan set hoTen = ?, phai = ?, "
 				+ "ngaySinh = ?, ngayBatDauCongTac = ?, ngayKetThucCongTac = ?,idPhanXuong = ?,email = ?,soDienThoai = ?, "
 				+ "tayNghe = ?, anhDaiDien =  ?,"
 				+ " CCCD = ? where idCongNhan = ?");

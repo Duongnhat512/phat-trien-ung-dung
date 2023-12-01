@@ -34,12 +34,25 @@ public class ChamCongCongNhan_DAO {
 				+ "JOIN CaLam CL ON PC.idCaLam = CL.idCaLam "
 				+ "WHERE MONTH(BC.ngayChamCong) = ? AND YEAR(BC.ngayChamCong) = ? AND PX.tenPhanXuong = ? "
 				+ "GROUP BY CN.idCongNhan, CN.hoTen, CN.phai, CN.ngaySinh, CN.ngayBatDauCongTac, CN.ngayKetThucCongTac, CN.idPhanXuong, CN.email, CN.soDienThoai, CN.tayNghe, CN.anhDaiDien, CN.phuCap, CN.tenTaiKhoan ";
+		if(tenpb.equals("Tất cả")) {
+			sql = "SELECT CN.idCongNhan, CN.hoTen, CN.phai, CN.ngaySinh, CN.ngayBatDauCongTac, CN.ngayKetThucCongTac, CN.idPhanXuong, CN.email, CN.soDienThoai, CN.tayNghe, CN.anhDaiDien, CN.phuCap, CN.tenTaiKhoan\r\n"
+					+ "	FROM CongNhan CN\r\n"
+					+ "	JOIN PhanXuong PX ON CN.idPhanXuong = PX.idPhanXuong\r\n"
+					+ "	JOIN CongDoanPhanCong PC ON CN.idCongNhan = PC.idCongNhan\r\n"
+					+ "	JOIN BangChamCongCongNhan BC ON PC.idPhanCong = BC.idPhanCong\r\n"
+					+ " JOIN CongDoanSP CDSP ON PC.idCongDoan = CDSP.idCongDoan\r\n"
+					+ "	JOIN CaLam CL ON PC.idCaLam = CL.idCaLam\r\n"
+					+ "	WHERE MONTH(BC.ngayChamCong) = ? AND YEAR(BC.ngayChamCong) = ? \r\n"
+					+ "	GROUP BY CN.idCongNhan, CN.hoTen, CN.phai, CN.ngaySinh, CN.ngayBatDauCongTac, CN.ngayKetThucCongTac, CN.idPhanXuong, CN.email, CN.soDienThoai, CN.tayNghe, CN.anhDaiDien, CN.phuCap, CN.tenTaiKhoan";
+		}
 		try {
 			PreparedStatement st = null;
 			st = con.prepareStatement(sql);
 			st.setInt(1, thang);
 			st.setInt(2, nam);
-			st.setString(3, tenpb);
+			if(!tenpb.equals("Tất cả")) {
+				st.setString(3, tenpb);				
+			}
 			ResultSet r = st.executeQuery();
 			while (r.next()) {
 				String id = r.getString(1);

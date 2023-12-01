@@ -10,4 +10,8 @@ public class ThongKeLuongCongNhan_BUS {
        {
     	   return thongKeLuongCongNhan_DAO.getListLuongCNtheoPhanXuong(month, year);
        }
+       public ArrayList<String> getListLuongCongNhan(String manv , int year)
+       {
+    	   return thongKeLuongCongNhan_DAO.getListLuongCNtheoCongNhan(manv, year);
+       }
 }

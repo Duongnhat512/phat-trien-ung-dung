@@ -1,8 +1,6 @@
 /bus/
-/dao/
+/commons/
 /form/
-/entities/
-/icon/
-/dialog/
 /gui/
-/images/
+/dao/
+/icon/

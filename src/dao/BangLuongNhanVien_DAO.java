@@ -109,16 +109,23 @@ public class BangLuongNhanVien_DAO {
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection();
 		ArrayList<LuongNhanVien> dslnv = new ArrayList<>();
-
+		String subSql;
+		if(!phongBan.equals("Tất cả")) {
+			subSql = "and p.tenPhongBan = ?";
+		}else {
+			subSql = "";
+		}
 		try {
 			String sql = "select bl.idLuongNVHC,bl.ngayTinhLuong,bl.idNhanVien,bl.thueLaoDong,bl.tienBaoHiemXaHoi,bl.tongLuong,bl.thucLanh,bl.thang,bl.nam \r\n"
 					+ "from BangLuongNhanVien bl join NhanVien n on bl.idNhanVien=n.idNhanVien join PhongBan p on p.idPhongBan=n.idPhongBan \r\n"
-					+ "where thang = ? and nam = ? and p.tenPhongBan = ?";
+					+ "where thang = ? and nam = ? "+subSql;
 
 			PreparedStatement st = con.prepareStatement(sql);
 			st.setInt(1, thang);
 			st.setInt(2, nam);
-			st.setString(3, phongBan);
+			if(!phongBan.equals("Tất cả")) {
+				st.setString(3, phongBan);
+			}
 			ResultSet r = st.executeQuery();
 
 			while (r.next()) {
