@@ -11,8 +11,17 @@ public class CongNhan_BUS {
 	public ArrayList<CongNhan> getDanhSachCongNhan(){
 		return congNhan_DAO.getDanhSachCongNhan();
 	}
+	public ArrayList<CongNhan> getDanhSachCongNhanDangLam(){
+		return congNhan_DAO.getDanhSachCongNhanDangLam();
+	}
+	public ArrayList<CongNhan> getDanhSachCongNhanDangLamTheoPX(String idpx){
+		return congNhan_DAO.getDanhSachCongNhanDangLamTheoPX(idpx);
+	}
 	public CongNhan getCongNhanTheoID(String id){
 		return congNhan_DAO.getCongNhanTheoID(id);
+	}
+	public CongNhan getCongNhanDangLamTheoID(String id){
+		return congNhan_DAO.getCongNhanDangLamTheoID(id);
 	}
 	public ArrayList<CongNhan> getDanhSachCongNhanTheoCa(int idCaLam){
 		return congNhan_DAO.getDanhSachCongNhanTheoCa(idCaLam);

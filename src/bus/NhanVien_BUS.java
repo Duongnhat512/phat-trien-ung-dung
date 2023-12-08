@@ -11,6 +11,12 @@ public class NhanVien_BUS {
 	public ArrayList<NhanVien> getdsNV() {
 		return nv_DAO.getdsNhanVien(); 
 	}
+	public ArrayList<NhanVien> getdsNVDangLam() {
+		return nv_DAO.getdsNhanVienDangLam(); 
+	}
+	public ArrayList<NhanVien> getdsNVDangLamThePB(String idPhongBan) {
+		return nv_DAO.getDsNhanVienDangLamTheoPB(idPhongBan); 
+	}
 	public NhanVien getNV(String id) {
 		return nv_DAO.getNhanVienTheoID(id); 
 	}
@@ -23,6 +29,9 @@ public class NhanVien_BUS {
 	}
 	public NhanVien getNhanVienTheoID(String id) {
 		return nv_DAO.getNhanVienTheoID(id);
+	}
+	public NhanVien getNhanVienDangLamTheoID(String id) {
+		return nv_DAO.getNhanVienDangLamTheoID(id);
 	}
 	public ArrayList<NhanVien> getDanHSachNhanVienTheoChucVu(String idChucVu){
 		return nv_DAO.getDanhSachNhanVienTheoChucVu(idChucVu);
