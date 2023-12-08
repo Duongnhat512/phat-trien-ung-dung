@@ -433,14 +433,9 @@ public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 				luongThucTe += l.getTongLuong();
 				tongThucLanh += l.getThucLanh();
 				luongCb += nv.getLUONGCOBAN();
-<<<<<<< HEAD
-				dftable.addRow(new Object[] { stt,l.getIdLuong(), l.getNgayTinhLuong(), phongBan, nv.getIdNhanVien(), nv.getHoTen(), c.getTenChucVu(), luongCB,
-						c.getHeSoLuong(), phuCap, tongLuong, bhxh, thue, thuclanh });
-=======
 				dftable.addRow(new Object[] { stt, l.getIdLuong(), l.getNgayTinhLuong(), p.getTenPhongBan(), nv.getIdNhanVien(),
 						nv.getHoTen(), c.getTenChucVu(), luongCB, c.getHeSoLuong(), phuCap, tongLuong, bhxh, thue,
 						thuclanh });
->>>>>>> 4b6e64dea6d3f98c68969482e7d4a2facbb84f7d
 				stt++;
 			}
 		} else {
@@ -462,14 +457,9 @@ public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 				luongThucTe += lnv.getTongLuong();
 				tongThucLanh += lnv.getThucLanh();
 				luongCb += nv.getLUONGCOBAN();
-<<<<<<< HEAD
-				dftable.addRow(new Object[] { stt,lnv.getIdLuong(), lnv.getNgayTinhLuong(), phongBan, nv.getIdNhanVien(), nv.getHoTen(), c.getTenChucVu(), luongCB,
-						c.getHeSoLuong(), phuCap, tongLuong, bhxh, thue, thuclanh });
-=======
 				dftable.addRow(new Object[] { stt, lnv.getIdLuong(), lnv.getNgayTinhLuong(), p.getTenPhongBan(),
 						nv.getIdNhanVien(), nv.getHoTen(), c.getTenChucVu(), luongCB, c.getHeSoLuong(), phuCap,
 						tongLuong, bhxh, thue, thuclanh });
->>>>>>> 4b6e64dea6d3f98c68969482e7d4a2facbb84f7d
 				stt++;
 			}
 		}
@@ -602,14 +592,9 @@ public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 				}
 			}
 			if (!checkNV) {
-<<<<<<< HEAD
-				JOptionPane.showMessageDialog(this, "Không tìm thấy nhân viên");;
-				tongSoLuong=0;
-=======
 				JOptionPane.showMessageDialog(this, "Không tìm thấy nhân viên");
 				;
 				tongSoLuong = 0;
->>>>>>> 4b6e64dea6d3f98c68969482e7d4a2facbb84f7d
 			}
 			docDuLieuVaoThongTinChung(tongSoLuong, luongCb, tongPhuCap, tongThue, tongBhxh, luongThucTe, tongThucLanh);
 		}

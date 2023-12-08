@@ -375,12 +375,7 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 		if (dslcn.isEmpty()) {
 			dscn = cccn_bus.getDSChamCongCongNhan(thang, nam, phanXuong);
 			if (dscn.isEmpty()) {
-<<<<<<< HEAD
 				JOptionPane.showMessageDialog(this, "Không có dữ liệu để tính lương");;
-=======
-				JOptionPane.showMessageDialog(this, "Không có dữ liệu để tính lương");
-				;
->>>>>>> 4b6e64dea6d3f98c68969482e7d4a2facbb84f7d
 			}
 			tongSoLuong = dscn.size();
 			for (CongNhan cn : dscn) {
@@ -702,9 +697,6 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 			}
 			if (!checkNV) {
 				JOptionPane.showMessageDialog(this, "Không tìm thấy nhân viên");
-<<<<<<< HEAD
-				tongSoLuong=0;
-=======
 				tongSoLuong = 0;
 			}
 			docDuLieuVaoThongTinChung(tongSoLuong, tongThoiGianLamViec, tongSoLuongSanPham, tongLuongHanhChanh,
@@ -803,7 +795,6 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
->>>>>>> 4b6e64dea6d3f98c68969482e7d4a2facbb84f7d
 			}
 		}
 	}

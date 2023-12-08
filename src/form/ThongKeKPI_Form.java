@@ -127,7 +127,7 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener,MouseListe
            initComponents();
            
     }
-	private void showPieChart(double tyle){
+	private void showPieChart(double tyle , int row){
         
         //create dataset
       DefaultPieDataset barDataset = new DefaultPieDataset( );
@@ -135,7 +135,8 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener,MouseListe
       barDataset.setValue( "Không đạt" , 100 - tyle );   
       
       //create chart
-       JFreeChart piechart = ChartFactory.createPieChart("Tỷ lệ hoàn thành KPI tháng "+cbThang.getSelectedItem().toString(),barDataset, false,true,false);//explain
+       JFreeChart piechart = ChartFactory.createPieChart("Biểu Đồ Tròn Thể Hiện Mức Độ Hoàn Thành KPI Của "+tableThongKe.getValueAt(row, 1) +" tháng "+cbThang.getSelectedItem().toString(),barDataset, false,true,false);//explain"
+       		
       
         PiePlot piePlot =(PiePlot) piechart.getPlot();
       
@@ -153,7 +154,7 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener,MouseListe
         barChartPanel.setLayout(new BorderLayout(0, 0));
         panelBarChart.validate();
     }
-    private void showLineChart(double[] t){
+    private void showLineChart(double[] t,int row){
     //create dataset for the graph
      DefaultCategoryDataset dataset = new DefaultCategoryDataset();
     dataset.setValue(t[0], "Số Lượng", "T1");
@@ -170,7 +171,7 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener,MouseListe
     dataset.setValue(t[11], "Số Lượng", "T12");
     
     //create chart
-    JFreeChart linechart = ChartFactory.createLineChart("Biểu đồ tăng trưởng KPI từng tháng của năm "+cbNam.getSelectedItem().toString(),"Tháng","Tỷ lệ", 
+    JFreeChart linechart = ChartFactory.createLineChart("Biểu đồ tăng trưởng KPI của "+tableThongKe.getValueAt(row, 1) +" năm "+cbNam.getSelectedItem().toString(),"Tháng","Tỷ lệ", 
             dataset, PlotOrientation.VERTICAL, false,true,false);
     
     //create plot object
@@ -308,7 +309,6 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener,MouseListe
       cbThang.addActionListener(this);
       cbNam.addActionListener(this);
 //      tinhTangTruong(Integer.parseInt(cbNam.getSelectedItem().toString()));
-      tinhTangTruong(Integer.parseInt(cbNam.getSelectedItem().toString()));
       thongKeTungNhanVienBieuDoTron(0);
       thongKeTungNhanVienBieuDoTangTruong(0);
     }
@@ -317,8 +317,8 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener,MouseListe
 		// TODO Auto-generated method stub
 		Object o = e.getSource();
 		if(o.equals(cbThang) || o.equals(cbNam))
-		{
-			hienThibieuDo();
+		{			
+			hienThiDSThongKe();
 		}
 		if (o.equals(btnPrint)) {
 			String projectDirectory = System.getProperty("user.dir");
@@ -344,60 +344,6 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener,MouseListe
 			model.addRow(string.split(";"));
 		}
 	}
-	
-	private void tinhTangTruong(int year)
-	{
-		double[] t = new double[20];
-		String col[] = {"idCong Nhan","Hoten","PhanXuong","soLuongDG","SoLuongHT"};
-		DefaultTableModel modeltest = new DefaultTableModel(col,0);
-		JTable tableTest = new JTable(modeltest);
-		for(int i = 1 ;i <= 12;i++)
-		{
-			modeltest.setRowCount(0);
-			ArrayList<String> listCN = thongKeKPI_BUS.getListCNKPI(i, year);
-			for (String string : listCN) {
-				modeltest.addRow(string.split(";"));
-			}
-			double soLuongCNdatKPI = 0;
-			try {
-				for (int j = 0; j < modeltest.getRowCount(); j++) {
-					int soLuongSPDC = Integer.parseInt(tableTest.getValueAt(j, 3).toString());
-					int soLuongSPHT = Integer.parseInt(tableTest.getValueAt(j, 4).toString());
-					if (soLuongSPDC < soLuongSPHT) {
-						soLuongCNdatKPI++;
-					}
-				} 
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-			ArrayList<CongNhan> cn = congNhan_BUS.getDanhSachCongNhan();
-	    	double soLuongCN = cn.size();
-	    	
-	        t[i-1] = (soLuongCNdatKPI / soLuongCN)*100;
-		}
-		showLineChart(t);
-	}
-	private void hienThibieuDo()
-	{
-		hienThiDSThongKe();
-    	double soLuongCNdatKPI = 0;
-    	for(int i = 0; i < tableThongKe.getRowCount();i++)
-    	{
-    		int soLuongSPDC = Integer.parseInt(tableThongKe.getValueAt(i, 3).toString());
-    		
-    		int soLuongSPHT = Integer.parseInt(tableThongKe.getValueAt(i, 4).toString());
-    		
-    		if(soLuongSPDC<soLuongSPHT)
-    		{
-    			soLuongCNdatKPI++;
-    		}
-    	}
-    	ArrayList<CongNhan> cn = congNhan_BUS.getDanhSachCongNhan();
-    	double soLuongCN = cn.size();
-    	
-        double tyle = (soLuongCNdatKPI / soLuongCN)*100;
-    	showPieChart(tyle);
-	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
@@ -415,7 +361,7 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener,MouseListe
     		int soLuongSPHT = Integer.parseInt(tableThongKe.getValueAt(row, 4).toString());
     	
         double tyle = ((soLuongSPHT*1.0) /(soLuongSPDC*1.0))*100;
-    	showPieChart(tyle);
+    	showPieChart(tyle,row);
 	}
 	private void thongKeTungNhanVienBieuDoTangTruong(int row)
 	{
@@ -435,7 +381,7 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener,MouseListe
 	           double tyle = ((slht*1.0)/(sldg*1.0))*100;
 	           t[thang-1] = tyle;
 	         }
-	    	showLineChart(t);
+	    	showLineChart(t,row);
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {

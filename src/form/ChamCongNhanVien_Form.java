@@ -530,44 +530,7 @@ public class ChamCongNhanVien_Form extends JPanel implements ActionListener, Mou
 		int columnToSelect = 4; // Chọn cột 1, thay đổi nếu cần
 		boolean selectValue = (buttonClickCount % 2 == 1); // Đảo ngược trạng thái mỗi lần nhấn
 		for (int row = 0; row < tableNhanVien.getRowCount(); row++) {
-<<<<<<< HEAD
-			modelNV.setValueAt(selectValue, row, columnToSelect);
-		}
-	}
-
-	private void ActionChamCong() {
-		// TODO Auto-generated method stub
-		try {
-			String idNV = lbMaNV.getText();
-			LocalDate ngayChamCong = LocalDate.parse(textNgay.getText());
-			String trangThai = "Có mặt";
-			if (tableNhanVien.getValueAt(tableNhanVien.getSelectedRow(), 3).toString().equals("true")) {
-				trangThai = "Có mặt";
-			} else {
-				if (radVang.isSelected()) {
-					trangThai = "Không phép";
-				} else if (radCoPhep.isSelected()) {
-					trangThai = "Có phép";
-				} else if (!radCoPhep.isSelected() && !radVang.isSelected()) {
-					JOptionPane.showMessageDialog(this, "Hãy chọn trạng thái chấm công ");
-					return;
-				}
-			}
-			NhanVien nv = new NhanVien(idNV);
-			BangChamCongNhanVien bcc = new BangChamCongNhanVien("1", ngayChamCong, trangThai, nv);
-			int row = tableNhanVien.getSelectedRow();
-			if (chamCongNhanVien_BUS.themChamCong(bcc)) {
-				modelNV.removeRow(row);
-				getListChamCong();
-			} else {
-				JOptionPane.showMessageDialog(this, "Thêm thất bại !");
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-			JOptionPane.showMessageDialog(this, e.getMessage());
-=======
 			tableNhanVien.setValueAt(selectValue, row, columnToSelect);
->>>>>>> 4b6e64dea6d3f98c68969482e7d4a2facbb84f7d
 		}
 	}
 
@@ -578,14 +541,7 @@ public class ChamCongNhanVien_Form extends JPanel implements ActionListener, Mou
 		if (!tenPB.equals("Tất cả")) {
 
 			modelNV.setRowCount(0);
-<<<<<<< HEAD
-			String day = dateChamCong.getDate().getDate() + "";
-			String month = (dateChamCong.getDate().getMonth() + 1) + "";
-			String year = (dateChamCong.getDate().getYear() + 1900) + "";
-			String format = year + "-" + month + "-" + day;
-=======
 			String format = LocalDate.now().toString();
->>>>>>> 4b6e64dea6d3f98c68969482e7d4a2facbb84f7d
 			ArrayList<NhanVien> listCC = chamCongNhanVien_BUS.getListNVchuaChamCong(format);
 			for (NhanVien nhanVien : listCC) {
 				if (phongBan_BUS.getPBTheoTen(tenPB).getIdPhongBan().equals(nhanVien.getPhongBan().getIdPhongBan())) {
@@ -603,15 +559,8 @@ public class ChamCongNhanVien_Form extends JPanel implements ActionListener, Mou
 
 	public void getListNVchuaChamCong() {
 		modelNV.setRowCount(0);
-<<<<<<< HEAD
-		String day = dateChamCong.getDate().getDate() + "";
-		String month = (dateChamCong.getDate().getMonth() + 1) + "";
-		String year = (dateChamCong.getDate().getYear() + 1900) + "";
-		String format = year + "-" + month + "-" + day;
-=======
 		String format = LocalDate.now().toString();
 
->>>>>>> 4b6e64dea6d3f98c68969482e7d4a2facbb84f7d
 		ArrayList<NhanVien> listCC = chamCongNhanVien_BUS.getListNVchuaChamCong(format);
 		for (NhanVien nhanVien : listCC) {
 			modelNV.addRow(new Object[] { nhanVien.getIdNhanVien(), nhanVien.getHoTen(),
@@ -677,21 +626,6 @@ public class ChamCongNhanVien_Form extends JPanel implements ActionListener, Mou
 
 					if (selectedRow != -1 && selectedColumn != -1) {
 						selectedValue = tableNhanVien.getValueAt(selectedRow, selectedColumn);
-<<<<<<< HEAD
-						if (tableNhanVien.getValueAt(selectedRow, 3).toString().equals("true")) {
-							radCoMat.setVisible(true);
-							radCoMat.setSelected(true);
-							radVang.setVisible(false);
-							radCoPhep.setVisible(false);
-						} else {
-							radCoMat.setVisible(false);
-							radVang.setVisible(true);
-							radCoPhep.setVisible(true);
-							radCoPhep.setSelected(false);
-							radVang.setSelected(false);
-							radVang.setBounds(437, 27, 110, 21);
-=======
->>>>>>> 4b6e64dea6d3f98c68969482e7d4a2facbb84f7d
 
 					}
 				}

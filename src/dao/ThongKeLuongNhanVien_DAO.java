@@ -30,9 +30,7 @@ public class ThongKeLuongNhanVien_DAO {
  				String tenPB = r.getString(3);
  				int thang = r.getInt(4);
  				double tongLuong = r.getDouble(6);
- 				
  			    double thucLanh = r.getDouble(7);
- 				
  				String data = idnv+";"+tennv+";"+tenPB+";"+thang+";"+tongLuong+";"+thucLanh+";";
  				listLuongPB.add(data);
  			}
