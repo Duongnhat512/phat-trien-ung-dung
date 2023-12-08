@@ -9,6 +9,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -65,6 +66,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -81,6 +83,8 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.RowFilter.Entry;
+
 import java.awt.Cursor;
 import java.awt.Desktop;
 
@@ -88,6 +92,8 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import java.awt.FlowLayout;
 import javax.swing.JToolBar;
+import javax.swing.RowFilter;
+
 import net.miginfocom.swing.MigLayout;
 
 public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener, MouseListener {
@@ -110,6 +116,8 @@ public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener,
 	private JButton btnPrint;
 	private JTextField textField_1;
 	private RoundTextField txtTimKiem;
+    private DecimalFormat decimalFormat = new DecimalFormat("###,###,###.##");
+	private TableRowSorter sorter;
 
 	public ThongKeLuongCongNhan_Form(int width, int height) {
 		this.width = width;
@@ -343,7 +351,11 @@ public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener,
 		int year = Integer.parseInt(cbNam.getSelectedItem().toString());
 		ArrayList<String> listPB = thongKeLuongCongNhan_BUS.getListLuongPX(month, year);
 		for (String string : listPB) {
-			modelTK.addRow(string.split(";"));
+			String[] mangChuoi = string.split(";");
+	
+			double luongThucLanh = Double.parseDouble(mangChuoi[5]);
+			String thucLanhFM = decimalFormat.format(luongThucLanh)+ " VND";
+			modelTK.addRow(new Object[] {mangChuoi[0],mangChuoi[1],mangChuoi[2].toString(),mangChuoi[3].toString(),mangChuoi[4],thucLanhFM});
 		}
 	}
 
@@ -466,5 +478,24 @@ public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener,
 		} else {
 			System.out.println("File not found: " + filePath);
 		}
+	}
+	private void searchEmployee() {
+		String searchText = txtTimKiem.getText().trim();
+		sorter = new TableRowSorter<>(modelTK);
+		tableThongKe.setRowSorter(sorter);
+		RowFilter<DefaultTableModel, Object> idOrNameFilter = new RowFilter<DefaultTableModel, Object>() {
+			@Override
+			public boolean include(Entry<? extends DefaultTableModel, ? extends Object> entry) {
+				String text = searchText.toLowerCase();
+				for (int i = 0; i < entry.getValueCount(); i++) {
+					Object value = entry.getValue(i);
+					if (value != null && value.toString().toLowerCase().contains(text)) {
+						return true;
+					}
+				}
+				return false;
+			}
+		};
+		sorter.setRowFilter(idOrNameFilter);
 	}
 }

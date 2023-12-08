@@ -10,8 +10,7 @@ import connectDB.ConnectDB;
 public class ThongKeLuongCongNhan_DAO {
       public ArrayList<String> getListLuongCNtheoPhanXuong(int month, int year)
       {
-    	  ConnectDB.getInstance();
-    	 
+    	 ConnectDB.getInstance();
     	 Connection con =  ConnectDB.getConnection();
     	  ArrayList<String> listLuong = new ArrayList<String>();
     	  try {
