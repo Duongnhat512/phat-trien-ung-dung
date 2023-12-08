@@ -262,7 +262,7 @@ public class NhanVien_DAO {
 			stmt.setString(9, nv.getChucVu().getIdChucVu());
 			stmt.setDouble(10, nv.getHESOBAOHIEMXAHOI());
 			stmt.setDouble(11, nv.getLUONGCOBAN());
-			stmt.setString(12, null);
+			stmt.setString(12, nv.getTaiKhoan().getTenTaiKhoan());
 			stmt.setString(13, nv.getPhongBan().getIdPhongBan());
 			stmt.setDouble(14, nv.getPhuCap());
 			stmt.setString(15, nv.getAnhDaiDien());

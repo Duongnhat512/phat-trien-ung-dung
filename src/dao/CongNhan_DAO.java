@@ -246,7 +246,7 @@ public boolean 	create(CongNhan cn) {
 		stmt.setString(9,cn.getSoDienThoai());
 		stmt.setDouble(10, cn.getPhuCap());
 		stmt.setString(11, cn.getTayNghe());
-		stmt.setString(12, null);
+		stmt.setString(12, cn.getTaiKhoan().getTenTaiKhoan());
 		stmt.setString(13, cn.getAnhDaiDien());
 		stmt.setString(14, cn.getcCCD());
 		n = stmt.executeUpdate();
