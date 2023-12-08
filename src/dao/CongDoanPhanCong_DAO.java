@@ -106,6 +106,28 @@ public class CongDoanPhanCong_DAO {
 		return phanCong;
 	}
 	
+	public boolean themPhanCong(CongDoanPhanCong cDPC) {
+		int n = 0;
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stm = null;
+		try {
+			stm = con.prepareStatement("insert into CongDoanPhanCong values(?, ?, ?, ?, ?, ?)");
+			stm.setString(1, cDPC.getIdPhanCong());
+			stm.setString(2, cDPC.getCongDoanSP().getIdCongDoan());
+			stm.setString(3, cDPC.getCongNhan().getIdCongNhan());
+			stm.setInt(4, cDPC.getSoLuongSanPhamDuocGiao());
+			stm.setInt(5, cDPC.getCaLam().getIdCaLam());
+			stm.setInt(6, cDPC.getSoLuongConLai());
+			n = stm.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return n > 0;
+	}
+	
 	/**
 	 * Cập nhật số lượng còn lại
 	 * @param congDoanPhanCong

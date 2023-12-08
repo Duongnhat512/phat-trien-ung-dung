@@ -27,6 +27,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -98,10 +100,6 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 	private MyButton btnChamCong;
 	private MyButton btnChamCongAll;
 	private MyButton btnCapNhat;
-	
-	//
-	private ArrayList<CongDoanPhanCong> listPhanCong = new ArrayList<CongDoanPhanCong>();
-	private ArrayList<BangChamCongCongNhan> listChamCong = new ArrayList<BangChamCongCongNhan>();
 	private JPanel panelNorth;
 	private JComboBox cboCaLam;
 	private JLabel lblNewLabel_2;
@@ -109,6 +107,11 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 	private RoundTextField txtTimKiem;
 	private JComboBox cboPhanXuong;
 	private LocalDate date;
+	private int currentRowChamCong = -1;
+	
+	//
+	private ArrayList<CongDoanPhanCong> listPhanCong = new ArrayList<CongDoanPhanCong>();
+	private ArrayList<BangChamCongCongNhan> listChamCong = new ArrayList<BangChamCongCongNhan>();
 
 	/**
 	 * Create the panel.
@@ -530,10 +533,27 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 			}
 		});
       //
-	    //
-	  	locDuLieuChamCongTheoNgay();
-	    layDanhSachCongNhan();
-	    docDuLieuLenTablePhanCong(listPhanCong);
+      
+      //
+      tableChamCong.addMouseListener(new MouseAdapter() {
+    	  @Override
+    	public void mousePressed(MouseEvent e) {
+    		int row = tableChamCong.getSelectedRow();
+    		if (currentRowChamCong == -1) {
+    			currentRowChamCong = row;
+				return;
+			}
+    		if (currentRowChamCong != row) {
+				capNhatSoLuongHoanThanh(currentRowChamCong);
+    			currentRowChamCong = row;
+			}
+    	}
+      });
+      
+	  //
+	  locDuLieuChamCongTheoNgay();
+	  layDanhSachCongNhan();
+	  docDuLieuLenTablePhanCong(listPhanCong);
         
 	}
 	
@@ -667,7 +687,6 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 				return;
 			}
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
 			lblThongBao.setText("Số lượng hoàn thành nhập vào phải là chữ số!");
 			txtSLHoanThanh.selectAll();
 			txtSLHoanThanh.requestFocus();
@@ -736,10 +755,9 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 	/**
 	 * Cập nhật số lượng hoàn thành
 	 */
-	private void capNhatSoLuongHoanThanh() {
-		int row = tableChamCong.getSelectedRow();
-		tableChamCong.editCellAt(row, 0);
+	private void capNhatSoLuongHoanThanh(int row) {
 		if (row != -1) {
+			tableChamCong.editCellAt(row, 5);
 			BangChamCongCongNhan bangCC = listChamCong.get(row);
 			int soLuongHoanThanh = 0;
 			try {
@@ -747,22 +765,37 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 			} catch (NumberFormatException e) {
 				JOptionPane.showMessageDialog(this, "Số lượng hoàn thành cần sửa phải là chữ số.");
 				tableChamCong.setValueAt("" + bangCC.getSoLuongHoanThanh(), row, 6);
+				tableChamCong.editCellAt(row, 6);
+				return;
+			}
+			if (soLuongHoanThanh == bangCC.getSoLuongHoanThanh()) {
 				return;
 			}
 			if (soLuongHoanThanh > (bangCC.getSoLuongHoanThanh() + bangCC.getCongDoanPhanCong().getSoLuongConLai())) {
 				JOptionPane.showMessageDialog(this, "Số lượng hoàn thành vượt quá số lượng còn lại của công nhân.");
+				tableChamCong.setValueAt("" + bangCC.getSoLuongHoanThanh(), row, 6);
+				tableChamCong.editCellAt(row, 6);
+				return;
 			}
 			else {
-				CongDoanPhanCong congDoanPhanCong = bangCC.getCongDoanPhanCong();
-				congDoanPhanCong.setSoLuongConLai(congDoanPhanCong.getSoLuongConLai() - (soLuongHoanThanh - bangCC.getSoLuongHoanThanh()));
-				bangCC.setSoLuongHoanThanh(soLuongHoanThanh);
-				bangChamCongCongNhan_BUS.capNhatSoLuongHoanThanh(bangCC);
+				if (JOptionPane.showConfirmDialog(this, "Bạn có muốn thay đổi không?", "Hỏi nhắc", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					CongDoanPhanCong congDoanPhanCong = bangCC.getCongDoanPhanCong();
+					congDoanPhanCong.setSoLuongConLai(congDoanPhanCong.getSoLuongConLai() - (soLuongHoanThanh - bangCC.getSoLuongHoanThanh()));
+					bangCC.setSoLuongHoanThanh(soLuongHoanThanh);
+					bangChamCongCongNhan_BUS.capNhatSoLuongHoanThanh(bangCC);
+					JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
+				}
 			}
 		}
 		else {
 			JOptionPane.showMessageDialog(this, "Bạn cần chọn ngày công để sửa chấm công.");
 			return;	
 		}
+	}
+	
+	private void capNhatSLHoanThanhKhiNhanNut() {
+		int row = tableChamCong.getSelectedRow();
+		capNhatSoLuongHoanThanh(row);
 	}
 
 	@Override
@@ -779,7 +812,7 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 			kiemTraComboBoxCaLam();
 		}
 		if (o.equals(btnCapNhat)) {
-			capNhatSoLuongHoanThanh();
+			capNhatSLHoanThanhKhiNhanNut();
 		}
 	}
 

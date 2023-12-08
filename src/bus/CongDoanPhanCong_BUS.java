@@ -20,4 +20,7 @@ public class CongDoanPhanCong_BUS {
 	public boolean capNhatSoLuongConLai(CongDoanPhanCong congDoanPhanCong) {
 		return congDoanPhanCong_DAO.capNhatSoLuongConLai(congDoanPhanCong);
 	}
+	public boolean themPhanCong(CongDoanPhanCong cDPC) {
+		return congDoanPhanCong_DAO.themPhanCong(cDPC);
+	}
 }

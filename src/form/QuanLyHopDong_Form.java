@@ -14,6 +14,7 @@ import commons.RoundPanel;
 import commons.RoundTextField;
 import commons.Table;
 import dialog.ThemHopDong_Dialog;
+import dialog.XemHopDong_Dialog;
 import entities.HopDongSanPham;
 
 import javax.swing.GroupLayout;
@@ -23,7 +24,12 @@ import commons.MyButton;
 import java.awt.Font;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -46,8 +52,11 @@ public class QuanLyHopDong_Form extends RoundPanel implements ActionListener{
 	//
 	private HopDongSanPham_BUS hopDongSanPham_BUS = new HopDongSanPham_BUS();
 	private MyButton btnXemChiTiet;
-	private MyButton btnCapNhat;
+	private MyButton btnLamMoi;
 	private MyButton btnThem;
+	
+	//
+	ArrayList<HopDongSanPham> listHD = new ArrayList<HopDongSanPham>();
 	
 	
 	/**
@@ -85,13 +94,13 @@ public class QuanLyHopDong_Form extends RoundPanel implements ActionListener{
 		btnThem.setFocusPainted(false);
 		btnThem.setBackground(new Color(82, 125, 254));
 		
-		btnCapNhat = new MyButton();
-		btnCapNhat.setIcon(new ImageIcon(QuanLyHopDong_Form.class.getResource("/icon/update.png")));
-		btnCapNhat.setText("Cập nhật");
-		btnCapNhat.setRadius(10);
-		btnCapNhat.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		btnCapNhat.setFocusPainted(false);
-		btnCapNhat.setBackground(Color.WHITE);
+		btnLamMoi = new MyButton();
+		btnLamMoi.setIcon(new ImageIcon(QuanLyHopDong_Form.class.getResource("/icon/update.png")));
+		btnLamMoi.setText("Làm mới");
+		btnLamMoi.setRadius(10);
+		btnLamMoi.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		btnLamMoi.setFocusPainted(false);
+		btnLamMoi.setBackground(Color.WHITE);
 		
 		textTimKiem = new RoundTextField(10);
 		textTimKiem.setText("Nhập tên hợp đồng cần tìm.....");
@@ -135,7 +144,7 @@ public class QuanLyHopDong_Form extends RoundPanel implements ActionListener{
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnXemChiTiet, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnCapNhat, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
+					.addComponent(btnLamMoi, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
 		gl_panel.setVerticalGroup(
@@ -148,7 +157,7 @@ public class QuanLyHopDong_Form extends RoundPanel implements ActionListener{
 							.addComponent(btnThem, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 							.addComponent(textTimKiem, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-							.addComponent(btnCapNhat, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(btnLamMoi, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		panel.setLayout(gl_panel);
@@ -193,7 +202,7 @@ public class QuanLyHopDong_Form extends RoundPanel implements ActionListener{
         tableHopDong.fixTable(scrollPane);
         
         //Đăng ký sự kiện
-        btnCapNhat.addActionListener(this);
+        btnLamMoi.addActionListener(this);
         btnThem.addActionListener(this);
         btnXemChiTiet.addActionListener(this);
         setLayout(new BorderLayout(0, 0));
@@ -206,31 +215,111 @@ public class QuanLyHopDong_Form extends RoundPanel implements ActionListener{
         panel_1_1.add(lblNewLabel_1_1);
         
         //
-        docDuLieuLenTableHDSP();
+        layDanhSachHopDong();
+        docDuLieuLenTableHDSP(listHD);
+        
+        //
+        textTimKiem.addFocusListener(new FocusListener() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(textTimKiem.getText().trim().isEmpty()) {
+					textTimKiem.setText("Nhập tên hợp đồng cần tìm.....");
+					textTimKiem.setForeground(Color.GRAY);
+				}
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				if(textTimKiem.getText().trim().equalsIgnoreCase("Nhập tên hợp đồng cần tìm.....")) {
+					textTimKiem.setText("");
+					textTimKiem.setForeground(Color.BLACK);
+				}
+			}
+		});
+        
+        textTimKiem.addKeyListener(new KeyAdapter() {
+        	@Override
+        	public void keyReleased(KeyEvent e) {
+        		layDanhSachHopDong();
+        		if (!textTimKiem.getText().trim().isEmpty()) {
+        			timHopDong(textTimKiem.getText());
+        		}
+        		else {
+        			docDuLieuLenTableHDSP(listHD);
+        		}
+        	}
+        });
 	}
 	
+	private void layDanhSachHopDong() {
+		listHD = hopDongSanPham_BUS.getAllHopDongSanPham();
+	}
 	
 	/**
 	 * Đọc dữ liệu lên table Hợp đồng sản phẩm
 	 */
-	private void docDuLieuLenTableHDSP() {
-		ArrayList<HopDongSanPham> list = hopDongSanPham_BUS.getAllHopDongSanPham();
+	private void docDuLieuLenTableHDSP(ArrayList<HopDongSanPham> list) {
 		DefaultTableModel dm = (DefaultTableModel) tableHopDong.getModel();
+		dm.getDataVector().removeAllElements();
 		for(HopDongSanPham hd : list) {
 			dm.addRow(new Object[] {hd.getIdHopDong(), hd.getTenHopDong(), hd.getNgayBatDau(), hd.getNgayKetThuc(), hd.getNguoiQuanLy().getHoTen(), String.format("%,.2f", hd.getTongTien()), hd.getGhiChu()});
 		}
+		tableHopDong.repaint();
+		tableHopDong.revalidate();
 	}
 	
 	private void moDialogThemHD() {
 		ThemHopDong_Dialog themHopDong_Dialog = new ThemHopDong_Dialog();
 		themHopDong_Dialog.openThemHopDong_Dialog((int) (this.width*0.75), this.height);
 	}
-
+	
+	/**
+	 * Mở dialog xem hợp đồng
+	 */
+	private void xemHopDong() {
+		int row = tableHopDong.getSelectedRow();
+		if (row == -1) {
+			return;
+		}
+		XemHopDong_Dialog xemHopDong_Dialog = new XemHopDong_Dialog(tableHopDong.getValueAt(row, 0).toString());
+		xemHopDong_Dialog.setVisible(true);
+	}
+	
+	/**
+	 * Tìm hợp đồng sản phẩm theo tên
+	 * @param tenHopDong
+	 */
+	private void timHopDong(String tenHopDong) {
+		ArrayList<HopDongSanPham> temp = new ArrayList<HopDongSanPham>();
+		for (HopDongSanPham hopDongSanPham : listHD) {
+			if (hopDongSanPham.getTenHopDong().trim().toUpperCase().contains(tenHopDong.trim().toUpperCase())) {
+				temp.add(hopDongSanPham);
+			}
+		}
+		listHD = new ArrayList<HopDongSanPham>();
+		listHD.addAll(temp);
+		docDuLieuLenTableHDSP(listHD);
+	}
+	
+	/**
+	 * Lọc hợp đồng theo ngày
+	 */
+	private void locHopDongTheoNgay() {
+		
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if (o.equals(btnThem)) {
 			moDialogThemHD();
+		}
+		if (o.equals(btnLamMoi)) {
+			layDanhSachHopDong();
+			docDuLieuLenTableHDSP(listHD);
+		}
+		if (o.equals(btnXemChiTiet)) {
+			xemHopDong();
 		}
 	}
 }

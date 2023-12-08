@@ -7,6 +7,10 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -105,6 +109,23 @@ public class MenuItem extends JButton {
         super.setFocusPainted(false);
         rippleEffect = new RippleEffect(this);
         rippleEffect.setRippleColor(new Color(220, 220, 220));
+//        addMouseListener(new MouseAdapter() {
+//        	@Override
+//        	public void mousePressed(MouseEvent e) {
+//        		selected = true;
+//        		repaint();
+//        	}
+//        	@Override
+//        	public void mouseEntered(MouseEvent e) {
+//        		over = true;
+//        		repaint();
+//        	}
+//        	@Override
+//        	public void mouseExited(MouseEvent e) {
+//        		over = false;
+//        		repaint();
+//        	}
+//        });
     }
 
     private void createShadowImage() {

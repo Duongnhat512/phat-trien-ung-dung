@@ -10,11 +10,13 @@ import javax.swing.plaf.DimensionUIResource;
 import javax.swing.table.DefaultTableModel;
 
 import bus.HopDongSanPham_BUS;
+import bus.SanPham_BUS;
 import commons.RoundPanel;
 import commons.RoundTextField;
 import commons.Table;
 import dialog.ThemSanPham_Dialog;
 import entities.HopDongSanPham;
+import entities.SanPham;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -23,6 +25,8 @@ import commons.MyButton;
 import java.awt.Font;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
@@ -41,12 +45,14 @@ public class QuanLySanPham_Form extends JPanel implements ActionListener{
 	private RoundTextField textTimKiem;
 	private Table tableSanPham;
 	private MyButton btnXemChiTiet;
-	private MyButton btnCapNhat;
-	private MyButton btnLoc;
+	private MyButton btnLamMoi;
 	private MyButton btnThem;
 	
 	//
+	private SanPham_BUS sanPham_BUS = new SanPham_BUS();
+	private ArrayList<SanPham> listSanPham = new ArrayList<SanPham>();
 	
+	//
 	
 	/**
 	 * Create the panel.
@@ -81,21 +87,13 @@ public class QuanLySanPham_Form extends JPanel implements ActionListener{
 		btnThem.setFocusPainted(false);
 		btnThem.setBackground(new Color(82, 125, 254));
 		
-		btnLoc = new MyButton();
-		btnLoc.setIcon(new ImageIcon(QuanLySanPham_Form.class.getResource("/icon/icons8_filter_25px_1.png")));
-		btnLoc.setText("Lọc");
-		btnLoc.setRadius(10);
-		btnLoc.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		btnLoc.setFocusPainted(false);
-		btnLoc.setBackground(Color.WHITE);
-		
-		btnCapNhat = new MyButton();
-		btnCapNhat.setIcon(new ImageIcon(QuanLySanPham_Form.class.getResource("/icon/update.png")));
-		btnCapNhat.setText("Cập nhật");
-		btnCapNhat.setRadius(10);
-		btnCapNhat.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		btnCapNhat.setFocusPainted(false);
-		btnCapNhat.setBackground(Color.WHITE);
+		btnLamMoi = new MyButton();
+		btnLamMoi.setIcon(new ImageIcon(QuanLySanPham_Form.class.getResource("/icon/update.png")));
+		btnLamMoi.setText("Làm mới");
+		btnLamMoi.setRadius(10);
+		btnLamMoi.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		btnLamMoi.setFocusPainted(false);
+		btnLamMoi.setBackground(Color.WHITE);
 		
 		textTimKiem = new RoundTextField(10);
 		textTimKiem.setText("Nhập mã sản phẩm cần tìm.....");
@@ -132,16 +130,14 @@ public class QuanLySanPham_Form extends JPanel implements ActionListener{
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(83)
+					.addGap(28)
 					.addComponent(textTimKiem, GroupLayout.PREFERRED_SIZE, 297, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnLoc, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 394, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 535, Short.MAX_VALUE)
 					.addComponent(btnThem, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnXemChiTiet, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnCapNhat, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
+					.addComponent(btnLamMoi, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
 		gl_panel.setVerticalGroup(
@@ -151,11 +147,9 @@ public class QuanLySanPham_Form extends JPanel implements ActionListener{
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 							.addComponent(btnXemChiTiet, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-							.addComponent(btnThem, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-							.addComponent(textTimKiem, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-							.addComponent(btnCapNhat, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-							.addComponent(btnLoc, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(btnThem, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+							.addComponent(textTimKiem, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
+						.addComponent(btnLamMoi, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		panel.setLayout(gl_panel);
@@ -242,15 +236,67 @@ public class QuanLySanPham_Form extends JPanel implements ActionListener{
         panelSouth.setLayout(gl_panelSouth);
         
         //
+        layDanhSachSanPham();
+        docDuLieuLenTableSP(listSanPham);
+        
+        //
         btnThem.addActionListener(this);
-        btnCapNhat.addActionListener(this);
-        btnLoc.addActionListener(this);
+        btnLamMoi.addActionListener(this);
         btnXemChiTiet.addActionListener(this);
+        
+        textTimKiem.addKeyListener(new KeyAdapter() {
+        	@Override
+        	public void keyReleased(KeyEvent e) {
+        		layDanhSachSanPham();
+        		if (!textTimKiem.getText().trim().isEmpty()) {
+					timKiemSanPham(textTimKiem.getText());
+				}
+        		else {
+					docDuLieuLenTableSP(listSanPham);
+				}
+        	}
+        });
 	}
 	
+	/**
+	 * Mở dialog thêm sản phẩm
+	 */
 	private void moThemSanPham_Dialog() {
 		ThemSanPham_Dialog themSanPham_Dialog = new ThemSanPham_Dialog();
 		themSanPham_Dialog.openThemSanPham_Dialog((int) (this.width*0.75), (int) (this.height*0.7));
+	}
+	
+	/**
+	 * Đọc dữ liệu sản phẩm lên table sản phẩm
+	 */
+	private void docDuLieuLenTableSP(ArrayList<SanPham> list) {
+		DefaultTableModel dm = (DefaultTableModel) tableSanPham.getModel();
+		dm.getDataVector().removeAllElements();
+		
+		for (SanPham sanPham : list) {
+			dm.addRow(new Object[]{sanPham.getIdSanPham(), sanPham.getTenSanPham(), sanPham.getChatLieu(), sanPham.getDonGia(), sanPham.getDonViTinh(), sanPham.getGhiChu()});
+		}
+		tableSanPham.repaint();
+		tableSanPham.revalidate();
+	}
+	
+	/**
+	 * Lấy danh sách sản phẩm
+	 */
+	private void layDanhSachSanPham() {
+		listSanPham = sanPham_BUS.getAllSanPham();
+	}
+	
+	private void timKiemSanPham(String tenSP) {
+		ArrayList<SanPham> temp = new ArrayList<SanPham>();
+		for (SanPham sanPham : listSanPham) {
+			if (sanPham.getTenSanPham().trim().toUpperCase().contains(tenSP.trim().toUpperCase())) {
+				temp.add(sanPham);
+			}
+		}
+		listSanPham = new ArrayList<SanPham>();
+		listSanPham.addAll(temp);
+		docDuLieuLenTableSP(listSanPham);
 	}
 
 	@Override

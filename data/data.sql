@@ -1,6 +1,6 @@
 ﻿--use master
 --drop database QLLuongSanPham
-select * from CongDoanSP
+--select * from CongDoanSP
 create database QLLuongSanPham
 go
 use QLLuongSanPham

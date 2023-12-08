@@ -171,7 +171,7 @@ public class CongDoanSanPham_DAO {
 		PreparedStatement stmt = null;
 		int n= 0;
 		try {
-			stmt =con.prepareStatement("update CongDoanSP set soLuongSanPham = ? where idCongDoan = ?");
+			stmt =con.prepareStatement("update CongDoanSP set soLuongSanPham = soLuongSanPham - ? where idCongDoan = ?");
 			stmt.setInt(1, soLuongSanPham);
 			stmt.setString(2, idCongDoan);
 			n = stmt.executeUpdate();
@@ -200,7 +200,7 @@ public class CongDoanSanPham_DAO {
 		Connection con = ConnectDB.getConnection();
 		PreparedStatement stm = null;
 		try {
-			stm = con.prepareStatement("select * from CongDoanSP where soLuongConLai > 0");
+			stm = con.prepareStatement("select * from CongDoanSP where soLuongSanPham > 0");
 			ResultSet rs = stm.executeQuery();
 			while(rs.next()) {
 				String idCongDoan = rs.getString(1);
