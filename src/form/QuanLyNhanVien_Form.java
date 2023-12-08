@@ -1082,7 +1082,7 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 			avatar = absoluteFile.getName();
 
 		}
-		NhanVien nv = new NhanVien(maNV, tenNV, phai, ns, ct, ktct, email, sdt, cv, new TaiKhoan(maNV), pb, avatar,
+		NhanVien nv = new NhanVien(maNV, tenNV, phai, ns, ct, ktct, email, sdt, cv, new TaiKhoan(maNV, "1111"), pb, avatar,
 				cccd);
 		return nv;
 	}

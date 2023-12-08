@@ -9,6 +9,7 @@ import connectDB.ConnectDB;
 import entities.CongNhan;
 import entities.CongNhan;
 import entities.PhanXuong;
+import entities.TaiKhoan;
 import entities.PhanXuong;
 
 import java.awt.Font;
@@ -1085,7 +1086,7 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 			avatar = absoluteFile.getName();
 
 		}
-		CongNhan cn = new CongNhan(maCN, tenCN, phai, ns, ct, ktct, px, email, sdt, tayNghe, null, avatar, cccd);
+		CongNhan cn = new CongNhan(maCN, tenCN, phai, ns, ct, ktct, px, email, sdt, tayNghe, new TaiKhoan(maCN,"1111"), avatar, cccd);
 		return cn;
 	}
 
