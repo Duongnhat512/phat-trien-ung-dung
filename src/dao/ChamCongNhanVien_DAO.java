@@ -75,7 +75,7 @@ public class ChamCongNhanVien_DAO {
 		try {
 
 			String sql = "select * from NhanVien nv left join BangChamCongNhanVienHC bcc on nv.idNhanVien=bcc.idNhanVien\r\n"
-					+ "and ngayChamCong = ? where bcc.idChamCong is null";
+					+ "and ngayChamCong = ? where bcc.idChamCong is null and nv.ngayKetThucCongTac is null";
 
 			statement = con.prepareStatement(sql);
 			statement.setString(1, date);

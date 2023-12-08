@@ -14,6 +14,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -76,15 +78,16 @@ public class Password_GUI extends JFrame implements ActionListener {
 	private boolean passwordVisible;
 	private BufferedImage visibleImage;
 	private BufferedImage hiddenImage;
+	private JButton btnTroVe;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		openLogin_GUI();
+		openPassword_GUI();
 	}
 
-	public static void openLogin_GUI() {
+	public static void openPassword_GUI() {
 		frame = new Password_GUI();
 		frame.setVisible(true);
 	}
@@ -182,13 +185,6 @@ public class Password_GUI extends JFrame implements ActionListener {
 		lblThongBao.setBounds(152, 212, 279, 21);
 		pRight.add(lblThongBao);
 
-		JLabel lbQMK = new JLabel("Trở Về");
-		lbQMK.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lbQMK.setForeground(new Color(255, 0, 0));
-		lbQMK.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lbQMK.setBounds(344, 296, 87, 38);
-		pRight.add(lbQMK);
-
 		btnOTP = new JButton("Gửi Mã OTP");
 		btnOTP.setBounds(294, 174, 137, 28);
 		pRight.add(btnOTP);
@@ -209,17 +205,25 @@ public class Password_GUI extends JFrame implements ActionListener {
 		btnToggleIcon.setBounds(439, 236, 36, 30);
 		pRight.add(btnToggleIcon);
 		String projectDirectory = System.getProperty("user.dir");
-//		ImageIcon visibleIcon = new ImageIcon(projectDirectory+"\\src\\icon\\icons8_eye_25px.png"); // Thay đổi đường dẫn tới hình ảnh mắt mở
-//        ImageIcon hiddenIcon = new ImageIcon(projectDirectory+"\\src\\icon\\hidden_eye.png"); // Thay đổi đường dẫn tới hình ảnh mắt đóng
         try {
              visibleImage = ImageIO.read(new File(projectDirectory+"\\src\\icon\\icons8_eye_25px.png")); // Đường dẫn hình ảnh mắt mở
              hiddenImage = ImageIO.read(new File(projectDirectory+"\\src\\icon\\hidden_eye.png")); // Đường dẫn hình ảnh mắt đóng
 
-            btnToggleIcon.setIcon(new ImageIcon(resizeImage(visibleImage, 25, 25))); // Đặt kích thước cho hình ảnh mắt mở
-            btnToggleIcon.setDisabledIcon(new ImageIcon(resizeImage(hiddenImage, 25, 25))); // Đặt kích thước cho hình ảnh mắt đóng
+            btnToggleIcon.setIcon(new ImageIcon(resizeImage(hiddenImage, 36, 30))); // Đặt kích thước cho hình ảnh mắt mở
+            btnToggleIcon.setDisabledIcon(new ImageIcon(resizeImage(visibleImage, 36, 30))); // Đặt kích thước cho hình ảnh mắt đóng
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
+        btnTroVe = new JButton("Trở Về");
+        btnTroVe.setBackground(new Color(255, 0, 0));
+        btnTroVe.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnTroVe.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        btnTroVe.setForeground(new Color(255, 255, 255));
+        btnTroVe.setBounds(355, 294, 85, 38);
+        pRight.add(btnTroVe);
+    	btnToggleIcon.setBackground(null);
+		btnToggleIcon.setBorder(null);
         passwordVisible = false;
 		JLabel lbLogo = new JLabel("");
 		lbLogo.setIcon(new ImageIcon(Password_GUI.class.getResource("/icon/logo_Login.png")));
@@ -239,16 +243,17 @@ public class Password_GUI extends JFrame implements ActionListener {
 		// Đăng ký sự kiện
 		btnDangNhap.addActionListener(this);
 		btnOTP.addActionListener(this);
+		btnTroVe.addActionListener(this);
 		btnToggleIcon.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
             	passwordVisible = !passwordVisible;
             	if (passwordVisible) {
                     txtPass.setEchoChar((char) 0); // Hiện password
-                    btnToggleIcon.setIcon(new ImageIcon(resizeImage(visibleImage, 25, 25)));
+                    btnToggleIcon.setIcon(new ImageIcon(resizeImage(visibleImage, 36, 30)));
                 } else {
                 	txtPass.setEchoChar('\u2022'); // Ẩn password
-                	btnToggleIcon.setIcon(new ImageIcon(resizeImage(hiddenImage, 25, 25)));
+                	btnToggleIcon.setIcon(new ImageIcon(resizeImage(hiddenImage,36, 30)));
                 }
             }
         });
@@ -399,6 +404,9 @@ public class Password_GUI extends JFrame implements ActionListener {
 				btnOTP.setText(remainingTime + " (s)");
 				startTimer(btnOTP);
 			}
+		}
+		if(o.equals(btnTroVe)) {
+			moLogin();
 		}
 	}
 }

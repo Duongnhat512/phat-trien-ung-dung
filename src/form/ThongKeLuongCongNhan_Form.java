@@ -355,7 +355,8 @@ public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener,
 	
 			double luongThucLanh = Double.parseDouble(mangChuoi[5]);
 			String thucLanhFM = decimalFormat.format(luongThucLanh)+ " VND";
-			modelTK.addRow(new Object[] {mangChuoi[0],mangChuoi[1],mangChuoi[2].toString(),mangChuoi[3].toString(),mangChuoi[4],thucLanhFM});
+			modelTK.addRow(new Object[] { mangChuoi[0],
+					mangChuoi[1],mangChuoi[2].toString(),mangChuoi[3].toString(),mangChuoi[4],thucLanhFM});
 		}
 	}
 

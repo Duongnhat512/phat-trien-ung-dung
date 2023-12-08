@@ -77,11 +77,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Properties;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
 
 public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, MouseListener {
 	private int width = 1250;
@@ -117,7 +120,7 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 	private JTable table_chiTiet1;
 	private JTable table_chiTiet2;
 	private JLabel lbldsCC;
-
+	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
 	public TinhLuongCongNhan_Form(int width, int height) {
 		setBackground(new Color(240, 240, 240));
 		bl_bus = new BangLuongCongNhan_BUS();
@@ -180,16 +183,10 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 		tableLuong.setOpaque(false);
 		// Cài đặt header cho table Chấm công
 		tableLuong.setModel(dftable = new DefaultTableModel(new Object[][] {},
-				new String[] { "STT", "ID Lương", "Ngày Tính Lương", "Phân Xưởng", "ID Công Nhân", "Tên Công Nhân",
+				new String[] { "STT", "Ngày Tính Lương", "Phân Xưởng", "ID Công Nhân", "Tên Công Nhân",
 						"Tổng Thời Gian Làm Việc", "Tổng Sản Lượng Hoàn Thành", "Lương Hành Chánh", "Lương Tăng Ca",
 						"Phụ Cấp", "Thực Lãnh" }));
 		tableLuong.getColumnModel().getColumn(0).setPreferredWidth(20);
-//		tableLuong.getColumnModel().getColumn(1).setPreferredWidth(20);
-//		tableLuong.getColumnModel().getColumn(2).setPreferredWidth(20);
-//		tableLuong.getColumnModel().getColumn(3).setPreferredWidth(30);
-//		tableLuong.getColumnModel().getColumn(6).setPreferredWidth(30);
-//		tableLuong.getColumnModel().getColumn(8).setPreferredWidth(100);
-//		tableLuong.getColumnModel().getColumn(11).setPreferredWidth(80);
 		DefaultTableCellRenderer centerHeaderRenderer = (DefaultTableCellRenderer) tableLuong
 				.getDefaultRenderer(Object.class);
 		centerHeaderRenderer.setHorizontalAlignment(SwingConstants.CENTER);
@@ -303,7 +300,8 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 		lbl_thucLanh.setBounds(998, 113, 186, 19);
 		panel_1.add(lbl_thucLanh);
 
-		btnPrint = new JButton("In Bảng Lương");
+		btnPrint = new JButton("Xuất Excel");
+		btnPrint.setIcon(new ImageIcon(TinhLuongCongNhan_Form.class.getResource("/icon/excel.png")));
 		btnPrint.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnPrint.setBounds(874, 23, 158, 30);
 		add(btnPrint);
@@ -313,21 +311,22 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 		btnEmail.setBounds(1053, 23, 179, 30);
 		add(btnEmail);
 
-		btnTinhLuong = new JButton("Bảng Lương");
+		btnTinhLuong = new JButton("Làm mới");
 		btnTinhLuong.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnTinhLuong.setBounds(680, 23, 158, 30);
 		add(btnTinhLuong);
 		//
 		searchField = new RoundTextField(10);
-		searchField.setText("Nhập mã lương hoặc mã/tên công nhân cần tìm");
-		searchField.setBounds(850, 270, 260, 30);
+		searchField.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		searchField.setText("Nhập mã/tên công nhân cần tìm");
+		searchField.setBounds(812, 270, 298, 30);
 		add(searchField);
 		searchField.setColumns(10);
 		searchField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
 				if (searchField.getText().isEmpty()) {
-					searchField.setText("Nhập mã lương hoặc mã/tên công nhân cần tìm");
+					searchField.setText("Nhập mã/tên công nhân cần tìm");
 					searchField.setForeground(Color.GRAY);
 				}
 				super.focusLost(e);
@@ -335,7 +334,7 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 
 			@Override
 			public void focusGained(FocusEvent e) {
-				if (searchField.getText().equalsIgnoreCase("Nhập mã lương hoặc mã/tên công nhân cần tìm")) {
+				if (searchField.getText().equalsIgnoreCase("Nhập mã/tên công nhân cần tìm")) {
 					searchField.setText("");
 					searchField.setForeground(Color.BLACK);
 				}
@@ -354,6 +353,9 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 		btnSearch.addActionListener(this);
 		tableLuong.addMouseListener(this);
 		btnPrint.addMouseListener(this);
+		cbbThang.addActionListener(this);
+		cbbNam.addActionListener(this);
+		cbbPhongBan.addActionListener(this);
 
 	}
 
@@ -385,15 +387,21 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 				PhanXuong p = px_bus.getdsPXtheoID(cn.getPhanXuong().getIdPhanXuong());
 				String idBangLuong = getIdBangLuong(l.getIdLuongCN());
 				l.setIdLuongCN(idBangLuong);
-				bl_bus.themBangLuongCongNhan(l, thang, nam);
+				if(LocalDate.now().getMonthValue()==thang+1 && LocalDate.now().getDayOfMonth()==5) {
+					
+					bl_bus.themBangLuongCongNhan(l, thang, nam);
+				}
 				DecimalFormat decimalFormat = new DecimalFormat("###,###,###.##");
+				if(l.getThucLanh()<0) {
+					String thuclanh = decimalFormat.format(0) + " VND";
+				}
 				String luongHanhChanh = decimalFormat.format(l.getTongLuong()) + " VND";
 				String thucLanh = decimalFormat.format(l.getThucLanh()) + " VND";
 				String phuCap = decimalFormat.format(cn.getPhuCap()) + " VND";
 
 				double tangCa = l.getThucLanh() - l.getTongLuong() - cn.getPhuCap();
 				String luongTangCa = decimalFormat.format(tangCa) + " VND";
-				dftable.addRow(new Object[] { stt, l.getIdLuongCN(), l.getNgayTinhLuong(), p.getTenPhanXuong(),
+				dftable.addRow(new Object[] { stt, l.getNgayTinhLuong().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), p.getTenPhanXuong(),
 						cn.getIdCongNhan(), cn.getHoTen(), values[1] + "h", values[0], luongHanhChanh, luongTangCa,
 						phuCap, thucLanh });
 				stt++;
@@ -408,6 +416,9 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 			tongSoLuong = dslcn.size();
 			for (LuongCongNhan luongCongNhan : dslcn) {
 				DecimalFormat decimalFormat = new DecimalFormat("###,###,###.##");
+				if(luongCongNhan.getThucLanh()<0) {
+					String thuclanh = decimalFormat.format(0) + " VND";
+				}
 				CongNhan cn = cn_bus.getCongNhanTheoID(luongCongNhan.getCongNhan().getIdCongNhan());
 				PhanXuong p = px_bus.getdsPXtheoID(cn.getPhanXuong().getIdPhanXuong());
 				String luongHanhChanh = decimalFormat.format(luongCongNhan.getTongLuong()) + " VND";
@@ -417,7 +428,7 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 						thang, nam);
 				double tangCa = luongCongNhan.getThucLanh() - luongCongNhan.getTongLuong() - cn.getPhuCap();
 				String luongTangCa = decimalFormat.format(tangCa) + " VND";
-				dftable.addRow(new Object[] { stt, luongCongNhan.getIdLuongCN(), luongCongNhan.getNgayTinhLuong(), p.getTenPhanXuong(),
+				dftable.addRow(new Object[] { stt,luongCongNhan.getNgayTinhLuong().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), p.getTenPhanXuong(),
 						cn.getIdCongNhan(), cn.getHoTen(), values[1] + "h", values[0], luongHanhChanh, luongTangCa,
 						phuCap, thucLanh });
 				stt++;
@@ -546,19 +557,19 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 		String filePath = projectDirectory + "\\file\\file.pdf";
 		String ttfPath = projectDirectory + "\\file\\ARIAL.TTF";
 		File file = new File(filePath);
-		CongNhan cn = cn_bus.getCongNhanTheoID((String) tableLuong.getValueAt(r, 4));
-		TaiKhoanNganHang tk = tknh_bus.getTaiKhoanNganHangTheoIDCongNhan((String) tableLuong.getValueAt(r, 4));
-		ArrayList<String[]> listChiTiet = bl_bus.getChiTietLuong((String) tableLuong.getValueAt(r, 4), 10, 2023);
+		CongNhan cn = cn_bus.getCongNhanTheoID((String) tableLuong.getValueAt(r, 3));
+		TaiKhoanNganHang tk = tknh_bus.getTaiKhoanNganHangTheoIDCongNhan((String) tableLuong.getValueAt(r, 3));
+		ArrayList<String[]> listChiTiet = bl_bus.getChiTietLuong((String) tableLuong.getValueAt(r, 3), 10, 2023);
 		DecimalFormat decimalFormat = new DecimalFormat("###,###,###.##");
 		Document document = new Document();
 		try {
 
-			Object[][] data1 = { { "ID Lương", (String) tableLuong.getValueAt(r, 1) },
-					{ "Mã Công Nhân", (String) tableLuong.getValueAt(r, 4) },
-					{ "Tên Công Nhân", (String) tableLuong.getValueAt(r, 5) }, { "Số Tài Khoản", tk.getSoTaiKhoan() },
-					{ "Phân Xưởng", (String) tableLuong.getValueAt(r, 3) }, { "Trình Độ", cn.getTayNghe() },
-					{ "Giờ Công", (String) tableLuong.getValueAt(r, 6) },
-					{ "Tổng Lương", (String) tableLuong.getValueAt(r, 11) }, };
+			Object[][] data1 = {
+					{ "Mã Công Nhân", (String) tableLuong.getValueAt(r, 3) },
+					{ "Tên Công Nhân", (String) tableLuong.getValueAt(r, 4) }, { "Số Tài Khoản", tk.getSoTaiKhoan() },
+					{ "Phân Xưởng", (String) tableLuong.getValueAt(r, 2) }, { "Trình Độ", cn.getTayNghe() },
+					{ "Giờ Công", (String) tableLuong.getValueAt(r, 5) },
+					{ "Tổng Lương", (String) tableLuong.getValueAt(r, 10) }, };
 
 			Object[][] data2 = new Object[listChiTiet.size() + 1][6]; // Khởi tạo mảng với số hàng cần thiết
 			data2[0] = new Object[] { "ID Sản Phẩm", "Tên Sản Phẩm", "Tên Công Đoạn", "Thời Gian Làm Việc",
@@ -628,7 +639,7 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		Object obj = e.getSource();
-		if (obj.equals(btnTinhLuong)) {
+		if (obj.equals(cbbThang) || obj.equals(cbbNam) || obj.equals(obj)) {
 			int thang;
 			int nam;
 			try {
@@ -667,7 +678,6 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 			double tongThoiGianLamViec = 0, tongSoLuongSanPham = 0, tongLuongHanhChanh = 0, tongLuongTangCa = 0,
 					tongPhuCap = 0, tongThucLanh = 0;
 			int stt = 1;
-			tongSoLuong = dslcn.size();
 			String txtSearch = searchField.getText();
 			boolean checkNV = false;
 			for (LuongCongNhan lcn : dslcn) {
@@ -684,7 +694,7 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 							nam);
 					double tangCa = lcn.getThucLanh() - lcn.getTongLuong() - cn.getPhuCap();
 					String luongTangCa = decimalFormat.format(tangCa) + " VND";
-					dftable.addRow(new Object[] { stt, lcn.getIdLuongCN(), lcn.getNgayTinhLuong(), p.getTenPhanXuong(),
+					dftable.addRow(new Object[] { stt,lcn.getNgayTinhLuong().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), p.getTenPhanXuong(),
 							cn.getIdCongNhan(), cn.getHoTen(), values[1] + "h", values[0], luongHanhChanh, luongTangCa,
 							phuCap, thucLanh });
 					stt++;
@@ -696,6 +706,7 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 					tongThucLanh += lcn.getThucLanh();
 				}
 			}
+			tongSoLuong = stt-1;
 			if (!checkNV) {
 				JOptionPane.showMessageDialog(this, "Không tìm thấy nhân viên");
 				tongSoLuong = 0;
@@ -755,7 +766,7 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 					return;
 				}
 				for (int row = 0; row < rowCount; row++) {
-					Object cellValue = dftable.getValueAt(row, 4);
+					Object cellValue = dftable.getValueAt(row, 3);
 					exportPdf(row, thang, nam);
 					// Xử lý giá trị trong ô tại hàng 'row' và cột 'col'
 					System.out.println("Giá trị tại hàng " + row + ", cột " + 4 + ": " + cellValue);
@@ -867,20 +878,18 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 			lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
 			panel_2.add(lblNewLabel);
 
-
-
-			CongNhan cn = cn_bus.getCongNhanTheoID((String) tableLuong.getValueAt(r, 4));
-			TaiKhoanNganHang tk = tknh_bus.getTaiKhoanNganHangTheoIDCongNhan((String) tableLuong.getValueAt(r, 4));
+			CongNhan cn = cn_bus.getCongNhanTheoID((String) tableLuong.getValueAt(r, 3));
+			TaiKhoanNganHang tk = tknh_bus.getTaiKhoanNganHangTheoIDCongNhan(cn.getIdCongNhan());
 
 			table_chiTiet1 = new JTable();
 			table_chiTiet1.setModel(new DefaultTableModel(
-					new Object[][] { { "ID Lương", (String) tableLuong.getValueAt(r, 1) },
-							{ "Mã Công Nhân", (String) tableLuong.getValueAt(r, 4) },
-							{ "Tên Công Nhân", (String) tableLuong.getValueAt(r, 5) },
+					new Object[][] {
+							{ "Mã Công Nhân", (String) tableLuong.getValueAt(r, 3) },
+							{ "Tên Công Nhân", (String) tableLuong.getValueAt(r, 4) },
 							{ "Số Tài Khoản", tk.getSoTaiKhoan() },
-							{ "Phân Xưởng", (String) tableLuong.getValueAt(r, 3) }, { "Trình Độ", cn.getTayNghe() },
-							{ "Giờ Công", (String) tableLuong.getValueAt(r, 6) },
-							{ "Tổng Lương", (String) tableLuong.getValueAt(r, 11) }, },
+							{ "Phân Xưởng", (String) tableLuong.getValueAt(r, 2) }, { "Trình Độ", cn.getTayNghe() },
+							{ "Giờ Công", (String) tableLuong.getValueAt(r, 5) },
+							{ "Tổng Lương", (String) tableLuong.getValueAt(r, 10) }, },
 					new String[] { "New column", "New column" }));
 			JScrollPane scrollPane = new JScrollPane(table_chiTiet1);
 			scrollPane.setColumnHeaderView(table_chiTiet1);
@@ -892,7 +901,7 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 
 			table_chiTiet2 = new JTable();
 			table_chiTiet2.setRowHeight(cellHeight);
-			ArrayList<String[]> listChiTiet = bl_bus.getChiTietLuong((String) tableLuong.getValueAt(r, 4), thang, nam);
+			ArrayList<String[]> listChiTiet = bl_bus.getChiTietLuong((String) tableLuong.getValueAt(r, 3), thang, nam);
 			DefaultTableModel dfChiTiet2;
 			table_chiTiet2.setModel(dfChiTiet2 = new DefaultTableModel(new Object[][] {}, new String[] { "ID Sản Phẩm",
 					"Tên Sản Phẩm", "Tên Công Đoạn", "Thời Gian Làm Việc", "Số Lượng Hoàn Thành", "Tổng Tiền" }));
@@ -973,7 +982,7 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 			        
 			    }
 			});
-			
+			dialog.setModal(true);
 		}
 	}
 }
