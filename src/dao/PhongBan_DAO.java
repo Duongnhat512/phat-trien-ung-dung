@@ -57,6 +57,30 @@ public class PhongBan_DAO {
 		}
 			return null;
 	}
+	public PhongBan getPhongBanTheoIDNhanVien(String idNhanVien) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement statement = null;
+		
+		try {	
+			String sql = "select p.idPhongBan,p.tenPhongBan from PhongBan p join NhanVien n on p.idPhongBan = n.idPhongBan \r\n"
+					+ " where n.idNhanVien = ?";	
+			statement = con.prepareStatement(sql);
+			statement.setString(1,idNhanVien);
+			ResultSet rs = statement.executeQuery();
+			
+			while(rs.next()) {
+				String idpb = rs.getString(1);
+				String tenpb = rs.getString(2);
+				PhongBan pb = new PhongBan(idpb, tenpb);
+				return pb;
+			}
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+			return null;
+	}
 	public PhongBan getPhongBanTheoTen(String ten) {
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection();

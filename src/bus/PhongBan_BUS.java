@@ -30,4 +30,7 @@ public class PhongBan_BUS {
 		}
 		return null;
 	}
+	public PhongBan getPhongBanTheoIDNhanVien(String idNhanVien) {
+		return pb_dao.getPhongBanTheoIDNhanVien(idNhanVien);
+	}
 }

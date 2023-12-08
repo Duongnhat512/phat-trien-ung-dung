@@ -48,4 +48,5 @@ public class ChamCongNhanVien_BUS {
 	public ArrayList<NhanVien> getDSChamCongNhanVien(int thang,int nam,String tenpb) {
 		return cc_dao.getAllTableChamCong(thang,nam,tenpb);
 	}
+	
 }

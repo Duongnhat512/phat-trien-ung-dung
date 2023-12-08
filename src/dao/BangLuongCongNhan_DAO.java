@@ -133,17 +133,24 @@ public class BangLuongCongNhan_DAO {
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection();
 		ArrayList<LuongCongNhan> dslcn = new ArrayList<>();
-
 		try {
 			String sql = "SELECT bl.idLuongCN, bl.ngayTinhLuong, bl.idCongNhan, bl.tongLuong, bl.thucLanh, bl.thang, bl.nam "
 					+ "FROM CongNhan CN " + "JOIN PhanXuong PX ON CN.idPhanXuong = PX.idPhanXuong "
 					+ "join BangLuongCongNhan bl on bl.idCongNhan = cn.idCongNhan " + "WHERE thang = ?"
 					+ "    AND nam = ?" + "    AND PX.tenPhanXuong = ?";
+			if(phanXuong.equals("Tất cả")) {
+				sql = "SELECT bl.idLuongCN, bl.ngayTinhLuong, bl.idCongNhan, bl.tongLuong, bl.thucLanh, bl.thang, bl.nam "
+						+ "FROM CongNhan CN " + "JOIN PhanXuong PX ON CN.idPhanXuong = PX.idPhanXuong "
+						+ "join BangLuongCongNhan bl on bl.idCongNhan = cn.idCongNhan " + "WHERE thang = ?"
+						+ "    AND nam = ?";
+			}
 
 			PreparedStatement st = con.prepareStatement(sql);
 			st.setInt(1, thang);
 			st.setInt(2, nam);
-			st.setString(3, phanXuong);
+			if(!phanXuong.equals("Tất cả")) {
+				st.setString(3, phanXuong);
+			}
 			ResultSet r = st.executeQuery();
 
 			while (r.next()) {

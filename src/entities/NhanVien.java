@@ -36,6 +36,11 @@ public class NhanVien {
 		super();
 	}
 	
+	public NhanVien(String idNhanVien, String hoTen) {
+		super();
+		this.idNhanVien = idNhanVien;
+		this.hoTen = hoTen;
+	}
 	public NhanVien(String idNhanVien, String hoTen, boolean phai, LocalDate ngaySinh, LocalDate ngayBatDauCongTac,
 			LocalDate ngayKetThucCongTac, String email, String soDienThoai, ChucVu chucVu, TaiKhoan taiKhoan,
 			PhongBan phongBan, String anhDaiDien, String cCCD, double phuCap) {

@@ -8,4 +8,7 @@ public class TaiKhoan_BUS {
 	public TaiKhoan getTaiKhoan(String tenTaiKhoan) {
 		return taiKhoan_DAO.getTaiKhoan(tenTaiKhoan);
 	}
+	public boolean 	updatePassword(String tenTaiKhoan,String matKhau) {
+		return taiKhoan_DAO.updatePassword(tenTaiKhoan,matKhau);
+	}
 }

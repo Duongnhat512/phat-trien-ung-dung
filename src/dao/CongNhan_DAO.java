@@ -93,6 +93,50 @@ public class CongNhan_DAO {
 
 		return congNhan;
 	}
+<<<<<<< HEAD
+=======
+	finally {
+		try {
+			stmt.close();
+		} catch (SQLException e2) {
+			// TODO: handle exception
+			e2.printStackTrace();
+		}
+	}
+	return n > 0;
+}
+public boolean 	update(CongNhan cn) {
+	ConnectDB.getInstance();
+	Connection con = ConnectDB.getConnection();
+	PreparedStatement stmt = null;
+	int n= 0;
+	try {
+		stmt =con.prepareStatement("update CongNhan set hoTen = ?, phai = ?, "
+				+ "ngaySinh = ?, ngayBatDauCongTac = ?, ngayKetThucCongTac = ?,idPhanXuong = ?,email = ?,soDienThoai = ?, "
+				+ "tayNghe = ?, anhDaiDien =  ?,"
+				+ " CCCD = ? where idCongNhan = ?");
+		
+		
+		stmt.setString(1, cn.getHoTen());
+		stmt.setBoolean(2, cn.isPhai());
+		stmt.setString(3, cn.getNgaySinh()+"");
+		stmt.setString(4, cn.getNgayBatDauCongTac()+"");
+		if(cn.getNgayKetThucCongTac()!=null) {
+			stmt.setString(5, cn.getNgayKetThucCongTac()+"");
+		}
+		else {
+			stmt.setString(5, null);
+		}
+		stmt.setString(6,cn.getPhanXuong().getIdPhanXuong());
+		stmt.setString(7,cn.getEmail());
+		stmt.setString(8,cn.getSoDienThoai());
+		stmt.setString(9, cn.getTayNghe());
+		stmt.setString(10, cn.getAnhDaiDien());
+	
+		stmt.setString(11, cn.getcCCD());
+		stmt.setString(12, cn.getIdCongNhan());
+		n = stmt.executeUpdate();
+>>>>>>> 4b6e64dea6d3f98c68969482e7d4a2facbb84f7d
 
 	public ArrayList<CongNhan> getDanhSachCongNhanTheoCa(int idCaLam) {
 		ArrayList<CongNhan> danhSachCongNhan = new ArrayList<CongNhan>();
