@@ -8,4 +8,11 @@ public class TaiKhoanNganHang_BUS {
 	public TaiKhoanNganHang getTaiKhoanNganHangTheoIDCongNhan(String idCongNhan) {
 		return tk_dao.getTaiKhoanNganHangTheoIDCongNhan(idCongNhan);
 	}
+	public boolean create(TaiKhoanNganHang tk) {
+		return tk_dao.create(tk);
+	}
+	public boolean update(TaiKhoanNganHang tk,String stkCu) {
+		return tk_dao.updateTaiKhoanNganHang(tk,stkCu);
+	}
+	
 }

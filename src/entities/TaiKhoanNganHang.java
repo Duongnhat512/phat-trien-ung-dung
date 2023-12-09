@@ -4,15 +4,23 @@ public class TaiKhoanNganHang {
         private String soTaiKhoan;
         private String tenNganHang;
         private String chiNhanh;
-		public TaiKhoanNganHang(String soTaiKhoan, String tenNganHang, String chiNhanh) {
+        private String chuTaiKhoan;
+		public TaiKhoanNganHang(String soTaiKhoan, String tenNganHang,  String chuTaiKhoan,String chiNhanh) {
 			super();
 			this.soTaiKhoan = soTaiKhoan;
 			this.tenNganHang = tenNganHang;
 			this.chiNhanh = chiNhanh;
+			this.chuTaiKhoan = chuTaiKhoan;
 		}
 		public TaiKhoanNganHang() {
 			super();
 			// TODO Auto-generated constructor stub
+		}
+		public String getChuTaiKhoan() {
+			return chuTaiKhoan;
+		}
+		public void setChuTaiKhoan(String chuTaiKhoan) {
+			this.chuTaiKhoan = chuTaiKhoan;
 		}
 		public String getSoTaiKhoan() {
 			return soTaiKhoan;
