@@ -91,11 +91,11 @@ public class MyButton extends JButton{
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		//paint border
-		g2d.setColor(new Color(228, 228, 228));
+		g2d.setColor(new Color(240, 240, 240));
 		g2d.fillRoundRect(0, 0, getWidth(), getHeight(), radius, radius);
 		g2d.setColor(getBackground());
 		if(over) {
-			colorOver = new Color(getBackground().getRed(), getBackground().getGreen(), getBackground().getBlue(), 150);
+			colorOver = new Color(getBackground().getRed(), getBackground().getGreen(), getBackground().getBlue(), 175);
 			g2d.setColor(colorOver);
 		}
 		// border set 2 pixel

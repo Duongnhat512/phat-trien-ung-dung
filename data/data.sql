@@ -285,31 +285,6 @@ VALUES
     ('CN0020', '1111', N'CN', '111100041111');
 
 go
-<<<<<<< HEAD
-INSERT INTO NhanVien (idNhanVien, hoTen, phai, ngaySinh, ngayBatDauCongTac, ngayKetThucCongTac, email, soDienThoai, idChucVu, heSoBaoHiemXaHoi, luongCoBan, tenTaiKhoan, idPhongBan, phuCap,anhDaiDien, cCCD)
-VALUES
-('NV0001', N'Nguyễn Thị Ánh', 0, '1985-11-25', '2007-07-17', null, 'anhnguyen@gmail.com', '0901234567', 'CV002', 0.05, 8000000, 'NV0001', 'PB001', 700000, 'avatar1.jpg','012345678901'),
-    ('NV0002', N'Lê Văn Hùng', 1, '1986-02-12', '2008-09-05', NULL, 'hungle@gmail.com', '0912345678', 'CV002', 0.05, 8000000, 'NV0002', 'PB001', 700000,'avatar2.jpg','012345678901'),
-    ('NV0003', N'Trần Thị Thảo', 0, '1982-08-31', '2005-10-09', NULL, 'thao.tran@gmail.com', '0923456789', 'CV003', 0.05, 8000000, 'NV0003', 'PB002', 1000000,'avatar3.jpg','012345678901'),
-    ('NV0004', N'Vũ Văn Minh', 1, '1980-06-20', '2002-03-18', NULL, 'minhvu@gmail.com', '0934567890', 'CV003', 0.05, 8000000, 'NV0004', 'PB003', 1000000,'avatar4.jpg','012345678901'),
-    ('NV0005', N'Phạm Thị Hương', 0, '1991-07-20', '2018-03-25', NULL, 'pthuong@gmail.com', '0987654322', 'CV001', 0.05, 8000000, 'NV0005', 'PB002', 500000, 'avatar5.jpg','012345678901'),
-    ('NV0006', N'Lê Huy Hoàng', 1, '1995-11-10', '2019-09-02', NULL, 'lhhoang@gmail.com', '0987654323', 'CV001', 0.05, 8000000, 'NV0006', 'PB001', 500000, 'avatar6.jpg','012345678901'),
-    ('NV0007', N'Trần Thị Minh', 0, '1992-05-25', '2021-06-14',  NULL,'ttminh@gmail.com', '0987654324', 'CV001', 0.05, 8000000, 'NV0007', 'PB003', 500000, 'avatar7.jpg','012345678901'),
-    ('NV0008', N'Hoàng Văn Phú', 1, '1989-12-02', '2019-04-20', NULL, 'hvphu@gmail.com', '0987654325', 'CV001', 0.05, 8000000, 'NV0008', 'PB002', 500000, 'avatar8.jpg','012345678901'),
-    ('NV0009', N'Ngọc Thị Bích', 0, '1993-08-12', '2022-02-05', NULL, 'ntbich@gmail.com', '0987654326', 'CV001', 0.05, 8000000, 'NV0009', 'PB001', 500000, 'avatar9.jpg','012345678901'),
-    ('NV0010', N'Phan Văn Hòa', 1, '1991-04-30', '2018-11-30', NULL, 'pvhoa@gmail.com', '0987654327', 'CV001', 0.05, 8000000, 'NV0010', 'PB003', 500000, 'avatar10.jpg','012345678901'),
-    ('NV0011', N'Trần Thị Linh', 0, '1994-06-18', '2022-03-10', NULL, 'ttlinh@gmail.com', '0987654328', 'CV001', 0.05, 8000000, 'NV0011', 'PB001', 500000, 'avatar11.jpg','012345678901'),
-    ('NV0012', N'Lê Thanh Hùng', 1, '1990-02-08', '2019-01-07', NULL, 'lthung@gmail.com', '0987654329', 'CV001', 0.05, 8000000, 'NV0012', 'PB002', 500000, 'avatar12.jpg','012345678901'),
-    ('NV0013', N'Nguyễn Thị Hoài', 0, '1992-10-05', '2020-05-03', NULL, 'nthoai@gmail.com', '0987654330', 'CV001', 0.05, 8000000, 'NV0013', 'PB003', 500000, 'avatar13.jpg','012345678901'),
-    ('NV0014', N'Vũ Văn Đức', 1, '1988-11-21', '2018-12-14', NULL, 'vvduc@gmail.com', '0987654331', 'CV001', 0.05, 8000000, 'NV0014', 'PB001', 500000, 'avatar14.jpg','012345678901'),
-    ('NV0015', N'Nguyễn Thị Mai', 0, '1993-07-07', '2020-09-28', NULL, 'nthimai@gmail.com', '0987654332', 'CV001', 0.05, 8000000, 'NV0015', 'PB001', 500000, 'avatar15.jpg','012345678901'),
-    ('NV0016', N'Phạm Văn Thái', 1, '1987-03-25', '2019-11-15', NULL, 'pvthai@gmail.com', '0987654333', 'CV001', 0.05, 8000000, 'NV0016', 'PB003', 500000, 'avatar16.jpg','012345678901'),
-    ('NV0017', N'Lê Thị Hương', 0, '1995-09-12', '2021-07-20', NULL, 'lthuong@gmail.com', '0987654334', 'CV001', 0.05, 8000000, 'NV0017', 'PB002', 500000, 'avatar17.jpg','012345678901'),
-	('NV0018', N'Nguyễn Văn An', 1, '1990-03-15', '2010-01-15', NULL, 'vanan@gmail.com', '0987654321', 'CV001', 0.05, 8000000, 'NV0018', 'PB001', 500000,'avatar18.jpg','012345678901'),
-    ('NV0019', N'Trần Thị Bình', 0, '1992-05-20', '2012-02-18', NULL, 'binhtran@gmail.com', '0971234567', 'CV001', 0.05, 8000000, 'NV0019', 'PB001', 500000,'avatar19.jpg','012345678901'),
-    ('NV0020', N'Lê Văn Minh', 1, '1988-12-10', '2009-03-28', NULL, 'minhle@gmail.com', '0965432198', 'CV001', 0.05, 8000000, 'NV0020', 'PB003', 500000,'avatar20.jpg','012345678901'),
-	('NV0021', N'Nguyễn V', 1, '1990-03-15', '2020-01-15', NULL, 'nvan@gmail.com', '0987654321', 'CV001', 0.05, 8000000, 'NV0021', 'PB003', 500000, 'avatar21.jpg','012345678901')
-=======
 
 INSERT INTO NhanVien (idNhanVien, hoTen, phai, ngaySinh, ngayBatDauCongTac, ngayKetThucCongTac, email, soDienThoai, idChucVu, heSoBaoHiemXaHoi, luongCoBan, tenTaiKhoan, idPhongBan, phuCap,anhDaiDien, cCCD)
 VALUES
@@ -334,7 +309,6 @@ VALUES
     ('NV0019', N'Trần Thị Bình', 0, '1992-05-20', '2012-02-18', NULL, 'binhtran@gmail.com', '0901234519', 'CV001', 0.05, 8000000, 'NV0019', 'PB001', 500000,'Unknown_person.jpg','012345678919'),
     ('NV0020', N'Lê Văn Minh', 1, '1988-12-10', '2009-03-28', NULL, 'minhle@gmail.com', '0901234520', 'CV001', 0.05, 8000000, 'NV0020', 'PB003', 500000,'Unknown_person.jpg','012345678920'),
 	('NV0021', N'Nguyễn V', 1, '1990-03-15', '2020-01-15', NULL, 'nvan@gmail.com', '0901234521', 'CV001', 0.05, 8000000, 'NV0021', 'PB003', 500000, 'Unknown_person.jpg','012345678921')
->>>>>>> 97c9ba8df7175199a6ed2aa83e3c42752a01c129
 INSERT INTO PhanXuong (idPhanXuong, tenPhanXuong)
 VALUES
     ('PX001', N'A1'),
@@ -351,28 +325,6 @@ VALUES
 -- Tạo 20 bảng Công Nhân
 INSERT INTO CongNhan (idCongNhan, hoTen, phai, ngaySinh, ngayBatDauCongTac, ngayKetThucCongTac, idPhanXuong, email, soDienThoai, phuCap, tayNghe, tenTaiKhoan,anhDaiDien,cccd)
 VALUES
-<<<<<<< HEAD
-('CN0001', N'Nguyễn Văn An', 1, '1980-01-01', '2005-05-10', NULL, 'PX001', 'nguyenvanan@gmail.com', '0123456789',700000, N'Giỏi', 'CN0001', 'avatar22.jpg','012345678901'),
-('CN0002', N'Phạm Thị Bình', 0, '1985-03-15', '2008-11-20', NULL, 'PX002', 'binhpham@yahoo.com', '0234567890', 700000, N'Khá', 'CN0002', 'avatar23.jpg','012345678901'),
-('CN0003', N'Vũ Văn Minh', 1, '1990-07-20', '2010-09-30', NULL, 'PX003', 'vuminh@gmail.com', '0345678901', 700000, N'Trung bình', 'CN0003', 'avatar24.jpg','012345678901'),
-('CN0004', N'Trần Thị Mai', 0, '1988-05-05', '2009-12-05', NULL, 'PX001', 'maitran@yahoo.com', '0456789012', 700000, N'Giỏi', 'CN0004', 'avatar25.jpg','012345678901'),
-('CN0005', N'Lê Thanh Hùng', 1, '1986-09-10', '2007-06-15', NULL, 'PX002', 'hungle@gmail.com', '0567890123', 700000, N'Khá', 'CN0005', 'avatar26.jpg','012345678901'),
-('CN0006', N'Hoàng Thị Ngọc', 0, '1992-11-25', '2013-04-28', NULL, 'PX003', 'ngochoang@gmail.com', '0678901234', 700000, N'Trung bình', 'CN0006', 'avatar27.jpg','012345678901'),
-('CN0007', N'Phạm Văn Tuấn', 1, '1995-02-01', '2016-07-10', NULL, 'PX001', 'tuanpham@gmail.com', '0789012345', 700000, N'Giỏi', 'CN0007', 'avatar28.jpg','012345678901'),
-('CN0008', N'Trần Thị Lan', 0, '1984-12-12', '2006-09-23', NULL, 'PX002', 'lantran@gmail.com', '0890123456', 700000, N'Khá', 'CN0008', 'avatar29.jpg','012345678901'),
-('CN0009', N'Trần Thanh Tâm', 1, '1989-06-20', '2010-11-15', NULL, 'PX003', 'tamtran@yahoo.com', '0901234567', 700000, N'Trung bình', 'CN0009', 'avatar30.jpg','012345678901'),
-('CN0010', N'Hà Thị An', 0, '1991-08-18', '2012-12-12', NULL, 'PX001', 'anh@gmail.com', '0987654321', 700000, N'Giỏi', 'CN0010', 'avatar31.jpg','012345678901'),
-('CN0011', N'Lê Văn Trung', 1, '1983-04-30', '2004-06-25', NULL, 'PX002', 'trung@gmail.com', '0987654321', 700000, N'Khá', 'CN0011', 'avatar32.jpg','012345678901'),
-('CN0012', N'Nguyễn Thị Lan', 0, '1987-10-02', '2008-07-10', NULL, 'PX003', 'lan@gmail.com', '0987654321', 700000, N'Trung bình', 'CN0012', 'avatar33.jpg','012345678901'),
-('CN0013', N'Nguyễn Văn Long', 1, '1982-03-17', '2003-05-20', NULL, 'PX001', 'long@gmail.com', '0987654321', 700000, N'Giỏi', 'CN0013', 'avatar34.jpg','012345678901'),
-('CN0014', N'Trần Văn Bình', 0, '1993-07-08', '2014-09-30', NULL, 'PX002', 'binh@gmail.com', '0987654321', 700000, N'Khá', 'CN0014', 'avatar35.jpg','012345678901'),
-('CN0015', N'Nguyễn Thị Hoa', 1, '1981-05-25', '2002-06-10', NULL, 'PX003', 'hoa@gmail.com', '0987654321', 700000, N'Trung bình', 'CN0015', 'avatar36.jpg','012345678901'),
-('CN0016', N'Vũ Văn Đức', 1, '1980-08-12', '2001-12-25', NULL, 'PX001', 'duc@gmail.com', '0987654321', 700000, N'Giỏi', 'CN0016', 'avatar37.jpg','012345678901'),
-('CN0017', N'Hoàng Văn Phú', 1, '1994-01-10', '2015-03-15', NULL, 'PX002', 'phu@gmail.com', '0987654321', 700000, N'Khá', 'CN0017', 'avatar38.jpg','012345678901'),
-('CN0018', N'Lê Huy Hoàng', 1, '1996-09-28', '2017-11-20', NULL, 'PX003', 'hoang@gmail.com', '0987654321', 700000, N'Trung bình', 'CN0018', 'avatar39.jpg','012345678901'),
-('CN0019', N'Phan Văn Hòa', 1, '1988-06-15', '2009-08-30', NULL, 'PX001', 'hoa@gmail.com', '0987654321', 700000, N'Giỏi', 'CN0019', 'avatar40.jpg','012345678901'),
-('CN0020', N'Vũ Thị Thùy', 0, '1991-03-20', '2012-06-10', NULL, 'PX002', 'thuy@gmail.com', '0987654321', 700000, N'Khá', 'CN0020', 'avatar41.jpg','012345678901');
-=======
 ('CN0001', N'Nguyễn Văn An', 1, '1980-01-01', '2005-05-10', NULL, 'PX001', 'nguyenvanan@gmail.com', '0323456780',700000, N'Giỏi', 'CN0001', 'Unknown_person.jpg','012345678922'),
 ('CN0002', N'Phạm Thị Bình', 0, '1985-03-15', '2008-11-20', NULL, 'PX002', 'binhpham@yahoo.com', '0323456781', 700000, N'Khá', 'CN0002', 'Unknown_person.jpg','012345678923'),
 ('CN0003', N'Vũ Văn Minh', 1, '1990-07-20', '2010-09-30', NULL, 'PX003', 'vuminh@gmail.com', '0323456782', 700000, N'Trung bình', 'CN0003', 'Unknown_person.jpg','012345678924'),
@@ -393,7 +345,6 @@ VALUES
 ('CN0018', N'Lê Huy Hoàng', 1, '1996-09-28', '2017-11-20', NULL, 'PX003', 'hoang@gmail.com', '0323456788', 700000, N'Trung bình', 'CN0018', 'Unknown_person.jpg','012345678939'),
 ('CN0019', N'Phan Văn Hòa', 1, '1988-06-15', '2009-08-30', NULL, 'PX001', 'hoa@gmail.com', '0323456790', 700000, N'Giỏi', 'CN0019', 'Unknown_person.jpg','012345678940'),
 ('CN0020', N'Vũ Thị Thùy', 0, '1991-03-20', '2012-06-10', NULL, 'PX002', 'thuy@gmail.com', '0323456799', 700000, N'Khá', 'CN0020', 'Unknown_person.jpg','012345678941');
->>>>>>> 97c9ba8df7175199a6ed2aa83e3c42752a01c129
 --Tạo 10 hop dong
 use master
 INSERT INTO HopDongSanPham (idHopDong, tenHopDong, ngayBatDau, ngayKetThuc, idNguoiQuanLy, ghiChu)

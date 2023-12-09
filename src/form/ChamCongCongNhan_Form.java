@@ -494,6 +494,7 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
         
         btnLamMoi = new MyButton();
         btnLamMoi.setIcon(new ImageIcon(ChamCongCongNhan_Form.class.getResource("/icon/reset.png")));
+//        btnLamMoi.setIcon(new ImageIcon(ChamCongCongNhan_Form.class.getResource("/icon/reset.png")));
         btnLamMoi.setText("Làm mới danh sách");
         btnLamMoi.setRadius(10);
         btnLamMoi.setFont(new Font("SansSerif", Font.PLAIN, 15));
