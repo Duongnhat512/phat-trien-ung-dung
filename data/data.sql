@@ -1,6 +1,5 @@
 ﻿--use master
 --drop database QLLuongSanPham
---select * from CongDoanSP
 create database QLLuongSanPham
 go
 use QLLuongSanPham
@@ -21,7 +20,7 @@ create table TaiKhoan(
 	soTaiKhoan nvarchar(20)
 )
 create table CaLam(
-	idCaLam int primary key not null,
+	idCaLam int  primary key not null,
 	tenCaLam nvarchar(50),
 	thoiGianBatDau time(7),
 	thoiGianKetThuc time(7),
@@ -74,10 +73,10 @@ create table CongNhan(
 	email varchar(50),
 	soDienThoai varchar(10),
 	phuCap float,
+	idCaLam int,
 	tayNghe nvarchar(20),
 	tenTaiKhoan varchar(10),
-	anhDaiDien nvarchar(50),
-	cCCD varchar(15)
+	anhDaiDien nvarchar(50)
 
 )
 alter table CongNhan add constraint FK_tenTaiKhoan_CongNhan foreign key (tenTaiKhoan) references TaiKhoan(tenTaiKhoan) on delete cascade
@@ -108,8 +107,7 @@ create table ChiTietHopDong
 	idHopDong varchar(10),
 	idSanPham varchar(10),
 	soLuong int,
-	thanhTien money,
-	trangThai bit
+	thanhTien money
 )
 alter table ChiTietHopDong add constraint FK_ChiTietHopDong_HopDong foreign key (idHopDong) references HopDongSanPham(idHopDong) on delete cascade
 alter table ChiTietHopDong add constraint FK_ChiTietHopDong_SanPham foreign key (idSanPham) references SanPham(idSanPham) on delete cascade
@@ -151,8 +149,8 @@ create table BangLuongCongNhan(
 	idCongNhan varchar(10),
 	tongLuong money,
 	thucLanh money,
-	thang INT,
-    nam INT
+	thang int,
+	nam int
 )
 alter table BangLuongCongNhan add constraint FK_BangLuongCongNhan_CongNhan foreign key (idCongNhan) references CongNhan(idCongNhan)
 
@@ -172,28 +170,15 @@ create table BangLuongNhanVien(
 	tienBaoHiemXaHoi money,
 	tongLuong money,
 	thucLanh money,
-	thang INT,
-    nam INT
+	thang int,
+	nam int
 )
 alter table BangLuongNhanVien add constraint FK_BangLuongNhanVien_NhanVien foreign key (idNhanVien) references NhanVien(idNhanVien)
 
-insert into TaiKhoan(tenTaiKhoan, matKhau, loaiTaiKhoan) values('admin', '1111', 'admin')
+insert into TaiKhoan(tenTaiKhoan,matKhau,loaiTaiKhoan) values('admin', '1111', 'admin')
 go
 
-go
-create trigger trigger_CapNhatSoLuongSanPham
-on ChiTietHopDong
-after insert 
-as
-	begin
-		declare @soLuong int
-		select @soLuong = (select soLuong from inserted)
-		update CongDoanSP 
-		set soLuongSanPham = soLuongSanPham + @soLuong
-		where idCongDoan in (select idCongDoan 
-								from inserted inner join CongDoanSP on inserted.idSanPham = CongDoanSP.idSanPham)
-	end
-go
+
 
 -- Thêm các chức vụ
 INSERT INTO ChucVu (idChucVu, tenChucVu, heSoLuong)
@@ -299,67 +284,67 @@ VALUES
     ('CN0020', 'Matkhau20', N'cong nhân', '1111000041');
 
 go
-INSERT INTO NhanVien (idNhanVien, hoTen, phai, ngaySinh, ngayBatDauCongTac, ngayKetThucCongTac, email, soDienThoai, idChucVu, heSoBaoHiemXaHoi, luongCoBan, tenTaiKhoan, idPhongBan, phuCap,anhDaiDien,cCCD)
-VALUEs
-	('NV0001', N'Nguyễn Thị Ánh', 0, '1985-11-25', '2007-07-17', null, 'anhnguyen@gmail.com', '0901234567', 'CV002', 0.05, 8000000, 'NV0001', 'PB001', 700000, 'avatar1.jpg','012345678901'),
-    ('NV0002', N'Lê Văn Hùng', 1, '1986-02-12', '2008-09-05', NULL, 'hungle@gmail.com', '0912345678', 'CV002', 0.05, 8000000, 'NV0002', 'PB001', 700000,'avatar2.jpg','012345678901'),
-    ('NV0003', N'Trần Thị Thảo', 0, '1982-08-31', '2005-10-09', NULL, 'thao.tran@gmail.com', '0923456789', 'CV003', 0.05, 8000000, 'NV0003', 'PB002', 1000000,'avatar3.jpg','012345678901'),
-    ('NV0004', N'Vũ Văn Minh', 1, '1980-06-20', '2002-03-18', NULL, 'minhvu@gmail.com', '0934567890', 'CV003', 0.05, 8000000, 'NV0004', 'PB003', 1000000,'avatar4.jpg','012345678901'),
-    ('NV0005', N'Phạm Thị Hương', 0, '1991-07-20', '2018-03-25', NULL, 'pthuong@gmail.com', '0987654322', 'CV001', 0.05, 8000000, 'NV0005', 'PB002', 500000, 'avatar5.jpg','012345678901'),
-    ('NV0006', N'Lê Huy Hoàng', 1, '1995-11-10', '2019-09-02', NULL, 'lhhoang@gmail.com', '0987654323', 'CV001', 0.05, 8000000, 'NV0006', 'PB001', 500000, 'avatar6.jpg','012345678901'),
-    ('NV0007', N'Trần Thị Minh', 0, '1992-05-25', '2021-06-14',  NULL,'ttminh@gmail.com', '0987654324', 'CV001', 0.05, 8000000, 'NV0007', 'PB003', 500000, 'avatar7.jpg','012345678901'),
-    ('NV0008', N'Hoàng Văn Phú', 1, '1989-12-02', '2019-04-20', NULL, 'hvphu@gmail.com', '0987654325', 'CV001', 0.05, 8000000, 'NV0008', 'PB002', 500000, 'avatar8.jpg','012345678901'),
-    ('NV0009', N'Ngọc Thị Bích', 0, '1993-08-12', '2022-02-05', NULL, 'ntbich@gmail.com', '0987654326', 'CV001', 0.05, 8000000, 'NV0009', 'PB001', 500000, 'avatar9.jpg','012345678901'),
-    ('NV0010', N'Phan Văn Hòa', 1, '1991-04-30', '2018-11-30', NULL, 'pvhoa@gmail.com', '0987654327', 'CV001', 0.05, 8000000, 'NV0010', 'PB003', 500000, 'avatar10.jpg','012345678901'),
-    ('NV0011', N'Trần Thị Linh', 0, '1994-06-18', '2022-03-10', NULL, 'ttlinh@gmail.com', '0987654328', 'CV001', 0.05, 8000000, 'NV0011', 'PB001', 500000, 'avatar11.jpg','012345678901'),
-    ('NV0012', N'Lê Thanh Hùng', 1, '1990-02-08', '2019-01-07', NULL, 'lthung@gmail.com', '0987654329', 'CV001', 0.05, 8000000, 'NV0012', 'PB002', 500000, 'avatar12.jpg','012345678901'),
-    ('NV0013', N'Nguyễn Thị Hoài', 0, '1992-10-05', '2020-05-03', NULL, 'nthoai@gmail.com', '0987654330', 'CV001', 0.05, 8000000, 'NV0013', 'PB003', 500000, 'avatar13.jpg','012345678901'),
-    ('NV0014', N'Vũ Văn Đức', 1, '1988-11-21', '2018-12-14', NULL, 'vvduc@gmail.com', '0987654331', 'CV001', 0.05, 8000000, 'NV0014', 'PB001', 500000, 'avatar14.jpg','012345678901'),
-    ('NV0015', N'Nguyễn Thị Mai', 0, '1993-07-07', '2020-09-28', NULL, 'nthimai@gmail.com', '0987654332', 'CV001', 0.05, 8000000, 'NV0015', 'PB001', 500000, 'avatar15.jpg','012345678901'),
-    ('NV0016', N'Phạm Văn Thái', 1, '1987-03-25', '2019-11-15', NULL, 'pvthai@gmail.com', '0987654333', 'CV001', 0.05, 8000000, 'NV0016', 'PB003', 500000, 'avatar16.jpg','012345678901'),
-    ('NV0017', N'Lê Thị Hương', 0, '1995-09-12', '2021-07-20', NULL, 'lthuong@gmail.com', '0987654334', 'CV001', 0.05, 8000000, 'NV0017', 'PB002', 500000, 'avatar17.jpg','012345678901'),
-	('NV0018', N'Nguyễn Văn An', 1, '1990-03-15', '2010-01-15', NULL, 'vanan@gmail.com', '0987654321', 'CV001', 0.05, 8000000, 'NV0018', 'PB001', 500000,'avatar18.jpg','012345678901'),
-    ('NV0019', N'Trần Thị Bình', 0, '1992-05-20', '2012-02-18', NULL, 'binhtran@gmail.com', '0971234567', 'CV001', 0.05, 8000000, 'NV0019', 'PB001', 500000,'avatar19.jpg','012345678901'),
-    ('NV0020', N'Lê Văn Minh', 1, '1988-12-10', '2009-03-28', NULL, 'minhle@gmail.com', '0965432198', 'CV001', 0.05, 8000000, 'NV0020', 'PB003', 500000,'avatar20.jpg','012345678901'),
-	('NV0021', N'Nguyễn V', 1, '1990-03-15', '2020-01-15', NULL, 'nvan@gmail.com', '0987654321', 'CV001', 0.05, 8000000, 'NV0021', 'PB003', 500000, 'avatar21.jpg','012345678901')
-go
+INSERT INTO NhanVien (idNhanVien, hoTen, phai, ngaySinh, ngayBatDauCongTac, ngayKetThucCongTac, email, soDienThoai, idChucVu, heSoBaoHiemXaHoi, luongCoBan, tenTaiKhoan, idPhongBan, phuCap,anhDaiDien)
+VALUES
+	('NV0001', N'Nguyễn Thị Ánh', 0, '1985-11-25', '2007-07-17', null, 'anhnguyen@gmail.com', '0901234567', 'CV002', 0.05, 8000000, 'NV0001', 'PB001', 700000, 'avatar1.jpg'),
+    ('NV0002', N'Lê Văn Hùng', 1, '1986-02-12', '2008-09-05', NULL, 'hungle@gmail.com', '0912345678', 'CV002', 0.05, 8000000, 'NV0002', 'PB001', 700000,'avatar2.jpg'),
+    ('NV0003', N'Trần Thị Thảo', 0, '1982-08-31', '2005-10-09', NULL, 'thao.tran@gmail.com', '0923456789', 'CV003', 0.05, 8000000, 'NV0003', 'PB002', 1000000,'avatar3.jpg'),
+    ('NV0004', N'Vũ Văn Minh', 1, '1980-06-20', '2002-03-18', NULL, 'minhvu@gmail.com', '0934567890', 'CV003', 0.05, 8000000, 'NV0004', 'PB003', 1000000,'avatar4.jpg'),
+    ('NV0005', N'Phạm Thị Hương', 0, '1991-07-20', '2018-03-25', NULL, 'pthuong@gmail.com', '0987654322', 'CV001', 0.05, 8000000, 'NV0005', 'PB002', 500000, 'avatar5.jpg'),
+    ('NV0006', N'Lê Huy Hoàng', 1, '1995-11-10', '2019-09-02', NULL, 'lhhoang@gmail.com', '0987654323', 'CV001', 0.05, 8000000, 'NV0006', 'PB001', 500000, 'avatar6.jpg'),
+    ('NV0007', N'Trần Thị Minh', 0, '1992-05-25', '2021-06-14',  NULL,'ttminh@gmail.com', '0987654324', 'CV001', 0.05, 8000000, 'NV0007', 'PB003', 500000, 'avatar7.jpg'),
+    ('NV0008', N'Hoàng Văn Phú', 1, '1989-12-02', '2019-04-20', NULL, 'hvphu@gmail.com', '0987654325', 'CV001', 0.05, 8000000, 'NV0008', 'PB002', 500000, 'avatar8.jpg'),
+    ('NV0009', N'Ngọc Thị Bích', 0, '1993-08-12', '2022-02-05', NULL, 'ntbich@gmail.com', '0987654326', 'CV001', 0.05, 8000000, 'NV0009', 'PB001', 500000, 'avatar9.jpg'),
+    ('NV0010', N'Phan Văn Hòa', 1, '1991-04-30', '2018-11-30', NULL, 'pvhoa@gmail.com', '0987654327', 'CV001', 0.05, 8000000, 'NV0010', 'PB003', 500000, 'avatar10.jpg'),
+    ('NV0011', N'Trần Thị Linh', 0, '1994-06-18', '2022-03-10', NULL, 'ttlinh@gmail.com', '0987654328', 'CV001', 0.05, 8000000, 'NV0011', 'PB001', 500000, 'avatar11.jpg'),
+    ('NV0012', N'Lê Thanh Hùng', 1, '1990-02-08', '2019-01-07', NULL, 'lthung@gmail.com', '0987654329', 'CV001', 0.05, 8000000, 'NV0012', 'PB002', 500000, 'avatar12.jpg'),
+    ('NV0013', N'Nguyễn Thị Hoài', 0, '1992-10-05', '2020-05-03', NULL, 'nthoai@gmail.com', '0987654330', 'CV001', 0.05, 8000000, 'NV0013', 'PB003', 500000, 'avatar13.jpg'),
+    ('NV0014', N'Vũ Văn Đức', 1, '1988-11-21', '2018-12-14', NULL, 'vvduc@gmail.com', '0987654331', 'CV001', 0.05, 8000000, 'NV0014', 'PB001', 500000, 'avatar14.jpg'),
+    ('NV0015', N'Nguyễn Thị Mai', 0, '1993-07-07', '2020-09-28', NULL, 'nthimai@gmail.com', '0987654332', 'CV001', 0.05, 8000000, 'NV0015', 'PB001', 500000, 'avatar15.jpg'),
+    ('NV0016', N'Phạm Văn Thái', 1, '1987-03-25', '2019-11-15', NULL, 'pvthai@gmail.com', '0987654333', 'CV001', 0.05, 8000000, 'NV0016', 'PB003', 500000, 'avatar16.jpg'),
+    ('NV0017', N'Lê Thị Hương', 0, '1995-09-12', '2021-07-20', NULL, 'lthuong@gmail.com', '0987654334', 'CV001', 0.05, 8000000, 'NV0017', 'PB002', 500000, 'avatar17.jpg'),
+	('NV0018', N'Nguyễn Văn An', 1, '1990-03-15', '2010-01-15', NULL, 'vanan@gmail.com', '0987654321', 'CV001', 0.05, 8000000, 'NV0018', 'PB001', 500000,'avatar18.jpg'),
+    ('NV0019', N'Trần Thị Bình', 0, '1992-05-20', '2012-02-18', NULL, 'binhtran@gmail.com', '0971234567', 'CV001', 0.05, 8000000, 'NV0019', 'PB001', 500000,'avatar19.jpg'),
+    ('NV0020', N'Lê Văn Minh', 1, '1988-12-10', '2009-03-28', NULL, 'minhle@gmail.com', '0965432198', 'CV001', 0.05, 8000000, 'NV0020', 'PB003', 500000,'avatar20.jpg'),
+	('NV0021', N'Nguyễn V', 1, '1990-03-15', '2020-01-15', NULL, 'nvan@gmail.com', '0987654321', 'CV001', 0.05, 8000000, 'NV0021', 'PB003', 500000, 'avatar21.jpg')
+
 INSERT INTO PhanXuong (idPhanXuong, tenPhanXuong)
 VALUES
     ('PX001', N'A1'),
     ('PX002', N'A2'),
     ('PX003', N'B1'),
     ('PX004', N'B2');
-go
+
 INSERT INTO CaLam (idCaLam,tenCaLam, thoiGianBatDau, thoiGianKetThuc, heSoLuong)
 VALUES
     (1,N'Ca Sáng', '08:00:00', '12:00:00', 1),
     (2,N'Ca Chiều', '13:00:00', '17:00:00', 1),
     (3,N'Ca Tối', '18:00:00', '22:00:00', 1.5);
-go
+
 -- Tạo 20 bảng Công Nhân
-INSERT INTO CongNhan (idCongNhan, hoTen, phai, ngaySinh, ngayBatDauCongTac, ngayKetThucCongTac, idPhanXuong, email, soDienThoai, phuCap, tayNghe, tenTaiKhoan,anhDaiDien,cccd)
+INSERT INTO CongNhan (idCongNhan, hoTen, phai, ngaySinh, ngayBatDauCongTac, ngayKetThucCongTac, idPhanXuong, email, soDienThoai,phuCap, idCaLam, tayNghe, tenTaiKhoan,anhDaiDien)
 VALUES
-('CN0001', N'Nguyễn Văn An', 1, '1980-01-01', '2005-05-10', NULL, 'PX001', 'nguyenvanan@gmail.com', '0123456789',700000, N'Giỏi', 'CN0001', 'avatar22.jpg','012345678901'),
-('CN0002', N'Phạm Thị Bình', 0, '1985-03-15', '2008-11-20', NULL, 'PX002', 'binhpham@yahoo.com', '0234567890', 700000, N'Khá', 'CN0002', 'avatar23.jpg','012345678901'),
-('CN0003', N'Vũ Văn Minh', 1, '1990-07-20', '2010-09-30', NULL, 'PX003', 'vuminh@gmail.com', '0345678901', 700000, N'Trung bình', 'CN0003', 'avatar24.jpg','012345678901'),
-('CN0004', N'Trần Thị Mai', 0, '1988-05-05', '2009-12-05', NULL, 'PX001', 'maitran@yahoo.com', '0456789012', 700000, N'Giỏi', 'CN0004', 'avatar25.jpg','012345678901'),
-('CN0005', N'Lê Thanh Hùng', 1, '1986-09-10', '2007-06-15', NULL, 'PX002', 'hungle@gmail.com', '0567890123', 700000, N'Khá', 'CN0005', 'avatar26.jpg','012345678901'),
-('CN0006', N'Hoàng Thị Ngọc', 0, '1992-11-25', '2013-04-28', NULL, 'PX003', 'ngochoang@gmail.com', '0678901234', 700000, N'Trung bình', 'CN0006', 'avatar27.jpg','012345678901'),
-('CN0007', N'Phạm Văn Tuấn', 1, '1995-02-01', '2016-07-10', NULL, 'PX001', 'tuanpham@gmail.com', '0789012345', 700000, N'Giỏi', 'CN0007', 'avatar28.jpg','012345678901'),
-('CN0008', N'Trần Thị Lan', 0, '1984-12-12', '2006-09-23', NULL, 'PX002', 'lantran@gmail.com', '0890123456', 700000, N'Khá', 'CN0008', 'avatar29.jpg','012345678901'),
-('CN0009', N'Trần Thanh Tâm', 1, '1989-06-20', '2010-11-15', NULL, 'PX003', 'tamtran@yahoo.com', '0901234567', 700000, N'Trung bình', 'CN0009', 'avatar30.jpg','012345678901'),
-('CN0010', N'Hà Thị An', 0, '1991-08-18', '2012-12-12', NULL, 'PX001', 'anh@gmail.com', '0987654321', 700000, N'Giỏi', 'CN0010', 'avatar31.jpg','012345678901'),
-('CN0011', N'Lê Văn Trung', 1, '1983-04-30', '2004-06-25', NULL, 'PX002', 'trung@gmail.com', '0987654321', 700000, N'Khá', 'CN0011', 'avatar32.jpg','012345678901'),
-('CN0012', N'Nguyễn Thị Lan', 0, '1987-10-02', '2008-07-10', NULL, 'PX003', 'lan@gmail.com', '0987654321', 700000, N'Trung bình', 'CN0012', 'avatar33.jpg','012345678901'),
-('CN0013', N'Nguyễn Văn Long', 1, '1982-03-17', '2003-05-20', NULL, 'PX001', 'long@gmail.com', '0987654321', 700000, N'Giỏi', 'CN0013', 'avatar34.jpg','012345678901'),
-('CN0014', N'Trần Văn Bình', 0, '1993-07-08', '2014-09-30', NULL, 'PX002', 'binh@gmail.com', '0987654321', 700000, N'Khá', 'CN0014', 'avatar35.jpg','012345678901'),
-('CN0015', N'Nguyễn Thị Hoa', 1, '1981-05-25', '2002-06-10', NULL, 'PX003', 'hoa@gmail.com', '0987654321', 700000, N'Trung bình', 'CN0015', 'avatar36.jpg','012345678901'),
-('CN0016', N'Vũ Văn Đức', 1, '1980-08-12', '2001-12-25', NULL, 'PX001', 'duc@gmail.com', '0987654321', 700000, N'Giỏi', 'CN0016', 'avatar37.jpg','012345678901'),
-('CN0017', N'Hoàng Văn Phú', 1, '1994-01-10', '2015-03-15', NULL, 'PX002', 'phu@gmail.com', '0987654321', 700000, N'Khá', 'CN0017', 'avatar38.jpg','012345678901'),
-('CN0018', N'Lê Huy Hoàng', 1, '1996-09-28', '2017-11-20', NULL, 'PX003', 'hoang@gmail.com', '0987654321', 700000, N'Trung bình', 'CN0018', 'avatar39.jpg','012345678901'),
-('CN0019', N'Phan Văn Hòa', 1, '1988-06-15', '2009-08-30', NULL, 'PX001', 'hoa@gmail.com', '0987654321', 700000, N'Giỏi', 'CN0019', 'avatar40.jpg','012345678901'),
-('CN0020', N'Vũ Thị Thùy', 0, '1991-03-20', '2012-06-10', NULL, 'PX002', 'thuy@gmail.com', '0987654321', 700000, N'Khá', 'CN0020', 'avatar41.jpg','012345678901');
-go
+('CN0001', N'Nguyễn Văn An', 1, '1980-01-01', '2005-05-10', NULL, 'PX001', 'nguyenvanan@gmail.com', '0123456789',700000, 1, N'Giỏi', 'CN0001', 'avatar22.jpg'),
+('CN0002', N'Phạm Thị Bình', 0, '1985-03-15', '2008-11-20', NULL, 'PX002', 'binhpham@yahoo.com', '0234567890',700000, 2, N'Khá', 'CN0002', 'avatar23.jpg'),
+('CN0003', N'Vũ Văn Minh', 1, '1990-07-20', '2010-09-30', NULL, 'PX003', 'vuminh@gmail.com', '0345678901',700000, 3, N'Trung bình', 'CN0003', 'avatar24.jpg'),
+('CN0004', N'Trần Thị Mai', 0, '1988-05-05', '2009-12-05', NULL, 'PX001', 'maitran@yahoo.com', '0456789012',700000, 1, N'Giỏi', 'CN0004', 'avatar25.jpg'),
+('CN0005', N'Lê Thanh Hùng', 1, '1986-09-10', '2007-06-15', NULL, 'PX002', 'hungle@gmail.com', '0567890123',700000, 2, N'Khá', 'CN0005', 'avatar26.jpg'),
+('CN0006', N'Hoàng Thị Ngọc', 0, '1992-11-25', '2013-04-28', NULL, 'PX003', 'ngochoang@gmail.com', '0678901234',700000, 3, N'Trung bình', 'CN0006', 'avatar27.jpg'),
+('CN0007', N'Phạm Văn Tuấn', 1, '1995-02-01', '2016-07-10', NULL, 'PX001', 'tuanpham@gmail.com', '0789012345',700000, 1, N'Giỏi', 'CN0007', 'avatar28.jpg'),
+('CN0008', N'Trần Thị Lan', 0, '1984-12-12', '2006-09-23', NULL, 'PX002', 'lantran@gmail.com', '0890123456',700000, 2, N'Khá', 'CN0008', 'avatar29.jpg'),
+('CN0009', N'Trần Thanh Tâm', 1, '1989-06-20', '2010-11-15', NULL, 'PX003', 'tamtran@yahoo.com', '0901234567',700000, 3, N'Trung bình', 'CN0009', 'avatar30.jpg'),
+('CN0010', N'Hà Thị An', 0, '1991-08-18', '2012-12-12', NULL, 'PX001', 'anh@gmail.com', '0987654321',700000, 1, N'Giỏi', 'CN0010', 'avatar31.jpg'),
+('CN0011', N'Lê Văn Trung', 1, '1983-04-30', '2004-06-25', NULL, 'PX002', 'trung@gmail.com', '0987654321',700000, 2, N'Khá', 'CN0011', 'avatar32.jpg'),
+('CN0012', N'Nguyễn Thị Lan', 0, '1987-10-02', '2008-07-10', NULL, 'PX003', 'lan@gmail.com', '0987654321',700000, 3, N'Trung bình', 'CN0012', 'avatar33.jpg'),
+('CN0013', N'Nguyễn Văn Long', 1, '1982-03-17', '2003-05-20', NULL, 'PX001', 'long@gmail.com', '0987654321',700000, 1, N'Giỏi', 'CN0013', 'avatar34.jpg'),
+('CN0014', N'Trần Văn Bình', 0, '1993-07-08', '2014-09-30', NULL, 'PX002', 'binh@gmail.com', '0987654321',700000, 2, N'Khá', 'CN0014', 'avatar35.jpg'),
+('CN0015', N'Nguyễn Thị Hoa', 1, '1981-05-25', '2002-06-10', NULL, 'PX003', 'hoa@gmail.com', '0987654321',700000, 3, N'Trung bình', 'CN0015', 'avatar36.jpg'),
+('CN0016', N'Vũ Văn Đức', 1, '1980-08-12', '2001-12-25', NULL, 'PX001', 'duc@gmail.com', '0987654321',700000, 1, N'Giỏi', 'CN0016', 'avatar37.jpg'),
+('CN0017', N'Hoàng Văn Phú', 1, '1994-01-10', '2015-03-15', NULL, 'PX002', 'phu@gmail.com', '0987654321',700000, 2, N'Khá', 'CN0017', 'avatar38.jpg'),
+('CN0018', N'Lê Huy Hoàng', 1, '1996-09-28', '2017-11-20', NULL, 'PX003', 'hoang@gmail.com', '0987654321',700000, 3, N'Trung bình', 'CN0018', 'avatar39.jpg'),
+('CN0019', N'Phan Văn Hòa', 1, '1988-06-15', '2009-08-30', NULL, 'PX001', 'hoa@gmail.com', '0987654321',700000, 1, N'Giỏi', 'CN0019', 'avatar40.jpg'),
+('CN0020', N'Vũ Thị Thùy', 0, '1991-03-20', '2012-06-10', NULL, 'PX002', 'thuy@gmail.com', '0987654321',700000, 2, N'Khá', 'CN0020', 'avatar41.jpg');
+
 --Tạo 10 hop dong
 
 INSERT INTO HopDongSanPham (idHopDong, tenHopDong, ngayBatDau, ngayKetThuc, idNguoiQuanLy, ghiChu)
@@ -374,7 +359,7 @@ VALUES
     ('HD0008', N'Hợp đồng Đầm Công Sở', '2023-08-20', '2023-11-20', 'NV0004', N'Đang tiến hành'),
     ('HD0009', N'Hợp đồng Quần Áo Thể Thao', '2023-07-31', '2023-10-31', 'NV0003', N'Đã hoàn thành'),
     ('HD0010', N'Hợp đồng Áo Khoác Mùa Thu', '2023-10-10', '2024-01-10', 'NV0003', N'Đang tiến hành');
-	go
+
 -- Thêm 10 sản phẩm
 INSERT INTO SanPham (idSanPham, tenSanPham, donGia, chatLieu, donViTinh, ghiChu, anhSanPham)
 VALUES
@@ -389,27 +374,26 @@ VALUES
     ('SP0009', N'Quần Thể Thao', 280000, N'Polyester', 'Cái', N'Quần thể thao cho mùa Xuân', 'path/to/anh9.jpg'),
     ('SP0010', N'Áo Khoác Thu', 520000, N'Len', 'Cái', N'Áo khoác cho mùa Thu', 'path/to/anh10.jpg');
 
-	go
+
 --tHÊM 4 công đoạn
 
 INSERT INTO CongDoanSP (idCongDoan, tenCongDoan, soLuongSanPham, luongCongDoan, idSanPham, thuTuUuTien)
 VALUES
-    ('CDSP0001', N'Chuẩn bị nguyên vật liệu', 0, 50000, 'SP0001', 1),
-    ('CDSP0002', N'Cắt vải', 0, 30000, 'SP0001', 2),
-    ('CDSP0003', N'May áo khoác', 0, 35000, 'SP0001', 3),
-    ('CDSP0004', N'Chuẩn bị vải jean', 0, 25000, 'SP0002',1),
-    ('CDSP0005', N'Cắt vải jean', 0, 20000, 'SP0002',2),
-    ('CDSP0006', N'May quần jean', 0, 30000, 'SP0002',3),
-	('CDSP0007', N'Chuẩn bị vải satin', 0, 20000, 'SP0003', 1),
-	('CDSP0008', N'Cắt vải satin', 0, 18000, 'SP0003', 2),
-	('CDSP0009', N'May đầm dự tiệc', 0, 25000, 'SP0003', 3);
-go
+    ('CDSP0001', N'Chuẩn bị nguyên vật liệu', 100, 500000, 'SP0001', 1),
+    ('CDSP0002', N'Cắt vải', 120, 300000,  'SP0001', 2),
+    ('CDSP0003', N'May áo khoác', 90, 350000,  'SP0001', 3),
+    ('CDSP0004', N'Chuẩn bị vải jean', 130, 250000,  'SP0002',1),
+    ('CDSP0005', N'Cắt vải jean', 110, 200000,  'SP0002',2),
+    ('CDSP0006', N'May quần jean', 85, 300000,  'SP0002',3),
+	('CDSP0007', N'Chuẩn bị vải satin', 80, 200000,  'SP0003', 1),
+	('CDSP0008', N'Cắt vải satin', 70, 180000, 'SP0003', 2),
+	('CDSP0009', N'May đầm dự tiệc', 50, 250000,  'SP0003', 3);
 --THÊM CONG DOAN PHAN CONG
 -- Bảng phân công cho sản phẩm SP0001
 -- Công đoạn 1
 INSERT INTO CongDoanPhanCong (idPhanCong, idCongDoan, idCongNhan, soLuongSPDuocGiao, idCaLam, soLuongConLai)
 VALUES 
-		('PC0001',  'CDSP0001', 'CN0001', 30, 1, 30),
+		('PC0001',  'CDSP0001', 'CN0001', 30, 1,30),
 		('PC0002', 'CDSP0002', 'CN0001', 20, 2, 20),
 		('PC0003', 'CDSP0003', 'CN0001', 15, 3, 15),
 		('PC0004', 'CDSP0001', 'CN0002', 25, 1, 25),
@@ -421,42 +405,64 @@ VALUES
 		('PC0010', 'CDSP0007', 'CN0001', 10, 1, 10),
 		('PC0011', 'CDSP0008', 'CN0002', 8, 2, 8),
 		('PC0012', 'CDSP0009', 'CN0003', 7, 3, 7);
-go
+
 INSERT INTO BangChamCongCongNhan (idNgayChamCong, ngayChamCong, soLuongHoanThanh, idPhanCong, heSoNgayLam)
 VALUES
-    ('CCN0001', '2023-10-01', 10, 'PC0001', 1.35),
-    ('CCN0002', '2023-10-02', 10, 'PC0002', 1.0),
-    ('CCN0003', '2023-10-03', 15, 'PC0003', 1.0),
-    ('CCN0004', '2023-10-04', 15, 'PC0004', 1.0),
-    ('CCN0005', '2023-10-05', 20, 'PC0005', 1.0),
-    ('CCN0006', '2023-10-06', 15, 'PC0006', 1.0),
-    ('CCN0007', '2023-10-07', 10, 'PC0007', 1.0),
-    ('CCN0008', '2023-10-08', 10, 'PC0008', 1.35),
-    ('CCN0009', '2023-10-09', 10, 'PC0009', 1.0),
-    ('CCN0010', '2023-10-10', 10, 'PC0010', 1.0),
-    ('CCN0011', '2023-10-11', 10, 'PC0011', 1.0),
-    ('CCN0012', '2023-10-12', 10, 'PC0012', 1.0),
-    ('CCN0013', '2023-10-13', 10, 'PC0001', 1.0),
-    ('CCN0014', '2023-10-14', 10, 'PC0002', 1.0),
-    ('CCN0015', '2023-10-15', 10, 'PC0003', 1.35),
-    ('CCN0016', '2023-10-16', 10, 'PC0004', 1.0),
-    ('CCN0017', '2023-10-17', 10, 'PC0005', 1.0),
-    ('CCN0018', '2023-10-18', 10, 'PC0006', 1.0),
-    ('CCN0019', '2023-10-19', 10, 'PC0007', 1.0),
-    ('CCN0020', '2023-10-20', 10, 'PC0008', 1.0),
-    ('CCN0021', '2023-10-21', 10, 'PC0009', 1.0),
-    ('CCN0022', '2023-10-22', 10, 'PC0010', 1.35),
-    ('CCN0023', '2023-10-23', 10, 'PC0011', 1.0),
-    ('CCN0024', '2023-10-24', 10, 'PC0012', 1.0),
-    ('CCN0025', '2023-10-25', 10, 'PC0001', 1.0),
-    ('CCN0026', '2023-10-26', 10, 'PC0002', 1.0),
-    ('CCN0027', '2023-10-27', 10, 'PC0003', 1.0),
-    ('CCN0028', '2023-10-28', 10, 'PC0004', 1.0),
-    ('CCN0029', '2023-10-29', 10, 'PC0005', 1.35),
-    ('CCN0030', '2023-10-30', 10, 'PC0006', 1.0),
-    ('CCN0031', '2023-10-31', 10, 'PC0007', 1.0);
-go
---Thêm 1 nhan vien đã làm 30 ngày 
+    ('CCN0001', '2023-10-01', 30, 'PC0001', 1.35),
+    ('CCN0002', '2023-10-02', 30, 'PC0002', 1.0),
+    ('CCN0003', '2023-10-03', 30, 'PC0003', 1.0),
+    ('CCN0004', '2023-10-04', 30, 'PC0004', 1.0),
+    ('CCN0005', '2023-10-05', 30, 'PC0005', 1.0),
+    ('CCN0006', '2023-10-06', 30, 'PC0006', 1.0),
+    ('CCN0007', '2023-10-07', 30, 'PC0007', 1.0),
+    ('CCN0008', '2023-10-08', 30, 'PC0008', 1.35),
+    ('CCN0009', '2023-10-09', 30, 'PC0009', 1.0),
+    ('CCN0010', '2023-10-10', 30, 'PC0010', 1.0),
+    ('CCN0011', '2023-10-11', 30, 'PC0011', 1.0),
+    ('CCN0012', '2023-10-12', 30, 'PC0012', 1.0),
+    ('CCN0013', '2023-10-13', 30, 'PC0001', 1.0),
+    ('CCN0014', '2023-10-14', 30, 'PC0002', 1.0),
+    ('CCN0015', '2023-10-15', 30, 'PC0003', 1.35),
+    ('CCN0016', '2023-10-16', 30, 'PC0004', 1.0),
+    ('CCN0017', '2023-10-17', 30, 'PC0005', 1.0),
+    ('CCN0018', '2023-10-18', 30, 'PC0006', 1.0),
+    ('CCN0019', '2023-10-19', 30, 'PC0007', 1.0),
+    ('CCN0020', '2023-10-20', 30, 'PC0008', 1.0),
+    ('CCN0021', '2023-10-21', 30, 'PC0009', 1.0),
+    ('CCN0022', '2023-10-22', 30, 'PC0010', 1.35),
+    ('CCN0023', '2023-10-23', 30, 'PC0011', 1.0),
+    ('CCN0024', '2023-10-24', 30, 'PC0012', 1.0),
+    ('CCN0025', '2023-10-25', 30, 'PC0001', 1.0),
+    ('CCN0026', '2023-10-26', 30, 'PC0002', 1.0),
+    ('CCN0027', '2023-10-27', 50, 'PC0003', 1.0),
+    ('CCN0028', '2023-10-28', 50, 'PC0004', 1.0),
+    ('CCN0029', '2023-10-29', 50, 'PC0005', 1.35),
+    ('CCN0030', '2023-10-30', 50, 'PC0006', 1.0),
+    ('CCN0031', '2023-10-31', 50, 'PC0007', 1.0),
+	--
+	('CCN0032', '2023-10-01', 30, 'PC0001', 1.35),
+    ('CCN0033', '2023-10-02', 30, 'PC0002', 1.0),
+    ('CCN0034', '2023-10-03', 30, 'PC0003', 1.0),
+    ('CCN0035', '2023-10-04', 30, 'PC0004', 1.0),
+    ('CCN0036', '2023-10-05', 30, 'PC0005', 1.0),
+    ('CCN0037', '2023-10-06', 30, 'PC0006', 1.0),
+    ('CCN0038', '2023-10-07', 30, 'PC0007', 1.0),
+    ('CCN0039', '2023-10-08', 30, 'PC0008', 1.35),
+    ('CCN0040', '2023-10-09', 30, 'PC0009', 1.0),
+    ('CCN0041', '2023-10-10', 30, 'PC0010', 1.0),
+    ('CCN0042', '2023-10-11', 30, 'PC0011', 1.0),
+    ('CCN0043', '2023-10-12', 30, 'PC0012', 1.0),
+    ('CCN0044', '2023-10-13', 30, 'PC0001', 1.0),
+    ('CCN0045', '2023-10-14', 30, 'PC0002', 1.0),
+    ('CCN0046', '2023-10-15', 30, 'PC0003', 1.35),
+    ('CCN0047', '2023-10-16', 30, 'PC0004', 1.0),
+    ('CCN0048', '2023-10-17', 30, 'PC0005', 1.0),
+    ('CCN0049', '2023-10-18', 30, 'PC0006', 1.0),
+    ('CCN0050', '2023-10-19', 30, 'PC0007', 1.0)
+    
+
+--Thêm 1 nhan vien đã làm 30 ngày
+
 INSERT INTO BangChamCongNhanVienHC (idChamCong, ngayChamCong, trangThai, idNhanVien)
 VALUES
     ('CNVHC0001', '2023-10-01', N'Có mặt', 'NV0001'),
@@ -484,7 +490,294 @@ VALUES
 	('CNVHC0023', '2023-10-23', N'Có mặt', 'NV0001'),
 	('CNVHC0024', '2023-10-24', N'Có mặt', 'NV0001'),
 	('CNVHC0025', '2023-10-25', N'Có mặt', 'NV0001'),
-	('CNVHC0026', '2023-10-26', N'Có mặt', 'NV0001')
+	('CNVHC0026', '2023-10-26', N'Có mặt', 'NV0001'),
+	('CNVHC0027', '2023-10-27', N'Có mặt', 'NV0001'),
+	('CNVHC0028', '2023-10-28', N'Có mặt', 'NV0001'),
+	('CNVHC0029', '2023-10-29', N'Có mặt', 'NV0001'),
+	('CNVHC0030', '2023-10-30', N'Có mặt', 'NV0001'),
+	('CNVHC0031', '2023-10-31', N'Có mặt', 'NV0001'),
+	----
+	 ('CNVHC0032', '2023-11-01', N'Có mặt', 'NV0001'),
+    ('CNVHC0033', '2023-11-02', N'Có phép', 'NV0001'),
+    ('CNVHC0034', '2023-11-03', N'Có phép', 'NV0001'),
+    ('CNVHC0035', '2023-11-04', N'Có mặt', 'NV0001'),
+    ('CNVHC0036', '2023-11-05', N'Có mặt', 'NV0001'),
+    ('CNVHC0037', '2023-11-06', N'Có mặt', 'NV0001'),
+    ('CNVHC0038', '2023-11-07', N'Có mặt', 'NV0001'),
+    ('CNVHC0039', '2023-11-08', N'Có mặt', 'NV0001'),
+    ('CNVHC0040', '2023-11-09', N'Có mặt', 'NV0001'),
+    ('CNVHC0041', '2023-11-10', N'Có mặt', 'NV0001'),
+    ('CNVHC0043', '2023-11-12', N'Có phép', 'NV0001'),
+    ('CNVHC0045', '2023-11-14', N'Không phép', 'NV0001'),
+    ('CNVHC0046', '2023-11-15', N'Không phép', 'NV0001'),
+    ('CNVHC0047', '2023-11-16', N'Không phép', 'NV0001'),
+    ('CNVHC0048', '2023-11-17', N'Có mặt', 'NV0001'),
+    ('CNVHC0049', '2023-11-18', N'Có mặt', 'NV0001'),
+    ('CNVHC0050', '2023-11-19', N'Có mặt', 'NV0001'),
+    ('CNVHC0052', '2023-11-21', N'Có mặt', 'NV0001'),
+    ('CNVHC0053', '2023-11-22', N'Có mặt', 'NV0001'),
+    ('CNVHC0054', '2023-11-23', N'Có mặt', 'NV0001'),
+    ('CNVHC0056', '2023-11-25', N'Có mặt', 'NV0001'),
+    ('CNVHC0057', '2023-11-26', N'Có mặt', 'NV0001'),
+    ('CNVHC0059', '2023-11-28', N'Có mặt', 'NV0001'),
+    ('CNVHC0060', '2023-11-29', N'Có mặt', 'NV0001'),
+    ('CNVHC0061', '2023-11-30', N'Có mặt', 'NV0001'),
+	---
+	('CNVHC0062', '2023-11-01', N'Có mặt', 'NV0002'),
+    ('CNVHC0063', '2023-11-02', N'Có mặt', 'NV0002'),
+    ('CNVHC0064', '2023-11-03', N'Có mặt', 'NV0002'),
+    ('CNVHC0065', '2023-11-04', N'Có mặt', 'NV0002'),
+    ('CNVHC0066', '2023-11-05', N'Có mặt', 'NV0002'),
+    ('CNVHC0068', '2023-11-07', N'Có mặt', 'NV0002'),
+    ('CNVHC0069', '2023-11-08', N'Có mặt', 'NV0002'),
+    ('CNVHC0071', '2023-11-10', N'Có mặt', 'NV0002'),
+    ('CNVHC0072', '2023-11-11', N'Có phép', 'NV0002'),
+    ('CNVHC0073', '2023-11-12', N'Có phép', 'NV0002'),
+    ('CNVHC0074', '2023-11-13', N'Có mặt', 'NV0002'),
+    ('CNVHC0075', '2023-11-14', N'Có mặt', 'NV0002'),
+    ('CNVHC0076', '2023-11-15', N'Có mặt', 'NV0002'),
+    ('CNVHC0077', '2023-11-16', N'Không phép', 'NV0002'),
+    ('CNVHC0078', '2023-11-17', N'Có mặt', 'NV0002'),
+    ('CNVHC0079', '2023-11-18', N'Có mặt', 'NV0002'),
+    ('CNVHC0080', '2023-11-19', N'Có mặt', 'NV0002'),
+    ('CNVHC0081', '2023-11-20', N'Có mặt', 'NV0002'),
+    ('CNVHC0082', '2023-11-21', N'Có mặt', 'NV0002'),
+    ('CNVHC0083', '2023-11-22', N'Có mặt', 'NV0002'),
+    ('CNVHC0084', '2023-11-23', N'Có mặt', 'NV0002'),
+    ('CNVHC0085', '2023-11-24', N'Có mặt', 'NV0002'),
+    ('CNVHC0086', '2023-11-25', N'Có mặt', 'NV0002'),
+    ('CNVHC0087', '2023-11-26', N'Có mặt', 'NV0002'),
+    ('CNVHC0088', '2023-11-27', N'Có mặt', 'NV0002'),
+    ('CNVHC0089', '2023-11-28', N'Có mặt', 'NV0002'),
+    ('CNVHC0090', '2023-11-29', N'Có mặt', 'NV0002'),
+    ('CNVHC0091', '2023-11-30', N'Có mặt', 'NV0002'),
+	----
+	('CNVHC0092', '2023-11-01', N'Có mặt', 'NV0003'),
+    ('CNVHC0093', '2023-11-02', N'Có phép', 'NV0003'),
+    ('CNVHC0094', '2023-11-03', N'Có phép', 'NV0003'),
+    ('CNVHC0095', '2023-11-04', N'Có mặt', 'NV0003'),
+    ('CNVHC0096', '2023-11-05', N'Có mặt', 'NV0003'),
+    ('CNVHC0097', '2023-11-06', N'Có mặt', 'NV0003'),
+    ('CNVHC0098', '2023-11-07', N'Có mặt', 'NV0003'),
+    ('CNVHC0099', '2023-11-08', N'Có mặt', 'NV0003'),
+    ('CNVHC0100', '2023-11-09', N'Có mặt', 'NV0003'),
+    ('CNVHC0101', '2023-11-10', N'Có mặt', 'NV0003'),
+    ('CNVHC0102', '2023-11-11', N'Có phép', 'NV0003'),
+    ('CNVHC0103', '2023-11-12', N'Có phép', 'NV0003'),
+    ('CNVHC0104', '2023-11-13', N'Có mặt', 'NV0003'),
+    ('CNVHC0105', '2023-11-14', N'Có mặt', 'NV0003'),
+    ('CNVHC0106', '2023-11-15', N'Không phép', 'NV0003'),
+    ('CNVHC0107', '2023-11-16', N'Không phép', 'NV0003'),
+    ('CNVHC0108', '2023-11-17', N'Có mặt', 'NV0003'),
+    ('CNVHC0109', '2023-11-18', N'Có mặt', 'NV0003'),
+    ('CNVHC0110', '2023-11-19', N'Có mặt', 'NV0003'),
+    ('CNVHC0111', '2023-11-20', N'Có mặt', 'NV0003'),
+    ('CNVHC0112', '2023-11-21', N'Có mặt', 'NV0003'),
+    ('CNVHC0113', '2023-11-22', N'Có mặt', 'NV0003'),
+    ('CNVHC0114', '2023-11-23', N'Có mặt', 'NV0003'),
+    ('CNVHC0115', '2023-11-24', N'Có mặt', 'NV0003'),
+    ('CNVHC0116', '2023-11-25', N'Có mặt', 'NV0003'),
+    ('CNVHC0117', '2023-11-26', N'Có mặt', 'NV0003'),
+    ('CNVHC0118', '2023-11-27', N'Có mặt', 'NV0003'),
+    ('CNVHC0119', '2023-11-28', N'Có mặt', 'NV0003'),
+    ('CNVHC0120', '2023-11-29', N'Có mặt', 'NV0003'),
+    ('CNVHC0121', '2023-11-30', N'Có mặt', 'NV0003'),
+	----
+	('CNVHC0122', '2023-11-01', N'Có mặt', 'NV0004'),
+    ('CNVHC0123', '2023-11-02', N'Có phép', 'NV0004'),
+    ('CNVHC0124', '2023-11-03', N'Có phép', 'NV0004'),
+    ('CNVHC0125', '2023-11-04', N'Có mặt', 'NV0004'),
+    ('CNVHC0126', '2023-11-05', N'Có mặt', 'NV0004'),
+    ('CNVHC0127', '2023-11-06', N'Có mặt', 'NV0004'),
+    ('CNVHC0128', '2023-11-07', N'Có mặt', 'NV0004'),
+    ('CNVHC0129', '2023-11-08', N'Có mặt', 'NV0004'),
+    ('CNVHC0130', '2023-11-09', N'Có mặt', 'NV0004'),
+    ('CNVHC0131', '2023-11-10', N'Có mặt', 'NV0004'),
+    ('CNVHC0132', '2023-11-11', N'Có phép', 'NV0004'),
+    ('CNVHC0133', '2023-11-12', N'Có phép', 'NV0004'),
+    ('CNVHC0134', '2023-11-13', N'Có mặt', 'NV0004'),
+    ('CNVHC0135', '2023-11-14', N'Có mặt', 'NV0004'),
+    ('CNVHC0136', '2023-11-15', N'Không phép', 'NV0004'),
+    ('CNVHC0137', '2023-11-16', N'Không phép', 'NV0004'),
+    ('CNVHC0138', '2023-11-17', N'Có mặt', 'NV0004'),
+    ('CNVHC0139', '2023-11-18', N'Có mặt', 'NV0004'),
+    ('CNVHC0140', '2023-11-19', N'Có mặt', 'NV0004'),
+    ('CNVHC0141', '2023-11-20', N'Có mặt', 'NV0004'),
+    ('CNVHC0142', '2023-11-21', N'Có mặt', 'NV0004'),
+    ('CNVHC0143', '2023-11-22', N'Có mặt', 'NV0004'),
+    ('CNVHC0144', '2023-11-23', N'Có mặt', 'NV0004'),
+    ('CNVHC0145', '2023-11-24', N'Có mặt', 'NV0004'),
+    ('CNVHC0146', '2023-11-25', N'Có mặt', 'NV0004'),
+    ('CNVHC0147', '2023-11-26', N'Có mặt', 'NV0004'),
+    ('CNVHC0148', '2023-11-27', N'Có mặt', 'NV0004'),
+    ('CNVHC0149', '2023-11-28', N'Có mặt', 'NV0004'),
+    ('CNVHC0150', '2023-11-29', N'Có mặt', 'NV0004'),
+    ('CNVHC0151', '2023-11-30', N'Có mặt', 'NV0004'),
+	----
+	 ('CNVHC0152', '2023-11-01', N'Có mặt', 'NV0005'),
+    ('CNVHC0153', '2023-11-02', N'Có mặt', 'NV0005'),
+    ('CNVHC0154', '2023-11-03', N'Có phép', 'NV0005'),
+    ('CNVHC0155', '2023-11-04', N'Có mặt', 'NV0005'),
+    ('CNVHC0156', '2023-11-05', N'Có mặt', 'NV0005'),
+    ('CNVHC0157', '2023-11-06', N'Có mặt', 'NV0005'),
+    ('CNVHC0158', '2023-11-07', N'Có mặt', 'NV0005'),
+    ('CNVHC0159', '2023-11-08', N'Có mặt', 'NV0005'),
+    ('CNVHC0160', '2023-11-09', N'Có phép', 'NV0005'),
+    ('CNVHC0161', '2023-11-10', N'Có mặt', 'NV0005'),
+    ('CNVHC0162', '2023-11-11', N'Có mặt', 'NV0005'),
+    ('CNVHC0163', '2023-11-12', N'Có mặt', 'NV0005'),
+    ('CNVHC0164', '2023-11-13', N'Có mặt', 'NV0005'),
+    ('CNVHC0165', '2023-11-14', N'Có mặt', 'NV0005'),
+    ('CNVHC0166', '2023-11-15', N'Có phép', 'NV0005'),
+    ('CNVHC0167', '2023-11-16', N'Có mặt', 'NV0005'),
+    ('CNVHC0168', '2023-11-17', N'Có mặt', 'NV0005'),
+    ('CNVHC0169', '2023-11-18', N'Có mặt', 'NV0005'),
+    ('CNVHC0170', '2023-11-19', N'Có mặt', 'NV0005'),
+    ('CNVHC0171', '2023-11-20', N'Có mặt', 'NV0005'),
+    ('CNVHC0172', '2023-11-21', N'Có mặt', 'NV0005'),
+    ('CNVHC0173', '2023-11-22', N'Có mặt', 'NV0005'),
+    ('CNVHC0174', '2023-11-23', N'Có phép', 'NV0005'),
+    ('CNVHC0175', '2023-11-24', N'Có mặt', 'NV0005'),
+    ('CNVHC0176', '2023-11-25', N'Có mặt', 'NV0005'),
+	----
+	 ('CNVHC0177', '2023-11-01', N'Có mặt', 'NV0006'),
+    ('CNVHC0178', '2023-11-02', N'Có mặt', 'NV0006'),
+    ('CNVHC0179', '2023-11-03', N'Có mặt', 'NV0006'),
+    ('CNVHC0180', '2023-11-04', N'Có mặt', 'NV0006'),
+    ('CNVHC0181', '2023-11-05', N'Có mặt', 'NV0006'),
+    ('CNVHC0182', '2023-11-06', N'Có mặt', 'NV0006'),
+    ('CNVHC0183', '2023-11-07', N'Có mặt', 'NV0006'),
+    ('CNVHC0184', '2023-11-08', N'Có mặt', 'NV0006'),
+    ('CNVHC0185', '2023-11-09', N'Có mặt', 'NV0006'),
+    ('CNVHC0186', '2023-11-10', N'Có mặt', 'NV0006'),
+    ('CNVHC0187', '2023-11-11', N'Có mặt', 'NV0006'),
+    ('CNVHC0188', '2023-11-12', N'Có mặt', 'NV0006'),
+    ('CNVHC0189', '2023-11-13', N'Có mặt', 'NV0006'),
+    ('CNVHC0190', '2023-11-14', N'Có mặt', 'NV0006'),
+    ('CNVHC0191', '2023-11-15', N'Có mặt', 'NV0006'),
+    ('CNVHC0192', '2023-11-16', N'Có mặt', 'NV0006'),
+    ('CNVHC0193', '2023-11-17', N'Có mặt', 'NV0006'),
+    ('CNVHC0194', '2023-11-18', N'Có mặt', 'NV0006'),
+    ('CNVHC0195', '2023-11-19', N'Có mặt', 'NV0006'),
+    ('CNVHC0196', '2023-11-20', N'Có mặt', 'NV0006'),
+    ('CNVHC0197', '2023-11-21', N'Có mặt', 'NV0006'),
+    ('CNVHC0198', '2023-11-22', N'Có mặt', 'NV0006'),
+    ('CNVHC0199', '2023-11-23', N'Có mặt', 'NV0006'),
+    ('CNVHC0200', '2023-11-24', N'Có mặt', 'NV0006'),
+    ('CNVHC0201', '2023-11-25', N'Có mặt', 'NV0006'),
+    ('CNVHC0202', '2023-11-26', N'Có mặt', 'NV0006'),
+    ('CNVHC0203', '2023-11-27', N'Có mặt', 'NV0006'),
+    ('CNVHC0204', '2023-11-28', N'Có mặt', 'NV0006'),
+    ('CNVHC0205', '2023-11-29', N'Có mặt', 'NV0006'),
+    ('CNVHC0206', '2023-11-30', N'Có mặt', 'NV0006'),
+	----
+	('CNVHC0232', '2023-10-01', N'Có mặt', 'NV0002'),
+    ('CNVHC0207', '2023-10-02', N'Có mặt', 'NV0002'),
+    ('CNVHC0208', '2023-10-03', N'Có mặt', 'NV0002'),
+    ('CNVHC0209', '2023-10-04', N'Có mặt', 'NV0002'),
+    ('CNVHC0210', '2023-10-05', N'Có mặt', 'NV0002'),
+    ('CNVHC0211', '2023-10-06', N'Có mặt', 'NV0002'),
+    ('CNVHC0212', '2023-10-07', N'Có mặt', 'NV0002'),
+    ('CNVHC0213', '2023-10-08', N'Có mặt', 'NV0002'),
+    ('CNVHC0214', '2023-10-09', N'Có mặt', 'NV0002'),
+    ('CNVHC0215', '2023-10-10', N'Có mặt', 'NV0002'),
+    ('CNVHC0216', '2023-10-11', N'Có mặt', 'NV0002'),
+    ('CNVHC0217', '2023-10-12', N'Có mặt', 'NV0002'),
+    ('CNVHC0218', '2023-10-13', N'Có mặt', 'NV0002'),
+    ('CNVHC0219', '2023-10-14', N'Có mặt', 'NV0002'),
+    ('CNVHC0220', '2023-10-15', N'Có mặt', 'NV0002'),
+    ('CNVHC0221', '2023-10-16', N'Có mặt', 'NV0002'),
+    ('CNVHC0222', '2023-10-17', N'Có mặt', 'NV0002'),
+    ('CNVHC0223', '2023-10-18', N'Có mặt', 'NV0002'),
+    ('CNVHC0224', '2023-10-19', N'Có mặt', 'NV0002'),
+    ('CNVHC0225', '2023-10-20', N'Có mặt', 'NV0002'),
+    ('CNVHC0226', '2023-10-21', N'Có mặt', 'NV0002'),
+    ('CNVHC0227', '2023-10-22', N'Có mặt', 'NV0002'),
+    ('CNVHC0228', '2023-10-23', N'Có mặt', 'NV0002'),
+    ('CNVHC0229', '2023-10-24', N'Có mặt', 'NV0002'),
+    ('CNVHC0230', '2023-10-25', N'Có mặt', 'NV0002'),
+    ('CNVHC0231', '2023-10-26', N'Có mặt', 'NV0002'),
+	----
+	  ('CNVHC0233', '2023-10-01', N'Có mặt', 'NV0003'),
+    ('CNVHC0234', '2023-10-02', N'Có mặt', 'NV0003'),
+    ('CNVHC0235', '2023-10-03', N'Có mặt', 'NV0003'),
+    ('CNVHC0236', '2023-10-04', N'Có mặt', 'NV0003'),
+    ('CNVHC0237', '2023-10-05', N'Có phép', 'NV0003'),
+    ('CNVHC0238', '2023-10-06', N'Có phép', 'NV0003'),
+    ('CNVHC0239', '2023-10-07', N'Có mặt', 'NV0003'),
+    ('CNVHC0240', '2023-10-08', N'Có mặt', 'NV0003'),
+    ('CNVHC0241', '2023-10-09', N'Có mặt', 'NV0003'),
+    ('CNVHC0242', '2023-10-10', N'Có mặt', 'NV0003'),
+    ('CNVHC0243', '2023-10-11', N'Có mặt', 'NV0003'),
+    ('CNVHC0244', '2023-10-12', N'Có mặt', 'NV0003'),
+    ('CNVHC0245', '2023-10-13', N'Có mặt', 'NV0003'),
+    ('CNVHC0246', '2023-10-14', N'Có mặt', 'NV0003'),
+    ('CNVHC0247', '2023-10-15', N'Có mặt', 'NV0003'),
+    ('CNVHC0248', '2023-10-16', N'Có mặt', 'NV0003'),
+    ('CNVHC0249', '2023-10-17', N'Có mặt', 'NV0003'),
+    ('CNVHC0250', '2023-10-18', N'Có mặt', 'NV0003'),
+    ('CNVHC0251', '2023-10-19', N'Có mặt', 'NV0003'),
+    ('CNVHC0252', '2023-10-20', N'Có mặt', 'NV0003'),
+    ('CNVHC0253', '2023-10-21', N'Có mặt', 'NV0003'),
+    ('CNVHC0254', '2023-10-22', N'Có mặt', 'NV0003'),
+    ('CNVHC0255', '2023-10-23', N'Có mặt', 'NV0003'),
+    ('CNVHC0256', '2023-10-24', N'Có mặt', 'NV0003'),
+    ('CNVHC0257', '2023-10-25', N'Có mặt', 'NV0003'),
+    ('CNVHC0258', '2023-10-26', N'Có mặt', 'NV0003'),
+	----
+	 ('CNVHC0259', '2023-10-01', N'Có mặt', 'NV0004'),
+    ('CNVHC0260', '2023-10-02', N'Có mặt', 'NV0004'),
+    ('CNVHC0261', '2023-10-03', N'Có mặt', 'NV0004'),
+    ('CNVHC0262', '2023-10-04', N'Có phép', 'NV0004'),
+    ('CNVHC0263', '2023-10-05', N'Có phép', 'NV0004'),
+    ('CNVHC0264', '2023-10-06', N'Có mặt', 'NV0004'),
+    ('CNVHC0265', '2023-10-07', N'Có mặt', 'NV0004'),
+    ('CNVHC0266', '2023-10-08', N'Có mặt', 'NV0004'),
+    ('CNVHC0267', '2023-10-09', N'Có mặt', 'NV0004'),
+    ('CNVHC0268', '2023-10-10', N'Có mặt', 'NV0004'),
+    ('CNVHC0269', '2023-10-11', N'Có mặt', 'NV0004'),
+    ('CNVHC0270', '2023-10-12', N'Có mặt', 'NV0004'),
+    ('CNVHC0271', '2023-10-13', N'Có mặt', 'NV0004'),
+    ('CNVHC0272', '2023-10-14', N'Có mặt', 'NV0004'),
+    ('CNVHC0273', '2023-10-15', N'Có mặt', 'NV0004'),
+    ('CNVHC0274', '2023-10-16', N'Có mặt', 'NV0004'),
+    ('CNVHC0275', '2023-10-17', N'Có mặt', 'NV0004'),
+    ('CNVHC0276', '2023-10-18', N'Có mặt', 'NV0004'),
+    ('CNVHC0277', '2023-10-19', N'Có mặt', 'NV0004'),
+    ('CNVHC0278', '2023-10-20', N'Có mặt', 'NV0004'),
+    ('CNVHC0279', '2023-10-21', N'Có mặt', 'NV0004'),
+    ('CNVHC0280', '2023-10-22', N'Có mặt', 'NV0004'),
+    ('CNVHC0281', '2023-10-23', N'Có mặt', 'NV0004'),
+    ('CNVHC0282', '2023-10-24', N'Có mặt', 'NV0004'),
+    ('CNVHC0283', '2023-10-25', N'Có mặt', 'NV0004'),
+    ('CNVHC0284', '2023-10-26', N'Có mặt', 'NV0004'),
+	----
+	 ('CNVHC0285', '2023-10-01', N'Có mặt', 'NV0005'),
+    ('CNVHC0286', '2023-10-02', N'Có mặt', 'NV0005'),
+    ('CNVHC0287', '2023-10-03', N'Có phép', 'NV0005'),
+    ('CNVHC0288', '2023-10-04', N'Có phép', 'NV0005'),
+    ('CNVHC0289', '2023-10-05', N'Có mặt', 'NV0005'),
+    ('CNVHC0290', '2023-10-06', N'Có mặt', 'NV0005'),
+    ('CNVHC0291', '2023-10-07', N'Có mặt', 'NV0005'),
+    ('CNVHC0292', '2023-10-08', N'Có mặt', 'NV0005'),
+    ('CNVHC0293', '2023-10-09', N'Có mặt', 'NV0005'),
+    ('CNVHC0294', '2023-10-10', N'Có mặt', 'NV0005'),
+    ('CNVHC0295', '2023-10-11', N'Có mặt', 'NV0005'),
+    ('CNVHC0296', '2023-10-12', N'Có mặt', 'NV0005'),
+    ('CNVHC0297', '2023-10-13', N'Có mặt', 'NV0005'),
+    ('CNVHC0298', '2023-10-14', N'Có mặt', 'NV0005'),
+    ('CNVHC0299', '2023-10-15', N'Có mặt', 'NV0005'),
+    ('CNVHC0300', '2023-10-16', N'Có mặt', 'NV0005'),
+    ('CNVHC0301', '2023-10-17', N'Có mặt', 'NV0005'),
+    ('CNVHC0302', '2023-10-18', N'Có mặt', 'NV0005'),
+    ('CNVHC0303', '2023-10-19', N'Có mặt', 'NV0005'),
+    ('CNVHC0304', '2023-10-20', N'Có mặt', 'NV0005'),
+    ('CNVHC0305', '2023-10-21', N'Có mặt', 'NV0005'),
+    ('CNVHC0306', '2023-10-22', N'Có mặt', 'NV0005'),
+    ('CNVHC0307', '2023-10-23', N'Có mặt', 'NV0005'),
+    ('CNVHC0308', '2023-10-24', N'Có mặt', 'NV0005'),
+    ('CNVHC0309', '2023-10-25', N'Có mặt', 'NV0005'),
+    ('CNVHC0310', '2023-10-26', N'Có mặt', 'NV0005')
 
 select n.idNhanVien,n.idPhongBan,c.tenChucVu from NhanVien n join BangChamCongNhanVienHC l on n.idNhanVien=l.idNhanVien join ChucVu c on n.idChucVu = c.idChucVu
 go
@@ -532,7 +825,7 @@ BEGIN
     -- Lấy thông tin số ngày nghỉ không phép trong tháng
     SELECT @soNgayNghiKhongPhep = COUNT(*)
     FROM BangChamCongNhanVienHC
-    WHERE idNhanVien = @idNhanVien  AND MONTH(ngayChamCong) = @thang and YEAR(ngayChamCong) = @nam and trangThai = N'Không phép'
+    WHERE idNhanVien = @idNhanVien  AND MONTH(ngayChamCong) = @thang and YEAR(ngayChamCong) = @nam and trangThai = N'Vắng Mặt'
 
     -- Tính tiền bảo hiểm xã hội
     SET @tienBaoHiemXaHoi = @luongCoBan * @heSoChucVu * @heSoBaoHiemXaHoi
@@ -552,7 +845,6 @@ BEGIN
 	set @bhxh = @tienBaoHiemXaHoi
 	set @tongTienLuong = @tongLuong
 END
-
 go
 CREATE PROCEDURE chiTietLuongNhanVien_proc (
     @idNhanVien varchar(10),
@@ -577,7 +869,7 @@ BEGIN
     -- Lấy thông tin số ngày nghỉ không phép trong tháng
     SELECT @soNgayNghiKhongPhep = COUNT(*)
     FROM BangChamCongNhanVienHC
-    WHERE idNhanVien = @idNhanVien  AND MONTH(ngayChamCong) = @thang and YEAR(ngayChamCong) = @nam and trangThai = N'Không phép'
+    WHERE idNhanVien = @idNhanVien  AND MONTH(ngayChamCong) = @thang and YEAR(ngayChamCong) = @nam and trangThai = N'Vắng Mặt'
 
     -- Số Tiền Nghỉ Làm Không Phép
     SET @soTienNghiKhongPhep = @soNgayNghiKhongPhep * 150000
@@ -588,7 +880,6 @@ BEGIN
     WHERE idNhanVien = @idNhanVien  AND MONTH(ngayChamCong) = @thang and YEAR(ngayChamCong) = @nam and trangThai = N'Có phép'
 END
 go
--- Định nghĩa Stored Procedure tính lương cho từng công nhân trong một tháng và năm cụ thể
 go
 create PROCEDURE ThongTinLuongCongNhan
     @Thang INT,
@@ -665,3 +956,7 @@ begin
 	where idHopDong = (select idHopDong from inserted)
 end
 go
+
+
+
+

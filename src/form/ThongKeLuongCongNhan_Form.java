@@ -404,7 +404,6 @@ public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener,
 				tableThongKe.getValueAt(row, 0).toString(), Integer.parseInt(cbNam.getSelectedItem().toString()));
 		for (String string : listCN) {
 			modeltest.addRow(string.split(";"));
-			System.out.println(string);
 		}
 		for (int i = 0; i < tableTest.getRowCount(); i++) {
 			int thang = Integer.parseInt(tableTest.getValueAt(i, 3).toString());
@@ -419,7 +418,6 @@ public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener,
 			int thang = Integer.parseInt(tableTest.getValueAt(j, 3).toString());
 			double luong = Double.parseDouble(tableTest.getValueAt(j, 5).toString());
 			t1[thang - 1] = ((luong * 1.0) / (tong * 1.0)) / 100;
-			System.out.println(t1[thang - 1]);
 		}
 		showPieChart(t1);
 	}
