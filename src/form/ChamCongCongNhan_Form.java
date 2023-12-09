@@ -485,9 +485,6 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
         			.addComponent(panelSouth, GroupLayout.PREFERRED_SIZE, 284, GroupLayout.PREFERRED_SIZE))
         );
         setLayout(groupLayout);
-      
-        tableCongNhan.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tableChamCong.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
       indexCaLam = 3;
       cboCaLam.addActionListener(new ActionListener() {

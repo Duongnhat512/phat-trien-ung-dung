@@ -7,6 +7,7 @@ import javax.swing.JScrollPane;
 import commons.ScrollBar;
 import commons.SystemColor;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,6 +17,7 @@ public class Table extends JTable {
         setShowHorizontalLines(true);
         setGridColor(new Color(230, 230, 230));
         setRowHeight(40);
+        setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         getTableHeader().setReorderingAllowed(false);
         getTableHeader().setDefaultRenderer(new DefaultTableCellRenderer() {
             @Override
