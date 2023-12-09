@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import connectDB.ConnectDB;
+import entities.TaiKhoan;
 import entities.TaiKhoanNganHang;
 
 public class TaiKhoanNganHang_DAO {
@@ -24,13 +25,64 @@ public class TaiKhoanNganHang_DAO {
 				String tenNganHang = rs.getString(2);
 				String chuTaiKhoan = rs.getString(3);
 				String chiNhanh = rs.getString(4);
-				tk = new TaiKhoanNganHang(soTaiKhoan, tenNganHang, chiNhanh);
+				tk = new TaiKhoanNganHang(soTaiKhoan, tenNganHang, chuTaiKhoan,chiNhanh);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return tk;
+	}
+	public boolean create(TaiKhoanNganHang tk) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stmt = null;
+		int n = 0;
+		try {
+			stmt = con.prepareStatement("insert into" + " TaiKhoanNganHang values(?,?,?,?)");
+			stmt.setString(1, tk.getSoTaiKhoan());
+			stmt.setString(2, tk.getTenNganHang());
+			stmt.setString(3, tk.getChuTaiKhoan());
+			stmt.setString(4, tk.getChiNhanh());
+			n = stmt.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			try {
+				stmt.close();
+			} catch (SQLException e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}
+		return n > 0;
+	}
+	public boolean updateTaiKhoanNganHang (TaiKhoanNganHang tk, String stkMoi) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stmt = null;
+		int n = 0;
+		try {
+			stmt = con.prepareStatement("Update" + " TaiKhoanNganHang set soTaiKhoan = ?, chuTaiKhoan = ? where soTaiKhoan = ?");
+			stmt.setString(1, stkMoi);
+			stmt.setString(2, tk.getChuTaiKhoan());
+			stmt.setString(3, tk.getSoTaiKhoan());
+			n = stmt.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			try {
+				stmt.close();
+			} catch (SQLException e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}
+		return n > 0;
 	}
 	public TaiKhoanNganHang getTaiKhoanNganHangTheoIDCongNhan(String idCongNhan) {
 		TaiKhoanNganHang tk = null;
@@ -45,7 +97,7 @@ public class TaiKhoanNganHang_DAO {
 				String tenNganHang = rs.getString(2);
 				String chiNhanh = rs.getString(3);
 				String chuTaiKhoan = rs.getString(4);
-				tk = new TaiKhoanNganHang(soTaiKhoan, tenNganHang, chiNhanh);
+				tk = new TaiKhoanNganHang(soTaiKhoan, tenNganHang,chuTaiKhoan, chiNhanh);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

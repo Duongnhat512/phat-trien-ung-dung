@@ -35,4 +35,5 @@ public class CongNhan_BUS {
 	public ArrayList<CongNhan> getDanhSachCongNhanChuaPhanCong(){
 		return congNhan_DAO.getDanhSachCongNhanChuaPhanCong();
 	}
+	
 }
