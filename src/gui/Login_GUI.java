@@ -11,10 +11,15 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -45,6 +50,10 @@ public class Login_GUI extends JFrame implements ActionListener{
 	private JPasswordField passwordField;
 	private JLabel lblThongBao;
 	private TaiKhoan_BUS taiKhoan_BUS = new TaiKhoan_BUS();
+	private BufferedImage visibleImage;
+	private BufferedImage hiddenImage;
+	private JButton btnToggleIcon;
+	private boolean passwordVisible;
 	protected static Login_GUI frame;
 
 	/**
@@ -144,16 +153,11 @@ public class Login_GUI extends JFrame implements ActionListener{
 		passwordField.setBounds(152, 172, 279, 30);
 		pRight.add(passwordField);
 		
-		lblThongBao = new JLabel("");
-		lblThongBao.setFont(new Font("Segoe UI", Font.ITALIC, 12));
-		lblThongBao.setForeground(new Color(0, 0, 0));
-		lblThongBao.setBounds(152, 212, 279, 21);
-		pRight.add(lblThongBao);
-		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(Login_GUI.class.getResource("/icon/icons8_eye_25px.png")));
-		lblNewLabel.setBounds(433, 182, 45, 13);
-		pRight.add(lblNewLabel);
+		btnToggleIcon = new JButton("");
+		btnToggleIcon.setBackground(null);
+		btnToggleIcon.setBorder(null);
+		btnToggleIcon.setBounds(433, 172, 36, 30);
+		pRight.add(btnToggleIcon);
 		
 		JLabel lbQMK = new JLabel("Quên mật khẩu?\r\n");
 		lbQMK.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -166,11 +170,41 @@ public class Login_GUI extends JFrame implements ActionListener{
 		lbLogo.setIcon(new ImageIcon(Login_GUI.class.getResource("/icon/logo_Login.png")));
 		lbLogo.setBounds(161, 143, 412, 363);
 		panel.add(lbLogo);
+<<<<<<< HEAD
 		
 		
 		textTenDangNhap.setText("admin");
 		passwordField.setText("1111");
 		
+=======
+		String projectDirectory = System.getProperty("user.dir");
+        try {
+             visibleImage = ImageIO.read(new File(projectDirectory+"\\src\\icon\\icons8_eye_25px.png")); // Đường dẫn hình ảnh mắt mở
+             hiddenImage = ImageIO.read(new File(projectDirectory+"\\src\\icon\\hidden_eye.png")); // Đường dẫn hình ảnh mắt đóng
+
+            btnToggleIcon.setIcon(new ImageIcon(resizeImage(hiddenImage, 36, 30))); // Đặt kích thước cho hình ảnh mắt mở
+            btnToggleIcon.setDisabledIcon(new ImageIcon(resizeImage(visibleImage, 36, 30))); // Đặt kích thước cho hình ảnh mắt đóng
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        passwordVisible = false;
+        btnToggleIcon.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	passwordVisible = !passwordVisible;
+            	if (passwordVisible) {
+            		passwordField.setEchoChar((char) 0); // Hiện password
+                    btnToggleIcon.setIcon(new ImageIcon(resizeImage(visibleImage,36, 30)));
+                } else {
+                	passwordField.setEchoChar('\u2022'); // Ẩn password
+                	btnToggleIcon.setIcon(new ImageIcon(resizeImage(hiddenImage, 36, 30)));
+                }
+            }
+        });
+		
+		//
+>>>>>>> 3424301e5ed6b6fcaaabd3d21cbee7e10f4612fb
 		try {
 			ConnectDB.getInstance().connect();
 		} catch (ClassNotFoundException e) {
@@ -185,7 +219,10 @@ public class Login_GUI extends JFrame implements ActionListener{
 		btnDangNhap.addActionListener(this);
 		btnDangNhap.addActionListener(this);
 	}
-
+    private static Image resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) {
+        Image resultingImage = originalImage.getScaledInstance(targetWidth, targetHeight, Image.SCALE_SMOOTH);
+        return resultingImage;
+    }
 	private boolean kiemTraDangNhap() {
 		String tenTaiKhoan = textTenDangNhap.getText();
 		@SuppressWarnings("deprecation")
@@ -218,7 +255,11 @@ public class Login_GUI extends JFrame implements ActionListener{
 		Object o = e.getSource();
 		if(o.equals(btnDangNhap)) {
 			if(kiemTraDangNhap()) {
+<<<<<<< HEAD
 				moTrangChu();
+=======
+			moTrangChu();
+>>>>>>> 3424301e5ed6b6fcaaabd3d21cbee7e10f4612fb
 			}
 		}
 	}

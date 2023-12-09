@@ -33,6 +33,11 @@ public class TaiKhoan {
 		super();
 		this.tenTaiKhoan = tenTaiKhoan;
 	}
+	public TaiKhoan(String tenTaiKhoan, String matKhau) {
+		super();
+		this.tenTaiKhoan = tenTaiKhoan;
+		this.matKhau = matKhau;
+	}
 	public String getTenTaiKhoan() {
 		return tenTaiKhoan;
 	}

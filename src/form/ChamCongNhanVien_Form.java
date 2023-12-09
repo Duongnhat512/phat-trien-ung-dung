@@ -560,7 +560,6 @@ public class ChamCongNhanVien_Form extends JPanel implements ActionListener, Mou
 	public void getListNVchuaChamCong() {
 		modelNV.setRowCount(0);
 		String format = LocalDate.now().toString();
-
 		ArrayList<NhanVien> listCC = chamCongNhanVien_BUS.getListNVchuaChamCong(format);
 		for (NhanVien nhanVien : listCC) {
 			modelNV.addRow(new Object[] { nhanVien.getIdNhanVien(), nhanVien.getHoTen(),
