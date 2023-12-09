@@ -309,9 +309,14 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener,MouseListe
       cbThang.addActionListener(this);
       cbNam.addActionListener(this);
 //      tinhTangTruong(Integer.parseInt(cbNam.getSelectedItem().toString()));
-      thongKeTungNhanVienBieuDoTron(0);
-      thongKeTungNhanVienBieuDoTangTruong(0);
+      hienThiDSThongKe();
+      if(tableThongKe.getRowCount()!=0)
+      {
+    	  thongKeTungNhanVienBieuDoTron(0);
+    	  thongKeTungNhanVienBieuDoTangTruong(0);
+      }
     }
+    
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub

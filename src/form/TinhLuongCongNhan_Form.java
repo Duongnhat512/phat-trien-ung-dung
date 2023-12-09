@@ -13,6 +13,8 @@ import java.awt.Desktop;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -47,7 +49,9 @@ import entities.TaiKhoanNganHang;
 
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
 import javax.swing.SwingConstants;
+import javax.swing.RowFilter.Entry;
 
 import java.awt.Font;
 
@@ -85,8 +89,10 @@ import java.util.Properties;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
-public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, MouseListener {
+public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, MouseListener, DocumentListener {
 	private int width = 1250;
 	private int height = 725;
 	private BangLuongCongNhan_BUS bl_bus;
@@ -98,7 +104,6 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 	private Table tableLuong;
 
 	private DefaultTableModel dftable;
-	private JButton btnTinhLuong;
 	private JButton btnPrint;
 	private JButton btnEmail;
 	private JComboBox cbbNam;
@@ -115,12 +120,12 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 	private JLabel lbl_ltc;
 	private JLabel lbl_pc;
 	private JLabel lbl_thucLanh;
-	private JButton btnSearch;
 	private RoundPanel panel_southTitle;
 	private JTable table_chiTiet1;
 	private JTable table_chiTiet2;
 	private JLabel lbldsCC;
 	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
+
 	public TinhLuongCongNhan_Form(int width, int height) {
 		setBackground(new Color(240, 240, 240));
 		bl_bus = new BangLuongCongNhan_BUS();
@@ -207,7 +212,7 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 		panel_southTitle.setBackground(new Color(153, 204, 255));
 		pSouth.add(panel_southTitle, BorderLayout.NORTH);
 
-		lbldsCC = new JLabel("Danh sách lương tháng "+(currentMonth+1)+" - "+currentYear );
+		lbldsCC = new JLabel("Danh sách lương tháng " + (currentMonth + 1) + " - " + currentYear);
 		lbldsCC.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		panel_southTitle.add(lbldsCC);
 		RoundPanel panel = new RoundPanel();
@@ -310,16 +315,11 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 		btnEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnEmail.setBounds(1053, 23, 179, 30);
 		add(btnEmail);
-
-		btnTinhLuong = new JButton("Làm mới");
-		btnTinhLuong.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnTinhLuong.setBounds(680, 23, 158, 30);
-		add(btnTinhLuong);
 		//
 		searchField = new RoundTextField(10);
 		searchField.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		searchField.setText("Nhập mã/tên công nhân cần tìm");
-		searchField.setBounds(812, 270, 298, 30);
+		searchField.setBounds(934, 270, 298, 30);
 		add(searchField);
 		searchField.setColumns(10);
 		searchField.addFocusListener(new FocusAdapter() {
@@ -341,22 +341,15 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 				super.focusGained(e);
 			}
 		});
-
-		btnSearch = new JButton("Tìm Kiếm");
-		btnSearch.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnSearch.setBounds(1120, 270, 112, 30);
-		add(btnSearch);
 		docDuLieuPhanXuong();
-		btnTinhLuong.addActionListener(this);
 		btnPrint.addActionListener(this);
 		btnEmail.addActionListener(this);
-		btnSearch.addActionListener(this);
 		tableLuong.addMouseListener(this);
 		btnPrint.addMouseListener(this);
 		cbbThang.addActionListener(this);
 		cbbNam.addActionListener(this);
 		cbbPhongBan.addActionListener(this);
-
+		searchField.getDocument().addDocumentListener(this);
 	}
 
 	public void xoaTable() {
@@ -373,7 +366,7 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 		dslcn = bl_bus.getAllTableTinhLuongTheoThang(phanXuong, thang, nam);
 		double tongThoiGianLamViec = 0, tongSoLuongSanPham = 0, tongLuongHanhChanh = 0, tongLuongTangCa = 0,
 				tongPhuCap = 0, tongThucLanh = 0;
-		lbldsCC.setText("Danh sách lương tháng "+thang+" - "+nam );
+		lbldsCC.setText("Danh sách lương tháng " + thang + " - " + nam);
 		if (dslcn.isEmpty()) {
 			dscn = cccn_bus.getDSChamCongCongNhan(thang, nam, phanXuong);
 			if (dscn.isEmpty()) {
@@ -387,12 +380,12 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 				PhanXuong p = px_bus.getdsPXtheoID(cn.getPhanXuong().getIdPhanXuong());
 				String idBangLuong = getIdBangLuong(l.getIdLuongCN());
 				l.setIdLuongCN(idBangLuong);
-				if(LocalDate.now().getMonthValue()==thang+1 && LocalDate.now().getDayOfMonth()==5) {
-					
+				if (LocalDate.now().getMonthValue() == thang + 1 && LocalDate.now().getDayOfMonth() == 5) {
+
 					bl_bus.themBangLuongCongNhan(l, thang, nam);
 				}
 				DecimalFormat decimalFormat = new DecimalFormat("###,###,###.##");
-				if(l.getThucLanh()<0) {
+				if (l.getThucLanh() < 0) {
 					String thuclanh = decimalFormat.format(0) + " VND";
 				}
 				String luongHanhChanh = decimalFormat.format(l.getTongLuong()) + " VND";
@@ -401,9 +394,10 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 
 				double tangCa = l.getThucLanh() - l.getTongLuong() - cn.getPhuCap();
 				String luongTangCa = decimalFormat.format(tangCa) + " VND";
-				dftable.addRow(new Object[] { stt, l.getNgayTinhLuong().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), p.getTenPhanXuong(),
-						cn.getIdCongNhan(), cn.getHoTen(), values[1] + "h", values[0], luongHanhChanh, luongTangCa,
-						phuCap, thucLanh });
+				dftable.addRow(
+						new Object[] { stt, l.getNgayTinhLuong().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+								p.getTenPhanXuong(), cn.getIdCongNhan(), cn.getHoTen(), values[1] + "h", values[0],
+								luongHanhChanh, luongTangCa, phuCap, thucLanh });
 				stt++;
 				tongThoiGianLamViec += values[1];
 				tongSoLuongSanPham += values[0];
@@ -416,7 +410,7 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 			tongSoLuong = dslcn.size();
 			for (LuongCongNhan luongCongNhan : dslcn) {
 				DecimalFormat decimalFormat = new DecimalFormat("###,###,###.##");
-				if(luongCongNhan.getThucLanh()<0) {
+				if (luongCongNhan.getThucLanh() < 0) {
 					String thuclanh = decimalFormat.format(0) + " VND";
 				}
 				CongNhan cn = cn_bus.getCongNhanTheoID(luongCongNhan.getCongNhan().getIdCongNhan());
@@ -428,9 +422,10 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 						thang, nam);
 				double tangCa = luongCongNhan.getThucLanh() - luongCongNhan.getTongLuong() - cn.getPhuCap();
 				String luongTangCa = decimalFormat.format(tangCa) + " VND";
-				dftable.addRow(new Object[] { stt,luongCongNhan.getNgayTinhLuong().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), p.getTenPhanXuong(),
-						cn.getIdCongNhan(), cn.getHoTen(), values[1] + "h", values[0], luongHanhChanh, luongTangCa,
-						phuCap, thucLanh });
+				dftable.addRow(new Object[] { stt,
+						luongCongNhan.getNgayTinhLuong().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+						p.getTenPhanXuong(), cn.getIdCongNhan(), cn.getHoTen(), values[1] + "h", values[0],
+						luongHanhChanh, luongTangCa, phuCap, thucLanh });
 				stt++;
 				tongThoiGianLamViec += values[1];
 				tongSoLuongSanPham += values[0];
@@ -564,8 +559,7 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 		Document document = new Document();
 		try {
 
-			Object[][] data1 = {
-					{ "Mã Công Nhân", (String) tableLuong.getValueAt(r, 3) },
+			Object[][] data1 = { { "Mã Công Nhân", (String) tableLuong.getValueAt(r, 3) },
 					{ "Tên Công Nhân", (String) tableLuong.getValueAt(r, 4) }, { "Số Tài Khoản", tk.getSoTaiKhoan() },
 					{ "Phân Xưởng", (String) tableLuong.getValueAt(r, 2) }, { "Trình Độ", cn.getTayNghe() },
 					{ "Giờ Công", (String) tableLuong.getValueAt(r, 5) },
@@ -635,84 +629,54 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 		return false;
 	}
 
+	private void searchTable() {
+		String searchText = searchField.getText().trim();
+		TableRowSorter sorter = new TableRowSorter<>(dftable);
+		tableLuong.setRowSorter(sorter);
+		
+		RowFilter<DefaultTableModel, Object> idOrNameFilter = new RowFilter<DefaultTableModel, Object>() {
+			@Override
+			public boolean include(Entry<? extends DefaultTableModel, ? extends Object> entry) {
+				String text = searchText.toLowerCase();
+				Object col3Value = entry.getValue(3); // Cột 1
+				Object col4Value = entry.getValue(4); // Cột 3
+
+				// Kiểm tra xem giá trị trong cột 1 hoặc cột 3 có chứa chuỗi tìm kiếm không
+				if ((col3Value != null && col3Value.toString().toLowerCase().contains(text))
+						|| (col4Value != null && col4Value.toString().toLowerCase().contains(text))) {
+					return true;
+				}
+				return false;
+			}
+		};
+		sorter.setRowFilter(idOrNameFilter);
+	}
+	public void filterTable() {
+		int thang;
+		int nam;
+		try {
+			thang = Integer.parseInt(((String) cbbThang.getSelectedItem()).replaceAll("\\D", ""));
+			nam = Integer.parseInt(((String) cbbNam.getSelectedItem()).replaceAll("\\D", ""));
+		} catch (NumberFormatException e1) {
+			// Xử lý ngoại lệ nếu chuỗi không chứa số
+			thang = 0; // hoặc giá trị mặc định khác bạn muốn đặt
+			nam = 0;
+		}
+		String pb = (String) cbbPhongBan.getSelectedItem();
+
+		try {
+			docDulieuVaoTable(thang, nam, pb);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		Object obj = e.getSource();
-		if (obj.equals(cbbThang) || obj.equals(cbbNam) || obj.equals(obj)) {
-			int thang;
-			int nam;
-			try {
-				thang = Integer.parseInt(((String) cbbThang.getSelectedItem()).replaceAll("\\D", ""));
-				nam = Integer.parseInt(((String) cbbNam.getSelectedItem()).replaceAll("\\D", ""));
-			} catch (NumberFormatException e1) {
-				// Xử lý ngoại lệ nếu chuỗi không chứa số
-				thang = 0; // hoặc giá trị mặc định khác bạn muốn đặt
-				nam = 0;
-			}
-			String pb = (String) cbbPhongBan.getSelectedItem();
-
-			try {
-				docDulieuVaoTable(thang, nam, pb);
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-		if (obj.equals(btnSearch)) {
-			xoaTable();
-			int thang;
-			int nam;
-			try {
-				thang = Integer.parseInt(((String) cbbThang.getSelectedItem()).replaceAll("\\D", ""));
-				nam = Integer.parseInt(((String) cbbNam.getSelectedItem()).replaceAll("\\D", ""));
-			} catch (NumberFormatException e1) {
-				// Xử lý ngoại lệ nếu chuỗi không chứa số
-				thang = 0; // hoặc giá trị mặc định khác bạn muốn đặt
-				nam = 0;
-			}
-			String phanXuong = (String) cbbPhongBan.getSelectedItem();
-			ArrayList<LuongCongNhan> dslcn = new ArrayList<>();
-			int tongSoLuong = 0;
-			dslcn = bl_bus.getAllTableTinhLuongTheoThang(phanXuong, thang, nam);
-			double tongThoiGianLamViec = 0, tongSoLuongSanPham = 0, tongLuongHanhChanh = 0, tongLuongTangCa = 0,
-					tongPhuCap = 0, tongThucLanh = 0;
-			int stt = 1;
-			String txtSearch = searchField.getText();
-			boolean checkNV = false;
-			for (LuongCongNhan lcn : dslcn) {
-				CongNhan cn = cn_bus.getCongNhanTheoID(lcn.getCongNhan().getIdCongNhan());
-				if (lcn.getIdLuongCN().contains(txtSearch) || cn.getIdCongNhan().contains(txtSearch)
-						|| cn.getHoTen().contains(txtSearch)) {
-					checkNV = true;
-					PhanXuong p = px_bus.getdsPXtheoID(cn.getPhanXuong().getIdPhanXuong());
-					DecimalFormat decimalFormat = new DecimalFormat("###,###,###.##");
-					String luongHanhChanh = decimalFormat.format(lcn.getTongLuong()) + " VND";
-					String thucLanh = decimalFormat.format(lcn.getThucLanh()) + " VND";
-					String phuCap = decimalFormat.format(cn.getPhuCap()) + " VND";
-					int[] values = bl_bus.TinhTongSanLuongVaThoiGianLamViec(lcn.getCongNhan().getIdCongNhan(), thang,
-							nam);
-					double tangCa = lcn.getThucLanh() - lcn.getTongLuong() - cn.getPhuCap();
-					String luongTangCa = decimalFormat.format(tangCa) + " VND";
-					dftable.addRow(new Object[] { stt,lcn.getNgayTinhLuong().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), p.getTenPhanXuong(),
-							cn.getIdCongNhan(), cn.getHoTen(), values[1] + "h", values[0], luongHanhChanh, luongTangCa,
-							phuCap, thucLanh });
-					stt++;
-					tongThoiGianLamViec += values[1];
-					tongSoLuongSanPham += values[0];
-					tongLuongHanhChanh += lcn.getTongLuong();
-					tongLuongTangCa += lcn.getThucLanh() - lcn.getTongLuong() - cn.getPhuCap();
-					tongPhuCap += cn.getPhuCap();
-					tongThucLanh += lcn.getThucLanh();
-				}
-			}
-			tongSoLuong = stt-1;
-			if (!checkNV) {
-				JOptionPane.showMessageDialog(this, "Không tìm thấy nhân viên");
-				tongSoLuong = 0;
-			}
-			docDuLieuVaoThongTinChung(tongSoLuong, tongThoiGianLamViec, tongSoLuongSanPham, tongLuongHanhChanh,
-					tongLuongTangCa, tongPhuCap, tongThucLanh);
+		if (obj.equals(cbbThang) || obj.equals(cbbNam) || obj.equals(cbbPhongBan)) {
+			filterTable();
 		}
 		if (obj.equals(btnPrint)) {
 			String projectDirectory = System.getProperty("user.dir");
@@ -808,6 +772,7 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+
 		}
 	}
 
@@ -870,11 +835,8 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 			panel_2.setBackground(new Color(153, 204, 255));
 			pSouthh.add(panel_2, BorderLayout.NORTH);
 
-//			JLabel lbldsCCC = new JLabel("Danh sách lương tháng 10 - 2023 ");
-//			lbldsCCC.setFont(new Font("SansSerif", Font.PLAIN, 15));
-//			panel_southTitle.add(lbldsCCC);
 			panel.add(pSouthh, BorderLayout.NORTH);
-			JLabel lblNewLabel = new JLabel("Danh sách lương tháng "+thang+" - "+nam );
+			JLabel lblNewLabel = new JLabel("Danh sách lương tháng " + thang + " - " + nam);
 			lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
 			panel_2.add(lblNewLabel);
 
@@ -883,8 +845,7 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 
 			table_chiTiet1 = new JTable();
 			table_chiTiet1.setModel(new DefaultTableModel(
-					new Object[][] {
-							{ "Mã Công Nhân", (String) tableLuong.getValueAt(r, 3) },
+					new Object[][] { { "Mã Công Nhân", (String) tableLuong.getValueAt(r, 3) },
 							{ "Tên Công Nhân", (String) tableLuong.getValueAt(r, 4) },
 							{ "Số Tài Khoản", tk.getSoTaiKhoan() },
 							{ "Phân Xưởng", (String) tableLuong.getValueAt(r, 2) }, { "Trình Độ", cn.getTayNghe() },
@@ -893,7 +854,7 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 					new String[] { "New column", "New column" }));
 			JScrollPane scrollPane = new JScrollPane(table_chiTiet1);
 			scrollPane.setColumnHeaderView(table_chiTiet1);
-	        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+			scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 			scrollPane.setBounds(15, 62, 660, 200);
 			panel.add(scrollPane);
 			int cellHeight = 25;
@@ -935,54 +896,65 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 			JButton btnjd = new JButton("In PDF");
 			btnjd.setBounds(15, 452, 92, 28);
 			panel.add(btnjd);
-			JButton btnJDExit = new JButton("Đóng");
-			btnJDExit.setBounds(140, 452, 92, 28);
-			panel.add(btnJDExit);
 			dialog.setSize(700, 525);
 			dialog.setLocationRelativeTo(null); // Hiển thị JDialog ở trung tâm JFrame
 			dialog.setVisible(true);
-			btnJDExit.addActionListener(new ActionListener() {
-			    public void actionPerformed(ActionEvent e) {
-			        dialog.dispose(); // Đóng dialog
-			    }
-			});
+		
 			btnjd.addActionListener(new ActionListener() {
-			    public void actionPerformed(ActionEvent e) {
-			    	int thang = Integer.parseInt(((String) cbbThang.getSelectedItem()).replaceAll("\\D", ""));
-			    	int nam = Integer.parseInt(((String) cbbNam.getSelectedItem()).replaceAll("\\D", ""));
-			    	boolean check = exportPdf(r, thang, nam);
-			    	if(check) {
-			    		int option = JOptionPane.showConfirmDialog(null, "Xuất PDF thành công . Bạn có muốn mở file không",
-			    				"Xác nhận", JOptionPane.YES_NO_OPTION);
-			    		if (option == JOptionPane.YES_OPTION) {
-			    			// Kiểm tra xem Desktop được hỗ trợ không trước khi mở file
-			                if (Desktop.isDesktopSupported()) {
-			                    Desktop desktop = Desktop.getDesktop();
-			            		String projectDirectory = System.getProperty("user.dir");
-			            		String ttfPath = projectDirectory + "\\file\\file.pdf";
-			                    File file = new File(ttfPath);
-			                    if (file.exists()) {
-			                        try {
+				public void actionPerformed(ActionEvent e) {
+					int thang = Integer.parseInt(((String) cbbThang.getSelectedItem()).replaceAll("\\D", ""));
+					int nam = Integer.parseInt(((String) cbbNam.getSelectedItem()).replaceAll("\\D", ""));
+					boolean check = exportPdf(r, thang, nam);
+					if (check) {
+						int option = JOptionPane.showConfirmDialog(null,
+								"Xuất PDF thành công . Bạn có muốn mở file không", "Xác nhận",
+								JOptionPane.YES_NO_OPTION);
+						if (option == JOptionPane.YES_OPTION) {
+							// Kiểm tra xem Desktop được hỗ trợ không trước khi mở file
+							if (Desktop.isDesktopSupported()) {
+								Desktop desktop = Desktop.getDesktop();
+								String projectDirectory = System.getProperty("user.dir");
+								String ttfPath = projectDirectory + "\\file\\file.pdf";
+								File file = new File(ttfPath);
+								if (file.exists()) {
+									try {
 										desktop.open(file);
 									} catch (IOException e1) {
 										// TODO Auto-generated catch block
 										e1.printStackTrace();
 									} // Mở file PDF
-			                    } else {
-			                        System.out.println("File không tồn tại!");
-			                    }
-			                } else {
-			                    System.out.println("Desktop không được hỗ trợ!");
-			                }
-			    		} else {
-			    			
-			    		}
-			    		
-			    	}
-			        
-			    }
+								} else {
+									System.out.println("File không tồn tại!");
+								}
+							} else {
+								System.out.println("Desktop không được hỗ trợ!");
+							}
+						} else {
+
+						}
+
+					}
+
+				}
 			});
-			dialog.setModal(true);
 		}
+	}
+
+	@Override
+	public void insertUpdate(DocumentEvent e) {
+		// TODO Auto-generated method stub
+		searchTable();
+	}
+
+	@Override
+	public void removeUpdate(DocumentEvent e) {
+		// TODO Auto-generated method stub
+		searchTable();
+	}
+
+	@Override
+	public void changedUpdate(DocumentEvent e) {
+		// TODO Auto-generated method stub\
+		searchTable();
 	}
 }
