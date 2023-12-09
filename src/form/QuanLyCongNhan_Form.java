@@ -732,7 +732,7 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 		panel_Center.add(lblNewLabel_5);
 
 		px_bus = new PhanXuong_BUS();
-		ArrayList<PhanXuong> list = px_bus.getdsPX();
+		ArrayList<PhanXuong> list = px_bus.getDanhSachPhanXuong();
 		for (PhanXuong px : list) {
 			cb_PhanXuong.addItem(px.getTenPhanXuong());
 		}

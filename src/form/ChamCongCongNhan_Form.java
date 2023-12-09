@@ -15,12 +15,14 @@ import javax.swing.table.DefaultTableModel;
 
 import bus.ChamCongCongNhan_BUS;
 import bus.CongDoanPhanCong_BUS;
+import bus.PhanXuong_BUS;
 import commons.MyButton;
 import commons.RoundPanel;
 import commons.Table;
 import entities.BangChamCongCongNhan;
 import entities.CaLam;
 import entities.CongDoanPhanCong;
+import entities.PhanXuong;
 
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
@@ -67,6 +69,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import commons.RoundTextField;
 import java.awt.Cursor;
+import javax.swing.border.LineBorder;
 
 public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 	
@@ -113,6 +116,7 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 	//
 	private ArrayList<CongDoanPhanCong> listPhanCong = new ArrayList<CongDoanPhanCong>();
 	private ArrayList<BangChamCongCongNhan> listChamCong = new ArrayList<BangChamCongCongNhan>();
+	private MyButton btnLamMoi;
 
 	/**
 	 * Create the panel.
@@ -362,6 +366,7 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
         panelNorth_1.setBackground(Color.WHITE);
         
         btnChamCong = new MyButton();
+        btnChamCong.setIcon(new ImageIcon(ChamCongCongNhan_Form.class.getResource("/icon/add.png")));
         btnChamCong.setText("Chấm công");
         btnChamCong.setRadius(10);
         btnChamCong.setFont(new Font("SansSerif", Font.PLAIN, 15));
@@ -369,6 +374,7 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
         btnChamCong.setBackground(Color.WHITE);
         
         btnChamCongAll = new MyButton();
+        btnChamCongAll.setIcon(new ImageIcon(ChamCongCongNhan_Form.class.getResource("/icon/add.png")));
         btnChamCongAll.setText("Chấm công hàng loạt");
         btnChamCongAll.setRadius(10);
         btnChamCongAll.setFont(new Font("SansSerif", Font.PLAIN, 15));
@@ -376,6 +382,7 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
         btnChamCongAll.setBackground(Color.WHITE);
         
         btnCapNhat = new MyButton();
+        btnCapNhat.setIcon(new ImageIcon(ChamCongCongNhan_Form.class.getResource("/icon/update.png")));
         btnCapNhat.setText("Cập nhật");
         btnCapNhat.setRadius(10);
         btnCapNhat.setFont(new Font("SansSerif", Font.PLAIN, 15));
@@ -404,11 +411,6 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
         );
         panelNorth_1.setLayout(gl_panelNorth_1);
         
-        
-        btnChamCong.addActionListener(this);
-        btnChamCongAll.addActionListener(this);
-        btnCapNhat.addActionListener(this);
-        
         panelNorth = new JPanel();
         panelNorth.setLayout(null);
         panelNorth.setOpaque(false);
@@ -416,16 +418,18 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
         panelNorth.setBackground(Color.WHITE);
         
         cboCaLam = new JComboBox();
+        cboCaLam.setBackground(Color.WHITE);
+        cboCaLam.setBorder(new EmptyBorder(0, 0, 0, 0));
         cboCaLam.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         cboCaLam.setModel(new DefaultComboBoxModel<String>(new String[] {"Ca sáng", "Ca chiều", "Ca tối", "Tất cả"}));
         cboCaLam.setSelectedIndex(3);
         cboCaLam.setFont(new Font("SansSerif", Font.PLAIN, 15));
-        cboCaLam.setBounds(311, 3, 117, 37);
+        cboCaLam.setBounds(598, 5, 117, 37);
         panelNorth.add(cboCaLam);
         
         lblNewLabel_2 = new JLabel("Ngày chấm công:");
         lblNewLabel_2.setFont(new Font("SansSerif", Font.PLAIN, 15));
-        lblNewLabel_2.setBounds(687, 11, 117, 20);
+        lblNewLabel_2.setBounds(997, 12, 117, 20);
         panelNorth.add(lblNewLabel_2);
         
         textNgayChamCong = new JTextField();
@@ -437,7 +441,7 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
         textNgayChamCong.setFont(new Font("SansSerif", Font.PLAIN, 15));
         textNgayChamCong.setColumns(10);
         textNgayChamCong.setBorder(null);
-        textNgayChamCong.setBounds(808, 4, 93, 35);
+        textNgayChamCong.setBounds(1118, 5, 93, 35);
         panelNorth.add(textNgayChamCong);
         
         txtTimKiem = new RoundTextField(10);
@@ -448,11 +452,14 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
         txtTimKiem.setBorder(new EmptyBorder(0, 15, 0, 0));
         txtTimKiem.setBounds(10, 4, 291, 35);
         panelNorth.add(txtTimKiem);
-//        
-//        cboPhanXuong = new JComboBox();
-//        cboPhanXuong.setFont(new Font("SansSerif", Font.PLAIN, 15));
-//        cboPhanXuong.setBounds(438, 3, 117, 37);
-//        panelNorth.add(cboPhanXuong);
+        
+        cboPhanXuong = new JComboBox();
+        cboPhanXuong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        cboPhanXuong.setFont(new Font("SansSerif", Font.PLAIN, 15));
+        cboPhanXuong.setBounds(856, 5, 117, 37);
+        cboPhanXuong.setBackground(Color.WHITE);
+        panelNorth.add(cboPhanXuong);
+        
         GroupLayout groupLayout = new GroupLayout(this);
         groupLayout.setHorizontalGroup(
         	groupLayout.createParallelGroup(Alignment.LEADING)
@@ -484,6 +491,26 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
         			.addGap(9)
         			.addComponent(panelSouth, GroupLayout.PREFERRED_SIZE, 284, GroupLayout.PREFERRED_SIZE))
         );
+        
+        btnLamMoi = new MyButton();
+        btnLamMoi.setIcon(new ImageIcon(ChamCongCongNhan_Form.class.getResource("/icon/reset.png")));
+        btnLamMoi.setText("Làm mới danh sách");
+        btnLamMoi.setRadius(10);
+        btnLamMoi.setFont(new Font("SansSerif", Font.PLAIN, 15));
+        btnLamMoi.setFocusPainted(false);
+        btnLamMoi.setBackground(Color.WHITE);
+        btnLamMoi.setBounds(311, 2, 191, 40);
+        panelNorth.add(btnLamMoi);
+        
+        JLabel lblNewLabel_3_6 = new JLabel("Ca làm:");
+        lblNewLabel_3_6.setFont(new Font("SansSerif", Font.PLAIN, 15));
+        lblNewLabel_3_6.setBounds(537, 6, 51, 34);
+        panelNorth.add(lblNewLabel_3_6);
+        
+        JLabel lblNewLabel_3_7 = new JLabel("Phân xưởng:");
+        lblNewLabel_3_7.setFont(new Font("SansSerif", Font.PLAIN, 15));
+        lblNewLabel_3_7.setBounds(746, 5, 93, 34);
+        panelNorth.add(lblNewLabel_3_7);
         setLayout(groupLayout);
         
       indexCaLam = 3;
@@ -495,7 +522,7 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 			}
 		});
       
-      //
+      // Đưa dữ liệu công nhân lên label khi click vào 1 dòng
       tableCongNhan.addMouseListener(new MouseAdapter() {
       	@Override
       	public void mouseClicked(MouseEvent e) {
@@ -503,8 +530,6 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
       		super.mouseClicked(e);
       	}
       });
-      
-      // Đăng ký sự kiện cho ô tìm kiếm theo tên
       
       //Place holder
       txtTimKiem.addFocusListener(new FocusAdapter() {
@@ -526,7 +551,7 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
       	}
       });
       
-      // Xử lý sự kiện tìm kiếm
+      // Xử lý sự kiện tìm kiếm khi nhập vào ô tìm kiếm
       txtTimKiem.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -535,7 +560,7 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 		});
       //
       
-      //
+      //Xử lý sự kiện khi thay đổi giá trị của 1 dòng chấm công 
       tableChamCong.addMouseListener(new MouseAdapter() {
     	  @Override
     	public void mouseClicked(MouseEvent e) {
@@ -554,10 +579,20 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
     	}
       });
       
-	  //
-	  locDuLieuChamCongTheoNgay();
-	  layDanhSachCongNhan();
+      // Lấy dữ liệu cbo Phân Xưởng
+      duaDuLieuPhanXuongLenCBO();
+      
+      // Lấy và hiển thị danh sách chấm công
+      locDuLieuChamCongTheoNgay();
+	  //lấy và hiển thị danh sách công nhân
+	  layDanhSachPhanCong();
 	  docDuLieuLenTablePhanCong(listPhanCong);
+	  
+	  // Đăng ký sự kiện các nút
+	  btnChamCong.addActionListener(this);
+      btnChamCongAll.addActionListener(this);
+      btnCapNhat.addActionListener(this);
+      btnLamMoi.addActionListener(this);
         
 	}
 	
@@ -607,7 +642,7 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 		}
 	}
 	
-	private void layDanhSachCongNhan() {
+	private void layDanhSachPhanCong() {
 		ArrayList<CongDoanPhanCong> temp = congDoanPhanCong_BUS.getDanhSachPhanCong();
 		listPhanCong = new ArrayList<CongDoanPhanCong>();
 		for(CongDoanPhanCong congDoanPhanCong : temp) {
@@ -723,12 +758,30 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 	private void kiemTraComboBoxCaLam() {
 		tableCongNhan.clearSelection();
 		indexCaLam = cboCaLam.getSelectedIndex();
-		layDanhSachCongNhan();
+		layDanhSachPhanCong();
 		if (indexCaLam != 3) {
 			locPhanCongTheoCaLam(indexCaLam + 1);
 		}
 		kiemTraThanhTimKiem();
 		docDuLieuLenTablePhanCong(listPhanCong);
+	}
+	
+	private void duaDuLieuPhanXuongLenCBO() {
+		PhanXuong_BUS phanXuong_BUS = new PhanXuong_BUS();
+		ArrayList<PhanXuong> listPX = phanXuong_BUS.getDanhSachPhanXuong();
+		String[] item = new String[listPX.size() + 1]; 
+		int i = 0;
+		for (PhanXuong phanXuong : listPX) {
+			item[i] = phanXuong.getTenPhanXuong();
+			i++;
+		}
+		item[listPX.size()] = "Tất cả";
+		cboPhanXuong.setModel(new DefaultComboBoxModel<String>(item));
+		cboPhanXuong.setSelectedIndex(listPX.size());
+	}
+	
+	private void locTheoPhanXuong() {
+		
 	}
 	
 	/**
@@ -737,7 +790,7 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 	public void chamCongHangLoat() {
 		if ((JOptionPane.showConfirmDialog(this, "Bạn có muốn chấm công cho toàn bộ công nhân?", "Hỏi nhắc!", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)) {
 			tableCongNhan.clearSelection();
-			layDanhSachCongNhan();
+			layDanhSachPhanCong();
 			for (CongDoanPhanCong congDoanPhanCong : listPhanCong) {
 				String idChamCong = String.format("CCN%04d", bangChamCongCongNhan_BUS.getDanhSachChamCong().size() + 1);
 				LocalDate ngayChamCong =  LocalDate.parse(textNgayChamCong.getText(), dtf);
@@ -801,10 +854,20 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 		}
 	}
 	
+	/**
+	 * Cập nhật số lượng hoàn thành cho công nhân khi nhấn nút chấm công
+	 */
 	private void capNhatSLHoanThanhKhiNhanNut() {
 		int row = tableChamCong.getSelectedRow();
 		capNhatSoLuongHoanThanh(row);
 		currentRowChamCong = row;
+	}
+	
+	private void lamMoiDanhSachPhanCong() {
+		layDanhSachPhanCong();
+		docDuLieuLenTablePhanCong(listPhanCong);
+		cboCaLam.setSelectedItem("Tất cả");
+		cboPhanXuong.setSelectedItem("Tất cả");
 	}
 
 	@Override
@@ -823,6 +886,8 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 		if (o.equals(btnCapNhat)) {
 			capNhatSLHoanThanhKhiNhanNut();
 		}
+		if (o.equals(btnLamMoi)) {
+			lamMoiDanhSachPhanCong();
+		}
 	}
-
 }

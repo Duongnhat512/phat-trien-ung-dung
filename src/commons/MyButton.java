@@ -23,9 +23,19 @@ public class MyButton extends JButton{
 		setColor(Color.WHITE);
 		setBorderColor(Color.WHITE);
 		setBorder(null);
+		over = false;
 		setCursor(new Cursor(Cursor.HAND_CURSOR));
 		setContentAreaFilled(false);
-
+		addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				over = true;
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				over = false;
+			}
+		});
 	}
 
 	public boolean isOver() {
@@ -84,8 +94,13 @@ public class MyButton extends JButton{
 		g2d.setColor(new Color(228, 228, 228));
 		g2d.fillRoundRect(0, 0, getWidth(), getHeight(), radius, radius);
 		g2d.setColor(getBackground());
+		if(over) {
+			colorOver = new Color(getBackground().getRed(), getBackground().getGreen(), getBackground().getBlue(), 150);
+			g2d.setColor(colorOver);
+		}
 		// border set 2 pixel
 		g2d.fillRoundRect(1, 1, getWidth() - 4, getHeight() - 4, radius, radius);
+		
 		super.paintComponent(g);
 	}
 
