@@ -66,6 +66,7 @@ import java.util.Iterator;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import commons.RoundTextField;
+import java.awt.Cursor;
 
 public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 	
@@ -415,6 +416,7 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
         panelNorth.setBackground(Color.WHITE);
         
         cboCaLam = new JComboBox();
+        cboCaLam.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         cboCaLam.setModel(new DefaultComboBoxModel<String>(new String[] {"Ca sáng", "Ca chiều", "Ca tối", "Tất cả"}));
         cboCaLam.setSelectedIndex(3);
         cboCaLam.setFont(new Font("SansSerif", Font.PLAIN, 15));
@@ -423,17 +425,19 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
         
         lblNewLabel_2 = new JLabel("Ngày chấm công:");
         lblNewLabel_2.setFont(new Font("SansSerif", Font.PLAIN, 15));
-        lblNewLabel_2.setBounds(573, 12, 117, 20);
+        lblNewLabel_2.setBounds(687, 11, 117, 20);
         panelNorth.add(lblNewLabel_2);
         
         textNgayChamCong = new JTextField();
+        textNgayChamCong.setDisabledTextColor(new Color(0, 0, 0));
+        textNgayChamCong.setEnabled(false);
         date = LocalDate.now().minusDays(1);
         textNgayChamCong.setText(dtf.format(date));
         textNgayChamCong.setHorizontalAlignment(SwingConstants.CENTER);
         textNgayChamCong.setFont(new Font("SansSerif", Font.PLAIN, 15));
         textNgayChamCong.setColumns(10);
         textNgayChamCong.setBorder(null);
-        textNgayChamCong.setBounds(694, 5, 93, 35);
+        textNgayChamCong.setBounds(808, 4, 93, 35);
         panelNorth.add(textNgayChamCong);
         
         txtTimKiem = new RoundTextField(10);
@@ -537,15 +541,18 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
       //
       tableChamCong.addMouseListener(new MouseAdapter() {
     	  @Override
-    	public void mousePressed(MouseEvent e) {
+    	public void mouseClicked(MouseEvent e) {
     		int row = tableChamCong.getSelectedRow();
-    		if (currentRowChamCong == -1) {
-    			currentRowChamCong = row;
-				return;
+    		if (currentRowChamCong != -1 && currentRowChamCong != row) {
+				if (capNhatSoLuongHoanThanh(currentRowChamCong)) {
+					currentRowChamCong = row;
+				}
+				else {
+					tableChamCong.clearSelection();
+				}
 			}
-    		if (currentRowChamCong != row) {
-				capNhatSoLuongHoanThanh(currentRowChamCong);
-    			currentRowChamCong = row;
+    		else {
+				currentRowChamCong = row;
 			}
     	}
       });
@@ -755,47 +762,52 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener{
 	/**
 	 * Cập nhật số lượng hoàn thành
 	 */
-	private void capNhatSoLuongHoanThanh(int row) {
+	private boolean capNhatSoLuongHoanThanh(int row) {
 		if (row != -1) {
 			tableChamCong.editCellAt(row, 5);
 			BangChamCongCongNhan bangCC = listChamCong.get(row);
 			int soLuongHoanThanh = 0;
 			try {
 				soLuongHoanThanh = Integer.parseInt(tableChamCong.getValueAt(row, 6).toString());
+				if (soLuongHoanThanh == bangCC.getSoLuongHoanThanh()) {
+					return false;
+				}
+				if (soLuongHoanThanh > (bangCC.getSoLuongHoanThanh() + bangCC.getCongDoanPhanCong().getSoLuongConLai())) {
+					JOptionPane.showMessageDialog(this, "Số lượng hoàn thành vượt quá số lượng còn lại của công nhân.");
+					tableChamCong.setValueAt("" + bangCC.getSoLuongHoanThanh(), row, 6);
+					return false;
+				}
+				else {
+					if (JOptionPane.showConfirmDialog(this, "Bạn có muốn thay đổi không?", "Hỏi nhắc", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+						CongDoanPhanCong congDoanPhanCong = bangCC.getCongDoanPhanCong();
+						congDoanPhanCong.setSoLuongConLai(congDoanPhanCong.getSoLuongConLai() - (soLuongHoanThanh - bangCC.getSoLuongHoanThanh()));
+						bangCC.setSoLuongHoanThanh(soLuongHoanThanh);
+						congDoanPhanCong_BUS.capNhatSoLuongConLai(congDoanPhanCong);
+						bangChamCongCongNhan_BUS.capNhatSoLuongHoanThanh(bangCC);
+						JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
+						return true;
+					}
+					else {
+						tableChamCong.setValueAt("" + bangCC.getSoLuongHoanThanh(), row, 6);
+						return false;
+					}
+				}
 			} catch (NumberFormatException e) {
 				JOptionPane.showMessageDialog(this, "Số lượng hoàn thành cần sửa phải là chữ số.");
 				tableChamCong.setValueAt("" + bangCC.getSoLuongHoanThanh(), row, 6);
-				tableChamCong.editCellAt(row, 6);
-				return;
-			}
-			if (soLuongHoanThanh == bangCC.getSoLuongHoanThanh()) {
-				return;
-			}
-			if (soLuongHoanThanh > (bangCC.getSoLuongHoanThanh() + bangCC.getCongDoanPhanCong().getSoLuongConLai())) {
-				JOptionPane.showMessageDialog(this, "Số lượng hoàn thành vượt quá số lượng còn lại của công nhân.");
-				tableChamCong.setValueAt("" + bangCC.getSoLuongHoanThanh(), row, 6);
-				tableChamCong.editCellAt(row, 6);
-				return;
-			}
-			else {
-				if (JOptionPane.showConfirmDialog(this, "Bạn có muốn thay đổi không?", "Hỏi nhắc", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-					CongDoanPhanCong congDoanPhanCong = bangCC.getCongDoanPhanCong();
-					congDoanPhanCong.setSoLuongConLai(congDoanPhanCong.getSoLuongConLai() - (soLuongHoanThanh - bangCC.getSoLuongHoanThanh()));
-					bangCC.setSoLuongHoanThanh(soLuongHoanThanh);
-					bangChamCongCongNhan_BUS.capNhatSoLuongHoanThanh(bangCC);
-					JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
-				}
+				return false;
 			}
 		}
 		else {
 			JOptionPane.showMessageDialog(this, "Bạn cần chọn ngày công để sửa chấm công.");
-			return;	
+			return false;	
 		}
 	}
 	
 	private void capNhatSLHoanThanhKhiNhanNut() {
 		int row = tableChamCong.getSelectedRow();
 		capNhatSoLuongHoanThanh(row);
+		currentRowChamCong = row;
 	}
 
 	@Override
