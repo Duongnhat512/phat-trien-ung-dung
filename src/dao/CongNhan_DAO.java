@@ -54,29 +54,6 @@ public class CongNhan_DAO {
 		}
 		return danhSachCongNhan;
 	}
-<<<<<<< HEAD
-
-	public CongNhan getCongNhanTheoID(String id) {
-		CongNhan congNhan = null;
-		ConnectDB.getInstance();
-		Connection con = ConnectDB.getConnection();
-		PreparedStatement stm = null;
-		try {
-			stm = con.prepareStatement("select * from CongNhan where idCongNhan = ?");
-			stm.setString(1, id);
-			ResultSet rs = stm.executeQuery();
-			while (rs.next()) {
-				String idCongNhan = rs.getString(1);
-				String hoTen = rs.getString(2);
-				boolean phai = true;
-				if (!rs.getBoolean(3))
-					phai = false;
-				LocalDate ngaySinh = LocalDate.parse(rs.getString(4));
-				LocalDate ngayBatDauCongTac = LocalDate.parse(rs.getString(5));
-				String ngayKetThucCongTacStr = rs.getString(6);
-				LocalDate ngayKetThucCongTac = (ngayKetThucCongTacStr != null) ? LocalDate.parse(ngayKetThucCongTacStr)
-						: null;
-=======
 	public ArrayList<CongNhan> getDanhSachCongNhanDangLam() {
 		ArrayList<CongNhan> danhSachCongNhan = new ArrayList<CongNhan>();
 		Connection con = ConnectDB.getConnection();
@@ -92,7 +69,6 @@ public class CongNhan_DAO {
 				LocalDate ngayBatDauCongTac = LocalDate.parse(rs.getString(5));
 				String ngayKetThucCongTacStr = rs.getString(6);
 				LocalDate ngayKetThucCongTac = (ngayKetThucCongTacStr != null) ? LocalDate.parse(ngayKetThucCongTacStr) : null;
->>>>>>> 3424301e5ed6b6fcaaabd3d21cbee7e10f4612fb
 				PhanXuong phanXuong = phanXuong_DAO.getPhanXuongTheoID(rs.getString(7));
 				String email = rs.getString(8);
 				String soDienThoai = rs.getString(9);
@@ -101,19 +77,12 @@ public class CongNhan_DAO {
 				TaiKhoan taiKhoan = taiKhoan_DAO.getTaiKhoan(idCongNhan);
 				String anhDaiDien = rs.getString(13);
 				String cccd = rs.getString(14);
-<<<<<<< HEAD
-				congNhan = new CongNhan(idCongNhan, hoTen, phai, ngaySinh, ngayBatDauCongTac, ngayKetThucCongTac,
-						phanXuong, email, soDienThoai, tayNghe, taiKhoan, anhDaiDien, cccd, phuCap);
-=======
 				CongNhan congNhan = new CongNhan(idCongNhan, hoTen, phai, ngaySinh, ngayBatDauCongTac, ngayKetThucCongTac, phanXuong, email, soDienThoai, tayNghe, taiKhoan, anhDaiDien, cccd, phuCap);
 				danhSachCongNhan.add(congNhan);
->>>>>>> 3424301e5ed6b6fcaaabd3d21cbee7e10f4612fb
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-<<<<<<< HEAD
-=======
 		}
 		return danhSachCongNhan;
 	}
@@ -225,70 +194,6 @@ public CongNhan getCongNhanDangLamTheoID(String id) {
 	
 	return null;
 }
-public ArrayList<CongNhan> getDanhSachCongNhanTheoCa(int idCaLam){
-	ArrayList<CongNhan> danhSachCongNhan = new ArrayList<CongNhan>();
-	ConnectDB.getInstance();
-	Connection con = ConnectDB.getConnection();
-	PreparedStatement stm = null;
-	try {
-		stm = con.prepareStatement("select * from CongNhan where idCaLam = ?");
-		stm.setInt(1, idCaLam);
-		ResultSet rs = stm.executeQuery();
-		while(rs.next()) {
-			String idCongNhan = rs.getString(1);
-			String hoTen = rs.getString(2);
-			boolean phai = true;
-			if(!rs.getBoolean(3)) phai = false;
-			LocalDate ngaySinh = LocalDate.parse(rs.getString(4));
-			LocalDate ngayBatDauCongTac = LocalDate.parse(rs.getString(5));
-			String ngayKetThucCongTacStr = rs.getString(6);
-			LocalDate ngayKetThucCongTac = (ngayKetThucCongTacStr != null) ? LocalDate.parse(ngayKetThucCongTacStr) : null;
-			PhanXuong phanXuong = phanXuong_DAO.getPhanXuongTheoID(rs.getString(7));
-			String email = rs.getString(8);
-			String soDienThoai = rs.getString(9);
-			double phuCap = rs.getDouble(10);
-			String tayNghe = rs.getString(11);
-			TaiKhoan taiKhoan = taiKhoan_DAO.getTaiKhoan(idCongNhan);
-			String anhDaiDien = rs.getString(13);
-			String cccd = rs.getString(14);
-			CongNhan congNhan = new CongNhan(idCongNhan, hoTen, phai, ngaySinh, ngayBatDauCongTac, ngayKetThucCongTac, phanXuong, email, soDienThoai, tayNghe, taiKhoan, anhDaiDien, cccd, phuCap);
-			danhSachCongNhan.add(congNhan);
->>>>>>> 3424301e5ed6b6fcaaabd3d21cbee7e10f4612fb
-		}
-
-<<<<<<< HEAD
-		return congNhan;
-=======
-public boolean 	create(CongNhan cn) {
-	ConnectDB.getInstance();
-	Connection con = ConnectDB.getConnection();
-	PreparedStatement stmt = null;
-	int n= 0;
-	try {
-		stmt =con.prepareStatement("insert into"+" CongNhan values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-		
-		stmt.setString(1, cn.getIdCongNhan());
-		stmt.setString(2, cn.getHoTen());
-		stmt.setBoolean(3, cn.isPhai());
-		stmt.setString(4, cn.getNgaySinh()+"");
-		stmt.setString(5, cn.getNgayBatDauCongTac()+"");
-		stmt.setDate(6, null);
-		stmt.setString(7, cn.getPhanXuong().getIdPhanXuong());
-		stmt.setString(8, cn.getEmail());
-		stmt.setString(9,cn.getSoDienThoai());
-		stmt.setDouble(10, cn.getPhuCap());
-		stmt.setString(11, cn.getTayNghe());
-		stmt.setString(12, cn.getTaiKhoan().getTenTaiKhoan());
-		stmt.setString(13, cn.getAnhDaiDien());
-		stmt.setString(14, cn.getcCCD());
-		n = stmt.executeUpdate();
-		
-	} catch (SQLException e) {
-		// TODO: handle exception
-		e.printStackTrace();
->>>>>>> 3424301e5ed6b6fcaaabd3d21cbee7e10f4612fb
-	}
-
 	public ArrayList<CongNhan> getDanhSachCongNhanTheoCa(int idCaLam) {
 		ArrayList<CongNhan> danhSachCongNhan = new ArrayList<CongNhan>();
 		ConnectDB.getInstance();

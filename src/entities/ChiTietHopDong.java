@@ -7,7 +7,6 @@ public class ChiTietHopDong {
 	private SanPham sanPham;
 	private int soLuong;
 	private double thanhTien;
-	private boolean trangThai;
 	public ChiTietHopDong(HopDongSanPham hopDongSanPham, SanPham sanPham, int soLuong) {
 		super();
 		this.hopDongSanPham = hopDongSanPham;
@@ -22,17 +21,7 @@ public class ChiTietHopDong {
 		this.sanPham = sanPham;
 		this.soLuong = soLuong;
 		tinhThanhTien();
-		this.trangThai = trangThai;
 	}
-
-	public boolean isTrangThai() {
-		return trangThai;
-	}
-
-	public void setTrangThai(boolean trangThai) {
-		this.trangThai = trangThai;
-	}
-
 	public ChiTietHopDong() {
 		super();
 	}

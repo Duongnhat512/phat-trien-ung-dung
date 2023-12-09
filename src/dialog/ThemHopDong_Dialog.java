@@ -644,7 +644,6 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener{
 			hopDongSanPham_BUS.themHopDong(hd);
 			for (ChiTietHopDong chiTietHopDong : listCTHD) {
 				chiTietHopDong.setHopDongSanPham(hd);
-				chiTietHopDong.setTrangThai(false);
 				chiTietHopDong_BUS.themCTHopDong(chiTietHopDong);
 			}
 			JOptionPane.showMessageDialog(this, "Thêm hợp đồng thành công!");

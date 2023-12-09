@@ -170,13 +170,6 @@ public class Login_GUI extends JFrame implements ActionListener{
 		lbLogo.setIcon(new ImageIcon(Login_GUI.class.getResource("/icon/logo_Login.png")));
 		lbLogo.setBounds(161, 143, 412, 363);
 		panel.add(lbLogo);
-<<<<<<< HEAD
-		
-		
-		textTenDangNhap.setText("admin");
-		passwordField.setText("1111");
-		
-=======
 		String projectDirectory = System.getProperty("user.dir");
         try {
              visibleImage = ImageIO.read(new File(projectDirectory+"\\src\\icon\\icons8_eye_25px.png")); // Đường dẫn hình ảnh mắt mở
@@ -204,7 +197,6 @@ public class Login_GUI extends JFrame implements ActionListener{
         });
 		
 		//
->>>>>>> 3424301e5ed6b6fcaaabd3d21cbee7e10f4612fb
 		try {
 			ConnectDB.getInstance().connect();
 		} catch (ClassNotFoundException e) {
@@ -255,11 +247,7 @@ public class Login_GUI extends JFrame implements ActionListener{
 		Object o = e.getSource();
 		if(o.equals(btnDangNhap)) {
 			if(kiemTraDangNhap()) {
-<<<<<<< HEAD
 				moTrangChu();
-=======
-			moTrangChu();
->>>>>>> 3424301e5ed6b6fcaaabd3d21cbee7e10f4612fb
 			}
 		}
 	}

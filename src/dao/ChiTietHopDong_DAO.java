@@ -59,7 +59,6 @@ public class ChiTietHopDong_DAO {
 			stm.setString(2, chiTietHopDong.getSanPham().getIdSanPham());
 			stm.setInt(3, chiTietHopDong.getSoLuong());
 			stm.setDouble(4, chiTietHopDong.getThanhTien());
-			stm.setBoolean(5, chiTietHopDong.isTrangThai());
 			n = stm.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -85,8 +84,7 @@ public class ChiTietHopDong_DAO {
 				HopDongSanPham hd = hopDongSanPham_DAO.getHopDongSanPhamTheoID(rs.getString(1));
 				SanPham sp = sanPham_DAO.getSanPhamTheoID(rs.getString(2));
 				int soLuong = rs.getInt(3);
-				boolean trangThai = rs.getBoolean(5);
-				ChiTietHopDong chiTietHopDong = new ChiTietHopDong(hd, sp, soLuong, trangThai);
+				ChiTietHopDong chiTietHopDong = new ChiTietHopDong(hd, sp, soLuong);
 				list.add(chiTietHopDong);
 			}
 		} catch (SQLException e) {
