@@ -246,8 +246,8 @@ public class Login_GUI extends JFrame implements ActionListener{
 	}
 	
 	private void moTrangChu() {
-		Main_GUI main_GUI = new Main_GUI();
-		main_GUI.openMain_GUI(tk);
+		Main_GUI main_GUI = new Main_GUI(tk);
+		main_GUI.setVisible(true);
 		frame.dispose();
 	}
 	
