@@ -1030,14 +1030,23 @@ public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 								File file = new File(ttfPath);
 								if (file.exists()) {
 									try {
-										desktop.browse(file.toURI());
+										desktop.open(file);
 									} catch (IOException e1) {
+										// TODO Auto-generated catch block
 										e1.printStackTrace();
-									}
+									} // Mở file PDF
+								} else {
+									System.out.println("File không tồn tại!");
 								}
+							} else {
+								System.out.println("Desktop không được hỗ trợ!");
 							}
+						} else {
+
 						}
+
 					}
+
 				}
 			});
 		}

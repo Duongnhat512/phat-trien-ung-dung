@@ -183,7 +183,7 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 		cbbThang.setBackground(new Color(255, 255, 255));
 		cbbThang.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		cbbThang.setBounds(206, 23, 142, 30);
-		cbbThang.setSelectedIndex(currentMonth-1);
+		cbbThang.setSelectedIndex(currentMonth - 1);
 		add(cbbThang);
 
 		cbbPhongBan = new JComboBox();
@@ -371,7 +371,7 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 		btnRefesh.setFocusPainted(false);
 		btnRefesh.setBackground(new Color(255, 255, 255));
 		btnRefesh.setText("Làm Mới");
-		
+
 		btnRefesh.setRadius(20);
 		btnRefesh.setIcon(new ImageIcon(TinhLuongCongNhan_Form.class.getResource("/icon/refresh.png")));
 		btnRefesh.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -476,7 +476,7 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 				tongThoiGianLamViec += values[1];
 				tongSoLuongSanPham += values[0];
 				tongLuongHanhChanh += hanhChanh;
-				tongLuongTangCa +=tangCa;
+				tongLuongTangCa += tangCa;
 				tongPhuCap += cn.getPhuCap();
 				tongThucLanh += luongCongNhan.getThucLanh();
 			}
@@ -609,7 +609,8 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 					{ "Tên Công Nhân", (String) tableLuong.getValueAt(r, 4) }, { "Số Tài Khoản", tk.getSoTaiKhoan() },
 					{ "Phân Xưởng", (String) tableLuong.getValueAt(r, 2) }, { "Trình Độ", cn.getTayNghe() },
 					{ "Giờ Công", (String) tableLuong.getValueAt(r, 5) },
-					{ "Tổng Lương", (String) tableLuong.getValueAt(r, 10) }, };
+					{ "Ngày Nhận Lương", (String) tableLuong.getValueAt(r, 1) },
+					{ "Thực Lãnh", (String) tableLuong.getValueAt(r, 10) }, };
 
 			Object[][] data2 = new Object[listChiTiet.size() + 1][6]; // Khởi tạo mảng với số hàng cần thiết
 			data2[0] = new Object[] { "ID Sản Phẩm", "Tên Sản Phẩm", "Tên Công Đoạn", "Thời Gian Làm Việc",
@@ -677,7 +678,7 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 
 	private void searchTable() {
 		String searchText = searchField.getText().trim();
-		if(searchText.isEmpty() || searchText.equals("Nhập mã/tên công nhân cần tìm")) {
+		if (searchText.isEmpty() || searchText.equals("Nhập mã/tên công nhân cần tìm")) {
 //			System.out.println(searchText);
 			filterTable();
 			return;
@@ -715,7 +716,7 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 			nam = 0;
 		}
 		String pb = (String) cbbPhongBan.getSelectedItem();
-		
+
 		try {
 			docDulieuVaoTable(thang, nam, pb);
 		} catch (SQLException e1) {
@@ -723,20 +724,22 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 			e1.printStackTrace();
 		}
 	}
+
 	public void lamMoi() {
 		searchField.setText("Nhập mã/tên công nhân cần tìm");
 		Calendar calendar = Calendar.getInstance();
 		int currentMonth = calendar.get(Calendar.MONTH);
 		int currentYear = calendar.get(Calendar.YEAR);
 		cbbNam.setSelectedItem("Năm " + String.valueOf(currentYear));
-		cbbThang.setSelectedIndex(currentMonth-1);
+		cbbThang.setSelectedIndex(currentMonth - 1);
 		cbbPhongBan.setSelectedItem("Tất cả");
 		filterTable();
 		TableRowSorter<DefaultTableModel> sorter = (TableRowSorter<DefaultTableModel>) tableLuong.getRowSorter();
-	    if (sorter != null) {
-	        sorter.setRowFilter(null);
-	    }
+		if (sorter != null) {
+			sorter.setRowFilter(null);
+		}
 	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -922,12 +925,13 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 							{ "Số Tài Khoản", tk.getSoTaiKhoan() },
 							{ "Phân Xưởng", (String) tableLuong.getValueAt(r, 2) }, { "Trình Độ", cn.getTayNghe() },
 							{ "Giờ Công", (String) tableLuong.getValueAt(r, 5) },
-							{ "Tổng Lương", (String) tableLuong.getValueAt(r, 10) }, },
+							{ "Ngày Nhận Lương", (String) tableLuong.getValueAt(r, 1) },
+							{ "Thực Lãnh", (String) tableLuong.getValueAt(r, 10) }, },
 					new String[] { "New column", "New column" }));
 			JScrollPane scrollPane = new JScrollPane(table_chiTiet1);
 			scrollPane.setColumnHeaderView(table_chiTiet1);
 			scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-			scrollPane.setBounds(15, 62, 660, 175);
+			scrollPane.setBounds(15, 62, 660, 200);
 			panel.add(scrollPane);
 			int cellHeight = 25;
 			table_chiTiet1.setRowHeight(cellHeight);
@@ -984,7 +988,7 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 						int option = JOptionPane.showConfirmDialog(null,
 								"Xuất PDF thành công . Bạn có muốn mở file không", "Xác nhận",
 								JOptionPane.YES_NO_OPTION);
-						if (option == JOptionPane.YES_OPTION) {   
+						if (option == JOptionPane.YES_OPTION) {
 							// Kiểm tra xem Desktop được hỗ trợ không trước khi mở file
 							if (Desktop.isDesktopSupported()) {
 								Desktop desktop = Desktop.getDesktop();
