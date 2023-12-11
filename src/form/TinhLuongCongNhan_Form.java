@@ -38,6 +38,7 @@ import bus.CongNhan_BUS;
 import bus.PhanXuong_BUS;
 import bus.TaiKhoanNganHang_BUS;
 import bus.TaiKhoan_BUS;
+import commons.MyButton;
 import commons.RoundPanel;
 import commons.RoundTextField;
 import commons.Table;
@@ -54,6 +55,8 @@ import javax.swing.SwingConstants;
 import javax.swing.RowFilter.Entry;
 
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
 
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -73,6 +76,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -91,8 +96,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import java.awt.Cursor;
 
-public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, MouseListener, DocumentListener {
+public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, MouseListener {
 	private int width = 1250;
 	private int height = 725;
 	private BangLuongCongNhan_BUS bl_bus;
@@ -104,8 +110,6 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 	private Table tableLuong;
 
 	private DefaultTableModel dftable;
-	private JButton btnPrint;
-	private JButton btnEmail;
 	private JComboBox cbbNam;
 	private JComboBox cbbThang;
 	private JComboBox cbbPhongBan;
@@ -124,6 +128,10 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 	private JTable table_chiTiet1;
 	private JTable table_chiTiet2;
 	private JLabel lbldsCC;
+	private boolean allowFilter = true;
+	private MyButton btnRefesh;
+	private MyButton btnPrint;
+	private MyButton btnEmail;
 	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
 
 	public TinhLuongCongNhan_Form(int width, int height) {
@@ -159,6 +167,9 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 			years[i - startYear] = "Năm " + String.valueOf(i);
 		}
 		cbbNam = new JComboBox(years);
+		cbbNam.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		cbbNam.setBorder(null);
+		cbbNam.setBackground(new Color(255, 255, 255));
 		cbbNam.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		cbbNam.setBounds(23, 23, 142, 30);
 		cbbNam.setSelectedItem("Năm " + String.valueOf(currentYear));
@@ -167,14 +178,20 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 		String[] months = { "Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8",
 				"Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12" };
 		cbbThang = new JComboBox(months);
+		cbbThang.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		cbbThang.setBorder(null);
+		cbbThang.setBackground(new Color(255, 255, 255));
 		cbbThang.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		cbbThang.setBounds(206, 23, 142, 30);
-		cbbThang.setSelectedIndex(currentMonth);
+		cbbThang.setSelectedIndex(currentMonth - 1);
 		add(cbbThang);
 
 		cbbPhongBan = new JComboBox();
+		cbbPhongBan.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		cbbPhongBan.setBorder(null);
+		cbbPhongBan.setBackground(new Color(255, 255, 255));
 		cbbPhongBan.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		cbbPhongBan.setBounds(383, 23, 142, 30);
+		cbbPhongBan.setBounds(391, 23, 142, 30);
 		add(cbbPhongBan);
 
 		RoundPanel pSouth = new RoundPanel();
@@ -267,7 +284,7 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 
 		lbl_7 = new JLabel("Tổng Thực Lãnh");
 		lbl_7.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lbl_7.setBounds(816, 110, 161, 25);
+		lbl_7.setBounds(816, 110, 155, 25);
 		panel_1.add(lbl_7);
 
 		lbl_slcn = new JLabel("");
@@ -301,25 +318,34 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 		panel_1.add(lbl_pc);
 
 		lbl_thucLanh = new JLabel("");
-		lbl_thucLanh.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbl_thucLanh.setBounds(998, 113, 186, 19);
+		lbl_thucLanh.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lbl_thucLanh.setBounds(985, 113, 199, 19);
 		panel_1.add(lbl_thucLanh);
 
-		btnPrint = new JButton("Xuất Excel");
+		btnPrint = new MyButton();
+		btnPrint.setFocusPainted(false);
+		btnPrint.setBackground(new Color(255, 255, 255));
+		btnPrint.setText("Xuất Excel");
+		btnPrint.setRadius(20);
 		btnPrint.setIcon(new ImageIcon(TinhLuongCongNhan_Form.class.getResource("/icon/excel.png")));
 		btnPrint.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnPrint.setBounds(874, 23, 158, 30);
+		btnPrint.setBounds(815, 23, 158, 30);
 		add(btnPrint);
 
-		btnEmail = new JButton("Gửi Email Hàng Loạt");
+		btnEmail = new MyButton();
+		btnEmail.setFocusPainted(false);
+		btnEmail.setBackground(new Color(255, 255, 255));
+		btnEmail.setText("Gửi Email Hàng Loạt");
+		btnEmail.setRadius(20);
+		btnEmail.setIcon(new ImageIcon(TinhLuongCongNhan_Form.class.getResource("/icon/mail.png")));
 		btnEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnEmail.setBounds(1053, 23, 179, 30);
+		btnEmail.setBounds(1021, 23, 211, 30);
 		add(btnEmail);
 		//
 		searchField = new RoundTextField(10);
 		searchField.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		searchField.setText("Nhập mã/tên công nhân cần tìm");
-		searchField.setBounds(934, 270, 298, 30);
+		searchField.setBounds(23, 270, 298, 30);
 		add(searchField);
 		searchField.setColumns(10);
 		searchField.addFocusListener(new FocusAdapter() {
@@ -341,7 +367,19 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 				super.focusGained(e);
 			}
 		});
+		btnRefesh = new MyButton();
+		btnRefesh.setFocusPainted(false);
+		btnRefesh.setBackground(new Color(255, 255, 255));
+		btnRefesh.setText("Làm Mới");
+
+		btnRefesh.setRadius(20);
+		btnRefesh.setIcon(new ImageIcon(TinhLuongCongNhan_Form.class.getResource("/icon/refresh.png")));
+		btnRefesh.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnRefesh.setBounds(622, 23, 158, 30);
+		add(btnRefesh);
+
 		docDuLieuPhanXuong();
+		filterTable();
 		btnPrint.addActionListener(this);
 		btnEmail.addActionListener(this);
 		tableLuong.addMouseListener(this);
@@ -349,7 +387,14 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 		cbbThang.addActionListener(this);
 		cbbNam.addActionListener(this);
 		cbbPhongBan.addActionListener(this);
-		searchField.getDocument().addDocumentListener(this);
+		btnRefesh.addActionListener(this);
+
+		searchField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				searchTable();
+			}
+		});
 	}
 
 	public void xoaTable() {
@@ -376,23 +421,23 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 			tongSoLuong = dscn.size();
 			for (CongNhan cn : dscn) {
 				LuongCongNhan l = bl_bus.getLuongCongNhan(cn.getIdCongNhan(), thang, nam);
-				int[] values = bl_bus.TinhTongSanLuongVaThoiGianLamViec(cn.getIdCongNhan(), thang, nam);
+				double[] values = bl_bus.TinhTongSanLuongVaThoiGianLamViec(cn.getIdCongNhan(), thang, nam);
 				PhanXuong p = px_bus.getdsPXtheoID(cn.getPhanXuong().getIdPhanXuong());
 				String idBangLuong = getIdBangLuong(l.getIdLuongCN());
 				l.setIdLuongCN(idBangLuong);
+				bl_bus.themBangLuongCongNhan(l, thang, nam);
 				if (LocalDate.now().getMonthValue() == thang + 1 && LocalDate.now().getDayOfMonth() == 5) {
-
-					bl_bus.themBangLuongCongNhan(l, thang, nam);
 				}
 				DecimalFormat decimalFormat = new DecimalFormat("###,###,###.##");
 				if (l.getThucLanh() < 0) {
 					String thuclanh = decimalFormat.format(0) + " VND";
 				}
-				String luongHanhChanh = decimalFormat.format(l.getTongLuong()) + " VND";
+				double hanhChanh = values[2];
+				String luongHanhChanh = decimalFormat.format(hanhChanh) + " VND";
 				String thucLanh = decimalFormat.format(l.getThucLanh()) + " VND";
 				String phuCap = decimalFormat.format(cn.getPhuCap()) + " VND";
 
-				double tangCa = l.getThucLanh() - l.getTongLuong() - cn.getPhuCap();
+				double tangCa = values[3];
 				String luongTangCa = decimalFormat.format(tangCa) + " VND";
 				dftable.addRow(
 						new Object[] { stt, l.getNgayTinhLuong().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
@@ -401,10 +446,10 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 				stt++;
 				tongThoiGianLamViec += values[1];
 				tongSoLuongSanPham += values[0];
-				tongLuongHanhChanh += l.getTongLuong();
-				tongLuongTangCa += l.getThucLanh() - l.getTongLuong() - cn.getPhuCap();
+				tongLuongHanhChanh += hanhChanh;
+				tongLuongTangCa += tangCa;
 				tongPhuCap += cn.getPhuCap();
-				tongThucLanh += l.getThucLanh();
+				tongThucLanh += hanhChanh;
 			}
 		} else {
 			tongSoLuong = dslcn.size();
@@ -415,12 +460,13 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 				}
 				CongNhan cn = cn_bus.getCongNhanTheoID(luongCongNhan.getCongNhan().getIdCongNhan());
 				PhanXuong p = px_bus.getdsPXtheoID(cn.getPhanXuong().getIdPhanXuong());
-				String luongHanhChanh = decimalFormat.format(luongCongNhan.getTongLuong()) + " VND";
 				String thucLanh = decimalFormat.format(luongCongNhan.getThucLanh()) + " VND";
 				String phuCap = decimalFormat.format(cn.getPhuCap()) + " VND";
-				int[] values = bl_bus.TinhTongSanLuongVaThoiGianLamViec(luongCongNhan.getCongNhan().getIdCongNhan(),
+				double[] values = bl_bus.TinhTongSanLuongVaThoiGianLamViec(luongCongNhan.getCongNhan().getIdCongNhan(),
 						thang, nam);
-				double tangCa = luongCongNhan.getThucLanh() - luongCongNhan.getTongLuong() - cn.getPhuCap();
+				double tangCa = values[3];
+				double hanhChanh = values[2];
+				String luongHanhChanh = decimalFormat.format(hanhChanh) + " VND";
 				String luongTangCa = decimalFormat.format(tangCa) + " VND";
 				dftable.addRow(new Object[] { stt,
 						luongCongNhan.getNgayTinhLuong().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
@@ -429,8 +475,8 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 				stt++;
 				tongThoiGianLamViec += values[1];
 				tongSoLuongSanPham += values[0];
-				tongLuongHanhChanh += luongCongNhan.getTongLuong();
-				tongLuongTangCa += luongCongNhan.getThucLanh() - luongCongNhan.getTongLuong() - cn.getPhuCap();
+				tongLuongHanhChanh += hanhChanh;
+				tongLuongTangCa += tangCa;
 				tongPhuCap += cn.getPhuCap();
 				tongThucLanh += luongCongNhan.getThucLanh();
 			}
@@ -563,7 +609,8 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 					{ "Tên Công Nhân", (String) tableLuong.getValueAt(r, 4) }, { "Số Tài Khoản", tk.getSoTaiKhoan() },
 					{ "Phân Xưởng", (String) tableLuong.getValueAt(r, 2) }, { "Trình Độ", cn.getTayNghe() },
 					{ "Giờ Công", (String) tableLuong.getValueAt(r, 5) },
-					{ "Tổng Lương", (String) tableLuong.getValueAt(r, 10) }, };
+					{ "Ngày Nhận Lương", (String) tableLuong.getValueAt(r, 1) },
+					{ "Thực Lãnh", (String) tableLuong.getValueAt(r, 10) }, };
 
 			Object[][] data2 = new Object[listChiTiet.size() + 1][6]; // Khởi tạo mảng với số hàng cần thiết
 			data2[0] = new Object[] { "ID Sản Phẩm", "Tên Sản Phẩm", "Tên Công Đoạn", "Thời Gian Làm Việc",
@@ -631,9 +678,14 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 
 	private void searchTable() {
 		String searchText = searchField.getText().trim();
+		if (searchText.isEmpty() || searchText.equals("Nhập mã/tên công nhân cần tìm")) {
+//			System.out.println(searchText);
+			filterTable();
+			return;
+		}
 		TableRowSorter sorter = new TableRowSorter<>(dftable);
 		tableLuong.setRowSorter(sorter);
-		
+
 		RowFilter<DefaultTableModel, Object> idOrNameFilter = new RowFilter<DefaultTableModel, Object>() {
 			@Override
 			public boolean include(Entry<? extends DefaultTableModel, ? extends Object> entry) {
@@ -651,6 +703,7 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 		};
 		sorter.setRowFilter(idOrNameFilter);
 	}
+
 	public void filterTable() {
 		int thang;
 		int nam;
@@ -671,12 +724,30 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 			e1.printStackTrace();
 		}
 	}
+
+	public void lamMoi() {
+		searchField.setText("Nhập mã/tên công nhân cần tìm");
+		Calendar calendar = Calendar.getInstance();
+		int currentMonth = calendar.get(Calendar.MONTH);
+		int currentYear = calendar.get(Calendar.YEAR);
+		cbbNam.setSelectedItem("Năm " + String.valueOf(currentYear));
+		cbbThang.setSelectedIndex(currentMonth - 1);
+		cbbPhongBan.setSelectedItem("Tất cả");
+		filterTable();
+		TableRowSorter<DefaultTableModel> sorter = (TableRowSorter<DefaultTableModel>) tableLuong.getRowSorter();
+		if (sorter != null) {
+			sorter.setRowFilter(null);
+		}
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		Object obj = e.getSource();
 		if (obj.equals(cbbThang) || obj.equals(cbbNam) || obj.equals(cbbPhongBan)) {
-			filterTable();
+			if (allowFilter) {
+				filterTable();
+			}
 		}
 		if (obj.equals(btnPrint)) {
 			String projectDirectory = System.getProperty("user.dir");
@@ -690,8 +761,12 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 			}
 
 		}
+		if (obj.equals(btnRefesh)) {
+			allowFilter = false; // Ngăn chặn sự kiện filterTable
+			lamMoi(); // Gọi hàm làm mới các combobox ở đây
+			allowFilter = true;
+		}
 		if (obj.equals(btnEmail)) {
-
 			int thang;
 			int nam;
 			try {
@@ -850,7 +925,8 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 							{ "Số Tài Khoản", tk.getSoTaiKhoan() },
 							{ "Phân Xưởng", (String) tableLuong.getValueAt(r, 2) }, { "Trình Độ", cn.getTayNghe() },
 							{ "Giờ Công", (String) tableLuong.getValueAt(r, 5) },
-							{ "Tổng Lương", (String) tableLuong.getValueAt(r, 10) }, },
+							{ "Ngày Nhận Lương", (String) tableLuong.getValueAt(r, 1) },
+							{ "Thực Lãnh", (String) tableLuong.getValueAt(r, 10) }, },
 					new String[] { "New column", "New column" }));
 			JScrollPane scrollPane = new JScrollPane(table_chiTiet1);
 			scrollPane.setColumnHeaderView(table_chiTiet1);
@@ -894,12 +970,15 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 			scrollPane_1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 			panel.add(scrollPane_1);
 			JButton btnjd = new JButton("In PDF");
-			btnjd.setBounds(15, 452, 92, 28);
+			btnjd.setIcon(new ImageIcon(Toolkit.getDefaultToolkit()
+					.createImage(TinhLuongNhanVien_Form.class.getResource("/icon/printer.png"))
+					.getScaledInstance(25, 20, Image.SCALE_SMOOTH)));
+			btnjd.setBounds(15, 452, 120, 28);
 			panel.add(btnjd);
 			dialog.setSize(700, 525);
 			dialog.setLocationRelativeTo(null); // Hiển thị JDialog ở trung tâm JFrame
 			dialog.setVisible(true);
-		
+
 			btnjd.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					int thang = Integer.parseInt(((String) cbbThang.getSelectedItem()).replaceAll("\\D", ""));
@@ -938,23 +1017,5 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 				}
 			});
 		}
-	}
-
-	@Override
-	public void insertUpdate(DocumentEvent e) {
-		// TODO Auto-generated method stub
-		searchTable();
-	}
-
-	@Override
-	public void removeUpdate(DocumentEvent e) {
-		// TODO Auto-generated method stub
-		searchTable();
-	}
-
-	@Override
-	public void changedUpdate(DocumentEvent e) {
-		// TODO Auto-generated method stub\
-		searchTable();
 	}
 }

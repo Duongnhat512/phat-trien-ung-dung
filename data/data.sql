@@ -346,7 +346,6 @@ VALUES
 ('CN0019', N'Phan Văn Hòa', 1, '1988-06-15', '2009-08-30', NULL, 'PX001', 'hoa@gmail.com', '0323456790', 700000, N'Giỏi', 'CN0019', 'Unknown_person.jpg','012345678940'),
 ('CN0020', N'Vũ Thị Thùy', 0, '1991-03-20', '2012-06-10', NULL, 'PX002', 'thuy@gmail.com', '0323456799', 700000, N'Khá', 'CN0020', 'Unknown_person.jpg','012345678941');
 --Tạo 10 hop dong
-use master
 INSERT INTO HopDongSanPham (idHopDong, tenHopDong, ngayBatDau, ngayKetThuc, idNguoiQuanLy, ghiChu)
 VALUES
     ('HD0001', N'Hợp đồng Áo Khoác Mùa Đông', '2023-08-31', '2023-11-30', 'NV0004', N'Đang tiến hành'),
@@ -778,8 +777,30 @@ VALUES
     ('CNVHC0308', '2023-10-24', N'Có mặt', 'NV0005'),
     ('CNVHC0309', '2023-10-25', N'Có mặt', 'NV0005'),
     ('CNVHC0310', '2023-10-26', N'Có mặt', 'NV0005')
+go
+INSERT INTO BangLuongNhanVien (idLuongNVHC, ngayTinhLuong, idNhanVien, thueLaoDong, tienBaoHiemXaHoi, tongLuong, thucLanh, thang, nam)
+VALUES
+    ('LNV0001', '2023-12-05', 'NV0001', 0.0000, 560000.0000, 8884615.3846, 8324615.3846, 11, 2023),
+    ('LNV0002', '2023-12-05', 'NV0002', 573461.5385, 560000.0000, 11469230.7692, 10335769.2307, 11, 2023),
+    ('LNV0003', '2023-12-05', 'NV0003', 1650769.2308, 840000.0000, 16507692.3077, 14016923.0769, 11, 2023),
+    ('LNV0004', '2023-12-05', 'NV0004', 1650769.2308, 840000.0000, 16507692.3077, 14016923.0769, 11, 2023),
+    ('LNV0005', '2023-12-05', 'NV0005', 0.0000, 400000.0000, 6961538.4615, 6561538.4615, 11, 2023),
+    ('LNV0006', '2023-12-05', 'NV0006', 0.0000, 400000.0000, 9730769.2308, 9330769.2308, 11, 2023),
+    ('LNV0007', '2023-11-05', 'NV0001', 659615.3846, 560000.0000, 13192307.6923, 11972692.3077, 10, 2023),
+    ('LNV0008', '2023-11-05', 'NV0002', 595000.0000, 560000.0000, 11900000.0000, 10745000.0000, 10, 2023),
+    ('LNV0009', '2023-11-05', 'NV0003', 1650769.2308, 840000.0000, 16507692.3077, 14016923.0769, 10, 2023),
+    ('LNV0010', '2023-11-05', 'NV0004', 1650769.2308, 840000.0000, 16507692.3077, 14016923.0769, 10, 2023),
+    ('LNV0011', '2023-11-05', 'NV0005', 0.0000, 400000.0000, 7884615.3846, 7484615.3846, 10, 2023);
+go
+INSERT INTO bangluongcongnhan (idLuongCn, ngayTinhLuong, idCongNhan, tongLuong, thuclanh, thang, nam)
+VALUES
+    ('LCN0001', '2023-12-05', 'CN0001', 59250000.0000, 96962500.0000, 11, 2023),
+    ('LCN0002', '2023-12-05', 'CN0002', 53400000.0000, 85600000.0000, 11, 2023),
+    ('LCN0003', '2023-12-05', 'CN0003', 23100000.0000, 48550000.0000, 11, 2023),
+    ('LCN0004', '2023-11-05', 'CN0001', 91350000.0000, 155312500.0000, 10, 2023),
+    ('LCN0005', '2023-11-05', 'CN0002', 104050000.0000, 162500000.0000, 10, 2023),
+    ('LCN0006', '2023-11-05', 'CN0003', 41600000.0000, 91800000.0000, 10, 2023);
 
-select n.idNhanVien,n.idPhongBan,c.tenChucVu from NhanVien n join BangChamCongNhanVienHC l on n.idNhanVien=l.idNhanVien join ChucVu c on n.idChucVu = c.idChucVu
 go
 CREATE PROCEDURE TinhLuongNhanVien_proc (
     @idNhanVien varchar(10),
@@ -880,21 +901,21 @@ BEGIN
     WHERE idNhanVien = @idNhanVien  AND MONTH(ngayChamCong) = @thang and YEAR(ngayChamCong) = @nam and trangThai = N'Có phép'
 END
 go
-go
 create PROCEDURE ThongTinLuongCongNhan
     @Thang INT,
     @Nam INT,
-    @idNhanVien NVARCHAR(10),
+    @idCongNhan NVARCHAR(10),
     @thucLanh MONEY OUTPUT,
-    @luongHanhChanh MONEY OUTPUT
+    @tongLuong MONEY OUTPUT
 
 AS
 BEGIN
     DECLARE @phuCap MONEY;
+	Declare @luongHanhChanh money
 	DECLARE @LuongTangCa MONEY
     SELECT @phuCap = CN.phuCap
     FROM CongNhan CN
-    WHERE CN.idCongNhan = @idNhanVien;
+    WHERE CN.idCongNhan = @idCongNhan;
 
     SELECT
         @luongHanhChanh = SUM(CASE WHEN CL.idCaLam IN (1, 2) THEN BC.soLuongHoanThanh * CDSP.luongCongDoan * CL.heSoLuong * BC.heSoNgayLam ELSE 0 END),
@@ -909,17 +930,21 @@ BEGIN
     WHERE
         MONTH(BC.ngayChamCong) = @Thang
         AND YEAR(BC.ngayChamCong) = @Nam
-        AND CN.idCongNhan = @idNhanVien;
+        AND CN.idCongNhan = @idCongNhan;
 
     SET @thucLanh = @luongHanhChanh + @LuongTangCa + @phuCap;
+	set @tongLuong = @LuongTangCa+@luongHanhChanh
 END;
+go
 go
 create PROCEDURE TinhTongSanLuongVaThoiGianLamViec
     @Thang INT,
     @Nam INT,
     @idCongNhan NVARCHAR(10),
 	@TongSanLuong INT output,
-    @TongThoiGianLamViec FLOAT output
+    @TongThoiGianLamViec FLOAT output,
+	@luongHanhChanh money output,
+	@luongTangCa money output
 AS
 BEGIN
     -- Tính tổng sản lượng hoàn thành
@@ -929,7 +954,20 @@ BEGIN
 	join CongNhan CN ON CN.idCongNhan = PC.idCongNhan
     JOIN PhanXuong PX ON CN.idPhanXuong = PX.idPhanXuong
     WHERE MONTH(BC.ngayChamCong) = @Thang AND YEAR(BC.ngayChamCong) = @Nam AND Cn.idCongNhan=@idCongNhan;
-
+	SELECT
+        @luongHanhChanh = SUM(CASE WHEN CL.idCaLam IN (1, 2) THEN BC.soLuongHoanThanh * CDSP.luongCongDoan * CL.heSoLuong * BC.heSoNgayLam ELSE 0 END),
+        @LuongTangCa = SUM(CASE WHEN CL.idCaLam = 3 THEN BC.soLuongHoanThanh * CDSP.luongCongDoan * CL.heSoLuong * BC.heSoNgayLam ELSE 0 END)
+    FROM
+        CongNhan CN
+    JOIN PhanXuong PX ON CN.idPhanXuong = PX.idPhanXuong
+    JOIN CongDoanPhanCong PC ON CN.idCongNhan = PC.idCongNhan
+    JOIN BangChamCongCongNhan BC ON PC.idPhanCong = BC.idPhanCong
+    JOIN CongDoanSP CDSP ON PC.idCongDoan = CDSP.idCongDoan
+    JOIN CaLam CL ON PC.idCaLam = CL.idCaLam
+    WHERE
+        MONTH(BC.ngayChamCong) = @Thang
+        AND YEAR(BC.ngayChamCong) = @Nam
+        AND CN.idCongNhan = @idCongNhan;
     -- Tính tổng thời gian làm việc
     SELECT @TongThoiGianLamViec = SUM(4)
     FROM BangChamCongCongNhan BC

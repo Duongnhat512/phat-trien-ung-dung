@@ -47,6 +47,7 @@ import bus.ChucVu_BUS;
 import bus.NhanVien_BUS;
 import bus.PhongBan_BUS;
 import bus.TaiKhoan_BUS;
+import commons.MyButton;
 import commons.RoundPanel;
 import commons.RoundTextField;
 import commons.Table;
@@ -73,6 +74,7 @@ import java.awt.Image;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.imageio.ImageIO;
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -96,6 +98,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -113,7 +116,7 @@ import java.util.Properties;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
 
-public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, MouseListener, DocumentListener {
+public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, MouseListener {
 	private int width = 1250;
 	private int height = 725;
 	private BangLuongNhanVien_BUS bl_bus;
@@ -129,10 +132,10 @@ public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 	private JTextField txtTongLuong;
 	private JTextField txtThucLanh;
 	private Table tableLuong;
-
+	private boolean allowFilter = true;
 	private DefaultTableModel dftable;
-	private JButton btnExcel;
-	private JButton btnEmail;
+	private MyButton btnExcel;
+	private MyButton btnEmail;
 	private JComboBox cbbNam;
 	private JComboBox cbbThang;
 	private JComboBox cbbPhongBan;
@@ -154,6 +157,9 @@ public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 	private TaiKhoan_BUS tk_bus;
 	private JLabel lbldsCC;
 	private RoundTextField searchField;
+	private BufferedImage visibleImage;
+	private BufferedImage emailIcon;
+	private MyButton btnRefesh;
 
 	public TinhLuongNhanVien_Form(int width, int height) {
 		setBackground(new Color(240, 240, 240));
@@ -189,6 +195,9 @@ public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 			years[i - startYear] = "Năm " + String.valueOf(i);
 		}
 		cbbNam = new JComboBox(years);
+		cbbNam.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		cbbNam.setBorder(null);
+		cbbNam.setBackground(new Color(255, 255, 255));
 		cbbNam.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		cbbNam.setBounds(23, 23, 142, 30);
 		cbbNam.setSelectedItem("Năm " + String.valueOf(currentYear));
@@ -197,14 +206,20 @@ public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 		String[] months = { "Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8",
 				"Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12" };
 		cbbThang = new JComboBox(months);
+		cbbThang.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		cbbThang.setBorder(null);
+		cbbThang.setBackground(new Color(255, 255, 255));
 		cbbThang.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		cbbThang.setBounds(206, 23, 142, 30);
-		cbbThang.setSelectedIndex(currentMonth);
+		cbbThang.setSelectedIndex(currentMonth-1);
 		add(cbbThang);
 
 		cbbPhongBan = new JComboBox();
+		cbbPhongBan.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		cbbPhongBan.setBorder(null);
+		cbbPhongBan.setBackground(new Color(255, 255, 255));
 		cbbPhongBan.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		cbbPhongBan.setBounds(383, 23, 142, 30);
+		cbbPhongBan.setBounds(391, 23, 142, 30);
 		add(cbbPhongBan);
 
 		RoundPanel pSouth = new RoundPanel();
@@ -338,26 +353,53 @@ public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 		panel_1.add(lbl_luongThucTe);
 
 		lbl_thucLanh = new JLabel("");
-		lbl_thucLanh.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lbl_thucLanh.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lbl_thucLanh.setBounds(998, 113, 186, 19);
 		panel_1.add(lbl_thucLanh);
 
-		btnExcel = new JButton("Xuất Excel");
+		btnExcel = new MyButton();
+		btnExcel.setFocusPainted(false);
+		btnExcel.setBackground(new Color(255, 255, 255));
+		btnExcel.setText("Xuất Excel");
+		btnExcel.setRadius(20);
 		btnExcel.setIcon(new ImageIcon(TinhLuongNhanVien_Form.class.getResource("/icon/excel.png")));
 		btnExcel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnExcel.setBounds(874, 23, 158, 30);
+		btnExcel.setBounds(815, 23, 158, 30);
 		add(btnExcel);
 
-		btnEmail = new JButton("Gửi Email Hàng Loạt");
+		btnEmail = new MyButton();
+		btnEmail.setFocusPainted(false);
+		btnEmail.setBackground(new Color(255, 255, 255));
+		btnEmail.setText("Gửi Email Hàng Loạt");
+		btnEmail.setRadius(20);
+		String projectDirectory = System.getProperty("user.dir");
+		try {
+			emailIcon = ImageIO.read(new File(projectDirectory+"\\src\\icon\\send_email.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		btnEmail.setIcon(new ImageIcon(TinhLuongNhanVien_Form.class.getResource("/icon/mail.png")));
+//		visibleImage = ImageIO.read(new File(projectDirectory+"\\src\\icon\\icons8_eye_25px.png"))
 		btnEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnEmail.setBounds(1053, 23, 179, 30);
+		btnEmail.setBounds(1021, 23, 211, 30);
 		add(btnEmail);
 		//
 		searchField = new RoundTextField(10);
 		searchField.setText("Nhập mã/tên nhân viên cần tìm");
-		searchField.setBounds(972, 275, 260, 30);
+		searchField.setBounds(23, 275, 260, 30);
 		add(searchField);
 		searchField.setColumns(10);
+		
+		btnRefesh = new MyButton();
+		btnRefesh.setFocusPainted(false);
+		btnRefesh.setBackground(new Color(255, 255, 255));
+		btnRefesh.setText("Làm Mới");
+		btnRefesh.setRadius(20);
+		btnRefesh.setIcon(new ImageIcon(TinhLuongCongNhan_Form.class.getResource("/icon/refresh.png")));
+		btnRefesh.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnRefesh.setBounds(622, 23, 158, 30);
+		add(btnRefesh);
 		searchField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -377,14 +419,27 @@ public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 				super.focusGained(e);
 			}
 		});
+		
 		docDuLieuPhongBan();
+		lamMoi();
 		btnExcel.addActionListener(this);
 		btnEmail.addActionListener(this);
 		tableLuong.addMouseListener(this);
 		cbbThang.addActionListener(this);
 		cbbNam.addActionListener(this);
 		cbbPhongBan.addActionListener(this);
-		searchField.getDocument().addDocumentListener(this);
+		btnRefesh.addActionListener(this);
+		searchField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				searchTable();
+			}
+		});
+	}
+
+	private String resizeImage(BufferedImage emailIcon2, int i, int j) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	public void xoaTable() {
@@ -545,125 +600,6 @@ public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 		sorter.setRowFilter(idOrNameFilter);
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		Object obj = e.getSource();
-		if (obj.equals(cbbThang) || obj.equals(cbbNam) || obj.equals(cbbPhongBan)) {
-			int thang;
-			int nam;
-			try {
-				thang = Integer.parseInt(((String) cbbThang.getSelectedItem()).replaceAll("\\D", ""));
-				nam = Integer.parseInt(((String) cbbNam.getSelectedItem()).replaceAll("\\D", ""));
-			} catch (NumberFormatException e1) {
-				// Xử lý ngoại lệ nếu chuỗi không chứa số
-				thang = 0; // hoặc giá trị mặc định khác bạn muốn đặt
-				nam = 0;
-			}
-			String pb = (String) cbbPhongBan.getSelectedItem();
-
-			try {
-				docDulieuVaoTable(thang, nam, pb);
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-		if (obj.equals(btnExcel)) {
-			String projectDirectory = System.getProperty("user.dir");
-			String filePath = projectDirectory + "\\file\\file.xlsx";
-			if (dftable.getRowCount() > 0) {
-				if (exportToExcelAndCreateUI(tableLuong, filePath)) {
-					openExcelFile(filePath); // Mở tệp Excel nếu xuất thành công
-				}
-			} else {
-				JOptionPane.showMessageDialog(this, "Không có dữ liệu để xuất file");
-			}
-
-		}
-		if (obj.equals(btnEmail)) {
-
-			int thang;
-			int nam;
-			try {
-				thang = Integer.parseInt(((String) cbbThang.getSelectedItem()).replaceAll("\\D", ""));
-				nam = Integer.parseInt(((String) cbbNam.getSelectedItem()).replaceAll("\\D", ""));
-			} catch (NumberFormatException e1) {
-				// Xử lý ngoại lệ nếu chuỗi không chứa số
-				thang = 0; // hoặc giá trị mặc định khác bạn muốn đặt
-				nam = 0;
-			}
-			// Thông tin tài khoản email
-			final String username = "ngoquocdat0810@gmail.com"; // Thay bằng địa chỉ email của bạn
-			final String password = "ozkc hoyu xosh kkxf"; // Thay bằng mật khẩu của bạn
-
-			// Cấu hình thông tin máy chủ email
-			Properties props = new Properties();
-			props.put("mail.smtp.auth", "true");
-			props.put("mail.smtp.starttls.enable", "true");
-			props.put("mail.smtp.host", "smtp.gmail.com"); // Thay bằng SMTP host của bạn (ví dụ: smtp.gmail.com cho
-															// Gmail)
-			props.put("mail.smtp.port", "587"); // Port thường là 587 cho TLS
-
-			// Tạo phiên làm việc (session) để gửi email
-			Authenticator auth = new Authenticator() {
-				@Override
-				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication(username, password);
-				}
-			};
-			Session session = Session.getInstance(props, auth);
-
-			try {
-				int rowCount = dftable.getRowCount();
-				if (rowCount < 1) {
-					JOptionPane.showMessageDialog(null, "Không có giá trị để gửi");
-					return;
-				}
-				for (int row = 0; row < rowCount; row++) {
-					Object cellValue = dftable.getValueAt(row, 3);
-					exportPdf(row, thang, nam);
-					// Thực hiện xử lý khác ở đây...
-					NhanVien n = nv_bus.getNhanVienTheoID(cellValue + "");
-
-					// Tạo thông điệp email
-					Message message = new MimeMessage(session);
-					message.setFrom(new InternetAddress(username));
-					message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(n.getEmail()));
-					message.setSubject("Bảng lương  " + cbbThang.getSelectedItem() + " " + cbbNam.getSelectedItem());
-
-					MimeBodyPart messageBodyPart = new MimeBodyPart();
-					messageBodyPart.setText("Chủ đề: Thông tin Bảng lương - Thanh toán tháng " + thang + "/" + nam
-							+ "\r\n" + "\r\n" + "Kính gửi " + n.getHoTen() + ",\r\n" + "\r\n"
-							+ "Xin chào! Dưới đây là thông tin chi tiết về Bảng lương của bạn cho thanh toán tháng "
-							+ thang + "/" + nam + ":\r\n" + "\r\n"
-							+ "Mời bạn tải xuống và xem thông tin chi tiết trong file PDF đính kèm. Nếu bạn có bất kỳ câu hỏi nào hoặc cần hỗ trợ, vui lòng liên hệ với Bộ phận Tài chính qua email nguyennhatduong@gmail.com hoặc số điện thoại 0912345678.\r\n"
-							+ "\r\n"
-							+ "Xin cảm ơn bạn đã đóng góp và làm việc chăm chỉ. Hãy liên hệ nếu có bất kỳ thắc mắc nào.\r\n"
-							+ "\r\n" + "Trân trọng,\r\n" + "Nguyễn Nhất Dương\r\n" + "Bộ phận Tài chính");
-					MimeBodyPart attachmentPart = new MimeBodyPart();
-					String projectDirectory = System.getProperty("user.dir");
-					String filePath = projectDirectory + "\\file\\file.pdf";
-					attachmentPart.attachFile(new File(filePath));
-					// Gửi email
-					Multipart multipart = new MimeMultipart();
-					multipart.addBodyPart(messageBodyPart);
-					multipart.addBodyPart(attachmentPart);
-					message.setContent(multipart, "text/plain; charset=UTF-8");
-					Transport.send(message);
-				}
-				JOptionPane.showMessageDialog(null, "Đã gửi email thành công");
-
-//	            
-			} catch (MessagingException b) {
-				b.printStackTrace();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-	}
-
 	private boolean exportToExcelAndCreateUI(JTable table, String filePath) {
 		Workbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet("Sheet1");
@@ -801,6 +737,148 @@ public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 		}
 		return false;
 	}
+	public void filterTable() {
+		int thang;
+		int nam;
+		try {
+			thang = Integer.parseInt(((String) cbbThang.getSelectedItem()).replaceAll("\\D", ""));
+			nam = Integer.parseInt(((String) cbbNam.getSelectedItem()).replaceAll("\\D", ""));
+		} catch (NumberFormatException e1) {
+			// Xử lý ngoại lệ nếu chuỗi không chứa số
+			thang = 0; // hoặc giá trị mặc định khác bạn muốn đặt
+			nam = 0;
+		}
+		String pb = (String) cbbPhongBan.getSelectedItem();
+
+		try {
+			docDulieuVaoTable(thang, nam, pb);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	public void lamMoi() {
+		searchField.setText("");
+		Calendar calendar = Calendar.getInstance();
+		int currentMonth = calendar.get(Calendar.MONTH);
+		int currentYear = calendar.get(Calendar.YEAR);
+		cbbNam.setSelectedItem("Năm " + String.valueOf(currentYear));
+		cbbThang.setSelectedIndex(currentMonth-1);
+		cbbPhongBan.setSelectedItem("Tất cả");
+		filterTable();
+		TableRowSorter<DefaultTableModel> sorter = (TableRowSorter<DefaultTableModel>) tableLuong.getRowSorter();
+	    if (sorter != null) {
+	        sorter.setRowFilter(null);
+	    }
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		Object obj = e.getSource();
+		if (obj.equals(cbbThang) || obj.equals(cbbNam) || obj.equals(cbbPhongBan)) {
+			if (allowFilter) {
+				filterTable();
+			}
+		}
+		if (obj.equals(btnRefesh)) {
+			allowFilter = false; // Ngăn chặn sự kiện filterTable
+			lamMoi(); // Gọi hàm làm mới các combobox ở đây
+			allowFilter = true;
+		}
+		if (obj.equals(btnExcel)) {
+			String projectDirectory = System.getProperty("user.dir");
+			String filePath = projectDirectory + "\\file\\file.xlsx";
+			if (dftable.getRowCount() > 0) {
+				if (exportToExcelAndCreateUI(tableLuong, filePath)) {
+					openExcelFile(filePath); // Mở tệp Excel nếu xuất thành công
+				}
+			} else {
+				JOptionPane.showMessageDialog(this, "Không có dữ liệu để xuất file");
+			}
+
+		}
+		if (obj.equals(btnEmail)) {
+
+			int thang;
+			int nam;
+			try {
+				thang = Integer.parseInt(((String) cbbThang.getSelectedItem()).replaceAll("\\D", ""));
+				nam = Integer.parseInt(((String) cbbNam.getSelectedItem()).replaceAll("\\D", ""));
+			} catch (NumberFormatException e1) {
+				// Xử lý ngoại lệ nếu chuỗi không chứa số
+				thang = 0; // hoặc giá trị mặc định khác bạn muốn đặt
+				nam = 0;
+			}
+			// Thông tin tài khoản email
+			final String username = "ngoquocdat0810@gmail.com"; // Thay bằng địa chỉ email của bạn
+			final String password = "ozkc hoyu xosh kkxf"; // Thay bằng mật khẩu của bạn
+
+			// Cấu hình thông tin máy chủ email
+			Properties props = new Properties();
+			props.put("mail.smtp.auth", "true");
+			props.put("mail.smtp.starttls.enable", "true");
+			props.put("mail.smtp.host", "smtp.gmail.com"); // Thay bằng SMTP host của bạn (ví dụ: smtp.gmail.com cho
+															// Gmail)
+			props.put("mail.smtp.port", "587"); // Port thường là 587 cho TLS
+
+			// Tạo phiên làm việc (session) để gửi email
+			Authenticator auth = new Authenticator() {
+				@Override
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication(username, password);
+				}
+			};
+			Session session = Session.getInstance(props, auth);
+
+			try {
+				int rowCount = dftable.getRowCount();
+				if (rowCount < 1) {
+					JOptionPane.showMessageDialog(null, "Không có giá trị để gửi");
+					return;
+				}
+				for (int row = 0; row < rowCount; row++) {
+					Object cellValue = dftable.getValueAt(row, 3);
+					exportPdf(row, thang, nam);
+					// Thực hiện xử lý khác ở đây...
+					NhanVien n = nv_bus.getNhanVienTheoID(cellValue + "");
+
+					// Tạo thông điệp email
+					Message message = new MimeMessage(session);
+					message.setFrom(new InternetAddress(username));
+					message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(n.getEmail()));
+					message.setSubject("Bảng lương  " + cbbThang.getSelectedItem() + " " + cbbNam.getSelectedItem());
+
+					MimeBodyPart messageBodyPart = new MimeBodyPart();
+					messageBodyPart.setText("Chủ đề: Thông tin Bảng lương - Thanh toán tháng " + thang + "/" + nam
+							+ "\r\n" + "\r\n" + "Kính gửi " + n.getHoTen() + ",\r\n" + "\r\n"
+							+ "Xin chào! Dưới đây là thông tin chi tiết về Bảng lương của bạn cho thanh toán tháng "
+							+ thang + "/" + nam + ":\r\n" + "\r\n"
+							+ "Mời bạn tải xuống và xem thông tin chi tiết trong file PDF đính kèm. Nếu bạn có bất kỳ câu hỏi nào hoặc cần hỗ trợ, vui lòng liên hệ với Bộ phận Tài chính qua email nguyennhatduong@gmail.com hoặc số điện thoại 0912345678.\r\n"
+							+ "\r\n"
+							+ "Xin cảm ơn bạn đã đóng góp và làm việc chăm chỉ. Hãy liên hệ nếu có bất kỳ thắc mắc nào.\r\n"
+							+ "\r\n" + "Trân trọng,\r\n" + "Nguyễn Nhất Dương\r\n" + "Bộ phận Tài chính");
+					MimeBodyPart attachmentPart = new MimeBodyPart();
+					String projectDirectory = System.getProperty("user.dir");
+					String filePath = projectDirectory + "\\file\\file.pdf";
+					attachmentPart.attachFile(new File(filePath));
+					// Gửi email
+					Multipart multipart = new MimeMultipart();
+					multipart.addBodyPart(messageBodyPart);
+					multipart.addBodyPart(attachmentPart);
+					message.setContent(multipart, "text/plain; charset=UTF-8");
+					Transport.send(message);
+				}
+				JOptionPane.showMessageDialog(null, "Đã gửi email thành công");
+
+//	            
+			} catch (MessagingException b) {
+				b.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
@@ -923,11 +1001,11 @@ public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 				table_chiTiet1.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
 			}
 			scrollPane_1.setViewportView(table_chiTiet2);
-			JButton btnjd = new JButton("");
+			JButton btnjd = new JButton("In PDF");
 			btnjd.setIcon(new ImageIcon(Toolkit.getDefaultToolkit()
 					.createImage(TinhLuongNhanVien_Form.class.getResource("/icon/printer.png"))
 					.getScaledInstance(25, 20, Image.SCALE_SMOOTH)));
-			btnjd.setBounds(15, 427, 50, 28);
+			btnjd.setBounds(15, 427, 120, 28);
 			panel.add(btnjd);
 
 			dialog.setSize(700, 500);
@@ -952,34 +1030,26 @@ public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 								File file = new File(ttfPath);
 								if (file.exists()) {
 									try {
-										desktop.browse(file.toURI());
+										desktop.open(file);
 									} catch (IOException e1) {
+										// TODO Auto-generated catch block
 										e1.printStackTrace();
-									}
+									} // Mở file PDF
+								} else {
+									System.out.println("File không tồn tại!");
 								}
+							} else {
+								System.out.println("Desktop không được hỗ trợ!");
 							}
+						} else {
+
 						}
+
 					}
+
 				}
 			});
 		}
 	}
 
-	@Override
-	public void insertUpdate(DocumentEvent e) {
-		// TODO Auto-generated method stub
-		searchTable();
-	}
-
-	@Override
-	public void removeUpdate(DocumentEvent e) {
-		// TODO Auto-generated method stub
-		searchTable();
-	}
-
-	@Override
-	public void changedUpdate(DocumentEvent e) {
-		// TODO Auto-generated method stub
-		searchTable();
-	}
 }
