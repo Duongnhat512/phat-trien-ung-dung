@@ -48,12 +48,13 @@ public class Login_GUI extends JFrame implements ActionListener{
 	private GradientPanel panel;
 	private JTextField textTenDangNhap;
 	private JPasswordField passwordField;
-	private JLabel lblThongBao;
 	private TaiKhoan_BUS taiKhoan_BUS = new TaiKhoan_BUS();
 	private BufferedImage visibleImage;
 	private BufferedImage hiddenImage;
 	private JButton btnToggleIcon;
 	private boolean passwordVisible;
+	private TaiKhoan tk;
+	private JLabel lblThongBao;
 	protected static Login_GUI frame;
 
 	/**
@@ -195,6 +196,16 @@ public class Login_GUI extends JFrame implements ActionListener{
                 }
             }
         });
+        
+        // Tự động điền thông tin tài khoản
+        textTenDangNhap.setText("admin");
+        passwordField.setText("1111");
+        
+        lblThongBao = new JLabel("");
+        lblThongBao.setForeground(new Color(255, 0, 0));
+        lblThongBao.setFont(new Font("SansSerif", Font.ITALIC, 12));
+        lblThongBao.setBounds(152, 212, 279, 29);
+        pRight.add(lblThongBao);
 		
 		//
 		try {
@@ -208,7 +219,6 @@ public class Login_GUI extends JFrame implements ActionListener{
 		}
 		
 		//Đăng ký sự kiện
-		btnDangNhap.addActionListener(this);
 		btnDangNhap.addActionListener(this);
 	}
     private static Image resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) {
@@ -227,7 +237,7 @@ public class Login_GUI extends JFrame implements ActionListener{
 			lblThongBao.setText("Vui lòng điền mật khẩu!");
 			return false;
 		}
-		TaiKhoan tk = taiKhoan_BUS.getTaiKhoan(tenTaiKhoan);
+		tk = taiKhoan_BUS.getTaiKhoan(tenTaiKhoan);
 		if(tk == null || matKhau.compareTo(tk.getMatKhau()) != 0) {
 			lblThongBao.setText("Thông tin tài khoản hoặc mật khẩu không chính xác!");
 			return false;
@@ -237,7 +247,7 @@ public class Login_GUI extends JFrame implements ActionListener{
 	
 	private void moTrangChu() {
 		Main_GUI main_GUI = new Main_GUI();
-		main_GUI.openMain_GUI();;
+		main_GUI.openMain_GUI(tk);
 		frame.dispose();
 	}
 	

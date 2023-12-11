@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import bus.CongDoanSanPham_BUS;
+import bus.NhanVien_BUS;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -16,6 +17,8 @@ import commons.MyMenu;
 import commons.PanelButton;
 import connectDB.ConnectDB;
 import dao.CongDoanSanPham_DAO;
+import entities.NhanVien;
+import entities.TaiKhoan;
 import form.ChamCongCongNhan_Form;
 import form.ChamCongNhanVien_Form;
 import form.CongDoanPhanCong_Form;
@@ -103,19 +106,25 @@ public class Main_GUI extends JFrame implements ActionListener{
 	private JPanel panelContent;
 	private MyButton btnAvt;
 	private Container panel;
-	private static Main_GUI mainFrame = new Main_GUI();
+//	private static Main_GUI mainFrame = new Main_GUI();
+	private TaiKhoan tk = new TaiKhoan();
+	private NhanVien_BUS nv_BUS = new NhanVien_BUS();
+	private NhanVien nv = new NhanVien();
 	
 	//
 	private int[] currentIndex = new int[2];
 	private JLabel lblTenNV;
 	private MyButton btnDangXuat;
 	
-	public static void main(String[] args) {
-		mainFrame.setVisible(true);
-	}
+//	public static void main(String[] args) {
+//		mainFrame.setVisible(true);
+//	}
 	
-	public void openMain_GUI() {
+	public void openMain_GUI(TaiKhoan tk) {
+		this.tk = tk;
+		Main_GUI mainFrame = new Main_GUI();
 		mainFrame.setVisible(true);
+		hienThiTenNhanVien();
 //		resize();
 	}
 
@@ -123,10 +132,10 @@ public class Main_GUI extends JFrame implements ActionListener{
 	 * Create the frame.
 	 */
 	public Main_GUI() {
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Main_GUI.class.getResource("/icon/logo.png")));
 		int w = WIDTH;
 		int h = HEIGHT;
-		
 		setTitle("Phần mềm quản lý lương sản phẩm");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1800, 800);
@@ -389,6 +398,16 @@ public class Main_GUI extends JFrame implements ActionListener{
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+	
+	private void hienThiTenNhanVien() {
+		if (tk.getLoaiTaiKhoan().equals("admin")) {
+			lblTenNV.setText("admin");
+		}
+		else {
+			nv = nv_BUS.getNhanVienTheoID(tk.getTenTaiKhoan());
+			lblTenNV.setText(nv.getHoTen() + " - " + nv.getChucVu().getTenChucVu());
 		}
 	}
 	
