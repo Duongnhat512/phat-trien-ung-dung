@@ -40,8 +40,8 @@ public class BangLuongCongNhan_DAO {
 			// Gọi stored procedure
 			cs.execute();
 			double thucLanh = cs.getDouble(4);
-			double luongHanhChanh = cs.getDouble(5);
-			lcn = new LuongCongNhan("LCN0001", LocalDate.now(), new CongNhan(idCongNhan), thucLanh, luongHanhChanh,thang,nam);
+			double tongLuong = cs.getDouble(5);
+			lcn = new LuongCongNhan("LCN0001", LocalDate.now(), new CongNhan(idCongNhan), thucLanh, tongLuong,thang,nam);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -49,15 +49,15 @@ public class BangLuongCongNhan_DAO {
 		return lcn;
 	}
 
-	public int[] TinhTongSanLuongVaThoiGianLamViec(String idCongNhan, int thang, int nam) {
+	public double[] TinhTongSanLuongVaThoiGianLamViec(String idCongNhan, int thang, int nam) {
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection();
 		CallableStatement cs = null;
 		LuongCongNhan lcn = null;
-		int[] values = new int[2];
+		double[] values = new double[4];
 		try {
 
-			cs = con.prepareCall("{call TinhTongSanLuongVaThoiGianLamViec(?, ?, ?, ?,?)}");
+			cs = con.prepareCall("{call TinhTongSanLuongVaThoiGianLamViec(?, ?, ?, ?,?,?,?)}");
 
 			// Thiết lập giá trị cho các tham số
 			cs.setInt(1, thang);
@@ -65,10 +65,14 @@ public class BangLuongCongNhan_DAO {
 			cs.setString(3, idCongNhan);
 			cs.registerOutParameter(4, Types.DECIMAL);
 			cs.registerOutParameter(5, Types.DECIMAL);
+			cs.registerOutParameter(6, Types.DECIMAL);
+			cs.registerOutParameter(7, Types.DECIMAL);
 			// Gọi stored procedure
 			cs.execute();
 			values[0] = cs.getInt(4); // soNgayCongTrongThang
 			values[1] = cs.getInt(5); // soNgayDiLamThucTe
+			values[2] = cs.getDouble(6);
+			values[3] = cs.getDouble(7);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

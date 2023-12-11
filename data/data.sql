@@ -183,9 +183,10 @@ go
 INSERT INTO ChucVu (idChucVu, tenChucVu, heSoLuong)
 VALUES
     ('CV001', N'Nhân viên hành chánh', 1.0),
-    ('CV002', N'Kế Toán', 1.4),
+    ('CV002', N'Kế toán', 1.4),
     ('CV003', N'Trưởng phòng sản xuất', 2.1),
-    ('CV004', N'Trưởng phòng nhân sự', 2.1);
+    ('CV004', N'Trưởng phòng nhân sự', 2.1),
+	('CV005', N'Trưởng kế toán', 2.1);
 -- Thêm các phòng ban
 go
 INSERT INTO PhongBan (idPhongBan, tenPhongBan)
@@ -194,119 +195,120 @@ VALUES
     ('PB002', N'Phòng Nhân Sự'),
     ('PB003', N'Phòng Sản Xuất');
 go
+
 INSERT INTO TaiKhoanNganHang (soTaiKhoan, tenNganHang, chuTaiKhoan, chiNhanh)
 VALUES
-    ('1111000001', N'SacomBank', N'Nguyễn Thị Ánh', N'Chi nhánh Hà Nội'),
-    ('1111000002', N'Techcombank', N'Lê Văn Hùng', N'Chi nhánh TP.HCM'),
-    ('1111000003', N'Agribank', N'Trần Thị Thảo', N'Chi nhánh Đà Nẵng'),
-    ('1111000004', N'Vietcombank', N'Vũ Văn Minh', N'Chi nhánh Hải Phòng'),
-    ('1111000005', N'BIDV', N'Phạm Thị Hương', N'Chi nhánh Cần Thơ'),
-    ('1111000006', N'VietinBank', N'Lê Huy Hoàng', N'Chi nhánh Huế'),
-    ('1111000007', N'SHB', N'Trần Thị Minh', N'Chi nhánh Nha Trang'),
-    ('1111000008', N'ACB', N'Hoàng Văn Phú', N'Chi nhánh Vũng Tàu'),
-    ('1111000009', N'Maritime Bank', N'Ngọc Thị Bích', N'Chi nhánh Long An'),
-    ('1111000010', N'SEABank', N'Phan Văn Hòa', N'Chi nhánh Đồng Nai'),
-    ('1111000011', N'Sacombank', N'Trần Thị Linh', N'Chi nhánh Hà Nội'),
-    ('1111000012', N'Techcombank', N'Lê Thanh Hùng', N'Chi nhánh TP.HCM'),
-    ('1111000013', N'Agribank', N'Nguyễn Thị Hoài', N'Chi nhánh Đà Nẵng'),
-    ('1111000014', N'Vietcombank', N'Vũ Văn Đức', N'Chi nhánh Hải Phòng'),
-    ('1111000015', N'BIDV', N'Nguyễn Thị Mai', N'Chi nhánh Cần Thơ'),
-    ('1111000016', N'VietinBank', N'Phạm Văn Thái', N'Chi nhánh Huế'),
-    ('1111000017', N'SHB', N'Lê Thị Hương', N'Chi nhánh Nha Trang'),
-    ('1111000018', N'ACB', N'Nguyễn Văn An', N'Chi nhánh Vũng Tàu'),
-    ('1111000019', N'Maritime Bank', N'Trần Thị Bình', N'Chi nhánh Long An'),
-    ('1111000020', N'SEABank', N'Lê Văn Minh', N'Chi nhánh Đồng Nai'),
-    ('1111000021', N'SEABank', N'Nguyễn V', N'Chi nhánh Đồng Nai'),
-	('1111000022', N'Vietcombank', N'Nguyễn Văn An', N'Chi nhánh Hà Nội'),
-    ('1111000023', N'Techcombank', N'Phạm Thị Bình', N'Chi nhánh TP.HCM'),
-    ('1111000024', N'Sacombank', N'Vũ Văn Minh', N'Chi nhánh Đà Nẵng'),
-    ('1111000025', N'Agribank', N'Trần Thị Mai', N'Chi nhánh Hải Phòng'),
-    ('1111000026', N'BIDV', N'Lê Thanh Hùng', N'Chi nhánh Cần Thơ'),
-    ('1111000027', N'VietinBank', N'Hoàng Thị Ngọc', N'Chi nhánh Huế'),
-    ('1111000028', N'SHB', N'Phạm Văn Tuấn', N'Chi nhánh Nha Trang'),
-    ('1111000029', N'Maritime Bank', N'Trần Thị Lan', N'Chi nhánh Vũng Tàu'),
-    ('1111000030', N'ACB', N'Trần Thanh Tâm', N'Chi nhánh Long An'),
-    ('1111000031', N'SEABank', N'Hà Thị An', N'Chi nhánh Đồng Nai'),
-    ('1111000032', N'Sacombank', N'Lê Văn Trung', N'Chi nhánh Hà Nội'),
-    ('1111000033', N'Techcombank', N'Nguyễn Thị Lan', N'Chi nhánh TP.HCM'),
-    ('1111000034', N'Agribank', N'Nguyễn Văn Long', N'Chi nhánh Đà Nẵng'),
-    ('1111000035', N'Vietcombank', N'Trần Văn Bình', N'Chi nhánh Hải Phòng'),
-    ('1111000036', N'BIDV', N'Nguyễn Thị Hoa', N'Chi nhánh Cần Thơ'),
-    ('1111000037', N'VietinBank', N'Vũ Văn Đức', N'Chi nhánh Huế'),
-    ('1111000038', N'SHB', N'Hoàng Văn Phú', N'Chi nhánh Nha Trang'),
-    ('1111000039', N'ACB', N'Trần Thị Minh', N'Chi nhánh Vũng Tàu'),
-    ('1111000040', N'Maritime Bank', N'Lê Huy Hoàng', N'Chi nhánh Long An'),
-    ('1111000041', N'SEABank', N'Phan Văn Hòa', N'Chi nhánh Đồng Nai');
+    ('111100001111', N'SacomBank', N'Nguyễn Thị Ánh', N'Chi nhánh TP.HCM'),
+    ('111100002111', N'SacomBank', N'Lê Văn Hùng', N'Chi nhánh TP.HCM'),
+    ('111100003111', N'SacomBank', N'Trần Thị Thảo', N'Chi nhánh TP.HCM'),
+    ('111100004111', N'SacomBank', N'Vũ Văn Minh', N'Chi nhánh TP.HCM'),
+    ('111100005111', N'SacomBank', N'Phạm Thị Hương', N'Chi nhánh TP.HCM'),
+    ('111100006111', N'SacomBank', N'Lê Huy Hoàng', N'Chi nhánh TP.HCM'),
+    ('111100007111', N'SacomBank', N'Trần Thị Minh', N'Chi nhánh TP.HCM'),
+    ('111100008111', N'SacomBank', N'Hoàng Văn Phú', N'Chi nhánh TP.HCM'),
+    ('111100009111', N'SacomBank', N'Ngọc Thị Bích', N'Chi nhánh TP.HCM'),
+    ('111100010111', N'SacomBank', N'Phan Văn Hòa', N'Chi nhánh TP.HCM'),
+    ('111100011111', N'SacomBank', N'Trần Thị Linh', N'Chi nhánh TP.HCM'),
+    ('111100012111', N'SacomBank', N'Lê Thanh Hùng', N'Chi nhánh TP.HCM'),
+    ('111100013111', N'SacomBank', N'Nguyễn Thị Hoài', N'Chi nhánh TP.HCM'),
+    ('111100014111', N'SacomBank', N'Vũ Văn Đức', N'Chi nhánh TP.HCM'),
+    ('111100015111', N'SacomBank', N'Nguyễn Thị Mai', N'Chi nhánh TP.HCM'),
+    ('111100016111', N'SacomBank', N'Phạm Văn Thái', N'Chi nhánh TP.HCM'),
+    ('111100017111', N'SacomBank', N'Lê Thị Hương', N'Chi nhánh TP.HCM'),
+    ('111100018111', N'SacomBank', N'Nguyễn Văn An', N'Chi nhánh TP.HCM'),
+    ('111100019111', N'SacomBank', N'Trần Thị Bình', N'Chi nhánh TP.HCM'),
+    ('111100020111', N'SacomBank', N'Lê Văn Minh', N'CChi nhánh TP.HCM'),
+    ('111100021111', N'SacomBank', N'Nguyễn V', N'Chi nhánh TP.HCM'),
+	('111100022111', N'SacomBank', N'Nguyễn Văn An', N'Chi nhánh TP.HCM'),
+    ('111100023111', N'SacomBank', N'Phạm Thị Bình', N'Chi nhánh TP.HCM'),
+    ('111100024111', N'Sacombank', N'Vũ Văn Minh', N'Chi nhánh TP.HCM'),
+    ('111100025111', N'SacomBank', N'Trần Thị Mai', N'Chi nhánh TP.HCM'),
+    ('111100026111', N'SacomBank', N'Lê Thanh Hùng', N'Chi nhánh TP.HCM'),
+    ('111100027111', N'SacomBank', N'Hoàng Thị Ngọc', N'Chi nhánh TP.HCM'),
+    ('111100028111', N'SacomBank', N'Phạm Văn Tuấn', N'Chi nhánh TP.HCM'),
+    ('111100029111', N'SacomBank', N'Trần Thị Lan', N'Chi nhánh TP.HCM'),
+    ('111100030111', N'SacomBank', N'Trần Thanh Tâm', N'Chi nhánh TP.HCM'),
+    ('111100031111', N'SacomBank', N'Hà Thị An', N'Chi nhánh TP.HCM'),
+    ('111100032111', N'Sacombank', N'Lê Văn Trung', N'Chi nhánh TP.HCM'),
+    ('111100033111', N'SacomBank', N'Nguyễn Thị Lan', N'Chi nhánh TP.HCM'),
+    ('111100034111', N'SacomBank', N'Nguyễn Văn Long', N'Chi nhánh TP.HCM'),
+    ('111100035111', N'SacomBank', N'Trần Văn Bình', N'Chi nhánh TP.HCM'),
+    ('111100036111', N'SacomBank', N'Nguyễn Thị Hoa', N'Chi nhánh TP.HCM'),
+    ('111100037111', N'SacomBank', N'Vũ Văn Đức', N'Chi nhánh TP.HCM'),
+    ('111100038111', N'SacomBank', N'Hoàng Văn Phú', N'Chi nhánh TP.HCM'),
+    ('111100039111', N'SacomBank', N'Trần Thị Minh', N'Chi nhánh TP.HCM'),
+    ('111100040111', N'SacomBank', N'Lê Huy Hoàng', N'Chi nhánh TP.HCM'),
+    ('111100041111', N'SacomBank', N'Phan Văn Hòa', N'Chi nhánh TP.HCM');
 go
 INSERT INTO TaiKhoan (tenTaiKhoan, matKhau, loaiTaiKhoan,soTaiKhoan)
 VALUES
-    ('NV0001', 'Password1', N'kế toán','1111000001'),
-    ('NV0002', 'Password2', N'kế toán','1111000002'),
-    ('NV0003', 'Password3', N'Trưởng phòng nhân sự','1111000003'),
-    ('NV0004', 'Password4', N'Trưởng phòng sản xuất','1111000004'),
-    ('NV0005', 'Password5', N'nhân viên hành chánh','1111000005'),
-    ('NV0006', 'Password6', N'nhân viên hành chánh','1111000006'),
-    ('NV0007', 'Password7', N'nhân viên hành chánh','1111000007'),
-    ('NV0008', 'Password8', N'nhân viên hành chánh','1111000008'),
-    ('NV0009', 'Password9', N'nhân viên hành chánh','1111000009'),
-    ('NV0010', 'Password10', N'nhân viên hành chánh','1111000010'),
-    ('NV0011', 'Password11', N'nhân viên hành chánh','1111000011'),
-    ('NV0012', 'Password12', N'nhân viên hành chánh','1111000012'),
-    ('NV0013', 'Password13', N'nhân viên hành chánh','1111000013'),
-    ('NV0014', 'Password14', N'nhân viên hành chánh','1111000014'),
-    ('NV0015', 'Password15', N'nhân viên hành chánh','1111000015'),
-    ('NV0016', 'Password16', N'nhân viên hành chánh','1111000016'),
-    ('NV0017', 'Password17', N'nhân viên hành chánh','1111000017'),
-    ('NV0018', 'Password18', N'nhân viên hành chánh','1111000018'),
-    ('NV0019', 'Password19', N'nhân viên hành chánh','1111000019'),
-    ('NV0020', 'Password20', N'nhân viên hành chánh','1111000020'),
-    ('NV0021', 'Password21', N'nhân viên hành chánh','1111000021'),
-    ('CN0001', 'Matkhau1', N'cong nhân', '1111000022'),
-    ('CN0002', 'Matkhau2', N'cong nhân', '1111000023'),
-    ('CN0003', 'Matkhau3', N'cong nhân', '1111000024'),
-    ('CN0004', 'Matkhau4', N'cong nhân', '1111000025'),
-    ('CN0005', 'Matkhau5', N'cong nhân', '1111000026'),
-    ('CN0006', 'Matkhau6', N'cong nhân', '1111000027'),
-    ('CN0007', 'Matkhau7', N'cong nhân', '1111000028'),
-    ('CN0008', 'Matkhau8', N'cong nhân', '1111000029'),
-    ('CN0009', 'Matkhau9', N'cong nhân', '1111000030'),
-    ('CN0010', 'Matkhau10', N'cong nhân', '1111000031'),
-    ('CN0011', 'Matkhau11', N'cong nhân', '1111000032'),
-    ('CN0012', 'Matkhau12', N'cong nhân', '1111000033'),
-    ('CN0013', 'Matkhau13', N'cong nhân', '1111000034'),
-    ('CN0014', 'Matkhau14', N'cong nhân', '1111000035'),
-    ('CN0015', 'Matkhau15', N'cong nhân', '1111000036'),
-    ('CN0016', 'Matkhau16', N'cong nhân', '1111000037'),
-    ('CN0017', 'Matkhau17', N'cong nhân', '1111000038'),
-    ('CN0018', 'Matkhau18', N'cong nhân', '1111000039'),
-    ('CN0019', 'Matkhau19', N'cong nhân', '1111000040'),
-    ('CN0020', 'Matkhau20', N'cong nhân', '1111000041');
+    ('NV0001', '1111', N'KT','111100001111'),
+    ('NV0002', '1111', N'KT toán','111100002111'),
+    ('NV0003', '1111', N'TPNS','111100003111'),
+    ('NV0004', '1111', N'TPSX','111100004111'),
+    ('NV0005', '1111', N'NV','111100005111'),
+    ('NV0006', '1111', N'NV','111100006111'),
+    ('NV0007', '1111', N'NV','111100007111'),
+    ('NV0008', '1111', N'NV','111100008111'),
+    ('NV0009', '1111', N'NV','111100009111'),
+    ('NV0010', '1111', N'NV','111100010111'),
+    ('NV0011', '1111', N'NV','111100011111'),
+    ('NV0012', '1111', N'NV','111100012111'),
+    ('NV0013', '1111', N'NV','111100013111'),
+    ('NV0014', '1111', N'NV','111100014111'),
+    ('NV0015', '1111', N'NV','111100015111'),
+    ('NV0016', '1111', N'NV','111100016111'),
+    ('NV0017', '1111', N'NV','111100017111'),
+    ('NV0018', '1111', N'NV','111100018111'),
+    ('NV0019', '1111', N'NV','111100019111'),
+    ('NV0020', '1111', N'NV','111100020111'),
+    ('NV0021', '1111', N'NV','111100021111'),
+    ('CN0001', '1111', N'CN', '111100022111'),
+    ('CN0002', '1111', N'CN', '111100023111'),
+    ('CN0003', '1111', N'CN', '111100024111'),
+    ('CN0004', '1111', N'CN', '111100025111'),
+    ('CN0005', '1111', N'CN', '111100026111'),
+    ('CN0006', '1111', N'CN', '111100027111'),
+    ('CN0007', '1111', N'CN', '111100028111'),
+    ('CN0008', '1111', N'CN', '111100029111'),
+    ('CN0009', '1111', N'CN', '111100030111'),
+    ('CN0010', '1111', N'CN', '111100031111'),
+    ('CN0011', '1111', N'CN', '111100032111'),
+    ('CN0012', '1111', N'CN', '111100033111'),
+    ('CN0013', '1111', N'CN', '111100034111'),
+    ('CN0014', '1111', N'CN', '111100035111'),
+    ('CN0015', '1111', N'CN', '111100036111'),
+    ('CN0016', '1111', N'CN', '111100037111'),
+    ('CN0017', '1111', N'CN', '111100038111'),
+    ('CN0018', '1111', N'CN', '111100039111'),
+    ('CN0019', '1111', N'CN', '111100040111'),
+    ('CN0020', '1111', N'CN', '111100041111');
 
 go
-INSERT INTO NhanVien (idNhanVien, hoTen, phai, ngaySinh, ngayBatDauCongTac, ngayKetThucCongTac, email, soDienThoai, idChucVu, heSoBaoHiemXaHoi, luongCoBan, tenTaiKhoan, idPhongBan, phuCap,anhDaiDien)
-VALUES
-	('NV0001', N'Nguyễn Thị Ánh', 0, '1985-11-25', '2007-07-17', null, 'anhnguyen@gmail.com', '0901234567', 'CV002', 0.05, 8000000, 'NV0001', 'PB001', 700000, 'avatar1.jpg'),
-    ('NV0002', N'Lê Văn Hùng', 1, '1986-02-12', '2008-09-05', NULL, 'hungle@gmail.com', '0912345678', 'CV002', 0.05, 8000000, 'NV0002', 'PB001', 700000,'avatar2.jpg'),
-    ('NV0003', N'Trần Thị Thảo', 0, '1982-08-31', '2005-10-09', NULL, 'thao.tran@gmail.com', '0923456789', 'CV003', 0.05, 8000000, 'NV0003', 'PB002', 1000000,'avatar3.jpg'),
-    ('NV0004', N'Vũ Văn Minh', 1, '1980-06-20', '2002-03-18', NULL, 'minhvu@gmail.com', '0934567890', 'CV003', 0.05, 8000000, 'NV0004', 'PB003', 1000000,'avatar4.jpg'),
-    ('NV0005', N'Phạm Thị Hương', 0, '1991-07-20', '2018-03-25', NULL, 'pthuong@gmail.com', '0987654322', 'CV001', 0.05, 8000000, 'NV0005', 'PB002', 500000, 'avatar5.jpg'),
-    ('NV0006', N'Lê Huy Hoàng', 1, '1995-11-10', '2019-09-02', NULL, 'lhhoang@gmail.com', '0987654323', 'CV001', 0.05, 8000000, 'NV0006', 'PB001', 500000, 'avatar6.jpg'),
-    ('NV0007', N'Trần Thị Minh', 0, '1992-05-25', '2021-06-14',  NULL,'ttminh@gmail.com', '0987654324', 'CV001', 0.05, 8000000, 'NV0007', 'PB003', 500000, 'avatar7.jpg'),
-    ('NV0008', N'Hoàng Văn Phú', 1, '1989-12-02', '2019-04-20', NULL, 'hvphu@gmail.com', '0987654325', 'CV001', 0.05, 8000000, 'NV0008', 'PB002', 500000, 'avatar8.jpg'),
-    ('NV0009', N'Ngọc Thị Bích', 0, '1993-08-12', '2022-02-05', NULL, 'ntbich@gmail.com', '0987654326', 'CV001', 0.05, 8000000, 'NV0009', 'PB001', 500000, 'avatar9.jpg'),
-    ('NV0010', N'Phan Văn Hòa', 1, '1991-04-30', '2018-11-30', NULL, 'pvhoa@gmail.com', '0987654327', 'CV001', 0.05, 8000000, 'NV0010', 'PB003', 500000, 'avatar10.jpg'),
-    ('NV0011', N'Trần Thị Linh', 0, '1994-06-18', '2022-03-10', NULL, 'ttlinh@gmail.com', '0987654328', 'CV001', 0.05, 8000000, 'NV0011', 'PB001', 500000, 'avatar11.jpg'),
-    ('NV0012', N'Lê Thanh Hùng', 1, '1990-02-08', '2019-01-07', NULL, 'lthung@gmail.com', '0987654329', 'CV001', 0.05, 8000000, 'NV0012', 'PB002', 500000, 'avatar12.jpg'),
-    ('NV0013', N'Nguyễn Thị Hoài', 0, '1992-10-05', '2020-05-03', NULL, 'nthoai@gmail.com', '0987654330', 'CV001', 0.05, 8000000, 'NV0013', 'PB003', 500000, 'avatar13.jpg'),
-    ('NV0014', N'Vũ Văn Đức', 1, '1988-11-21', '2018-12-14', NULL, 'vvduc@gmail.com', '0987654331', 'CV001', 0.05, 8000000, 'NV0014', 'PB001', 500000, 'avatar14.jpg'),
-    ('NV0015', N'Nguyễn Thị Mai', 0, '1993-07-07', '2020-09-28', NULL, 'nthimai@gmail.com', '0987654332', 'CV001', 0.05, 8000000, 'NV0015', 'PB001', 500000, 'avatar15.jpg'),
-    ('NV0016', N'Phạm Văn Thái', 1, '1987-03-25', '2019-11-15', NULL, 'pvthai@gmail.com', '0987654333', 'CV001', 0.05, 8000000, 'NV0016', 'PB003', 500000, 'avatar16.jpg'),
-    ('NV0017', N'Lê Thị Hương', 0, '1995-09-12', '2021-07-20', NULL, 'lthuong@gmail.com', '0987654334', 'CV001', 0.05, 8000000, 'NV0017', 'PB002', 500000, 'avatar17.jpg'),
-	('NV0018', N'Nguyễn Văn An', 1, '1990-03-15', '2010-01-15', NULL, 'vanan@gmail.com', '0987654321', 'CV001', 0.05, 8000000, 'NV0018', 'PB001', 500000,'avatar18.jpg'),
-    ('NV0019', N'Trần Thị Bình', 0, '1992-05-20', '2012-02-18', NULL, 'binhtran@gmail.com', '0971234567', 'CV001', 0.05, 8000000, 'NV0019', 'PB001', 500000,'avatar19.jpg'),
-    ('NV0020', N'Lê Văn Minh', 1, '1988-12-10', '2009-03-28', NULL, 'minhle@gmail.com', '0965432198', 'CV001', 0.05, 8000000, 'NV0020', 'PB003', 500000,'avatar20.jpg'),
-	('NV0021', N'Nguyễn V', 1, '1990-03-15', '2020-01-15', NULL, 'nvan@gmail.com', '0987654321', 'CV001', 0.05, 8000000, 'NV0021', 'PB003', 500000, 'avatar21.jpg')
 
+INSERT INTO NhanVien (idNhanVien, hoTen, phai, ngaySinh, ngayBatDauCongTac, ngayKetThucCongTac, email, soDienThoai, idChucVu, heSoBaoHiemXaHoi, luongCoBan, tenTaiKhoan, idPhongBan, phuCap,anhDaiDien, cCCD)
+VALUES
+('NV0001', N'Nguyễn Thị Ánh', 0, '1985-11-25', '2007-07-17', null, 'anhnguyen@gmail.com', '0901234561', 'CV002', 0.05, 8000000, 'NV0001', 'PB001', 700000, 'Unknown_person.jpg','012345678901'),
+    ('NV0002', N'Lê Văn Hùng', 1, '1986-02-12', '2008-09-05', NULL, 'hungle@gmail.com', '0901234562', 'CV002', 0.05, 8000000, 'NV0002', 'PB001', 700000,'Unknown_person.jpg','012345678902'),
+    ('NV0003', N'Trần Thị Thảo', 0, '1982-08-31', '2005-10-09', NULL, 'thao.tran@gmail.com', '0901234563', 'CV003', 0.05, 8000000, 'NV0003', 'PB002', 1000000,'Unknown_person.jpg','012345678903'),
+    ('NV0004', N'Vũ Văn Minh', 1, '1980-06-20', '2002-03-18', NULL, 'minhvu@gmail.com', '0901234564', 'CV003', 0.05, 8000000, 'NV0004', 'PB003', 1000000,'Unknown_person.jpg','012345678904'),
+    ('NV0005', N'Phạm Thị Hương', 0, '1991-07-20', '2018-03-25', NULL, 'pthuong@gmail.com', '0901234565', 'CV001', 0.05, 8000000, 'NV0005', 'PB002', 500000, 'Unknown_person.jpg','012345678905'),
+    ('NV0006', N'Lê Huy Hoàng', 1, '1995-11-10', '2019-09-02', NULL, 'lhhoang@gmail.com', '0901234566', 'CV001', 0.05, 8000000, 'NV0006', 'PB001', 500000, 'Unknown_person.jpg','012345678906'),
+    ('NV0007', N'Trần Thị Minh', 0, '1992-05-25', '2021-06-14',  NULL,'ttminh@gmail.com', '0901234567', 'CV001', 0.05, 8000000, 'NV0007', 'PB003', 500000, 'Unknown_person.jpg','012345678907'),
+    ('NV0008', N'Hoàng Văn Phú', 1, '1989-12-02', '2019-04-20', NULL, 'hvphu@gmail.com', '0901234568', 'CV001', 0.05, 8000000, 'NV0008', 'PB002', 500000, 'Unknown_person.jpg','012345678908'),
+    ('NV0009', N'Ngọc Thị Bích', 0, '1993-08-12', '2022-02-05', NULL, 'ntbich@gmail.com', '0901234569', 'CV001', 0.05, 8000000, 'NV0009', 'PB001', 500000, 'Unknown_person.jpg','012345678909'),
+    ('NV0010', N'Phan Văn Hòa', 1, '1991-04-30', '2018-11-30', NULL, 'pvhoa@gmail.com', '0901234510', 'CV001', 0.05, 8000000, 'NV0010', 'PB003', 500000, 'Unknown_person.jpg','012345678910'),
+    ('NV0011', N'Trần Thị Linh', 0, '1994-06-18', '2022-03-10', NULL, 'ttlinh@gmail.com', '0901234511', 'CV001', 0.05, 8000000, 'NV0011', 'PB001', 500000, 'Unknown_person.jpg','012345678911'),
+    ('NV0012', N'Lê Thanh Hùng', 1, '1990-02-08', '2019-01-07', NULL, 'lthung@gmail.com', '0901234512', 'CV001', 0.05, 8000000, 'NV0012', 'PB002', 500000, 'Unknown_person.jpg','012345678912'),
+    ('NV0013', N'Nguyễn Thị Hoài', 0, '1992-10-05', '2020-05-03', NULL, 'nthoai@gmail.com', '0901234513', 'CV001', 0.05, 8000000, 'NV0013', 'PB003', 500000, 'Unknown_person.jpg','012345678913'),
+    ('NV0014', N'Vũ Văn Đức', 1, '1988-11-21', '2018-12-14', NULL, 'vvduc@gmail.com', '0901234514', 'CV001', 0.05, 8000000, 'NV0014', 'PB001', 500000, 'Unknown_person.jpg','012345678914'),
+    ('NV0015', N'Nguyễn Thị Mai', 0, '1993-07-07', '2020-09-28', NULL, 'nthimai@gmail.com', '0901234515', 'CV001', 0.05, 8000000, 'NV0015', 'PB001', 500000, 'Unknown_person.jpg','012345678915'),
+    ('NV0016', N'Phạm Văn Thái', 1, '1987-03-25', '2019-11-15', NULL, 'pvthai@gmail.com', '0901234516', 'CV001', 0.05, 8000000, 'NV0016', 'PB003', 500000, 'Unknown_person.jpg','012345678916'),
+    ('NV0017', N'Lê Thị Hương', 0, '1995-09-12', '2021-07-20', NULL, 'lthuong@gmail.com', '0901234517', 'CV001', 0.05, 8000000, 'NV0017', 'PB002', 500000, 'Unknown_person.jpg','012345678917'),
+	('NV0018', N'Nguyễn Văn An', 1, '1990-03-15', '2010-01-15', NULL, 'vanan@gmail.com', '0901234518', 'CV001', 0.05, 8000000, 'NV0018', 'PB001', 500000,'Unknown_person.jpg','012345678918'),
+    ('NV0019', N'Trần Thị Bình', 0, '1992-05-20', '2012-02-18', NULL, 'binhtran@gmail.com', '0901234519', 'CV001', 0.05, 8000000, 'NV0019', 'PB001', 500000,'Unknown_person.jpg','012345678919'),
+    ('NV0020', N'Lê Văn Minh', 1, '1988-12-10', '2009-03-28', NULL, 'minhle@gmail.com', '0901234520', 'CV001', 0.05, 8000000, 'NV0020', 'PB003', 500000,'Unknown_person.jpg','012345678920'),
+	('NV0021', N'Nguyễn V', 1, '1990-03-15', '2020-01-15', NULL, 'nvan@gmail.com', '0901234521', 'CV001', 0.05, 8000000, 'NV0021', 'PB003', 500000, 'Unknown_person.jpg','012345678921')
 INSERT INTO PhanXuong (idPhanXuong, tenPhanXuong)
 VALUES
     ('PX001', N'A1'),
@@ -323,28 +325,27 @@ VALUES
 -- Tạo 20 bảng Công Nhân
 INSERT INTO CongNhan (idCongNhan, hoTen, phai, ngaySinh, ngayBatDauCongTac, ngayKetThucCongTac, idPhanXuong, email, soDienThoai, phuCap, tayNghe, tenTaiKhoan,anhDaiDien,cccd)
 VALUES
-('CN0001', N'Nguyễn Văn An', 1, '1980-01-01', '2005-05-10', NULL, 'PX001', 'nguyenvanan@gmail.com', '0123456789',700000, N'Giỏi', 'CN0001', 'avatar22.jpg','012345678901'),
-('CN0002', N'Phạm Thị Bình', 0, '1985-03-15', '2008-11-20', NULL, 'PX002', 'binhpham@yahoo.com', '0234567890', 700000, N'Khá', 'CN0002', 'avatar23.jpg','012345678901'),
-('CN0003', N'Vũ Văn Minh', 1, '1990-07-20', '2010-09-30', NULL, 'PX003', 'vuminh@gmail.com', '0345678901', 700000, N'Trung bình', 'CN0003', 'avatar24.jpg','012345678901'),
-('CN0004', N'Trần Thị Mai', 0, '1988-05-05', '2009-12-05', NULL, 'PX001', 'maitran@yahoo.com', '0456789012', 700000, N'Giỏi', 'CN0004', 'avatar25.jpg','012345678901'),
-('CN0005', N'Lê Thanh Hùng', 1, '1986-09-10', '2007-06-15', NULL, 'PX002', 'hungle@gmail.com', '0567890123', 700000, N'Khá', 'CN0005', 'avatar26.jpg','012345678901'),
-('CN0006', N'Hoàng Thị Ngọc', 0, '1992-11-25', '2013-04-28', NULL, 'PX003', 'ngochoang@gmail.com', '0678901234', 700000, N'Trung bình', 'CN0006', 'avatar27.jpg','012345678901'),
-('CN0007', N'Phạm Văn Tuấn', 1, '1995-02-01', '2016-07-10', NULL, 'PX001', 'tuanpham@gmail.com', '0789012345', 700000, N'Giỏi', 'CN0007', 'avatar28.jpg','012345678901'),
-('CN0008', N'Trần Thị Lan', 0, '1984-12-12', '2006-09-23', NULL, 'PX002', 'lantran@gmail.com', '0890123456', 700000, N'Khá', 'CN0008', 'avatar29.jpg','012345678901'),
-('CN0009', N'Trần Thanh Tâm', 1, '1989-06-20', '2010-11-15', NULL, 'PX003', 'tamtran@yahoo.com', '0901234567', 700000, N'Trung bình', 'CN0009', 'avatar30.jpg','012345678901'),
-('CN0010', N'Hà Thị An', 0, '1991-08-18', '2012-12-12', NULL, 'PX001', 'anh@gmail.com', '0987654321', 700000, N'Giỏi', 'CN0010', 'avatar31.jpg','012345678901'),
-('CN0011', N'Lê Văn Trung', 1, '1983-04-30', '2004-06-25', NULL, 'PX002', 'trung@gmail.com', '0987654321', 700000, N'Khá', 'CN0011', 'avatar32.jpg','012345678901'),
-('CN0012', N'Nguyễn Thị Lan', 0, '1987-10-02', '2008-07-10', NULL, 'PX003', 'lan@gmail.com', '0987654321', 700000, N'Trung bình', 'CN0012', 'avatar33.jpg','012345678901'),
-('CN0013', N'Nguyễn Văn Long', 1, '1982-03-17', '2003-05-20', NULL, 'PX001', 'long@gmail.com', '0987654321', 700000, N'Giỏi', 'CN0013', 'avatar34.jpg','012345678901'),
-('CN0014', N'Trần Văn Bình', 0, '1993-07-08', '2014-09-30', NULL, 'PX002', 'binh@gmail.com', '0987654321', 700000, N'Khá', 'CN0014', 'avatar35.jpg','012345678901'),
-('CN0015', N'Nguyễn Thị Hoa', 1, '1981-05-25', '2002-06-10', NULL, 'PX003', 'hoa@gmail.com', '0987654321', 700000, N'Trung bình', 'CN0015', 'avatar36.jpg','012345678901'),
-('CN0016', N'Vũ Văn Đức', 1, '1980-08-12', '2001-12-25', NULL, 'PX001', 'duc@gmail.com', '0987654321', 700000, N'Giỏi', 'CN0016', 'avatar37.jpg','012345678901'),
-('CN0017', N'Hoàng Văn Phú', 1, '1994-01-10', '2015-03-15', NULL, 'PX002', 'phu@gmail.com', '0987654321', 700000, N'Khá', 'CN0017', 'avatar38.jpg','012345678901'),
-('CN0018', N'Lê Huy Hoàng', 1, '1996-09-28', '2017-11-20', NULL, 'PX003', 'hoang@gmail.com', '0987654321', 700000, N'Trung bình', 'CN0018', 'avatar39.jpg','012345678901'),
-('CN0019', N'Phan Văn Hòa', 1, '1988-06-15', '2009-08-30', NULL, 'PX001', 'hoa@gmail.com', '0987654321', 700000, N'Giỏi', 'CN0019', 'avatar40.jpg','012345678901'),
-('CN0020', N'Vũ Thị Thùy', 0, '1991-03-20', '2012-06-10', NULL, 'PX002', 'thuy@gmail.com', '0987654321', 700000, N'Khá', 'CN0020', 'avatar41.jpg','012345678901');
+('CN0001', N'Nguyễn Văn An', 1, '1980-01-01', '2005-05-10', NULL, 'PX001', 'nguyenvanan@gmail.com', '0323456780',700000, N'Giỏi', 'CN0001', 'Unknown_person.jpg','012345678922'),
+('CN0002', N'Phạm Thị Bình', 0, '1985-03-15', '2008-11-20', NULL, 'PX002', 'binhpham@yahoo.com', '0323456781', 700000, N'Khá', 'CN0002', 'Unknown_person.jpg','012345678923'),
+('CN0003', N'Vũ Văn Minh', 1, '1990-07-20', '2010-09-30', NULL, 'PX003', 'vuminh@gmail.com', '0323456782', 700000, N'Trung bình', 'CN0003', 'Unknown_person.jpg','012345678924'),
+('CN0004', N'Trần Thị Mai', 0, '1988-05-05', '2009-12-05', NULL, 'PX001', 'maitran@yahoo.com', '0323456783', 700000, N'Giỏi', 'CN0004', 'Unknown_person.jpg','012345678925'),
+('CN0005', N'Lê Thanh Hùng', 1, '1986-09-10', '2007-06-15', NULL, 'PX002', 'hungle@gmail.com', '0323456784', 700000, N'Khá', 'CN0005', 'Unknown_person.jpg','012345678926'),
+('CN0006', N'Hoàng Thị Ngọc', 0, '1992-11-25', '2013-04-28', NULL, 'PX003', 'ngochoang@gmail.com', '0323456785', 700000, N'Trung bình', 'CN0006', 'Unknown_person.jpg','012345678927'),
+('CN0007', N'Phạm Văn Tuấn', 1, '1995-02-01', '2016-07-10', NULL, 'PX001', 'tuanpham@gmail.com', '0323456786', 700000, N'Giỏi', 'CN0007', 'Unknown_person.jpg','012345678928'),
+('CN0008', N'Trần Thị Lan', 0, '1984-12-12', '2006-09-23', NULL, 'PX002', 'lantran@gmail.com', '0323456787', 700000, N'Khá', 'CN0008', 'Unknown_person.jpg','012345678929'),
+('CN0009', N'Trần Thanh Tâm', 1, '1989-06-20', '2010-11-15', NULL, 'PX003', 'tamtran@yahoo.com', '0323456788', 700000, N'Trung bình', 'CN0009', 'Unknown_person.jpg','012345678930'),
+('CN0010', N'Hà Thị An', 0, '1991-08-18', '2012-12-12', NULL, 'PX001', 'anh@gmail.com', '0323456789', 700000, N'Giỏi', 'CN0010', 'Unknown_person.jpg','0123456789031'),
+('CN0011', N'Lê Văn Trung', 1, '1983-04-30', '2004-06-25', NULL, 'PX002', 'trung@gmail.com', '0323456710', 700000, N'Khá', 'CN0011', 'Unknown_person.jpg','012345678932'),
+('CN0012', N'Nguyễn Thị Lan', 0, '1987-10-02', '2008-07-10', NULL, 'PX003', 'lan@gmail.com', '0323456720', 700000, N'Trung bình', 'CN0012', 'Unknown_person.jpg','012345678933'),
+('CN0013', N'Nguyễn Văn Long', 1, '1982-03-17', '2003-05-20', NULL, 'PX001', 'long@gmail.com', '0323456730', 700000, N'Giỏi', 'CN0013', 'Unknown_person.jpg','012345678934'),
+('CN0014', N'Trần Văn Bình', 0, '1993-07-08', '2014-09-30', NULL, 'PX002', 'binh@gmail.com', '0323456740', 700000, N'Khá', 'CN0014', 'Unknown_person.jpg','012345678935'),
+('CN0015', N'Nguyễn Thị Hoa', 1, '1981-05-25', '2002-06-10', NULL, 'PX003', 'hoa@gmail.com', '0323456750', 700000, N'Trung bình', 'CN0015', 'Unknown_person.jpg','012345678936'),
+('CN0016', N'Vũ Văn Đức', 1, '1980-08-12', '2001-12-25', NULL, 'PX001', 'duc@gmail.com', '0323456760', 700000, N'Giỏi', 'CN0016', 'Unknown_person.jpg','012345678937'),
+('CN0017', N'Hoàng Văn Phú', 1, '1994-01-10', '2015-03-15', NULL, 'PX002', 'phu@gmail.com', '0323456770', 700000, N'Khá', 'CN0017', 'Unknown_person.jpg','012345678938'),
+('CN0018', N'Lê Huy Hoàng', 1, '1996-09-28', '2017-11-20', NULL, 'PX003', 'hoang@gmail.com', '0323456788', 700000, N'Trung bình', 'CN0018', 'Unknown_person.jpg','012345678939'),
+('CN0019', N'Phan Văn Hòa', 1, '1988-06-15', '2009-08-30', NULL, 'PX001', 'hoa@gmail.com', '0323456790', 700000, N'Giỏi', 'CN0019', 'Unknown_person.jpg','012345678940'),
+('CN0020', N'Vũ Thị Thùy', 0, '1991-03-20', '2012-06-10', NULL, 'PX002', 'thuy@gmail.com', '0323456799', 700000, N'Khá', 'CN0020', 'Unknown_person.jpg','012345678941');
 --Tạo 10 hop dong
-
 INSERT INTO HopDongSanPham (idHopDong, tenHopDong, ngayBatDau, ngayKetThuc, idNguoiQuanLy, ghiChu)
 VALUES
     ('HD0001', N'Hợp đồng Áo Khoác Mùa Đông', '2023-08-31', '2023-11-30', 'NV0004', N'Đang tiến hành'),
@@ -776,8 +777,30 @@ VALUES
     ('CNVHC0308', '2023-10-24', N'Có mặt', 'NV0005'),
     ('CNVHC0309', '2023-10-25', N'Có mặt', 'NV0005'),
     ('CNVHC0310', '2023-10-26', N'Có mặt', 'NV0005')
+go
+INSERT INTO BangLuongNhanVien (idLuongNVHC, ngayTinhLuong, idNhanVien, thueLaoDong, tienBaoHiemXaHoi, tongLuong, thucLanh, thang, nam)
+VALUES
+    ('LNV0001', '2023-12-05', 'NV0001', 0.0000, 560000.0000, 8884615.3846, 8324615.3846, 11, 2023),
+    ('LNV0002', '2023-12-05', 'NV0002', 573461.5385, 560000.0000, 11469230.7692, 10335769.2307, 11, 2023),
+    ('LNV0003', '2023-12-05', 'NV0003', 1650769.2308, 840000.0000, 16507692.3077, 14016923.0769, 11, 2023),
+    ('LNV0004', '2023-12-05', 'NV0004', 1650769.2308, 840000.0000, 16507692.3077, 14016923.0769, 11, 2023),
+    ('LNV0005', '2023-12-05', 'NV0005', 0.0000, 400000.0000, 6961538.4615, 6561538.4615, 11, 2023),
+    ('LNV0006', '2023-12-05', 'NV0006', 0.0000, 400000.0000, 9730769.2308, 9330769.2308, 11, 2023),
+    ('LNV0007', '2023-11-05', 'NV0001', 659615.3846, 560000.0000, 13192307.6923, 11972692.3077, 10, 2023),
+    ('LNV0008', '2023-11-05', 'NV0002', 595000.0000, 560000.0000, 11900000.0000, 10745000.0000, 10, 2023),
+    ('LNV0009', '2023-11-05', 'NV0003', 1650769.2308, 840000.0000, 16507692.3077, 14016923.0769, 10, 2023),
+    ('LNV0010', '2023-11-05', 'NV0004', 1650769.2308, 840000.0000, 16507692.3077, 14016923.0769, 10, 2023),
+    ('LNV0011', '2023-11-05', 'NV0005', 0.0000, 400000.0000, 7884615.3846, 7484615.3846, 10, 2023);
+go
+INSERT INTO bangluongcongnhan (idLuongCn, ngayTinhLuong, idCongNhan, tongLuong, thuclanh, thang, nam)
+VALUES
+    ('LCN0001', '2023-12-05', 'CN0001', 59250000.0000, 96962500.0000, 11, 2023),
+    ('LCN0002', '2023-12-05', 'CN0002', 53400000.0000, 85600000.0000, 11, 2023),
+    ('LCN0003', '2023-12-05', 'CN0003', 23100000.0000, 48550000.0000, 11, 2023),
+    ('LCN0004', '2023-11-05', 'CN0001', 91350000.0000, 155312500.0000, 10, 2023),
+    ('LCN0005', '2023-11-05', 'CN0002', 104050000.0000, 162500000.0000, 10, 2023),
+    ('LCN0006', '2023-11-05', 'CN0003', 41600000.0000, 91800000.0000, 10, 2023);
 
-select n.idNhanVien,n.idPhongBan,c.tenChucVu from NhanVien n join BangChamCongNhanVienHC l on n.idNhanVien=l.idNhanVien join ChucVu c on n.idChucVu = c.idChucVu
 go
 CREATE PROCEDURE TinhLuongNhanVien_proc (
     @idNhanVien varchar(10),
@@ -878,21 +901,21 @@ BEGIN
     WHERE idNhanVien = @idNhanVien  AND MONTH(ngayChamCong) = @thang and YEAR(ngayChamCong) = @nam and trangThai = N'Có phép'
 END
 go
-go
 create PROCEDURE ThongTinLuongCongNhan
     @Thang INT,
     @Nam INT,
-    @idNhanVien NVARCHAR(10),
+    @idCongNhan NVARCHAR(10),
     @thucLanh MONEY OUTPUT,
-    @luongHanhChanh MONEY OUTPUT
+    @tongLuong MONEY OUTPUT
 
 AS
 BEGIN
     DECLARE @phuCap MONEY;
+	Declare @luongHanhChanh money
 	DECLARE @LuongTangCa MONEY
     SELECT @phuCap = CN.phuCap
     FROM CongNhan CN
-    WHERE CN.idCongNhan = @idNhanVien;
+    WHERE CN.idCongNhan = @idCongNhan;
 
     SELECT
         @luongHanhChanh = SUM(CASE WHEN CL.idCaLam IN (1, 2) THEN BC.soLuongHoanThanh * CDSP.luongCongDoan * CL.heSoLuong * BC.heSoNgayLam ELSE 0 END),
@@ -907,17 +930,21 @@ BEGIN
     WHERE
         MONTH(BC.ngayChamCong) = @Thang
         AND YEAR(BC.ngayChamCong) = @Nam
-        AND CN.idCongNhan = @idNhanVien;
+        AND CN.idCongNhan = @idCongNhan;
 
     SET @thucLanh = @luongHanhChanh + @LuongTangCa + @phuCap;
+	set @tongLuong = @LuongTangCa+@luongHanhChanh
 END;
+go
 go
 create PROCEDURE TinhTongSanLuongVaThoiGianLamViec
     @Thang INT,
     @Nam INT,
     @idCongNhan NVARCHAR(10),
 	@TongSanLuong INT output,
-    @TongThoiGianLamViec FLOAT output
+    @TongThoiGianLamViec FLOAT output,
+	@luongHanhChanh money output,
+	@luongTangCa money output
 AS
 BEGIN
     -- Tính tổng sản lượng hoàn thành
@@ -927,7 +954,20 @@ BEGIN
 	join CongNhan CN ON CN.idCongNhan = PC.idCongNhan
     JOIN PhanXuong PX ON CN.idPhanXuong = PX.idPhanXuong
     WHERE MONTH(BC.ngayChamCong) = @Thang AND YEAR(BC.ngayChamCong) = @Nam AND Cn.idCongNhan=@idCongNhan;
-
+	SELECT
+        @luongHanhChanh = SUM(CASE WHEN CL.idCaLam IN (1, 2) THEN BC.soLuongHoanThanh * CDSP.luongCongDoan * CL.heSoLuong * BC.heSoNgayLam ELSE 0 END),
+        @LuongTangCa = SUM(CASE WHEN CL.idCaLam = 3 THEN BC.soLuongHoanThanh * CDSP.luongCongDoan * CL.heSoLuong * BC.heSoNgayLam ELSE 0 END)
+    FROM
+        CongNhan CN
+    JOIN PhanXuong PX ON CN.idPhanXuong = PX.idPhanXuong
+    JOIN CongDoanPhanCong PC ON CN.idCongNhan = PC.idCongNhan
+    JOIN BangChamCongCongNhan BC ON PC.idPhanCong = BC.idPhanCong
+    JOIN CongDoanSP CDSP ON PC.idCongDoan = CDSP.idCongDoan
+    JOIN CaLam CL ON PC.idCaLam = CL.idCaLam
+    WHERE
+        MONTH(BC.ngayChamCong) = @Thang
+        AND YEAR(BC.ngayChamCong) = @Nam
+        AND CN.idCongNhan = @idCongNhan;
     -- Tính tổng thời gian làm việc
     SELECT @TongThoiGianLamViec = SUM(4)
     FROM BangChamCongCongNhan BC

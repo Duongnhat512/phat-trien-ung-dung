@@ -13,7 +13,7 @@ public class BangLuongCongNhan_BUS {
 	public LuongCongNhan  getLuongCongNhan(String idCongNhan,int thang,int nam) {
 		return bl_dao.getAllTableTinhLuong(idCongNhan,thang,nam);
 	}
-	public int[] TinhTongSanLuongVaThoiGianLamViec(String idCongNhan,int thang,int nam) {
+	public double[] TinhTongSanLuongVaThoiGianLamViec(String idCongNhan,int thang,int nam) {
 		return bl_dao.TinhTongSanLuongVaThoiGianLamViec(idCongNhan, thang, nam);
 	}
 	public boolean themBangLuongCongNhan(LuongCongNhan luong,int thang,int nam) {
