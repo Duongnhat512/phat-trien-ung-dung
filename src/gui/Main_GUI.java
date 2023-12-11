@@ -64,6 +64,7 @@ import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import java.awt.Component;
 import java.awt.Container;
+import javax.swing.SwingConstants;
 
 /**
  * 
@@ -103,6 +104,11 @@ public class Main_GUI extends JFrame implements ActionListener{
 	private MyButton btnAvt;
 	private Container panel;
 	private static Main_GUI mainFrame = new Main_GUI();
+	
+	//
+	private int[] currentIndex = new int[2];
+	private JLabel lblTenNV;
+	private MyButton btnDangXuat;
 	
 	public static void main(String[] args) {
 		mainFrame.setVisible(true);
@@ -179,11 +185,30 @@ public class Main_GUI extends JFrame implements ActionListener{
 		
 		panelCNort = new JPanel();
 		panelCNort.setBorder(null);
-		panelCNort.setBackground(new Color(228, 228, 228));
+		panelCNort.setBackground(new Color(255, 255, 255));
 		panelCNort.setSize(panelCenter.getWidth(), (int)(h*0.06));
 		panelCNort.setPreferredSize(new Dimension(panelCenter.getWidth(), (int)(h*0.06)));
 		panelCenter.add(panelCNort, BorderLayout.NORTH);
-		panelCNort.setLayout(new BorderLayout());
+		panelCNort.setLayout(null);
+		
+		lblTenNV = new JLabel("");
+		lblTenNV.setIcon(new ImageIcon(Main_GUI.class.getResource("/icon/picture_30px.png")));
+		lblTenNV.setBorder(new EmptyBorder(0, 0, 0, 5));
+		lblTenNV.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblTenNV.setFont(new Font("SansSerif", Font.PLAIN, 18));
+		lblTenNV.setBounds(668, 10, 518, 31);
+		panelCNort.add(lblTenNV);
+		
+		btnDangXuat = new MyButton();
+		btnDangXuat.setFocusPainted(false);
+		btnDangXuat.setIcon(new ImageIcon(Main_GUI.class.getResource("/icon/icons8_Logout_30px_4.png")));
+		btnDangXuat.setBackground(new Color(255, 0, 0));
+		btnDangXuat.setRadius(40);
+		btnDangXuat.setOpaque(false);
+		btnDangXuat.setBorder(new EmptyBorder(0, 0, 0, 0));
+		btnDangXuat.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		btnDangXuat.setBounds(1196, 3, 45, 45);
+		panelCNort.add(btnDangXuat);
 		
 //		 avt nhân viên
 //		btnAvt = new MyButton();
@@ -198,15 +223,19 @@ public class Main_GUI extends JFrame implements ActionListener{
 		panelCenter.add(panelContent, BorderLayout.CENTER);
 		
 		// Kết nối đến database 
-			try {
-				ConnectDB.getInstance().connect();
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		try {
+			ConnectDB.getInstance().connect();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		currentIndex[0] = 0;
+		currentIndex[1] = 0;
+		
 		trangChu_Form = new TrangChu_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
 		quanLyCongNhan_Form = new QuanLyCongNhan_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
 		chamCongCongNhan_Form = new ChamCongCongNhan_Form(panelCenter.getWidth(), panelCenter.getHeight() - panelCNort.getHeight());
@@ -222,6 +251,9 @@ public class Main_GUI extends JFrame implements ActionListener{
 		congDoanSanPham_Form = new CongDoanSanPham_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
 		congDoanPhanCong_Form = new CongDoanPhanCong_Form();
 		setForm(trangChu_Form);
+		
+		// Đăng ký sự kiện
+		btnDangXuat.addActionListener(this);
 	}
     
 	
@@ -253,12 +285,10 @@ public class Main_GUI extends JFrame implements ActionListener{
 	 */
 	private void moForm(int index, int subIndex) {
 		if(index == 0 && subIndex == 0) {
-			
 			setForm(trangChu_Form);
 		}
 		else if (index == 1) {
 			if (subIndex == 1) {
-				
 				setForm(quanLyCongNhan_Form);
 			}
 			else if(subIndex == 2){
@@ -364,8 +394,12 @@ public class Main_GUI extends JFrame implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-         
-		
+		Object o = e.getSource();
+		if (o.equals(btnDangXuat)) {
+			if (JOptionPane.showConfirmDialog(this, "Bạn có muốn đăng xuất không?", "Hỏi nhắc", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				openLogin_GUI();
+				this.dispose();
+			}
+		}
 	}
 }

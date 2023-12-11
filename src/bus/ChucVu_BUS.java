@@ -17,4 +17,14 @@ public class ChucVu_BUS {
 	public ChucVu getCVTheoTen(String ten){
 		return cv_dao.getChucVuTheoTen(ten);
 	}
+	public ArrayList<ChucVu> getDSCVPhongKeToan(){
+		return cv_dao.getDsCVPbKeToan();
+	}
+	public ArrayList<ChucVu> getDSCVPhongNhanSu(){
+		return cv_dao.getDsCVPbNhanSu();
+	}
+	public ArrayList<ChucVu> getDSCVPhongSanXuat(){
+		return cv_dao.getDsCVPbSanXuat();
+	}
+	
 }

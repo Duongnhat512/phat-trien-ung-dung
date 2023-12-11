@@ -318,9 +318,9 @@ VALUES
 
 INSERT INTO CaLam (idCaLam,tenCaLam, thoiGianBatDau, thoiGianKetThuc, heSoLuong)
 VALUES
-    (1,N'Ca Sáng', '08:00:00', '12:00:00', 1),
-    (2,N'Ca Chiều', '13:00:00', '17:00:00', 1),
-    (3,N'Ca Tối', '18:00:00', '22:00:00', 1.5);
+    (1,N'Ca sáng', '08:00:00', '12:00:00', 1),
+    (2,N'Ca chiều', '13:00:00', '17:00:00', 1),
+    (3,N'Ca tối', '18:00:00', '22:00:00', 1.5);
 
 -- Tạo 20 bảng Công Nhân
 INSERT INTO CongNhan (idCongNhan, hoTen, phai, ngaySinh, ngayBatDauCongTac, ngayKetThucCongTac, idPhanXuong, email, soDienThoai, phuCap, tayNghe, tenTaiKhoan,anhDaiDien,cccd)

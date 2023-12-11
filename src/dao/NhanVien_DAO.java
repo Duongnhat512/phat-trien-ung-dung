@@ -24,7 +24,7 @@ public class NhanVien_DAO {
 		try {
 			ConnectDB.getInstance();
 			Connection con = ConnectDB.getConnection();
-			String sql = "select*from NhanVien";
+			String sql = "select * from NhanVien";
 			Statement statement = con.createStatement();
 			ResultSet rs = statement.executeQuery(sql);
 			while (rs.next()) {
@@ -46,7 +46,7 @@ public class NhanVien_DAO {
 				String chucVu = rs.getString(9);
 				ChucVu cv = cv_DAO.getChucVuTheoID(chucVu);
 				String idTK = rs.getString(12);
-				TaiKhoan tk = new TaiKhoan(idTK);
+				TaiKhoan tk = taiKhoan_DAO.getTaiKhoan(idTK);
 				String pB = rs.getString(13);
 				PhongBan phongBan = pb_DAO.getPhongBanTheoID(pB);
 				String avatar = rs.getString(15);
@@ -87,7 +87,7 @@ public class NhanVien_DAO {
 				String chucVu = rs.getString(9);
 				ChucVu cv = cv_DAO.getChucVuTheoID(chucVu);
 				String idTK = rs.getString(12);
-				TaiKhoan tk = new TaiKhoan(idTK);
+				TaiKhoan tk = taiKhoan_DAO.getTaiKhoan(idTK);
 				String pB = rs.getString(13);
 				PhongBan phongBan = pb_DAO.getPhongBanTheoID(pB);
 				String avatar = rs.getString(15);
@@ -130,7 +130,7 @@ public class NhanVien_DAO {
 				String chucVu = rs.getString(9);
 				ChucVu cv = cv_DAO.getChucVuTheoID(chucVu);
 				String idTK = rs.getString(12);
-				TaiKhoan tk = new TaiKhoan(idTK);
+				TaiKhoan tk = taiKhoan_DAO.getTaiKhoan(idTK);
 				String pB = rs.getString(13);
 				PhongBan phongBan = pb_DAO.getPhongBanTheoID(pB);
 				double phuCap = rs.getDouble(14);
@@ -178,7 +178,7 @@ public class NhanVien_DAO {
 				String chucVu = rs.getString(9);
 				ChucVu cv = cv_DAO.getChucVuTheoID(chucVu);
 				String idTK = rs.getString(12);
-				TaiKhoan tk = new TaiKhoan(idTK);
+				TaiKhoan tk = taiKhoan_DAO.getTaiKhoan(idTK);
 				String pB = rs.getString(13);
 				PhongBan phongBan = pb_DAO.getPhongBanTheoID(pB);
 				double phuCap = rs.getDouble(14);
@@ -225,7 +225,7 @@ public class NhanVien_DAO {
 				String chucVu = rs.getString(9);
 				ChucVu cv = cv_DAO.getChucVuTheoID(chucVu);
 				String idTK = rs.getString(12);
-				TaiKhoan tk = new TaiKhoan(idTK);
+				TaiKhoan tk = taiKhoan_DAO.getTaiKhoan(idTK);
 				String pB = rs.getString(13);
 				PhongBan phongBan = pb_DAO.getPhongBanTheoID(pB);
 				double phuCap = rs.getDouble(14);
@@ -359,7 +359,7 @@ public class NhanVien_DAO {
 				String chucVu = rs.getString(9);
 				ChucVu cv = cv_DAO.getChucVuTheoID(chucVu);
 				String idTK = rs.getString(12);
-				TaiKhoan tk = new TaiKhoan(idTK);
+				TaiKhoan tk = taiKhoan_DAO.getTaiKhoan(idTK);
 				String pB = rs.getString(13);
 				PhongBan phongBan = pb_DAO.getPhongBanTheoID(pB);
 				double phuCap = rs.getDouble(14);

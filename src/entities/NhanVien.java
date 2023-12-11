@@ -75,6 +75,7 @@ public class NhanVien {
 		this.chucVu = chucVu;
 		this.taiKhoan = taiKhoan;
 		this.phongBan = phongBan;
+		tinhPhuCap();
 		this.anhDaiDien = anhDaiDien;
 		this.cCCD = cCCD;
 	}

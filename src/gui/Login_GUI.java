@@ -241,6 +241,12 @@ public class Login_GUI extends JFrame implements ActionListener{
 		frame.dispose();
 	}
 	
+	private void moQuenMatKhauGUI() {
+		Password_GUI gui = new Password_GUI();
+		gui.setVisible(true);
+		this.dispose();
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub

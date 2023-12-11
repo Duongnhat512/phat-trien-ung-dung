@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import connectDB.ConnectDB;
 import entities.ChucVu;
-import entities.NhanVien;
 
 
 public class ChucVu_DAO {
@@ -19,6 +18,69 @@ public class ChucVu_DAO {
 			ConnectDB.getInstance();
 			Connection con = ConnectDB.getConnection();
 			String sql = "select*from ChucVu";
+			Statement statement = con.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while(rs.next()) {
+				
+				String id = rs.getString(1);
+				String tenCV = rs.getString(2);
+				double heSoLuong = rs.getDouble(3);
+				ChucVu cv = new ChucVu(id, tenCV, heSoLuong);	
+				list.add(cv);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	public ArrayList<ChucVu> getDsCVPbKeToan() {
+		ArrayList<ChucVu> list = new ArrayList<ChucVu>();
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			String sql = "select*from ChucVu where idChucVu = 'CV002' or idChucVu = 'CV005'";
+			Statement statement = con.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while(rs.next()) {
+				
+				String id = rs.getString(1);
+				String tenCV = rs.getString(2);
+				double heSoLuong = rs.getDouble(3);
+				ChucVu cv = new ChucVu(id, tenCV, heSoLuong);	
+				list.add(cv);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	public ArrayList<ChucVu> getDsCVPbSanXuat() {
+		ArrayList<ChucVu> list = new ArrayList<ChucVu>();
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			String sql = "select*from ChucVu where idChucVu = 'CV001' or idChucVu = 'CV003'";
+			Statement statement = con.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while(rs.next()) {
+				
+				String id = rs.getString(1);
+				String tenCV = rs.getString(2);
+				double heSoLuong = rs.getDouble(3);
+				ChucVu cv = new ChucVu(id, tenCV, heSoLuong);	
+				list.add(cv);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	public ArrayList<ChucVu> getDsCVPbNhanSu() {
+		ArrayList<ChucVu> list = new ArrayList<ChucVu>();
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			String sql = "select*from ChucVu where idChucVu = 'CV001' or idChucVu = 'CV004'";
 			Statement statement = con.createStatement();
 			ResultSet rs = statement.executeQuery(sql);
 			while(rs.next()) {

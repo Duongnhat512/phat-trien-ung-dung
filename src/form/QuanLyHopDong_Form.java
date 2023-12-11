@@ -82,12 +82,10 @@ public class QuanLyHopDong_Form extends RoundPanel implements ActionListener{
 		panel.setBackground(new Color(255, 255, 255));
 		
 		btnThem = new MyButton();
-		btnThem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		btnThem.setForeground(new Color(255, 255, 255));
-		btnThem.setIcon(new ImageIcon(QuanLyHopDong_Form.class.getResource("/icon/icons8_plus_math_30px.png")));
+		ImageIcon themIcon = new ImageIcon(QuanLyHopDong_Form.class.getResource("/icon/icons8_plus_math_30px.png"));
+		
+		btnThem.setIcon(themIcon);
 		btnThem.setText("Thêm");
 		btnThem.setRadius(10);
 		btnThem.setFont(new Font("SansSerif", Font.PLAIN, 15));
@@ -95,7 +93,8 @@ public class QuanLyHopDong_Form extends RoundPanel implements ActionListener{
 		btnThem.setBackground(new Color(82, 125, 254));
 		
 		btnLamMoi = new MyButton();
-		btnLamMoi.setIcon(new ImageIcon(QuanLyHopDong_Form.class.getResource("/icon/update.png")));
+		btnLamMoi.setIcon(new ImageIcon(QuanLyHopDong_Form.class.getResource("/icon/reset.png")));
+//		btnLamMoi.setIcon(new ImageIcon(QuanLyHopDong_Form.class.getResource("/icon/reset.png")));
 		btnLamMoi.setText("Làm mới");
 		btnLamMoi.setRadius(10);
 		btnLamMoi.setFont(new Font("SansSerif", Font.PLAIN, 15));
