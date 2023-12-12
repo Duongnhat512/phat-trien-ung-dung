@@ -1629,3 +1629,14 @@ begin
 	where idHopDong = (select idHopDong from inserted)
 end
 go
+go
+create trigger trigger_ThemSanPhamCongDoan
+on ChiTietHopDong
+after insert
+as
+begin
+	update CongDoanSP
+	set soLuongSanPham = soLuongSanPham + (select inserted.soLuong from inserted)
+	where idSanPham = (select inserted.idSanPham from inserted)
+end
+go

@@ -10,6 +10,9 @@ public class PhanXuong_BUS {
 	public ArrayList<PhanXuong> getDanhSachPhanXuong(){
 		return px_dao.getDanhSachPhanXuong();
 	}
+	public ArrayList<PhanXuong> getdsPX(){
+		return px_dao.getDanhSachPhanXuong();
+	}
 	public PhanXuong getdsPXtheoID(String id){
 		return px_dao.getPhanXuongTheoID(id);
 	}

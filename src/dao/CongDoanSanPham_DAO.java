@@ -28,11 +28,12 @@ public class CongDoanSanPham_DAO {
 			while(rs.next()) {
 				String idCongDoan = rs.getString(1);
 				String tenCongDoan = rs.getString(2);
-				double luongCongDoan = rs.getDouble(3);
-				String idSanPham = rs.getString(4);
+				int soLuong = rs.getInt(3);
+				double luongCongDoan = rs.getDouble(4);
+				String idSanPham = rs.getString(5);
 				SanPham sp = sanPham_DAO.getSanPhamTheoID(idSanPham);
 				
-				CongDoanSanPham cd = new CongDoanSanPham(idCongDoan, tenCongDoan, luongCongDoan, sp);
+				CongDoanSanPham cd = new CongDoanSanPham(idCongDoan, tenCongDoan,soLuong, luongCongDoan, sp);
 				list.add(cd);
 			}
 		} catch (SQLException e) {
@@ -42,6 +43,7 @@ public class CongDoanSanPham_DAO {
 		
 		return list;
 	}
+	
 	/**
 	 * Tìm công đoạn theo mã sản phẩm
 	 * @param idSanPham
@@ -62,8 +64,8 @@ public class CongDoanSanPham_DAO {
 				int soLuongSP = rs.getInt(3);
 				double luongCongDoan = rs.getDouble(4);
 				SanPham sp = sanPham_DAO.getSanPhamTheoID(rs.getString(5));
-				String thuTuUuTien = rs.getString(6); 
-				CongDoanSanPham cd = new CongDoanSanPham(idCongDoan, tenCongDoan, soLuongSP, luongCongDoan, sp, thuTuUuTien);
+			
+				CongDoanSanPham cd = new CongDoanSanPham(idCongDoan, tenCongDoan, soLuongSP, luongCongDoan, sp);
 				list.add(cd);
 			}
 		} catch (SQLException e) {
@@ -93,8 +95,8 @@ public class CongDoanSanPham_DAO {
 				int soLuongSP = rs.getInt(3);
 				double luongCongDoan = rs.getDouble(4);
 				SanPham sp = sanPham_DAO.getSanPhamTheoID(rs.getString(5));
-				String thuTuUuTien = rs.getString(6); 
-				cd = new CongDoanSanPham(idCongDoan, tenCongDoan, soLuongSP, luongCongDoan, sp, thuTuUuTien);
+			
+				cd = new CongDoanSanPham(idCongDoan, tenCongDoan, soLuongSP, luongCongDoan, sp);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -109,12 +111,13 @@ public class CongDoanSanPham_DAO {
 		PreparedStatement stmt = null;
 		int n= 0;
 		try {
-			stmt =con.prepareStatement("insert into"+" CongDoanSP values(?,?,?,?)");
+			stmt =con.prepareStatement("insert into"+" CongDoanSP values(?,?,?,?,?)");
 			
 			stmt.setString(1, cdsp.getIdCongDoan());
 			stmt.setString(2, cdsp.getTenCongDoan());
-			stmt.setDouble(3, cdsp.getLuongCongDoan());
-			stmt.setString(4, cdsp.getSanPham().getIdSanPham());
+			stmt.setInt(3, cdsp.getSoLuongSanPham());
+			stmt.setDouble(4, cdsp.getLuongCongDoan());
+			stmt.setString(5, cdsp.getSanPham().getIdSanPham());
 			n = stmt.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -208,8 +211,8 @@ public class CongDoanSanPham_DAO {
 				int soLuongSP = rs.getInt(3);
 				double luongCongDoan = rs.getDouble(4);
 				SanPham sp = sanPham_DAO.getSanPhamTheoID(rs.getString(5));
-				String thuTuUuTien = rs.getString(6); 
-				CongDoanSanPham cd = new CongDoanSanPham(idCongDoan, tenCongDoan, soLuongSP, luongCongDoan, sp, thuTuUuTien);
+				
+				CongDoanSanPham cd = new CongDoanSanPham(idCongDoan, tenCongDoan, soLuongSP, luongCongDoan, sp);
 				list.add(cd);
 			}
 		} catch (SQLException e) {

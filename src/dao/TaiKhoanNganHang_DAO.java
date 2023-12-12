@@ -22,10 +22,8 @@ public class TaiKhoanNganHang_DAO {
 			ResultSet rs = stm.executeQuery();
 			while(rs.next()) {
 				String soTaiKhoan = rs.getString(1);
-				String tenNganHang = rs.getString(2);
 				String chuTaiKhoan = rs.getString(3);
-				String chiNhanh = rs.getString(4);
-				tk = new TaiKhoanNganHang(soTaiKhoan, tenNganHang, chuTaiKhoan,chiNhanh);
+				tk = new TaiKhoanNganHang(soTaiKhoan,  chuTaiKhoan);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -94,10 +92,8 @@ public class TaiKhoanNganHang_DAO {
 			ResultSet rs = stm.executeQuery();
 			while(rs.next()) {
 				String soTaiKhoan = rs.getString(1);
-				String tenNganHang = rs.getString(2);
-				String chiNhanh = rs.getString(3);
-				String chuTaiKhoan = rs.getString(4);
-				tk = new TaiKhoanNganHang(soTaiKhoan, tenNganHang,chuTaiKhoan, chiNhanh);
+				String chuTaiKhoan = rs.getString(3);
+				tk = new TaiKhoanNganHang(soTaiKhoan, chuTaiKhoan);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -2,14 +2,12 @@ package entities;
 
 public class TaiKhoanNganHang {
         private String soTaiKhoan;
-        private String tenNganHang;
-        private String chiNhanh;
+        private  final String tenNganHang = "Sacombank";
+        private final String chiNhanh = "Gò Vấp, TP HCM";
         private String chuTaiKhoan;
-		public TaiKhoanNganHang(String soTaiKhoan, String tenNganHang,  String chuTaiKhoan,String chiNhanh) {
+		public TaiKhoanNganHang(String soTaiKhoan,  String chuTaiKhoan) {
 			super();
 			this.soTaiKhoan = soTaiKhoan;
-			this.tenNganHang = tenNganHang;
-			this.chiNhanh = chiNhanh;
 			this.chuTaiKhoan = chuTaiKhoan;
 		}
 		public TaiKhoanNganHang() {
@@ -31,15 +29,11 @@ public class TaiKhoanNganHang {
 		public String getTenNganHang() {
 			return tenNganHang;
 		}
-		public void setTenNganHang(String tenNganHang) {
-			this.tenNganHang = tenNganHang;
-		}
+	
 		public String getChiNhanh() {
 			return chiNhanh;
 		}
-		public void setChiNhanh(String chiNhanh) {
-			this.chiNhanh = chiNhanh;
-		}
+		
 		@Override
 		public String toString() {
 			return "TaiKhoanNganHang [soTaiKhoan=" + soTaiKhoan + ", tenNganHang=" + tenNganHang + ", chiNhanh="
