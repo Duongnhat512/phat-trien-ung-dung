@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import bus.CongDoanSanPham_BUS;
+import bus.NhanVien_BUS;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -16,6 +17,8 @@ import commons.MyMenu;
 import commons.PanelButton;
 import connectDB.ConnectDB;
 import dao.CongDoanSanPham_DAO;
+import entities.NhanVien;
+import entities.TaiKhoan;
 import form.ChamCongCongNhan_Form;
 import form.ChamCongNhanVien_Form;
 import form.CongDoanPhanCong_Form;
@@ -103,30 +106,34 @@ public class Main_GUI extends JFrame implements ActionListener{
 	private JPanel panelContent;
 	private MyButton btnAvt;
 	private Container panel;
-	private static Main_GUI mainFrame = new Main_GUI();
+//	private static Main_GUI mainFrame = new Main_GUI();
+	private TaiKhoan tk = new TaiKhoan();
+	private NhanVien_BUS nv_BUS = new NhanVien_BUS();
+	private NhanVien nv = new NhanVien();
 	
 	//
 	private int[] currentIndex = new int[2];
 	private JLabel lblTenNV;
 	private MyButton btnDangXuat;
 	
-	public static void main(String[] args) {
-		mainFrame.setVisible(true);
-	}
+//	public static void main(String[] args) {
+//		mainFrame.setVisible(true);
+//	}
 	
-	public void openMain_GUI() {
+	public void openMain_GUI(TaiKhoan tk) {
+		Main_GUI mainFrame = new Main_GUI(tk);
 		mainFrame.setVisible(true);
-//		resize();
 	}
 
 	/**
 	 * Create the frame.
 	 */
-	public Main_GUI() {
+	public Main_GUI(TaiKhoan tk) {
+		this.tk = tk;
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Main_GUI.class.getResource("/icon/logo.png")));
 		int w = WIDTH;
 		int h = HEIGHT;
-		
 		setTitle("Phần mềm quản lý lương sản phẩm");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1800, 800);
@@ -148,17 +155,6 @@ public class Main_GUI extends JFrame implements ActionListener{
 		panelWest.setkGradientFocus(500);
 		panelWest.setkEndColor(Color.decode("#000428"));
 		contentPane.add(panelWest, BorderLayout.WEST);
-		
-		// Khởi tạo menu
-		initMenu();
-		
-		//Đăng ký sự kiện cho menu
-		menu.setEvent(new MenuEvent() {
-			@Override
-			public void selected(int index, int subIndex) {
-				moForm(index, subIndex);
-			}
-		});
 		
 		Image logo = new ImageIcon(Main_GUI.class.getResource("/icon/logo.png")).getImage().getScaledInstance((int)(w*0.1), (int)(w*0.1), Image.SCALE_SMOOTH);
 		ImageIcon logoIcon = new ImageIcon(logo);
@@ -254,6 +250,18 @@ public class Main_GUI extends JFrame implements ActionListener{
 		
 		// Đăng ký sự kiện
 		btnDangXuat.addActionListener(this);
+		
+		hienThiTenNhanVien();
+		// Khởi tạo menua
+		initMenu();
+		
+		//Đăng ký sự kiện cho menu
+		menu.setEvent(new MenuEvent() {
+			@Override
+			public void selected(int index, int subIndex) {
+				moForm(index, subIndex);
+			}
+		});
 	}
     
 	
@@ -265,29 +273,71 @@ public class Main_GUI extends JFrame implements ActionListener{
 	}
 	
 	private void initMenu() {
-		String[][] menuAdmin = new String[][]{
-			{"Trang chủ"},
-			{"Công nhân", "Quản lý công nhân", "Chấm công công nhân", "Tính lương công nhân", "Thống kê lương", "Thống kê KPI"},
-			{"Nhân viên", "Quản lý nhân viên", "Chấm công nhân viên", "Tính lương nhân viên", "Thống kê lương"},
-			{"Hợp đồng"},
-			{"Sản phẩm", "Quản lý sản phẩm", "Chia công đoạn cho sản phẩm", "Phân công cho công nhân"},
-			{"Hỗ trợ"}
-		};
-		menu = new MyMenu(menuAdmin);
+		if (tk.getLoaiTaiKhoan().equals("admin")) {
+			String[][] menuTitle = new String[][]{
+				{"Trang chủ"},
+				{"Công nhân", "Quản lý công nhân", "Chấm công công nhân", "Tính lương công nhân", "Thống kê lương", "Thống kê KPI"},
+				{"Nhân viên", "Quản lý nhân viên", "Chấm công nhân viên", "Tính lương nhân viên", "Thống kê lương"},
+				{"Hợp đồng"},
+				{"Sản phẩm", "Quản lý sản phẩm", "Chia công đoạn cho sản phẩm", "Phân công cho công nhân"}
+			};
+			menu = new MyMenu(menuTitle);
+		}
+		else if(nv.getChucVu().getTenChucVu().equals("Trưởng phòng sản xuất")) {
+			String[][] menuTitle = new String[][]{
+				{"Trang chủ"},
+				{"Công nhân", "Chấm công công nhân"},
+				{"Nhân viên", "Chấm công nhân viên"},
+				{"Hợp đồng"},
+				{"Sản phẩm", "Quản lý sản phẩm", "Chia công đoạn sản phẩm cho công nhân", "Phân công cho công nhân"}
+			};
+			menu = new MyMenu(menuTitle);
+		}
+		else if(nv.getChucVu().getTenChucVu().equals("Trưởng phòng nhân sự")) {
+			String[][] menuTitle = new String[][]{
+				{"Trang chủ"},
+				{"Công nhân", "Quản lý công nhân"},
+				{"Nhân viên", "Quản lý nhân viên"},
+			};
+			menu = new MyMenu(menuTitle);
+		}
+		else if(nv.getChucVu().getTenChucVu().equals("Kế toán")){
+			String[][] menuTitle = new String[][]{
+				{"Trang chủ"},
+				{"Công nhân", "Tính lương công nhân", "Thống kê lương", "Thống kê KPI"},
+				{"Nhân viên", "Tính lương nhân viên", "Thống kê lương"}
+			};
+			menu = new MyMenu(menuTitle);
+		}
 		panelWest.add(menu);
 		
 	}
 	
-	/**
-	 * Mở form
-	 * @param index
-	 * @param subIndex
-	 */
 	private void moForm(int index, int subIndex) {
 		if(index == 0 && subIndex == 0) {
 			setForm(trangChu_Form);
 		}
-		else if (index == 1) {
+		if(tk.getLoaiTaiKhoan().equals("admin")) {
+			moFormAdmin(index, subIndex);
+		}
+		else if(nv.getChucVu().getTenChucVu().equals("Trưởng phòng sản xuất")) {
+			moFormTPSX(index, subIndex);
+		}
+		else if (nv.getChucVu().getTenChucVu().equals("Trưởng phòng nhân sự")) {
+			moFormTPNS(index, subIndex);
+		}
+		else if (nv.getChucVu().getTenChucVu().equals("Kế toán")) {
+			moFromKeToan(index, subIndex);
+		}
+	}
+	
+	/**
+	 * Mở form admin
+	 * @param index
+	 * @param subIndex
+	 */
+	private void moFormAdmin(int index, int subIndex) {
+		if (index == 1) {
 			if (subIndex == 1) {
 				setForm(quanLyCongNhan_Form);
 			}
@@ -349,8 +399,82 @@ public class Main_GUI extends JFrame implements ActionListener{
 			}
 			
 		}
-		else if(index == 5 && subIndex == 0) {
-			moLinkHoTro();
+	}
+	
+	/**
+	 * Mở form cho trưởng phòng nhân sự
+	 * @param index
+	 * @param subIndex
+	 */
+	private void moFormTPNS(int index, int subIndex) {
+		if (index == 1) {
+			if (subIndex == 1) {
+				setForm(quanLyCongNhan_Form);
+			}
+		}
+		if (index == 2) {
+			if (subIndex == 1) {
+				setForm(quanLyNhanVien_Form);
+			}
+		}
+	}
+	
+	/**
+	 * Mở form cho trưởng phòng sản xuất
+	 * @param index
+	 * @param subIndex
+	 */
+	private void moFormTPSX(int index, int subIndex) {
+		if (index == 1) {
+			if (subIndex == 1) {
+				setForm(chamCongCongNhan_Form);
+			}
+		}
+		if (index == 2) {
+			if (subIndex == 1) {
+				setForm(chamCongNhanVien_Form);
+			}
+		}
+		if (index == 3) {
+			setForm(quanLyHopDong_Form);
+		}
+		if (index == 4) {
+			if (subIndex == 1) {
+				setForm(quanLySanPham_Form);
+			}
+			else if (subIndex == 2) {
+				setForm(congDoanSanPham_Form);
+			}
+			else {
+				setForm(congDoanPhanCong_Form);
+			}
+		}
+	}
+	
+	/**
+	 * Mở form cho kế toán
+	 * @param index
+	 * @param subIndex
+	 */
+	private void moFromKeToan(int index, int subIndex) {
+		if(index == 1) {
+			if (subIndex == 1) {
+				setForm(tinhLuongCongNhan_Form);
+			}
+			else if(subIndex == 2){
+				setForm(thongKeLuongCongNhan_Form);
+			}
+			else if(subIndex == 3){
+				setForm(thongKeKPI_form);
+			}
+		}
+		else if (index == 2) {
+			if (subIndex == 1) {
+				setForm(tinhLuongNhanVien_Form);
+			}
+			else if (subIndex == 2) {
+				setForm(thongKeLuongNhanVien_Form);
+			}
 		}
 	}
 	
@@ -389,6 +513,16 @@ public class Main_GUI extends JFrame implements ActionListener{
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+	
+	private void hienThiTenNhanVien() {
+		if (tk.getLoaiTaiKhoan().equals("admin")) {
+			lblTenNV.setText("admin");
+		}
+		else {
+			nv = nv_BUS.getNhanVienTheoID(tk.getTenTaiKhoan());
+			lblTenNV.setText(nv.getHoTen() + " - " + nv.getChucVu().getTenChucVu());
 		}
 	}
 	
