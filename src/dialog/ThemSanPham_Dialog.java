@@ -9,6 +9,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -20,13 +21,14 @@ import bus.SanPham_BUS;
 import commons.MyButton;
 import commons.RoundPanel;
 import entities.SanPham;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ThemSanPham_Dialog extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private int width = 900;
 	private int height = 550;
-	private MyButton btnCapNhat;
 	private MyButton btnHuy;
 	private JPanel buttonPane;
 	private RoundPanel panel_1;
@@ -77,7 +79,7 @@ public class ThemSanPham_Dialog extends JDialog {
 
 	public void initComponents() {
 		setTitle("Thêm sản phẩm");
-		setBounds(100, 100, 514, 459);
+		setBounds(100, 100, 534, 459);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -85,18 +87,6 @@ public class ThemSanPham_Dialog extends JDialog {
 			buttonPane = new JPanel();
 			buttonPane.setBorder(new MatteBorder(1, 0, 0, 0, (Color) new Color(192, 192, 192)));
 			buttonPane.setPreferredSize(new Dimension(this.width, (int) (this.height * 0.05)));
-			{
-				btnCapNhat = new MyButton();
-				btnCapNhat.setRadius(10);
-				btnCapNhat.setForeground(new Color(0, 0, 0));
-				btnCapNhat.setIcon(new ImageIcon(ThemSanPham_Dialog.class.getResource("/icon/update.png")));
-				btnCapNhat.setText("Thêm");
-				btnCapNhat.setFont(new Font("SansSerif", Font.PLAIN, 15));
-				btnCapNhat.setFocusPainted(false);
-				btnCapNhat.setActionCommand("OK");
-				btnCapNhat.setBackground(new Color(255, 255, 255));
-				getRootPane().setDefaultButton(btnCapNhat);
-			}
 			{
 				btnHuy = new MyButton();
 				btnHuy.setRadius(10);
@@ -107,19 +97,42 @@ public class ThemSanPham_Dialog extends JDialog {
 				btnHuy.setBackground(new Color(255, 81, 81));
 				btnHuy.setActionCommand("Cancel");
 			}
+			
+			MyButton btnThem = new MyButton();
+			btnThem.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					themSanPham();
+				}
+			});
+			btnThem.setIcon(new ImageIcon(ThemSanPham_Dialog.class.getResource("/icon/icons8_plus_math_30px_1.png")));
+			btnThem.setText("Thêm");
+			btnThem.setRadius(10);
+			btnThem.setForeground(Color.WHITE);
+			btnThem.setFont(new Font("SansSerif", Font.PLAIN, 15));
+			btnThem.setFocusable(false);
+			btnThem.setFocusTraversalKeysEnabled(false);
+			btnThem.setFocusPainted(false);
+			btnThem.setBackground(new Color(82, 125, 254));
+			btnThem.setActionCommand("ADD");
 			GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
-			gl_buttonPane.setHorizontalGroup(gl_buttonPane.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_buttonPane.createSequentialGroup().addGap(261)
-							.addComponent(btnCapNhat, GroupLayout.PREFERRED_SIZE, 98, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnHuy, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap(429, Short.MAX_VALUE)));
-			gl_buttonPane.setVerticalGroup(gl_buttonPane.createParallelGroup(Alignment.LEADING)
-					.addGroup(Alignment.TRAILING, gl_buttonPane.createSequentialGroup().addContainerGap()
-							.addGroup(gl_buttonPane.createParallelGroup(Alignment.BASELINE)
-									.addComponent(btnHuy, GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE).addComponent(
-											btnCapNhat, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))
-							.addContainerGap()));
+			gl_buttonPane.setHorizontalGroup(
+				gl_buttonPane.createParallelGroup(Alignment.TRAILING)
+					.addGroup(Alignment.LEADING, gl_buttonPane.createSequentialGroup()
+						.addGap(256)
+						.addComponent(btnThem, GroupLayout.PREFERRED_SIZE, 98, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addComponent(btnHuy, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(430, Short.MAX_VALUE))
+			);
+			gl_buttonPane.setVerticalGroup(
+				gl_buttonPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_buttonPane.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(gl_buttonPane.createParallelGroup(Alignment.BASELINE)
+							.addComponent(btnHuy, GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+							.addComponent(btnThem, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))
+						.addContainerGap())
+			);
 			buttonPane.setLayout(gl_buttonPane);
 		}
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
@@ -155,6 +168,7 @@ public class ThemSanPham_Dialog extends JDialog {
 		lblGhiCh.setFont(new Font("SansSerif", Font.PLAIN, 15));
 
 		textIDSP = new JTextField();
+		textIDSP.setDisabledTextColor(new Color(0, 0, 0));
 		textIDSP.setEditable(false);
 		textIDSP.setEnabled(false);
 		textIDSP.setBackground(new Color(240, 240, 240));
@@ -163,7 +177,6 @@ public class ThemSanPham_Dialog extends JDialog {
 		textIDSP.setColumns(10);
 
 		textTenSP = new JTextField();
-		textTenSP.setEditable(false);
 		textTenSP.setBackground(new Color(240, 240, 240));
 		textTenSP.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		textTenSP.setFont(new Font("SansSerif", Font.PLAIN, 15));
@@ -182,20 +195,23 @@ public class ThemSanPham_Dialog extends JDialog {
 		textChatLieu.setColumns(10);
 
 		textDonViTinh = new JTextField();
-		textDonViTinh.setEditable(false);
 		textDonViTinh.setBackground(new Color(240, 240, 240));
 		textDonViTinh.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		textDonViTinh.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		textDonViTinh.setColumns(10);
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
-		gl_contentPanel.setHorizontalGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+		gl_contentPanel.setHorizontalGroup(
+			gl_contentPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPanel.createSequentialGroup()
-						.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 877, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
-		gl_contentPanel.setVerticalGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 516, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(361, Short.MAX_VALUE))
+		);
+		gl_contentPanel.setVerticalGroup(
+			gl_contentPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPanel.createSequentialGroup()
-						.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 348, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(43, Short.MAX_VALUE)));
+					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 348, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
 
 		lblThongBao = new JLabel("");
 		lblThongBao.setFont(new Font("SansSerif", Font.ITALIC, 15));
@@ -235,7 +251,7 @@ public class ThemSanPham_Dialog extends JDialog {
 							.addComponent(lblGhiCh, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE)
 							.addGap(61)
 							.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-								.addComponent(textGhiChu, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(textGhiChu, GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
 								.addComponent(lblThongBao, GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE))))
 					.addGap(428))
 		);
@@ -271,7 +287,7 @@ public class ThemSanPham_Dialog extends JDialog {
 							.addComponent(lblnVTnh))
 						.addComponent(textDonViTinh, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
 					.addGap(22)
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING, false)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
 						.addComponent(lblGhiCh)
 						.addComponent(textGhiChu, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
@@ -282,9 +298,21 @@ public class ThemSanPham_Dialog extends JDialog {
 		contentPanel.setLayout(gl_contentPanel);
 		getContentPane().setLayout(groupLayout);
 
-//		textIDSP
+		textIDSP.setText(String.format("SP%04d", sp_Bus.getAllSanPham().size() + 1));
+		
+		btnHuy.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		
 	}
-
+	
+	/**
+	 * Lấy dữ liệu sản phẩm từ textField
+	 * @return
+	 */
 	public SanPham getDataSanPham() {
 		SanPham sp = null;
 		String idSP = String.format("SP%04d", sp_Bus.getAllSanPham().size() + 1);
@@ -295,11 +323,51 @@ public class ThemSanPham_Dialog extends JDialog {
 			textTenSP.requestFocus();
 			return null;
 		}
+		double donGia = 0;
+		try {
+			donGia = Double.parseDouble(textDonGia.getText());
+			if (donGia <= 0) {
+				lblThongBao.setText("Đơn giá sản phầm phải là số dương!");
+				textDonGia.selectAll();
+				textDonGia.requestFocus();
+				return null;
+			}
+		} catch (NumberFormatException e) {
+			lblThongBao.setText("Đơn giá sản phầm phải là chữ số!");
+			textDonGia.selectAll();
+			textDonGia.requestFocus();
+			return null;
+		}
+		String chatLieu = textChatLieu.getText();
+		if(chatLieu.trim().isEmpty()) {
+			lblThongBao.setText("Chất liệu không được để trống!");
+			textChatLieu.selectAll();
+			textChatLieu.requestFocus();
+			return null;
+		}
+		String donViTinh = textDonViTinh.getText();
+		if (donViTinh.trim().isEmpty()) {
+			lblThongBao.setText("Đơn vị tính không được để trống!");
+			textDonViTinh.selectAll();
+			textDonViTinh.requestFocus();
+			return null;
+		}
+		String ghiChu = textGhiChu.getText();
 		
+		sp = new SanPham(idSP, tenSP, donGia, chatLieu, donViTinh, ghiChu, ghiChu);
 		return sp;
 	}
-
+	
+	/**
+	 * Thêm sản phẩm
+	 */
 	private void themSanPham() {
-
+		SanPham sp = new SanPham();
+		sp = getDataSanPham();
+		if (sp != null) {
+			sp_Bus.themSanPham(sp);
+			JOptionPane.showMessageDialog(this, "Thêm thành công!");
+			this.dispose();
+		}
 	}
 }

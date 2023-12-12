@@ -168,7 +168,7 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener {
 		btnThemSP = new MyButton();
 		btnThemSP.setFocusTraversalKeysEnabled(false);
 		btnThemSP.setFocusable(false);
-		btnThemSP.setIcon(new ImageIcon(ThemHopDong_Dialog.class.getResource("/icon/icons8_plus_math_30px.png")));
+		btnThemSP.setIcon(new ImageIcon(ThemHopDong_Dialog.class.getResource("/icon/icons8_plus_math_30px_1.png")));
 		btnThemSP.setBackground(new Color(52, 254, 78));
 		btnThemSP.setBorderColor(new Color(255, 255, 255));
 		btnThemSP.setRadius(10);

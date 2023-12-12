@@ -15,6 +15,7 @@ import commons.RoundPanel;
 import commons.RoundTextField;
 import commons.Table;
 import dialog.ThemSanPham_Dialog;
+import dialog.XemSanPham_Dialog;
 import entities.HopDongSanPham;
 import entities.SanPham;
 
@@ -30,6 +31,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ImageIcon;
@@ -288,6 +290,10 @@ public class QuanLySanPham_Form extends JPanel implements ActionListener{
 		listSanPham = sanPham_BUS.getAllSanPham();
 	}
 	
+	/**
+	 * Tìm kiếm sản phẩm theo tên
+	 * @param tenSP
+	 */
 	private void timKiemSanPham(String tenSP) {
 		ArrayList<SanPham> temp = new ArrayList<SanPham>();
 		for (SanPham sanPham : listSanPham) {
@@ -299,6 +305,17 @@ public class QuanLySanPham_Form extends JPanel implements ActionListener{
 		listSanPham.addAll(temp);
 		docDuLieuLenTableSP(listSanPham);
 	}
+	
+	private void xemChiTietHopDong() {
+		int row = tableSanPham.getSelectedRow();
+		if (row == -1) {
+			JOptionPane.showMessageDialog(this, "Bạn cần chọn sản phẩm để xem chi tiết!");
+			return;
+		}
+		String id = tableSanPham.getValueAt(row, 0).toString();
+		XemSanPham_Dialog dg = new XemSanPham_Dialog(id);
+		dg.openThemSanPham_Dialog(row, row, id);
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -306,6 +323,13 @@ public class QuanLySanPham_Form extends JPanel implements ActionListener{
 		Object o = e.getSource();
 		if (o.equals(btnThem)) {
 			moThemSanPham_Dialog();
+		}
+		else if (o.equals(btnLamMoi)) {
+			layDanhSachSanPham();
+			docDuLieuLenTableSP(listSanPham);
+		}
+		else if (o.equals(btnXemChiTiet)) {
+			xemChiTietHopDong();
 		}
 	}
 	
