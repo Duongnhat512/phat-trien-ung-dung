@@ -755,7 +755,45 @@ public class ChamCongNhanVien_Form extends JPanel implements ActionListener, Mou
 		}
 		else
 		{
-			JOptionPane.showMessageDialog(this, "Chưa chọn nhân viên để chấm công!!");
+			boolean flag=false;
+			for(int i = 0;i < tableNhanVien.getRowCount();i++)
+			{
+				if(tableNhanVien.getValueAt(i, 4).toString().equals("true"))
+				{
+					flag = true;
+				}
+			}
+			
+			if(flag == false)
+			{
+				JOptionPane.showMessageDialog(this, "Chưa chọn nhân viên để chấm công");
+			}
+			else
+			{
+				for (int i = 0; i < modelNV.getRowCount(); i++) {
+					if (tableNhanVien.getValueAt(i, 4).toString().equals("true")
+							|| tableNhanVien.getValueAt(i, 5).toString().equals("true")
+							|| tableNhanVien.getValueAt(i, 6).toString().equals("true")) {
+						String manv = tableNhanVien.getValueAt(i, 0).toString();
+						String tennv = tableNhanVien.getValueAt(i, 1).toString();
+						String pb = tableNhanVien.getValueAt(i, 3).toString();
+						String trangThai = "";
+						if (tableNhanVien.getValueAt(i, 4).toString().equals("true")) {
+							trangThai = "Có mặt";
+						} else if (tableNhanVien.getValueAt(i, 5).toString().equals("true")) {
+							trangThai = "Có phép";
+						} else if (tableNhanVien.getValueAt(i, 6).toString().equals("true")) {
+							trangThai = "Không phép";
+						}
+						NhanVien nv = new NhanVien(manv);
+						BangChamCongNhanVien bcc = new BangChamCongNhanVien("1", LocalDate.now(), trangThai, nv);
+						if (chamCongNhanVien_BUS.themChamCong(bcc)) {
+							getListChamCong();
+						}
+					}
+				}
+			}
+			getListNVchuaChamCong();
 		}
 	}
 
