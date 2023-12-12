@@ -34,6 +34,7 @@ import com.toedter.calendar.JDateChooser;
 
 import bus.ThongKeLuongCongNhan_BUS;
 import bus.ThongKeLuongNV_BUS;
+import commons.MyButton;
 import commons.RoundPanel;
 import commons.RoundTextField;
 import commons.Table;
@@ -60,6 +61,8 @@ import java.awt.Container;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -113,11 +116,13 @@ public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener,
 	private JComboBox cbThang;
 	private JComboBox cbNam;
 	private DefaultTableModel modelTK;
-	private JButton btnPrint;
+	private MyButton btnPrint;
 	private JTextField textField_1;
 	private RoundTextField txtTimKiem;
     private DecimalFormat decimalFormat = new DecimalFormat("###,###,###.##");
 	private TableRowSorter sorter;
+	private RoundPanel panelListTK;
+	private JComponent lbThongKe;
 
 	public ThongKeLuongCongNhan_Form(int width, int height) {
 		this.width = width;
@@ -136,7 +141,7 @@ public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener,
 
 	}
 
-	public void showBarChart(double[] t) {
+	public void showBarChart(double[] t, int row) {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		dataset.setValue(t[0], "Lương trung bình", "T1");
 		dataset.setValue(t[1], "Lương trung bình", "T2");
@@ -150,7 +155,8 @@ public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener,
 		dataset.setValue(t[9], "Lương trung bình", "T10");
 		dataset.setValue(t[10], "Lương trung bình", "T11");
 		dataset.setValue(t[11], "Lương trung bình", "T12");
-		JFreeChart chart = ChartFactory.createBarChart("Biểu Đồ Cột Thể Hiện Sự Tăng Trưởng Thu Nhập Từng Công Nhân",
+		JFreeChart chart = ChartFactory.createBarChart("Biểu Đồ Cột Thể Hiện Sự Tăng Trưởng Thu Nhập"
+				+ " Năm " + cbNam.getSelectedItem().toString(),
 				"Tháng", "Lương", dataset, PlotOrientation.VERTICAL, false, true, false);
 
 		CategoryPlot categoryPlot = chart.getCategoryPlot();
@@ -170,9 +176,11 @@ public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener,
 		panelBarChart.validate();
 	}
 
-	private void showPieChart(double tyle[]) {
+	private void showPieChart(double tyle[], int row) {
 
 		// create dataset
+		if(row>=0)
+		{
 		DefaultPieDataset barDataset = new DefaultPieDataset();
 		for (int i = 0; i < tyle.length; i++) {
 			if (tyle[i] != 0) {
@@ -181,7 +189,8 @@ public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener,
 		}
 		// create chart
 		JFreeChart piechart = ChartFactory.createPieChart(
-				"Biểu đồ tròn phần trăm lương mỗi tháng của năm " + cbNam.getSelectedItem().toString(), barDataset,
+				"Biểu đồ tròn thể hiện mức độ gia tăng lương mỗi tháng của "
+						+ tableThongKe.getValueAt(row, 1).toString() + " Năm " + cbNam.getSelectedItem().toString(), barDataset,
 				false, true, false);// explain
 
 		PiePlot piePlot = (PiePlot) piechart.getPlot();
@@ -200,6 +209,36 @@ public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener,
 		panelLineChart.add(barChartPanel, "cell 0 0,grow");
 		barChartPanel.setLayout(new BorderLayout(0, 0));
 		panelLineChart.validate();
+		}else
+		{
+			DefaultPieDataset barDataset = new DefaultPieDataset();
+			for (int i = 0; i < tyle.length; i++) {
+				if (tyle[i] != 0) {
+					barDataset.setValue("Tháng " + (i + 1), tyle[i]);
+				}
+			}
+			// create chart
+			JFreeChart piechart = ChartFactory.createPieChart(
+					"Biểu đồ tròn phần trăm lương mỗi tháng của năm " + cbNam.getSelectedItem().toString(), barDataset,
+					false, true, false);// explain
+
+			PiePlot piePlot = (PiePlot) piechart.getPlot();
+
+			// changing pie chart blocks colors
+			piePlot.setSectionPaint("Đạt KPI", new Color(102, 255, 102));
+			piePlot.setSectionPaint("Không đạt", new Color(255, 0, 0));
+			piePlot.setBackgroundPaint(Color.white);
+
+			// create chartPanel to display chart(graph)
+			ChartPanel barChartPanel = new ChartPanel(piechart);
+			barChartPanel.setBounds(10, 10, 585, 387);
+			panelLineChart.removeAll();
+			panelLineChart.setLayout(null);
+			panelLineChart.setLayout(new MigLayout("", "[585px]", "[387px]"));
+			panelLineChart.add(barChartPanel, "cell 0 0,grow");
+			barChartPanel.setLayout(new BorderLayout(0, 0));
+			panelLineChart.validate();
+		}
 	}
 
 	public void initComponents() {
@@ -242,16 +281,28 @@ public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener,
 		panelCenter.setBorder(new EmptyBorder(5, 15, 10, 10));
 		panelCenter.setBounds(10, 75, 1230, 279);
 		add(panelCenter);
-		panelCenter.setLayout(null);
-		panelCenter.add(scrollPane_TK);
+		panelCenter.setLayout(new BorderLayout());
+		panelCenter.add(scrollPane_TK,BorderLayout.CENTER);
+		 panelListTK = new RoundPanel();
+		panelListTK.setRound(10);
+		panelListTK.setOpaque(false);
+		panelListTK.setBackground(new Color(153, 204, 255));
+//           scrollPane.setColumnHeaderView(panel_1);
+		panelCenter.add(panelListTK, BorderLayout.NORTH);
+
+		lbThongKe = new JLabel("Danh sách công nhân");
+		lbThongKe.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		panelListTK.add(lbThongKe,BorderLayout.NORTH);
 
 		RoundPanel pNorth = new RoundPanel();
+		pNorth.setBackground(new Color(255, 255, 255));
 		pNorth.setRound(20);
 		pNorth.setBounds(10, 10, 1230, 55);
 		add(pNorth);
 		pNorth.setLayout(null);
 
 		cbThang = new JComboBox();
+		cbThang.setBackground(new Color(255, 255, 255));
 		cbThang.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		cbThang.setBounds(93, 15, 83, 28);
 		String data[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" };
@@ -260,6 +311,7 @@ public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener,
 		pNorth.add(cbThang);
 
 		cbNam = new JComboBox();
+		cbNam.setBackground(new Color(255, 255, 255));
 		cbNam.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		cbNam.setBounds(261, 15, 181, 28);
 		String data_1[] = { "2023" };
@@ -267,11 +319,15 @@ public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener,
 		cbNam.setSelectedItem(LocalDate.now().getYear() + "");
 		pNorth.add(cbNam);
 
-		btnPrint = new JButton("Xuất ra excel");
+		btnPrint = new MyButton();
+		btnPrint.setText("Xuất Excel");
+		btnPrint.setRadius(20);
+		btnPrint.setBackground(Color.white);
+		btnPrint.setFocusPainted(false);
 		btnPrint.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnPrint.setIcon(new ImageIcon(ThongKeLuongCongNhan_Form.class.getResource("/icon/excel.png")));
 
-		btnPrint.setBounds(970, 10, 160, 38);
+		btnPrint.setBounds(1005, 10, 131, 38);
 		pNorth.add(btnPrint);
 		btnPrint.addActionListener(this);
 		JLabel lbthang = new JLabel("Tháng:");
@@ -287,7 +343,7 @@ public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener,
 		pNorth.add(lbNam);
 
 		txtTimKiem = new RoundTextField(10);
-		txtTimKiem.setText("Nhập tên nhân viên cần tìm...");
+		txtTimKiem.setText("Nhập tên công nhân cần tìm...");
 		txtTimKiem.setForeground(Color.GRAY);
 		txtTimKiem.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		txtTimKiem.setColumns(10);
@@ -296,7 +352,7 @@ public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener,
 			@Override
 			public void focusLost(FocusEvent e) {
 				if (txtTimKiem.getText().isEmpty()) {
-					txtTimKiem.setText("Nhập tên nhân viên cần tìm...");
+					txtTimKiem.setText("Nhập dữ liệu công nhân cần tìm...");
 					txtTimKiem.setForeground(Color.GRAY);
 				}
 				super.focusLost(e);
@@ -304,7 +360,7 @@ public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener,
 
 			@Override
 			public void focusGained(FocusEvent e) {
-				if (txtTimKiem.getText().equalsIgnoreCase("Nhập tên nhân viên cần tìm...")) {
+				if (txtTimKiem.getText().equalsIgnoreCase("Nhập dữ liệu công nhân cần tìm...")) {
 					txtTimKiem.setText("");
 					txtTimKiem.setForeground(Color.BLACK);
 				}
@@ -313,6 +369,13 @@ public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener,
 		});
 		txtTimKiem.setBounds(492, 13, 408, 33);
 		pNorth.add(txtTimKiem);
+		txtTimKiem.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				searchEmployee();
+			}
+		});
+		
 		tableThongKe.addMouseListener(this);
 		cbThang.addActionListener(this);
 		cbNam.addActionListener(this);
@@ -329,6 +392,21 @@ public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener,
 		Object o = e.getSource();
 		if (o.equals(cbThang) || o.equals(cbNam)) {
 			hienThiTable();
+			 if(tableThongKe.getRowCount()!=0)
+		        {
+		        	thongKeLuongNhanVien(0);
+		        }
+			 if(tableThongKe.getRowCount() == 0)
+			{
+	           JOptionPane.showMessageDialog(this, "Tháng này chưa có lương");
+	           double[] t = new double[20];
+	           for(int i = 0;i<19;i++)
+	           {
+	        	   t[i] = 0;
+	           }
+	           showBarChart(t,-1);
+	           showPieChart(t,-1);
+			}
 		}
 		if (o.equals(btnPrint)) {
 			String projectDirectory = System.getProperty("user.dir");
@@ -412,7 +490,7 @@ public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener,
 			t[thang - 1] = luong;
 			tong += luong;
 		}
-		showBarChart(t);
+		showBarChart(t,row);
 
 		double t1[] = new double[20];
 		for (int j = 0; j < tableTest.getRowCount(); j++) {
@@ -420,7 +498,7 @@ public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener,
 			double luong = Double.parseDouble(tableTest.getValueAt(j, 5).toString());
 			t1[thang - 1] = ((luong * 1.0) / (tong * 1.0)) / 100;
 		}
-		showPieChart(t1);
+		showPieChart(t1,row);
 	}
 
 	private boolean exportToExcelAndCreateUI(JTable table, String filePath) {

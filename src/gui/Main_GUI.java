@@ -188,7 +188,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 		panelCNort.setLayout(null);
 		
 		lblTenNV = new JLabel("");
-		lblTenNV.setIcon(new ImageIcon(Main_GUI.class.getResource("/icon/picture_30px.png")));
+//		lblTenNV.setIcon(new ImageIcon(Main_GUI.class.getResource("/icon/picture_30px.png")));
 		lblTenNV.setBorder(new EmptyBorder(0, 0, 0, 5));
 		lblTenNV.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTenNV.setFont(new Font("SansSerif", Font.PLAIN, 18));

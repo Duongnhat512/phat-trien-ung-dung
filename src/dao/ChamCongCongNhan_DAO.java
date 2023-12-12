@@ -105,6 +105,23 @@ public class ChamCongCongNhan_DAO {
 		return list;
 	}
 	
+	public int getSoLuongChamCong() {
+		int sl = 0;
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		try {
+			Statement stm = con.createStatement();
+			ResultSet rs = stm.executeQuery("select count(idNgayChamCong) from BangChamCongCongNhan");
+			while(rs.next()) {
+				sl = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return sl;
+	}
+	
 	/**
 	 * Lấy danh sách chấm công theo ngày, tháng, năm
 	 * @param ngay

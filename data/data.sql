@@ -1,5 +1,4 @@
-﻿--use master
---drop database QLLuongSanPham
+﻿use master
 create database QLLuongSanPham
 go
 use QLLuongSanPham
@@ -1625,7 +1624,3 @@ begin
 	where idHopDong = (select idHopDong from inserted)
 end
 go
-
-
-
-
