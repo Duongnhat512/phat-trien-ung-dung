@@ -679,7 +679,6 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 	private void searchTable() {
 		String searchText = searchField.getText().trim();
 		if (searchText.isEmpty() || searchText.equals("Nhập mã/tên công nhân cần tìm")) {
-//			System.out.println(searchText);
 			filterTable();
 			return;
 		}
@@ -690,10 +689,9 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 			@Override
 			public boolean include(Entry<? extends DefaultTableModel, ? extends Object> entry) {
 				String text = searchText.toLowerCase();
-				Object col3Value = entry.getValue(3); // Cột 1
-				Object col4Value = entry.getValue(4); // Cột 3
+				Object col3Value = entry.getValue(3); 
+				Object col4Value = entry.getValue(4); 
 
-				// Kiểm tra xem giá trị trong cột 1 hoặc cột 3 có chứa chuỗi tìm kiếm không
 				if ((col3Value != null && col3Value.toString().toLowerCase().contains(text))
 						|| (col4Value != null && col4Value.toString().toLowerCase().contains(text))) {
 					return true;
@@ -733,6 +731,7 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 		cbbNam.setSelectedItem("Năm " + String.valueOf(currentYear));
 		cbbThang.setSelectedIndex(currentMonth - 1);
 		cbbPhongBan.setSelectedItem("Tất cả");
+		lbldsCC.setText("Danh sách lương tháng " + (currentMonth + 1) + " - " + currentYear);
 		filterTable();
 		TableRowSorter<DefaultTableModel> sorter = (TableRowSorter<DefaultTableModel>) tableLuong.getRowSorter();
 		if (sorter != null) {

@@ -156,10 +156,10 @@ public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 	private JTable table_chiTiet2;
 	private TaiKhoan_BUS tk_bus;
 	private JLabel lbldsCC;
-	private RoundTextField searchField;
 	private BufferedImage visibleImage;
 	private BufferedImage emailIcon;
 	private MyButton btnRefesh;
+	private RoundTextField searchField;
 
 	public TinhLuongNhanVien_Form(int width, int height) {
 		setBackground(new Color(240, 240, 240));
@@ -467,8 +467,8 @@ public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 				PhongBan p = pb_bus.getPhongBanTheoIDNhanVien(nv.getIdNhanVien());
 				String idBangLuong = getIdBangLuong(l.getIdLuong());
 				l.setIdLuong(idBangLuong);
+				bl_bus.themBangLuongNhanVien(l, thang, nam);
 				if (LocalDate.now().getMonthValue() == thang + 1 && LocalDate.now().getDayOfMonth() == 5) {
-					bl_bus.themBangLuongNhanVien(l, thang, nam);
 				}
 				ChucVu c = cv_bus.getCV(nv.getChucVu().getIdChucVu());
 				DecimalFormat decimalFormat = new DecimalFormat("###,###,###.##");
@@ -581,6 +581,10 @@ public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 
 	private void searchTable() {
 		String searchText = searchField.getText().trim();
+		if (searchText.isEmpty() || searchText.equals("Nhập mã/tên công nhân cần tìm")) {
+			filterTable();
+			return;
+		}
 		TableRowSorter sorter = new TableRowSorter<>(dftable);
 		tableLuong.setRowSorter(sorter);
 
@@ -588,8 +592,9 @@ public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 			@Override
 			public boolean include(Entry<? extends DefaultTableModel, ? extends Object> entry) {
 				String text = searchText.toLowerCase();
-				Object col3Value = entry.getValue(3);
-				Object col4Value = entry.getValue(4);
+				Object col3Value = entry.getValue(3); 
+				Object col4Value = entry.getValue(4); 
+
 				if ((col3Value != null && col3Value.toString().toLowerCase().contains(text))
 						|| (col4Value != null && col4Value.toString().toLowerCase().contains(text))) {
 					return true;
@@ -670,7 +675,7 @@ public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 					{ "Số Tài Khoản", stk.getTaiKhoanNganHang().getSoTaiKhoan() },
 					{ "Phòng Ban", (String) tableLuong.getValueAt(r, 2) },
 					{ "Chức Vụ", (String) tableLuong.getValueAt(r, 5) },
-					{ "Số Ngày Công Thực Tế Trong Tháng", chiTiet[0] }, { "Ngày Nhận", LocalDate.now() }, };
+					{ "Số Ngày Công Thực Tế Trong Tháng", chiTiet[0] }, { "Ngày Nhận",(String) tableLuong.getValueAt(r, 1) }, };
 
 			Object[][] data2 = { { "Lương Cơ Bản", "", "", (String) tableLuong.getValueAt(r, 6) },
 					{ "Hệ Số Lương", "" + tableLuong.getValueAt(r, 7), "", "" },
@@ -758,13 +763,14 @@ public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 		}
 	}
 	public void lamMoi() {
-		searchField.setText("");
+		searchField.setText("Nhập mã/tên nhân viên cần tìm");
 		Calendar calendar = Calendar.getInstance();
 		int currentMonth = calendar.get(Calendar.MONTH);
 		int currentYear = calendar.get(Calendar.YEAR);
 		cbbNam.setSelectedItem("Năm " + String.valueOf(currentYear));
 		cbbThang.setSelectedIndex(currentMonth-1);
 		cbbPhongBan.setSelectedItem("Tất cả");
+		lbldsCC.setText("Danh sách lương tháng " + (currentMonth + 1) + " - " + currentYear);
 		filterTable();
 		TableRowSorter<DefaultTableModel> sorter = (TableRowSorter<DefaultTableModel>) tableLuong.getRowSorter();
 	    if (sorter != null) {
@@ -960,7 +966,7 @@ public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 							{ "Số Tài Khoản", stk.getTaiKhoanNganHang().getSoTaiKhoan() },
 							{ "Phòng Ban", (String) tableLuong.getValueAt(r, 2) },
 							{ "Chức Vụ", (String) tableLuong.getValueAt(r, 5) },
-							{ "Số Ngày Công Thực Tế Trong Tháng", chiTiet[0] }, { "Ngày Nhận", LocalDate.now() }, },
+							{ "Số Ngày Công Thực Tế Trong Tháng", chiTiet[0] }, { "Ngày Nhận",(String) tableLuong.getValueAt(r, 1) }, },
 					new String[] { "New column", "New column" }));
 			scrollPane.setColumnHeaderView(table_chiTiet1);
 			int cellHeight = 25;
