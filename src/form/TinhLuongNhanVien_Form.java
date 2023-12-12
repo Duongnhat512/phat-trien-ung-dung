@@ -704,7 +704,7 @@ public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 				e.printStackTrace();
 			}
 
-			Paragraph title = new Paragraph("Bảng Lương Công Nhân " + cbbThang.getSelectedItem() + " "
+			Paragraph title = new Paragraph("Bảng Lương Nhân Viên" + cbbThang.getSelectedItem() + " "
 					+ cbbNam.getSelectedItem() + "" + "" + "" + "" + "" + "" + "" + "", titleFont);
 			title.setAlignment(Element.ALIGN_CENTER);
 			document.add(title);

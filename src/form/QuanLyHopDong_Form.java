@@ -28,6 +28,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -54,7 +55,7 @@ public class QuanLyHopDong_Form extends RoundPanel implements ActionListener{
 	private MyButton btnXemChiTiet;
 	private MyButton btnLamMoi;
 	private MyButton btnThem;
-	
+	private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	//
 	ArrayList<HopDongSanPham> listHD = new ArrayList<HopDongSanPham>();
 	
@@ -261,7 +262,7 @@ public class QuanLyHopDong_Form extends RoundPanel implements ActionListener{
 		DefaultTableModel dm = (DefaultTableModel) tableHopDong.getModel();
 		dm.getDataVector().removeAllElements();
 		for(HopDongSanPham hd : list) {
-			dm.addRow(new Object[] {hd.getIdHopDong(), hd.getTenHopDong(), hd.getNgayBatDau(), hd.getNgayKetThuc(), hd.getNguoiQuanLy().getHoTen(), String.format("%,.2f", hd.getTongTien()), hd.getGhiChu()});
+			dm.addRow(new Object[] {hd.getIdHopDong(), hd.getTenHopDong(),dtf.format(hd.getNgayBatDau()), dtf.format(hd.getNgayKetThuc()), hd.getNguoiQuanLy().getHoTen(), String.format("%,.2f", hd.getTongTien()), hd.getGhiChu()});
 		}
 		tableHopDong.repaint();
 		tableHopDong.revalidate();

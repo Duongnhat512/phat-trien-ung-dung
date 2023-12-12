@@ -122,6 +122,7 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener,MouseListe
 	private MyButton btnPrint;
 	private RoundTextField txtTimKiem;
 	private TableRowSorter<DefaultTableModel> sorter;
+	private MyButton btnLamMoi;
 	
 	public ThongKeKPI_Form(int width, int height)
     { 
@@ -379,7 +380,7 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener,MouseListe
       btnPrint.setFont(new Font("Tahoma", Font.PLAIN, 15));
       btnPrint.setIcon(new ImageIcon(ThongKeKPI_Form.class.getResource("/icon/excel.png")));
 
-      btnPrint.setBounds(1005, 10, 131, 38);
+      btnPrint.setBounds(1089, 10, 131, 38);
       pNorth.add(btnPrint);
       btnPrint.addActionListener(this);
       
@@ -431,7 +432,18 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener,MouseListe
 			    	  thongKeTungNhanVienBieuDoTangTruong(0);
 			      }
 			}
+			
 		});
+		btnLamMoi = new MyButton();
+		btnLamMoi.setIcon(new ImageIcon(ThongKeLuongCongNhan_Form.class.getResource("/icon/reset.png")));
+		btnLamMoi.setText("Làm mới");
+		btnLamMoi.setRadius(20);
+		btnLamMoi.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnLamMoi.setFocusPainted(false);
+		btnLamMoi.setBackground(Color.WHITE);
+		btnLamMoi.setBounds(932, 10, 131, 38);
+		pNorth.add(btnLamMoi);
+		btnLamMoi.addActionListener(this);
       tableThongKe.addMouseListener(this);
       cbThang.addActionListener(this);
       cbNam.addActionListener(this);
@@ -447,6 +459,10 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener,MouseListe
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		Object o = e.getSource();
+		if(o.equals(btnLamMoi))
+		{
+			hienThiDSThongKe();
+		}
 		if(o.equals(cbThang) || o.equals(cbNam))
 		{			
 			hienThiDSThongKe();

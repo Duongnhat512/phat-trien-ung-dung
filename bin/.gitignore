@@ -1,12 +1,8 @@
+/bus/
+/commons/
+/connectDB/
 /dao/
 /dialog/
 /entities/
 /form/
 /gui/
-<<<<<<< HEAD
-=======
-/icon/
->>>>>>> 844960d1c70872982a479cab8f2c3e413e789ed9
-/bus/
-/commons/
-/connectDB/
