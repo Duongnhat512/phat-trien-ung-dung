@@ -467,8 +467,8 @@ public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 				PhongBan p = pb_bus.getPhongBanTheoIDNhanVien(nv.getIdNhanVien());
 				String idBangLuong = getIdBangLuong(l.getIdLuong());
 				l.setIdLuong(idBangLuong);
-				bl_bus.themBangLuongNhanVien(l, thang, nam);
 				if (LocalDate.now().getMonthValue() == thang + 1 && LocalDate.now().getDayOfMonth() == 5) {
+					bl_bus.themBangLuongNhanVien(l, thang, nam);
 				}
 				ChucVu c = cv_bus.getCV(nv.getChucVu().getIdChucVu());
 				DecimalFormat decimalFormat = new DecimalFormat("###,###,###.##");
