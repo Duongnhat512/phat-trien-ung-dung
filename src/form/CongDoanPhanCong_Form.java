@@ -31,6 +31,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -428,6 +430,61 @@ public class CongDoanPhanCong_Form extends JPanel implements ActionListener{
 		layDanhSachPhanCong();
 		docDuLieuDaPhanCongLenTable();
 		
+		txtTimKiemCDSP.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(txtTimKiemCDSP.getText().trim().isEmpty()) {
+					txtTimKiemCDSP.setText("Nhập tên sản phẩm cần tìm...");
+					txtTimKiemCDSP.setForeground(Color.GRAY);
+				}
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (txtTimKiemCDSP.getText().equals("Nhập tên sản phẩm cần tìm...")) {
+					txtTimKiemCDSP.setText("");
+					txtTimKiemCDSP.setForeground(Color.BLACK);
+				}
+			}
+		});
+		
+		txtTimKiemCDSP.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				layDanhSachCongDoanSP();
+				if (txtTimKiemCDSP.getText().trim().isEmpty()) {
+					docDuLieuLenTableCongDoan(listCongDoan);
+				}
+				else {
+					timCongDoanTheoTenSP(txtTimKiemCDSP.getText());
+				}
+			}
+		});
+		
+		txtTimKiemCN.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (txtTimKiemCN.getText().trim().isEmpty()) {
+					
+				}
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	
+		txtTimKiemCN.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				
+			}
+		});
+		
 		// Đăng ký sự kiện cho các table
 		tableCongDoanSP.addMouseListener(new MouseAdapter() {
 			@Override
@@ -485,6 +542,8 @@ public class CongDoanPhanCong_Form extends JPanel implements ActionListener{
 		for (CongDoanSanPham congDoanSanPham : list) {
 			dm.addRow(new Object[] {congDoanSanPham.getSanPham().getTenSanPham(), congDoanSanPham.getTenCongDoan(), congDoanSanPham.getSoLuongSanPham()});
 		}
+		tableCongDoanSP.repaint();
+		tableCongDoanSP.revalidate();
 	}
 	
 	/**
@@ -589,6 +648,10 @@ public class CongDoanPhanCong_Form extends JPanel implements ActionListener{
 		tablePhanCong.revalidate();
 	}
 	
+	/**
+	 * Tìm công đoạn theo tên sản phẩm
+	 * @param tenSP
+	 */
 	private void timCongDoanTheoTenSP(String tenSP) {
 		ArrayList<CongDoanSanPham> temp = new ArrayList<CongDoanSanPham>();
 		for (CongDoanSanPham congDoanSanPham : listCongDoan) {
@@ -597,6 +660,8 @@ public class CongDoanPhanCong_Form extends JPanel implements ActionListener{
 			}
 		}
 		listCongDoan = new ArrayList<CongDoanSanPham>();
+		listCongDoan.addAll(temp);
+		docDuLieuLenTableCongDoan(listCongDoan);
 	}
 
 	@Override
