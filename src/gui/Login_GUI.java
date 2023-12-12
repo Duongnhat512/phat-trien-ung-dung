@@ -40,6 +40,8 @@ import connectDB.ConnectDB;
 import entities.TaiKhoan;
 import java.awt.BorderLayout;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Login_GUI extends JFrame implements ActionListener{
 
@@ -88,7 +90,7 @@ public class Login_GUI extends JFrame implements ActionListener{
 		contentPane.setLayout(null);
 		
 		panel = new GradientPanel();
-		panel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		panel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		panel.setBorder(null);
 		panel.setBounds(0, 0, 1149, 674);
 		panel.setLayout(null);
@@ -163,6 +165,13 @@ public class Login_GUI extends JFrame implements ActionListener{
 		pRight.add(btnToggleIcon);
 		
 		JLabel lbQMK = new JLabel("Quên mật khẩu?\r\n");
+		lbQMK.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				new Password_GUI().setVisible(true);
+				dispose();
+			}
+		});
 		lbQMK.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lbQMK.setForeground(new Color(255, 0, 0));
 		lbQMK.setFont(new Font("Tahoma", Font.PLAIN, 16));
