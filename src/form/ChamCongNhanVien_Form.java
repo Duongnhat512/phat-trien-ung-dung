@@ -440,7 +440,7 @@ public class ChamCongNhanVien_Form extends JPanel implements ActionListener, Mou
 				btnLamMoi.setText("Làm mới");
 				btnLamMoi.setBackground(Color.white);
 				btnLamMoi.setRadius(20);
-				btnLamMoi.setIcon(new ImageIcon(ChamCongNhanVien_Form.class.getResource("/icon/update.png")));
+				btnLamMoi.setIcon(new ImageIcon(ChamCongNhanVien_Form.class.getResource("/icon/reset.png")));
 				btnLamMoi.setFont(new Font("Tahoma", Font.PLAIN, 15));
 				btnLamMoi.setBounds(1004, 10, 137, 48);
 				add(btnLamMoi);

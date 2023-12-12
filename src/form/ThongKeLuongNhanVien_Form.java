@@ -124,6 +124,7 @@ public class ThongKeLuongNhanVien_Form extends JPanel implements ActionListener,
 	private DecimalFormat decimalFormat = new DecimalFormat("###,###,###.##");
 	private RoundTextField txtTimKiem;
 	private TableRowSorter sorter;
+	private MyButton btnLamMoi;
 
 
 	public ThongKeLuongNhanVien_Form(int width, int height) {
@@ -366,7 +367,7 @@ public class ThongKeLuongNhanVien_Form extends JPanel implements ActionListener,
 		btnPrint.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnPrint.setIcon(new ImageIcon(ThongKeLuongNhanVien_Form.class.getResource("/icon/excel.png")));
 
-		btnPrint.setBounds(1005, 10, 131, 38);
+		btnPrint.setBounds(1089, 10, 131, 38);
 		pNorth.add(btnPrint);
 
 		JLabel lbthang = new JLabel("Tháng:");
@@ -399,6 +400,16 @@ public class ThongKeLuongNhanVien_Form extends JPanel implements ActionListener,
 				super.focusGained(e);
 			}
 		});
+		btnLamMoi = new MyButton();
+		btnLamMoi.setIcon(new ImageIcon(ThongKeLuongCongNhan_Form.class.getResource("/icon/reset.png")));
+		btnLamMoi.setText("Làm mới");
+		btnLamMoi.setRadius(20);
+		btnLamMoi.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnLamMoi.setFocusPainted(false);
+		btnLamMoi.setBackground(Color.WHITE);
+		btnLamMoi.setBounds(937, 10, 131, 38);
+		pNorth.add(btnLamMoi);
+		btnLamMoi.addActionListener(this);
 		txtTimKiem.setBounds(501, 13, 408, 33);
 		pNorth.add(txtTimKiem);
 		txtTimKiem.addActionListener(this);
@@ -422,6 +433,10 @@ public class ThongKeLuongNhanVien_Form extends JPanel implements ActionListener,
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		Object o = e.getSource();
+		if(o.equals(btnLamMoi))
+		{
+			hienThiTable();
+		}
 		if (o.equals(cbThang) || o.equals(cbNam)) {
 			hienThiTable();
 			 if(tableThongKe.getRowCount()!=0)

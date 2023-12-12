@@ -123,6 +123,7 @@ public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener,
 	private TableRowSorter sorter;
 	private RoundPanel panelListTK;
 	private JComponent lbThongKe;
+	private MyButton btnLamMoi;
 
 	public ThongKeLuongCongNhan_Form(int width, int height) {
 		this.width = width;
@@ -327,7 +328,7 @@ public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener,
 		btnPrint.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnPrint.setIcon(new ImageIcon(ThongKeLuongCongNhan_Form.class.getResource("/icon/excel.png")));
 
-		btnPrint.setBounds(1005, 10, 131, 38);
+		btnPrint.setBounds(1055, 10, 131, 38);
 		pNorth.add(btnPrint);
 		btnPrint.addActionListener(this);
 		JLabel lbthang = new JLabel("Tháng:");
@@ -367,8 +368,19 @@ public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener,
 				super.focusGained(e);
 			}
 		});
-		txtTimKiem.setBounds(492, 13, 408, 33);
+		txtTimKiem.setBounds(452, 13, 408, 33);
 		pNorth.add(txtTimKiem);
+		
+		btnLamMoi = new MyButton();
+		btnLamMoi.setIcon(new ImageIcon(ThongKeLuongCongNhan_Form.class.getResource("/icon/reset.png")));
+		btnLamMoi.setText("Làm mới");
+		btnLamMoi.setRadius(20);
+		btnLamMoi.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnLamMoi.setFocusPainted(false);
+		btnLamMoi.setBackground(Color.WHITE);
+		btnLamMoi.setBounds(877, 10, 131, 38);
+		pNorth.add(btnLamMoi);
+		btnLamMoi.addActionListener(this);
 		txtTimKiem.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -390,6 +402,10 @@ public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener,
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		Object o = e.getSource();
+		if(o.equals(btnLamMoi))
+		{
+			hienThiTable();
+		}
 		if (o.equals(cbThang) || o.equals(cbNam)) {
 			hienThiTable();
 			 if(tableThongKe.getRowCount()!=0)
