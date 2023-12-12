@@ -425,8 +425,8 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 				PhanXuong p = px_bus.getdsPXtheoID(cn.getPhanXuong().getIdPhanXuong());
 				String idBangLuong = getIdBangLuong(l.getIdLuongCN());
 				l.setIdLuongCN(idBangLuong);
-				bl_bus.themBangLuongCongNhan(l, thang, nam);
 				if (LocalDate.now().getMonthValue() == thang + 1 && LocalDate.now().getDayOfMonth() == 5) {
+					bl_bus.themBangLuongCongNhan(l, thang, nam);
 				}
 				DecimalFormat decimalFormat = new DecimalFormat("###,###,###.##");
 				if (l.getThucLanh() < 0) {
