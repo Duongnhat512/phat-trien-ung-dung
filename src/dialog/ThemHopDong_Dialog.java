@@ -60,7 +60,7 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener {
 
 	private final JPanel contentPanel = new JPanel();
 	private int width = 900;
-	private int height = 800;
+	private int height = 700;
 	private MyButton btnThem;
 	private MyButton btnHuy;
 	private JPanel buttonPane;
@@ -73,7 +73,6 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener {
 	private JTextField txtNgayKetThuc;
 	private JLabel lblNhnVinPh;
 	private JComboBox cboNhanVien;
-	private JLabel lblGhiCh;
 	private JLabel lblTngTinHp;
 	private JLabel lblTongTien;
 	private MyButton btnThemSP;
@@ -93,7 +92,6 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener {
 	private JLabel lblThongBaoSP;
 	private MyButton btnBoChon;
 	private JLabel lblThongBao;
-	private JTextArea txtGhiChu;
 	private double tongTien = 0;
 	private boolean flag = false;
 
@@ -127,69 +125,24 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener {
 	}
 
 	public void initComponents() {
-		setBounds(100, 100, this.width, this.height);
+		setBounds(100, 100, 900, 707);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		contentPanel.setBackground(new Color(240, 240, 240));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		{
-			buttonPane = new JPanel();
-			buttonPane.setBorder(new MatteBorder(1, 0, 0, 0, (Color) new Color(192, 192, 192)));
-			buttonPane.setPreferredSize(new Dimension(this.width, (int) (this.height * 0.05)));
-			{
-				btnThem = new MyButton();
-				btnThem.setFocusTraversalKeysEnabled(false);
-				btnThem.setFocusable(false);
-				btnThem.setActionCommand("ADD");
-				btnThem.setRadius(10);
-				btnThem.setForeground(new Color(255, 255, 255));
-				btnThem.setIcon(new ImageIcon(ThemHopDong_Dialog.class.getResource("/icon/icons8_plus_math_30px.png")));
-				btnThem.setText("Thêm");
-				btnThem.setFont(new Font("SansSerif", Font.PLAIN, 15));
-				btnThem.setFocusPainted(false);
-				btnThem.setBackground(new Color(82, 125, 254));
-				getRootPane().setDefaultButton(btnThem);
-			}
-			{
-				btnHuy = new MyButton();
-				btnHuy.setFocusTraversalKeysEnabled(false);
-				btnHuy.setFocusable(false);
-				btnHuy.setRadius(10);
-				btnHuy.setIcon(new ImageIcon(ThemHopDong_Dialog.class.getResource("/icon/unavailable.png")));
-				btnHuy.setText("Hủy");
-				btnHuy.setFont(new Font("SansSerif", Font.PLAIN, 15));
-				btnHuy.setFocusPainted(false);
-				btnHuy.setBackground(new Color(255, 81, 81));
-				btnHuy.setActionCommand("Cancel");
-			}
-			GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
-			gl_buttonPane.setHorizontalGroup(gl_buttonPane.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_buttonPane.createSequentialGroup().addGap(676)
-							.addComponent(btnThem, GroupLayout.PREFERRED_SIZE, 98, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(btnHuy, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap()));
-			gl_buttonPane.setVerticalGroup(gl_buttonPane.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_buttonPane.createSequentialGroup().addContainerGap()
-							.addGroup(gl_buttonPane.createParallelGroup(Alignment.BASELINE)
-									.addComponent(btnHuy, GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
-									.addComponent(btnThem, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))
-							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
-			buttonPane.setLayout(gl_buttonPane);
-		}
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(contentPanel, GroupLayout.PREFERRED_SIZE, 886, GroupLayout.PREFERRED_SIZE)
-								.addComponent(buttonPane, GroupLayout.PREFERRED_SIZE, 886, GroupLayout.PREFERRED_SIZE))
-						.addContainerGap()));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+					.addComponent(contentPanel, GroupLayout.PREFERRED_SIZE, 886, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-						.addComponent(contentPanel, GroupLayout.PREFERRED_SIZE, 698, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(buttonPane, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap()));
+					.addComponent(contentPanel, GroupLayout.PREFERRED_SIZE, 658, GroupLayout.PREFERRED_SIZE)
+					.addGap(105))
+		);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(192, 192, 192)));
@@ -302,11 +255,11 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener {
 		lblTnHpng.setFont(new Font("SansSerif", Font.PLAIN, 15));
 
 		lblNgyBtu = new JLabel("Ngày bắt đầu:");
-		lblNgyBtu.setBounds(10, 87, 130, 20);
+		lblNgyBtu.setBounds(442, 49, 130, 20);
 		lblNgyBtu.setFont(new Font("SansSerif", Font.PLAIN, 15));
 
 		lblNgyKtThc = new JLabel("Ngày kết thúc:");
-		lblNgyKtThc.setBounds(10, 127, 130, 20);
+		lblNgyKtThc.setBounds(442, 89, 130, 20);
 		lblNgyKtThc.setFont(new Font("SansSerif", Font.PLAIN, 15));
 
 		txtIDHopDong = new JTextField();
@@ -327,14 +280,14 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener {
 		txtTenHopDong.setBorder(new EmptyBorder(2, 4, 2, 4));
 
 		txtNgayBatDau = new JTextField();
-		txtNgayBatDau.setBounds(179, 88, 209, 21);
+		txtNgayBatDau.setBounds(611, 50, 215, 21);
 		txtNgayBatDau.setBackground(new Color(255, 255, 255));
 		txtNgayBatDau.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		txtNgayBatDau.setColumns(10);
 		txtNgayBatDau.setBorder(new EmptyBorder(2, 4, 2, 4));
 
 		txtNgayKetThuc = new JTextField();
-		txtNgayKetThuc.setBounds(179, 127, 209, 21);
+		txtNgayKetThuc.setBounds(611, 89, 215, 21);
 		txtNgayKetThuc.setBackground(new Color(255, 255, 255));
 		txtNgayKetThuc.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		txtNgayKetThuc.setColumns(10);
@@ -345,21 +298,12 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener {
 		lblNhnVinPh.setFont(new Font("SansSerif", Font.PLAIN, 15));
 
 		cboNhanVien = new JComboBox();
-		cboNhanVien.setBounds(597, 11, 215, 28);
+		cboNhanVien.setBounds(611, 6, 215, 28);
 		cboNhanVien.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		cboNhanVien.setBackground(Color.WHITE);
 
-		lblGhiCh = new JLabel("Ghi chú:");
-		lblGhiCh.setBounds(442, 59, 130, 20);
-		lblGhiCh.setFont(new Font("SansSerif", Font.PLAIN, 15));
-
-		txtGhiChu = new JTextArea();
-		txtGhiChu.setBounds(442, 89, 424, 77);
-		txtGhiChu.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		txtGhiChu.setBorder(new EmptyBorder(5, 5, 5, 5));
-
 		lblThongBao = new JLabel("");
-		lblThongBao.setBounds(10, 158, 378, 20);
+		lblThongBao.setBounds(10, 89, 378, 20);
 		lblThongBao.setForeground(new Color(255, 0, 0));
 		lblThongBao.setFont(new Font("SansSerif", Font.ITALIC, 15));
 		getContentPane().setLayout(groupLayout);
@@ -388,44 +332,114 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener {
 		btnCapNhat.setFocusPainted(false);
 		btnCapNhat.setBorderColor(Color.WHITE);
 		btnCapNhat.setBackground(Color.WHITE);
+		{
+			buttonPane = new JPanel();
+			buttonPane.setBorder(new MatteBorder(1, 0, 0, 0, (Color) new Color(192, 192, 192)));
+			buttonPane.setPreferredSize(new Dimension(this.width, (int) (this.height * 0.05)));
+			{
+				btnThem = new MyButton();
+				btnThem.setFocusTraversalKeysEnabled(false);
+				btnThem.setFocusable(false);
+				btnThem.setActionCommand("ADD");
+				btnThem.setRadius(10);
+				btnThem.setForeground(new Color(255, 255, 255));
+				btnThem.setIcon(new ImageIcon(ThemHopDong_Dialog.class.getResource("/icon/icons8_plus_math_30px.png")));
+				btnThem.setText("Thêm");
+				btnThem.setFont(new Font("SansSerif", Font.PLAIN, 15));
+				btnThem.setFocusPainted(false);
+				btnThem.setBackground(new Color(82, 125, 254));
+				getRootPane().setDefaultButton(btnThem);
+			}
+			{
+				btnHuy = new MyButton();
+				btnHuy.setFocusTraversalKeysEnabled(false);
+				btnHuy.setFocusable(false);
+				btnHuy.setRadius(10);
+				btnHuy.setIcon(new ImageIcon(ThemHopDong_Dialog.class.getResource("/icon/unavailable.png")));
+				btnHuy.setText("Hủy");
+				btnHuy.setFont(new Font("SansSerif", Font.PLAIN, 15));
+				btnHuy.setFocusPainted(false);
+				btnHuy.setBackground(new Color(255, 81, 81));
+				btnHuy.setActionCommand("Cancel");
+			}
+			GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
+			gl_buttonPane.setHorizontalGroup(
+				gl_buttonPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(Alignment.TRAILING, gl_buttonPane.createSequentialGroup()
+						.addContainerGap(657, Short.MAX_VALUE)
+						.addComponent(btnThem, GroupLayout.PREFERRED_SIZE, 98, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addComponent(btnHuy, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
+						.addGap(20))
+			);
+			gl_buttonPane.setVerticalGroup(
+				gl_buttonPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_buttonPane.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(gl_buttonPane.createParallelGroup(Alignment.BASELINE)
+							.addComponent(btnHuy, GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+							.addComponent(btnThem, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))
+						.addContainerGap())
+			);
+			buttonPane.setLayout(gl_buttonPane);
+		}
+		
+				//
+				btnHuy.addActionListener(this);
+				
+						btnThem.addActionListener(this);
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
-		gl_contentPanel.setHorizontalGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_contentPanel.createSequentialGroup().addGroup(gl_contentPanel
-						.createParallelGroup(Alignment.LEADING)
-						.addComponent(panel, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 876,
-								GroupLayout.PREFERRED_SIZE)
-						.addGroup(Alignment.TRAILING,
-								gl_contentPanel.createSequentialGroup().addGap(493)
-										.addComponent(lblTngTinHp, GroupLayout.PREFERRED_SIZE, 175,
-												GroupLayout.PREFERRED_SIZE)
-										.addGap(10).addComponent(lblTongTien, GroupLayout.PREFERRED_SIZE, 198,
-												GroupLayout.PREFERRED_SIZE))
-						.addComponent(panelSanPham, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 876, Short.MAX_VALUE)
-						.addComponent(panelCTHopDong, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 876,
-								GroupLayout.PREFERRED_SIZE)
-						.addGroup(Alignment.TRAILING, gl_contentPanel.createSequentialGroup().addContainerGap()
-								.addComponent(btnThemSP, GroupLayout.PREFERRED_SIZE, 165, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(btnCapNhat, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(btnBoChon, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
-								.addGap(20)))
-						.addContainerGap()));
-		gl_contentPanel.setVerticalGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING).addGroup(gl_contentPanel
-				.createSequentialGroup()
-				.addComponent(panel, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
-				.addPreferredGap(ComponentPlacement.RELATED)
-				.addComponent(panelSanPham, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)
-				.addPreferredGap(ComponentPlacement.RELATED)
-				.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+		gl_contentPanel.setHorizontalGroup(
+			gl_contentPanel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPanel.createSequentialGroup()
+					.addContainerGap(474, Short.MAX_VALUE)
+					.addComponent(lblTngTinHp, GroupLayout.PREFERRED_SIZE, 175, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(lblTongTien, GroupLayout.PREFERRED_SIZE, 198, GroupLayout.PREFERRED_SIZE)
+					.addGap(49))
+				.addGroup(Alignment.LEADING, gl_contentPanel.createSequentialGroup()
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(panelSanPham, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 879, Short.MAX_VALUE))
+					.addContainerGap())
+				.addGroup(gl_contentPanel.createSequentialGroup()
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING)
+						.addComponent(panelCTHopDong, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 887, Short.MAX_VALUE)
+						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addContainerGap(480, Short.MAX_VALUE)
+							.addComponent(btnThemSP, GroupLayout.PREFERRED_SIZE, 165, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnCapNhat, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnBoChon, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)))
+					.addGap(19))
+				.addGroup(Alignment.LEADING, gl_contentPanel.createSequentialGroup()
+					.addGap(10)
+					.addComponent(buttonPane, GroupLayout.PREFERRED_SIZE, 868, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
+		gl_contentPanel.setVerticalGroup(
+			gl_contentPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPanel.createSequentialGroup()
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(panelSanPham, GroupLayout.PREFERRED_SIZE, 165, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnThemSP, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnBoChon, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
+							.addComponent(btnThemSP, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
+							.addComponent(btnBoChon, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
 						.addComponent(btnCapNhat, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
-				.addPreferredGap(ComponentPlacement.RELATED)
-				.addComponent(panelCTHopDong, GroupLayout.PREFERRED_SIZE, 227, GroupLayout.PREFERRED_SIZE).addGap(18)
-				.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING).addComponent(lblTngTinHp)
-						.addComponent(lblTongTien, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))));
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(panelCTHopDong, GroupLayout.PREFERRED_SIZE, 209, GroupLayout.PREFERRED_SIZE)
+					.addGap(12)
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblTngTinHp)
+						.addComponent(lblTongTien, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(buttonPane, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
 		panel.setLayout(null);
 		panel.add(lblNewLabel);
 		panel.add(txtIDHopDong);
@@ -438,8 +452,6 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener {
 		panel.add(lblThongBao);
 		panel.add(lblNhnVinPh);
 		panel.add(cboNhanVien);
-		panel.add(lblGhiCh);
-		panel.add(txtGhiChu);
 
 		lblThongBaoSP = new JLabel("");
 		lblThongBaoSP.setForeground(new Color(255, 0, 0));
@@ -506,13 +518,8 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener {
 
 //		 Hiển thị IDHopDong
 		txtIDHopDong.setText(String.format("HD%04d", listHD.size() + 1));
-
-		//
-		btnHuy.addActionListener(this);
 		btnThemSP.addActionListener(this);
 		btnBoChon.addActionListener(this);
-
-		btnThem.addActionListener(this);
 
 		// Sự kiện hiển thị thông tin sau khi nhập mã sản phẩm ở txtIDSanPham
 		txtIDSanPham.addKeyListener(new KeyAdapter() {
@@ -554,6 +561,12 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener {
 			return false;
 		}
 		String tenHopDong = txtTenHopDong.getText();
+		if (tenHopDong.trim().isEmpty()) {
+			lblThongBao.setText("Tên hợp đồng không được để trống.");
+			txtTenHopDong.selectAll();
+			txtTenHopDong.requestFocus();
+			return false;
+		}
 		if (!tenHopDong.matches("^[\\p{L}]+([\\s]+[\\p{L}]+)*")) {
 			lblThongBao.setText("Tên hợp đồng không được chứa ký tự đặc biệt!");
 			txtTenHopDong.selectAll();
@@ -597,10 +610,7 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener {
 			String tenHopDong = txtTenHopDong.getText();
 			LocalDate ngayBatDau = LocalDate.parse(txtNgayBatDau.getText(), dtf);
 			LocalDate ngayKetThuc = LocalDate.parse(txtNgayKetThuc.getText(), dtf);
-			String ghiChu = null;
-			if (!txtGhiChu.getText().trim().isEmpty()) {
-				ghiChu = txtGhiChu.getText();
-			}
+			String ghiChu = "Đang tiến hành";
 			NhanVien nv = listTPSanXuat.get(cboNhanVien.getSelectedIndex());
 			double tongTien = 0;
 			for (ChiTietHopDong chiTietHopDong : listCTHD) {

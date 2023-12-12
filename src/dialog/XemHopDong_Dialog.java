@@ -88,7 +88,6 @@ public class XemHopDong_Dialog extends JDialog implements ActionListener{
 	private JTextField txtChatLieu;
 	private JLabel lblThongBaoSP;
 	private JLabel lblThongBao;
-	private JTextArea txtGhiChu;
 	private double tongTien = 0;
 	private HopDongSanPham hd = new HopDongSanPham();
 	
@@ -107,6 +106,8 @@ public class XemHopDong_Dialog extends JDialog implements ActionListener{
 	private JTextField txtTenHopDong;
 	private JTextField txtNgayBatDau;
 	private JTextField txtNgayKetThuc;
+	private JComboBox cboGhiChu;
+	private MyButton btnCapNhat;
 	
 //	public void openXemHopDong_Dialog(int width, int height) {
 //		this.width = width;
@@ -148,11 +149,24 @@ public class XemHopDong_Dialog extends JDialog implements ActionListener{
 				btnDong.setBackground(new Color(255, 81, 81));
 				btnDong.setActionCommand("Cancel");
 			}
+			
+			btnCapNhat = new MyButton();
+			btnCapNhat.setIcon(new ImageIcon(XemHopDong_Dialog.class.getResource("/icon/update.png")));
+			btnCapNhat.setText("Cập nhật");
+			btnCapNhat.setRadius(10);
+			btnCapNhat.setFont(new Font("SansSerif", Font.PLAIN, 15));
+			btnCapNhat.setFocusable(false);
+			btnCapNhat.setFocusTraversalKeysEnabled(false);
+			btnCapNhat.setFocusPainted(false);
+			btnCapNhat.setBackground(new Color(255, 255, 255));
+			btnCapNhat.setActionCommand("Cancel");
 			GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
 			gl_buttonPane.setHorizontalGroup(
 				gl_buttonPane.createParallelGroup(Alignment.LEADING)
 					.addGroup(gl_buttonPane.createSequentialGroup()
-						.addGap(784)
+						.addGap(667)
+						.addComponent(btnCapNhat, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
 						.addComponent(btnDong, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
 						.addContainerGap())
 			);
@@ -160,8 +174,13 @@ public class XemHopDong_Dialog extends JDialog implements ActionListener{
 				gl_buttonPane.createParallelGroup(Alignment.LEADING)
 					.addGroup(gl_buttonPane.createSequentialGroup()
 						.addContainerGap()
-						.addComponent(btnDong, GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
-						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addGroup(gl_buttonPane.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_buttonPane.createSequentialGroup()
+								.addComponent(btnCapNhat, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+								.addContainerGap())
+							.addGroup(gl_buttonPane.createSequentialGroup()
+								.addComponent(btnDong, GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+								.addContainerGap(11, Short.MAX_VALUE))))
 			);
 			buttonPane.setLayout(gl_buttonPane);
 		}
@@ -275,7 +294,7 @@ public class XemHopDong_Dialog extends JDialog implements ActionListener{
 		lblNewLabel.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		
 		lblTnHpng = new JLabel("Tên hợp đồng:");
-		lblTnHpng.setBounds(10, 59, 130, 20);
+		lblTnHpng.setBounds(10, 58, 130, 20);
 		lblTnHpng.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		
 		lblNgyBtu = new JLabel("Ngày bắt đầu:");
@@ -283,7 +302,7 @@ public class XemHopDong_Dialog extends JDialog implements ActionListener{
 		lblNgyBtu.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		
 		lblNgyKtThc = new JLabel("Ngày kết thúc:");
-		lblNgyKtThc.setBounds(10, 130, 130, 20);
+		lblNgyKtThc.setBounds(438, 58, 130, 20);
 		lblNgyKtThc.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		
 		txtIDHopDong = new JTextField();
@@ -301,13 +320,8 @@ public class XemHopDong_Dialog extends JDialog implements ActionListener{
 		lblNhnVinPh.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		
 		lblGhiCh = new JLabel("Ghi chú:");
-		lblGhiCh.setBounds(442, 59, 130, 20);
+		lblGhiCh.setBounds(438, 94, 130, 20);
 		lblGhiCh.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		
-		txtGhiChu = new JTextArea();
-		txtGhiChu.setBounds(442, 89, 424, 77);
-		txtGhiChu.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		txtGhiChu.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 		lblThongBao = new JLabel("");
 		lblThongBao.setBounds(10, 158, 378, 20);
@@ -336,25 +350,25 @@ public class XemHopDong_Dialog extends JDialog implements ActionListener{
 		gl_contentPanel.setHorizontalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPanel.createSequentialGroup()
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(panel, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 876, GroupLayout.PREFERRED_SIZE)
-						.addGroup(Alignment.TRAILING, gl_contentPanel.createSequentialGroup()
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING)
+						.addComponent(panelCTHopDong, GroupLayout.DEFAULT_SIZE, 886, Short.MAX_VALUE)
+						.addComponent(panelSanPham, GroupLayout.DEFAULT_SIZE, 876, Short.MAX_VALUE)
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 886, Short.MAX_VALUE)
+						.addGroup(gl_contentPanel.createSequentialGroup()
 							.addGap(493)
 							.addComponent(lblTngTinHp, GroupLayout.PREFERRED_SIZE, 175, GroupLayout.PREFERRED_SIZE)
 							.addGap(10)
-							.addComponent(lblTongTien, GroupLayout.PREFERRED_SIZE, 198, GroupLayout.PREFERRED_SIZE))
-						.addComponent(panelSanPham, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 886, Short.MAX_VALUE)
-						.addComponent(panelCTHopDong, GroupLayout.PREFERRED_SIZE, 876, GroupLayout.PREFERRED_SIZE))
+							.addComponent(lblTongTien, GroupLayout.PREFERRED_SIZE, 198, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
 		gl_contentPanel.setVerticalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPanel.createSequentialGroup()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panelSanPham, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)
+					.addComponent(panelSanPham, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panelCTHopDong, GroupLayout.PREFERRED_SIZE, 274, GroupLayout.PREFERRED_SIZE)
+					.addComponent(panelCTHopDong, GroupLayout.PREFERRED_SIZE, 334, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
 					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
 						.addComponent(lblTngTinHp)
@@ -369,7 +383,6 @@ public class XemHopDong_Dialog extends JDialog implements ActionListener{
 		panel.add(lblThongBao);
 		panel.add(lblNhnVinPh);
 		panel.add(lblGhiCh);
-		panel.add(txtGhiChu);
 		
 		txtNhanVien = new JTextField();
 		txtNhanVien.setFont(new Font("SansSerif", Font.PLAIN, 15));
@@ -412,8 +425,15 @@ public class XemHopDong_Dialog extends JDialog implements ActionListener{
 		txtNgayKetThuc.setColumns(10);
 		txtNgayKetThuc.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		txtNgayKetThuc.setBackground(SystemColor.menu);
-		txtNgayKetThuc.setBounds(143, 130, 245, 21);
+		txtNgayKetThuc.setBounds(620, 59, 209, 21);
 		panel.add(txtNgayKetThuc);
+		
+		cboGhiChu = new JComboBox();
+		cboGhiChu.setBackground(new Color(255, 255, 255));
+		cboGhiChu.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		cboGhiChu.setBounds(620, 96, 209, 21);
+		cboGhiChu.setModel(new DefaultComboBoxModel<>(new Object[] {"Đang tiến hành", "Đã hoàn thành"}));
+		panel.add(cboGhiChu);
 		
 		lblThongBaoSP = new JLabel("");
 		lblThongBaoSP.setForeground(new Color(255, 0, 0));
@@ -481,8 +501,10 @@ public class XemHopDong_Dialog extends JDialog implements ActionListener{
 		
 		lblTongTien.setText(String.format("%,.2f VND", tongTien));
 		
+		docDuLieuCTHDLenTable();
 		//
 		btnDong.addActionListener(this);
+		btnCapNhat.addActionListener(this);
 		tableCTHopDong.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -500,7 +522,7 @@ public class XemHopDong_Dialog extends JDialog implements ActionListener{
 		txtNgayBatDau.setText(dtf.format(hd.getNgayBatDau()));
 		txtNgayKetThuc.setText(dtf.format(hd.getNgayKetThuc()));
 		txtNhanVien.setText(hd.getNguoiQuanLy().getHoTen());
-		txtGhiChu.setText(hd.getGhiChu());
+		cboGhiChu.setSelectedItem(hd.getGhiChu());
 		lblTongTien.setText(String.format("%,.2f VND", hd.getTongTien()));
 	}
 	
@@ -508,7 +530,7 @@ public class XemHopDong_Dialog extends JDialog implements ActionListener{
 	 * Đọc dữ liệu chi tiết hợp đồng lên table
 	 */
 	public void docDuLieuCTHDLenTable() {
-		cthd = chiTietHopDong_BUS.getChiTietHopDongTheoIDHopDong(hd.getIdHopDong());
+		cthd = chiTietHopDong_BUS.getChiTietHopDongTheoIDHopDong(txtIDHopDong.getText());
 		DefaultTableModel dm = (DefaultTableModel) tableCTHopDong.getModel();
 		for (ChiTietHopDong chiTietHopDong : cthd) {
 			dm.addRow(new Object[] {chiTietHopDong.getSanPham().getIdSanPham(), chiTietHopDong.getSanPham().getTenSanPham(), 
@@ -541,6 +563,13 @@ public class XemHopDong_Dialog extends JDialog implements ActionListener{
 		if (o.equals(btnDong)) {
 			this.dispose();
 		}
-		
+		if (o.equals(btnCapNhat)) {
+			if (!hd.getGhiChu().equals(cboGhiChu.getSelectedItem().toString())) {
+				if (JOptionPane.showConfirmDialog(this, "Bạn có muốn thay đổi ghi chú không?", "Hỏi nhắc", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					hopDongSanPham_BUS.capNhatGhiChu(hd.getIdHopDong(), cboGhiChu.getSelectedItem().toString());
+					JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
+				}
+			}
+		}
 	}
 }

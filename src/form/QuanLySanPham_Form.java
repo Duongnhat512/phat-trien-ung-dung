@@ -120,6 +120,7 @@ public class QuanLySanPham_Form extends JPanel implements ActionListener{
 		});
 		
 		btnXemChiTiet = new MyButton();
+		btnXemChiTiet.setIcon(new ImageIcon(QuanLySanPham_Form.class.getResource("/icon/show_property.png")));
 //		btnXemChiTiet.setIcon(new ImageIcon(QuanLySanPham_Form.class.getResource("/icon/show_property.png")));
 		btnXemChiTiet.setText("Xem chi tiết");
 		btnXemChiTiet.setRadius(10);

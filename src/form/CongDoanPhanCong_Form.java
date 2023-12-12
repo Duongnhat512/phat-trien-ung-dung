@@ -47,6 +47,7 @@ import java.awt.FlowLayout;
 import commons.RoundTextField;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 
 public class CongDoanPhanCong_Form extends JPanel implements ActionListener{
 	private int width = 1259;
@@ -54,7 +55,6 @@ public class CongDoanPhanCong_Form extends JPanel implements ActionListener{
 	private Table tableCongNhan;
 	private Table tableCongDoanSP;
 	private MyButton btnPhanCong;
-	private MyButton btnCapNhat;
 	
 	//
 	private CongNhan_BUS congNhan_BUS = new CongNhan_BUS();
@@ -79,12 +79,12 @@ public class CongDoanPhanCong_Form extends JPanel implements ActionListener{
 	 * Create the panel.
 	 */
 	public CongDoanPhanCong_Form() {
-		setBorder(new EmptyBorder(0, 5, 10, 0));
+		setBorder(new EmptyBorder(10, 30, 10, 30));
 		initComponents();
 	}
 	
 	private void initComponents() {
-		setSize(new Dimension(width, height));
+		setSize(new Dimension(1234, 813));
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelNorth = new JPanel();
@@ -104,7 +104,7 @@ public class CongDoanPhanCong_Form extends JPanel implements ActionListener{
 		panelCN.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 		RoundPanel panelThongTin = new RoundPanel();
-		panelThongTin.setBounds(709, 64, 528, 332);
+		panelThongTin.setBounds(709, 64, 537, 332);
 		panelThongTin.setRound(20);
 		panelThongTin.setBorder(new EmptyBorder(5, 5, 5, 5));
 		panelThongTin.setBackground(new Color(255, 255, 255));
@@ -112,7 +112,7 @@ public class CongDoanPhanCong_Form extends JPanel implements ActionListener{
 		
 		RoundPanel panelCenter = new RoundPanel();
 		panelCenter.setRound(20);
-		panelCenter.setPreferredSize(new Dimension(1196, 487));
+		panelCenter.setPreferredSize(new Dimension(1100, 350));
 		panelCenter.setBorder(new EmptyBorder(5, 15, 10, 10));
 		panelCenter.setBackground(Color.WHITE);
 		add(panelCenter, BorderLayout.CENTER);
@@ -384,17 +384,10 @@ public class CongDoanPhanCong_Form extends JPanel implements ActionListener{
 		);
 		panel_4.setLayout(gl_panel_4);
 		
-		btnCapNhat = new MyButton();
-		btnCapNhat.setBounds(1096, 11, 141, 43);
-		panelNorth.add(btnCapNhat);
-		btnCapNhat.setText("Cập nhật");
-		btnCapNhat.setRadius(10);
-		btnCapNhat.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		btnCapNhat.setFocusPainted(false);
-		btnCapNhat.setBackground(Color.WHITE);
-		
 		btnPhanCong = new MyButton();
-		btnPhanCong.setBounds(949, 10, 141, 45);
+		btnPhanCong.setBorderColor(new Color(255, 255, 255));
+		btnPhanCong.setIcon(new ImageIcon(CongDoanPhanCong_Form.class.getResource("/icon/add.png")));
+		btnPhanCong.setBounds(1023, 9, 141, 45);
 		panelNorth.add(btnPhanCong);
 		btnPhanCong.setText("Phân công");
 		btnPhanCong.setRadius(10);
@@ -408,7 +401,7 @@ public class CongDoanPhanCong_Form extends JPanel implements ActionListener{
 		txtTimKiemCN.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		txtTimKiemCN.setColumns(10);
 		txtTimKiemCN.setBorder(new EmptyBorder(0, 15, 0, 0));
-		txtTimKiemCN.setBounds(352, 19, 347, 35);
+		txtTimKiemCN.setBounds(352, 15, 347, 35);
 		panelNorth.add(txtTimKiemCN);
 		
 		RoundTextField txtTimKiemCDSP = new RoundTextField(10);
@@ -417,7 +410,7 @@ public class CongDoanPhanCong_Form extends JPanel implements ActionListener{
 		txtTimKiemCDSP.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		txtTimKiemCDSP.setColumns(10);
 		txtTimKiemCDSP.setBorder(new EmptyBorder(0, 15, 0, 0));
-		txtTimKiemCDSP.setBounds(10, 19, 336, 35);
+		txtTimKiemCDSP.setBounds(10, 15, 336, 35);
 		panelNorth.add(txtTimKiemCDSP);
 		
 		
@@ -467,21 +460,30 @@ public class CongDoanPhanCong_Form extends JPanel implements ActionListener{
 			@Override
 			public void focusLost(FocusEvent e) {
 				if (txtTimKiemCN.getText().trim().isEmpty()) {
-					
+					txtTimKiemCN.setText("Nhập tên công nhân cần tìm...");
+					txtTimKiemCN.setForeground(getBackground());
 				}
 			}
 			
 			@Override
 			public void focusGained(FocusEvent e) {
-				// TODO Auto-generated method stub
-				
+				if (txtTimKiemCN.getText().equals("Nhập tên công nhân cần tìm...")) {
+					txtTimKiemCN.setText("");
+					txtTimKiemCN.setForeground(Color.BLACK);
+				}
 			}
 		});
 	
 		txtTimKiemCN.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				
+				layDanhSachCongNhan();
+				if (txtTimKiemCN.getText().trim().isEmpty()) {
+					docDuLieuLenTableCongNhan(listCongNhan);
+				}
+				else {
+					timCongNhanTheoTen(txtTimKiemCN.getText());
+				}
 			}
 		});
 		
@@ -663,7 +665,23 @@ public class CongDoanPhanCong_Form extends JPanel implements ActionListener{
 		listCongDoan.addAll(temp);
 		docDuLieuLenTableCongDoan(listCongDoan);
 	}
-
+	
+	/**
+	 * Tìm công nhân theo tên
+	 * @param tenCN
+	 */
+	private void timCongNhanTheoTen(String tenCN) {
+		ArrayList<CongNhan> temp = new ArrayList<CongNhan>();
+		for (CongNhan congNhan : listCongNhan) {
+			if (congNhan.getHoTen().trim().toUpperCase().contains(tenCN.trim().toUpperCase())) {
+				temp.add(congNhan);
+			}
+		}
+		listCongNhan = new ArrayList<CongNhan>();
+		listCongNhan.addAll(temp);
+		docDuLieuLenTableCongNhan(listCongNhan);
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();

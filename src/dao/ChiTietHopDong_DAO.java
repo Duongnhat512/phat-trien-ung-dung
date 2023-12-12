@@ -54,7 +54,7 @@ public class ChiTietHopDong_DAO {
 		Connection con = ConnectDB.getConnection();
 		PreparedStatement stm = null;
 		try {
-			stm = con.prepareStatement("insert into ChiTietHopDong values(?, ?, ?, ?, ?)");
+			stm = con.prepareStatement("insert into ChiTietHopDong values(?, ?, ?, ?)");
 			stm.setString(1, chiTietHopDong.getHopDongSanPham().getIdHopDong());
 			stm.setString(2, chiTietHopDong.getSanPham().getIdSanPham());
 			stm.setInt(3, chiTietHopDong.getSoLuong());

@@ -90,4 +90,21 @@ public class HopDongSanPham_DAO {
 		}
 		return n > 0;
 	}
+	
+	public boolean capNhatGhiChu(String idHD, String ghiChu) {
+		int n = 0;
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stm = null;
+		try {
+			stm = con.prepareStatement("update HopDongSanPham set ghiChu = ? where idHopDong = ?");
+			stm.setString(1, ghiChu);
+			stm.setString(2, idHD);
+			n = stm.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return n > 1;
+	}
 }

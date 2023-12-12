@@ -17,4 +17,7 @@ public class HopDongSanPham_BUS {
 	public boolean themHopDong(HopDongSanPham hopDongSanPham) {
 		return hopDongSanPham_DAO.themHopDong(hopDongSanPham);
 	}
+	public boolean capNhatGhiChu(String idHD, String ghiChu) {
+		return hopDongSanPham_DAO.capNhatGhiChu(idHD, ghiChu);
+	}
 }

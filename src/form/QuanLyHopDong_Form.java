@@ -138,9 +138,9 @@ public class QuanLyHopDong_Form extends RoundPanel implements ActionListener{
 				.addGroup(gl_panel.createSequentialGroup()
 					.addGap(31)
 					.addComponent(textTimKiem, GroupLayout.PREFERRED_SIZE, 349, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 480, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 476, Short.MAX_VALUE)
 					.addComponent(btnThem, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(btnXemChiTiet, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnLamMoi, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
@@ -157,7 +157,7 @@ public class QuanLyHopDong_Form extends RoundPanel implements ActionListener{
 						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 							.addComponent(textTimKiem, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
 							.addComponent(btnLamMoi, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addContainerGap(15, Short.MAX_VALUE))
 		);
 		panel.setLayout(gl_panel);
 		
@@ -298,13 +298,6 @@ public class QuanLyHopDong_Form extends RoundPanel implements ActionListener{
 		listHD = new ArrayList<HopDongSanPham>();
 		listHD.addAll(temp);
 		docDuLieuLenTableHDSP(listHD);
-	}
-	
-	/**
-	 * Lọc hợp đồng theo ngày
-	 */
-	private void locHopDongTheoNgay() {
-		
 	}
 	
 	@Override
