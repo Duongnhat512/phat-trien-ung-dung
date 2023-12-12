@@ -229,9 +229,6 @@ public class Main_GUI extends JFrame implements ActionListener{
 			e.printStackTrace();
 		}
 		
-		currentIndex[0] = 0;
-		currentIndex[1] = 0;
-		
 		trangChu_Form = new TrangChu_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
 		quanLyCongNhan_Form = new QuanLyCongNhan_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
 		chamCongCongNhan_Form = new ChamCongCongNhan_Form(panelCenter.getWidth(), panelCenter.getHeight() - panelCNort.getHeight());
