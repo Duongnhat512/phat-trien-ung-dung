@@ -246,20 +246,23 @@ public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener,
 		panelCenter.add(scrollPane_TK);
 
 		RoundPanel pNorth = new RoundPanel();
+		pNorth.setBackground(new Color(255, 255, 255));
 		pNorth.setRound(20);
 		pNorth.setBounds(10, 10, 1230, 55);
 		add(pNorth);
 		pNorth.setLayout(null);
 
 		cbThang = new JComboBox();
+		cbThang.setBackground(new Color(255, 255, 255));
 		cbThang.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		cbThang.setBounds(93, 15, 83, 28);
 		String data[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" };
 		cbThang.setModel(new DefaultComboBoxModel<String>(data));
-		cbThang.setSelectedItem(LocalDate.now().getMonthValue() + "");
+		cbThang.setSelectedItem(LocalDate.now().getMonthValue() - 1 + "");
 		pNorth.add(cbThang);
 
 		cbNam = new JComboBox();
+		cbNam.setBackground(new Color(255, 255, 255));
 		cbNam.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		cbNam.setBounds(261, 15, 181, 28);
 		String data_1[] = { "2023" };
@@ -329,6 +332,10 @@ public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener,
 		Object o = e.getSource();
 		if (o.equals(cbThang) || o.equals(cbNam)) {
 			hienThiTable();
+			if(tableThongKe.getRowCount() == 0)
+			{
+	           JOptionPane.showMessageDialog(this, "Tháng này chưa có lương");
+			}
 		}
 		if (o.equals(btnPrint)) {
 			String projectDirectory = System.getProperty("user.dir");

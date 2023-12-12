@@ -267,6 +267,7 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener,MouseListe
       pNorth.setLayout(null);
       
       cbThang = new JComboBox();
+      cbThang.setBackground(new Color(255, 255, 255));
       cbThang.setFont(new Font("Tahoma", Font.PLAIN, 15));
       cbThang.setBounds(93, 15, 83, 28);
       String data[] = {"1","2","3","4","5","6","7","8","9","10","11","12"};
@@ -275,6 +276,7 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener,MouseListe
       pNorth.add(cbThang);
       
        cbNam = new JComboBox();
+       cbNam.setBackground(new Color(255, 255, 255));
       cbNam.setFont(new Font("Tahoma", Font.PLAIN, 15));
       cbNam.setBounds(272, 15, 181, 28);
       String data_1[] = {"2023"};

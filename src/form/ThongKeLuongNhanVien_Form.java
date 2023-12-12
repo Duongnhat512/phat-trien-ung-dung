@@ -218,11 +218,11 @@ public class ThongKeLuongNhanVien_Form extends JPanel implements ActionListener,
 		panelBarChart = new RoundPanel();
 		panelBarChart.setRound(20);
 		panelBarChart.setBackground(new Color(255, 255, 255));
-		panelBarChart.setBounds(24, 363, 634, 404);
+		panelBarChart.setBounds(10, 363, 648, 404);
 		panelLineChart = new RoundPanel();
 		panelLineChart.setRound(20);
 		panelLineChart.setBackground(new Color(255, 255, 255));
-		panelLineChart.setBounds(668, 363, 556, 404);
+		panelLineChart.setBounds(668, 363, 572, 404);
 		setLayout(null);
 		add(panelBarChart);
 		add(panelLineChart);
@@ -248,7 +248,7 @@ public class ThongKeLuongNhanVien_Form extends JPanel implements ActionListener,
 		panelCenter.setRound(20);
 		panelCenter.setBackground(new Color(255, 255, 255));
 		panelCenter.setBorder(new EmptyBorder(5, 15, 10, 10));
-		panelCenter.setBounds(24, 59, 1200, 294);
+		panelCenter.setBounds(10, 59, 1230, 294);
 		add(panelCenter);
 		panelCenter.setLayout(new BorderLayout(0, 0));
 		panelCenter.add(scrollPane_TK, BorderLayout.CENTER);
@@ -266,11 +266,12 @@ public class ThongKeLuongNhanVien_Form extends JPanel implements ActionListener,
 
 		JPanel pNorth = new JPanel();
 		pNorth.setBackground(new Color(255, 255, 255));
-		pNorth.setBounds(25, 10, 1199, 39);
+		pNorth.setBounds(10, 10, 1230, 39);
 		add(pNorth);
 		pNorth.setLayout(null);
 
 		cbThang = new JComboBox();
+		cbThang.setBackground(new Color(255, 255, 255));
 		cbThang.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		cbThang.setBounds(84, 6, 83, 28);
 		String data[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" };
@@ -279,6 +280,7 @@ public class ThongKeLuongNhanVien_Form extends JPanel implements ActionListener,
 		pNorth.add(cbThang);
 
 		cbNam = new JComboBox();
+		cbNam.setBackground(new Color(255, 255, 255));
 		cbNam.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		cbNam.setBounds(272, 6, 181, 28);
 		String data_1[] = new String[15];

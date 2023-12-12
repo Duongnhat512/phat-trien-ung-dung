@@ -20,6 +20,8 @@ import bus.NhanVien_BUS;
 import bus.PhongBan_BUS;
 
 import javax.swing.*;
+
+import commons.MyButton;
 import commons.RoundPanel;
 import commons.RoundTextField;
 import commons.Table;
@@ -38,6 +40,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -50,6 +54,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.EventObject;
+import java.awt.Cursor;
 
 public class ChamCongNhanVien_Form extends JPanel implements ActionListener, MouseListener {
 	private RoundPanel panelCenterLeft;
@@ -75,20 +80,21 @@ public class ChamCongNhanVien_Form extends JPanel implements ActionListener, Mou
 	private ChamCongNhanVien_BUS chamCongNhanVien_BUS;
 	private Date valueOld;
 	public Date selectedDate;
-	private JButton btnSetALL;
-	private JButton btnReset;
+	private MyButton btnSetALL;
+	private MyButton btnReset;
 	private Object selectedValue;
 	private ButtonGroup group2;
 	private static int buttonClickCount = 0;
 	private JTextField textField;
 	private JTextField textField_1;
-	private JButton btnChamCong;
+	private MyButton btnChamCong;
 	private RoundTextField txtTimKiem;
 	private RoundTextField txtTimKiemCC;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	private JLabel ngayCong;
 	private TableRowSorter<DefaultTableModel> sorter;
 	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
+	private MyButton btnLamMoi;
 
 	/**
 	 * Create the panel.
@@ -184,7 +190,7 @@ public class ChamCongNhanVien_Form extends JPanel implements ActionListener, Mou
 
 		textPhongBan = new JLabel("");
 		textPhongBan.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		textPhongBan.setBounds(133, 175, 156, 28);
+		textPhongBan.setBounds(135, 178, 156, 28);
 		panel_2.add(textPhongBan);
 
 		textNgay = new JLabel("");
@@ -238,6 +244,8 @@ public class ChamCongNhanVien_Form extends JPanel implements ActionListener, Mou
 		});
 
 		JScrollPane scrollListNV = new JScrollPane();
+		scrollListNV.setIgnoreRepaint(true);
+		scrollListNV.setFocusable(false);
 		scrollListNV.setBackground(new Color(255, 255, 255));
 		scrollListNV.setBorder(new EmptyBorder(5, 5, 5, 5));
 		scrollListNV.setViewportView(tableNhanVien);
@@ -251,18 +259,7 @@ public class ChamCongNhanVien_Form extends JPanel implements ActionListener, Mou
 					tableChamCong.clearSelection();
 					lbMaNV.setText(tableNhanVien.getValueAt(row, 0).toString());
 					textTen.setText(tableNhanVien.getValueAt(row, 1).toString());
-					textPhongBan.setText(tableNhanVien.getValueAt(row, 2).toString());
-//					String day = dateChamCong.getDate().getDate() + "";
-//					if (day.length() < 2) {
-//						day = "0" + day;
-//					}
-//					String month = (dateChamCong.getDate().getMonth() + 1) + "";
-//					if (month.length() < 2) {
-//						month = "0" + month;
-//					}
-//
-//					String year = (dateChamCong.getDate().getYear() + 1900) + "";
-//					String format = year + "-" + month + "-" + day;
+					textPhongBan.setText(tableNhanVien.getValueAt(row, 3).toString());
 					String format = formatter.format(LocalDate.now());
 					textNgay.setText(format);
 
@@ -341,6 +338,11 @@ public class ChamCongNhanVien_Form extends JPanel implements ActionListener, Mou
 		add(lblNewLabel_1);
 
 		boxPhongBan = new JComboBox();
+		boxPhongBan.setDebugGraphicsOptions(DebugGraphics.NONE_OPTION);
+		boxPhongBan.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		boxPhongBan.setBorder(null);
+		boxPhongBan.setBackground(Color.white);
+	
 		boxPhongBan.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		boxPhongBan.setBounds(445, 12, 165, 36);
 		add(boxPhongBan);
@@ -348,7 +350,9 @@ public class ChamCongNhanVien_Form extends JPanel implements ActionListener, Mou
 		tableNhanVien.addMouseListener(this);
 		tableChamCong.addMouseListener(this);
 
-		btnSetALL = new JButton("Đánh dấu có mặt tất cả");
+		btnSetALL = new MyButton();
+		btnSetALL.setText("Đánh dấu có mặt tất cả");
+		btnSetALL.setRadius(20);
 		btnSetALL.setBackground(new Color(255, 255, 255));
 		btnSetALL.setIcon(new ImageIcon(ChamCongNhanVien_Form.class.getResource("/icon/select.png")));
 		btnSetALL.setBounds(357, 371, 223, 36);
@@ -359,8 +363,11 @@ public class ChamCongNhanVien_Form extends JPanel implements ActionListener, Mou
 		group2 = new ButtonGroup();
 		tableNhanVien.addMouseListener(this);
 
-		btnReset = new JButton("Cập nhật");
+		btnReset = new MyButton();
+		btnReset.setText("Cập nhật");
+		btnReset.setRadius(20);
 		btnReset.setBounds(765, 371, 151, 36);
+		btnReset.setBackground(Color.white);
 		add(btnReset);
 		btnReset.setIcon(new ImageIcon(ChamCongNhanVien_Form.class.getResource("/icon/update.png")));
 		btnReset.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -395,7 +402,10 @@ public class ChamCongNhanVien_Form extends JPanel implements ActionListener, Mou
 			}
 		});
 		txtTimKiem.addActionListener(this);
-		btnChamCong = new JButton("Lưu chấm công");
+		btnChamCong = new MyButton();
+		btnChamCong.setRadius(20);
+		btnChamCong.setText("Lưu chấm công");
+		btnChamCong.setBackground(Color.white);
 		btnChamCong.setIcon(new ImageIcon(ChamCongNhanVien_Form.class.getResource("/icon/add.png")));
 		btnChamCong.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnChamCong.setBounds(590, 371, 165, 36);
@@ -412,17 +422,29 @@ public class ChamCongNhanVien_Form extends JPanel implements ActionListener, Mou
 		add(txtTimKiemCC);
         txtTimKiemCC.addActionListener(this);
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255));
-		panel.setBounds(782, 12, 123, 42);
+		panel.setBackground(new Color(246, 246, 246));
+		panel.setBounds(793, 12, 123, 42);
 		add(panel);
 		panel.setLayout(null);
-
-		ngayCong = new JLabel("New label");
-		ngayCong.setBounds(20, 0, 93, 42);
-		panel.add(ngayCong);
-		ngayCong.setBackground(new Color(255, 255, 255));
-		ngayCong.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		ngayCong.setText(formatter.format(LocalDate.now()));
+		
+				ngayCong = new JLabel("New label");
+				ngayCong.setBounds(10, 0, 125, 42);
+				panel.add(ngayCong);
+				ngayCong.setIcon(new ImageIcon(ChamCongNhanVien_Form.class.getResource("/icon/schedule.png")));
+				ngayCong.setBackground(new Color(242, 242, 242));
+				ngayCong.setFont(new Font("Tahoma", Font.PLAIN, 15));
+				ngayCong.setText(formatter.format(LocalDate.now()));
+				
+				btnLamMoi = new MyButton();
+				btnLamMoi.setFocusPainted(false);
+				btnLamMoi.setText("Làm mới");
+				btnLamMoi.setBackground(Color.white);
+				btnLamMoi.setRadius(20);
+				btnLamMoi.setIcon(new ImageIcon(ChamCongNhanVien_Form.class.getResource("/icon/update.png")));
+				btnLamMoi.setFont(new Font("Tahoma", Font.PLAIN, 15));
+				btnLamMoi.setBounds(1004, 10, 137, 48);
+				add(btnLamMoi);
+				btnLamMoi.addActionListener(this);
 		txtTimKiemCC.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -449,6 +471,19 @@ public class ChamCongNhanVien_Form extends JPanel implements ActionListener, Mou
 		getListNVchuaChamCong();
 		getListChamCong();
 		selectColumn();
+		
+		txtTimKiem.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				searchEmployee();
+			}
+		});
+		txtTimKiemCC.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				searchEmployee();
+			}
+		});
 	}
 
 	public void LocTheoPhongBan() {
@@ -476,11 +511,37 @@ public class ChamCongNhanVien_Form extends JPanel implements ActionListener, Mou
 		if (o.equals(btnReset)) {
 			updateData();
 		}
-		if (o.equals(txtTimKiem)) {
-			searchEmployee();
-		}
-		if(o.equals(txtTimKiemCC)) {
-			searchEmployeeCC();
+		if(o.equals(btnLamMoi))
+		{
+			txtTimKiem.setText("Nhập dữ liệu nhân viên cần tìm...");
+			txtTimKiem.setForeground(Color.GRAY);
+			txtTimKiem.addFocusListener(new FocusAdapter() {
+				@Override
+				public void focusLost(FocusEvent e) {
+					if (txtTimKiem.getText().isEmpty()) {
+						txtTimKiem.setText("Nhập dữ liệu nhân viên cần tìm...");
+						txtTimKiem.setForeground(Color.GRAY);
+					}
+					super.focusLost(e);
+				}
+
+				@Override
+				public void focusGained(FocusEvent e) {
+					if (txtTimKiem.getText().equalsIgnoreCase("Nhập dữ liệu nhân viên cần tìm...")) {
+						txtTimKiem.setText("");
+						txtTimKiem.setForeground(Color.BLACK);
+					}
+					super.focusGained(e);
+				}
+			});
+			
+			if(txtTimKiem.getText().equalsIgnoreCase("Nhập dữ liệu nhân viên cần tìm..."))
+			{
+				txtTimKiem.setText("");
+				searchEmployee();
+				txtTimKiem.setText("Nhập dữ liệu nhân viên cần tìm...");
+			}
+			boxPhongBan.setSelectedIndex(0);
 		}
 	}
 
@@ -622,7 +683,6 @@ public class ChamCongNhanVien_Form extends JPanel implements ActionListener, Mou
 				if (!e.getValueIsAdjusting()) {
 					int selectedRow = tableNhanVien.getSelectedRow();
 					int selectedColumn = 3;
-
 					if (selectedRow != -1 && selectedColumn != -1) {
 						selectedValue = tableNhanVien.getValueAt(selectedRow, selectedColumn);
 
@@ -633,6 +693,9 @@ public class ChamCongNhanVien_Form extends JPanel implements ActionListener, Mou
 	}
 
 	private void chamCongTatCa() {
+		int row = tableNhanVien.getSelectedRow();
+		if(row!=-1)
+		{
 		if (JOptionPane.showConfirmDialog(this, "Bạn muốn lưu chấm công ?", "Cảnh báo",
 				JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 			String ktra = txtTimKiem.getText().trim();
@@ -688,6 +751,11 @@ public class ChamCongNhanVien_Form extends JPanel implements ActionListener, Mou
 				}
 			}
 			getListNVchuaChamCong();
+		}
+		}
+		else
+		{
+			JOptionPane.showMessageDialog(this, "Chưa chọn nhân viên để chấm công!!");
 		}
 	}
 
