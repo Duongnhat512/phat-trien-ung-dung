@@ -34,6 +34,7 @@ import javax.swing.border.MatteBorder;
 
 import bus.TaiKhoan_BUS;
 import commons.GradientPanel;
+import commons.MyButton;
 import commons.RoundPanel;
 import connectDB.ConnectDB;
 import entities.TaiKhoan;
@@ -44,7 +45,7 @@ public class Login_GUI extends JFrame implements ActionListener{
 
 	private JPanel contentPane;
 	private JPanel pRight;
-	private JButton btnDangNhap;
+	private MyButton btnDangNhap;
 	private GradientPanel panel;
 	private JTextField textTenDangNhap;
 	private JPasswordField passwordField;
@@ -136,16 +137,17 @@ public class Login_GUI extends JFrame implements ActionListener{
 		pRight.add(textTenDangNhap);
 		textTenDangNhap.setColumns(10);
 		
-		btnDangNhap = new JButton();
+		btnDangNhap = new MyButton();
+		btnDangNhap.setFocusPainted(false);
 		btnDangNhap.setText("Đăng nhập");
 		btnDangNhap.setIcon(new ImageIcon(Login_GUI.class.getResource("/icon/icons8_enter_25px.png")));
-		btnDangNhap.setOpaque(true);
 		btnDangNhap.setBackground(new Color(23, 191, 86));
 		btnDangNhap.setBorder(null);
 		btnDangNhap.setForeground(Color.WHITE);
 		btnDangNhap.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		btnDangNhap.setBounds(152, 251, 279, 38);
 		btnDangNhap.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnDangNhap.setRadius(20);
 		pRight.add(btnDangNhap);
 		
 		passwordField = new JPasswordField();

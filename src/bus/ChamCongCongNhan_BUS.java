@@ -16,6 +16,9 @@ public class ChamCongCongNhan_BUS {
 	public ArrayList<BangChamCongCongNhan> getDanhSachChamCong(){
 		return cc_dao.getDanhSachChamCong();
 	}
+	public int getSoLuongChamCong() {
+		return cc_dao.getSoLuongChamCong();
+	}
 	public ArrayList<BangChamCongCongNhan> getDanhSachChamCongTheoNgay(int ngay, int thang, int nam){
 		return cc_dao.getDanhSachChamCongTheoNgay(ngay, thang, nam);
 	}
