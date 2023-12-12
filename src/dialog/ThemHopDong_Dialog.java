@@ -38,6 +38,8 @@ import java.awt.event.KeyEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -50,6 +52,8 @@ import javax.swing.text.Element;
 import javax.swing.text.PlainDocument;
 import javax.swing.text.Position;
 import javax.swing.text.Segment;
+
+import com.toedter.calendar.JDateChooser;
 
 import bus.ChiTietHopDong_BUS;
 import bus.HopDongSanPham_BUS;
@@ -108,6 +112,8 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener {
 	private ChiTietHopDong_BUS chiTietHopDong_BUS = new ChiTietHopDong_BUS();
 	private SanPham_BUS sanPham_BUS = new SanPham_BUS();
 	private NhanVien_BUS nhanVien_BUS = new NhanVien_BUS();
+	private JDateChooser dateNgayBatDau;
+	private JDateChooser dateNgayKetThuc;
 
 	public void openThemHopDong_Dialog(int width, int height) {
 		this.width = width;
@@ -279,19 +285,13 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener {
 		txtTenHopDong.setColumns(10);
 		txtTenHopDong.setBorder(new EmptyBorder(2, 4, 2, 4));
 
-		txtNgayBatDau = new JTextField();
-		txtNgayBatDau.setBounds(611, 50, 215, 21);
-		txtNgayBatDau.setBackground(new Color(255, 255, 255));
-		txtNgayBatDau.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		txtNgayBatDau.setColumns(10);
-		txtNgayBatDau.setBorder(new EmptyBorder(2, 4, 2, 4));
-
-		txtNgayKetThuc = new JTextField();
-		txtNgayKetThuc.setBounds(611, 89, 215, 21);
-		txtNgayKetThuc.setBackground(new Color(255, 255, 255));
-		txtNgayKetThuc.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		txtNgayKetThuc.setColumns(10);
-		txtNgayKetThuc.setBorder(new EmptyBorder(2, 4, 2, 4));
+		dateNgayBatDau = new JDateChooser();
+		dateNgayBatDau.setBounds(611, 50, 215, 21);
+		 
+		dateNgayKetThuc = new JDateChooser();
+	
+		dateNgayKetThuc.setBounds(611, 89, 215, 21);
+		
 
 		lblNhnVinPh = new JLabel("Nhân viên phụ trách:");
 		lblNhnVinPh.setBounds(442, 15, 151, 20);
@@ -446,9 +446,9 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener {
 		panel.add(lblTnHpng);
 		panel.add(txtTenHopDong);
 		panel.add(lblNgyBtu);
-		panel.add(txtNgayBatDau);
+		panel.add(dateNgayBatDau);
 		panel.add(lblNgyKtThc);
-		panel.add(txtNgayKetThuc);
+		panel.add(dateNgayKetThuc);
 		panel.add(lblThongBao);
 		panel.add(lblNhnVinPh);
 		panel.add(cboNhanVien);
@@ -505,7 +505,7 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener {
 		lblTongTien.setText(String.format("%,.2f VND", tongTien));
 
 		// Cài đặt giá trị mặc đinh cho txtNgayBatDau là ngày hiện hành
-		txtNgayBatDau.setText(dtf.format(LocalDate.now()));
+		setDefaultDate();
 
 		//
 		listCTHD = new ArrayList<ChiTietHopDong>();
@@ -573,24 +573,18 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener {
 			txtTenHopDong.requestFocus();
 			return false;
 		}
-		if (txtNgayBatDau.getText().trim().isEmpty()) {
-			lblThongBao.setText("Ngày bắt đầu không được để trống");
-			txtNgayBatDau.selectAll();
-			txtNgayBatDau.requestFocus();
-			return false;
-		}
-		LocalDate ngayBatDau = LocalDate.parse(txtNgayBatDau.getText(), dtf);
-		if (txtNgayKetThuc.getText().trim().isEmpty()) {
+		 LocalDate ngayBatDau = LocalDate.parse(layGiaTriNgayBatDau());
+		 Date selectedDate = dateNgayKetThuc.getDate();
+		if (selectedDate == null) {
 			lblThongBao.setText("Ngày kết thúc không được để trống");
-			txtNgayKetThuc.selectAll();
-			txtNgayKetThuc.requestFocus();
+			dateNgayKetThuc.requestFocus();
 			return false;
 		}
-		LocalDate ngayKetThuc = LocalDate.parse(txtNgayKetThuc.getText(), dtf);
+		LocalDate ngayKetThuc = LocalDate.parse(layGiaTriNgayKetThuc());
 		if (!ngayKetThuc.isAfter(ngayBatDau)) {
 			lblThongBao.setText("Ngày kết thúc hợp đồng phải sau ngày bắt đầu!");
-			txtNgayKetThuc.selectAll();
-			txtNgayKetThuc.requestFocus();
+			dateNgayKetThuc.requestFocus();
+			
 			return false;
 		}
 		lblThongBao.setText("");
@@ -608,8 +602,8 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener {
 		if (kiemTraDuLieuHopDong()) {
 			String idHopDong = txtIDHopDong.getText();
 			String tenHopDong = txtTenHopDong.getText();
-			LocalDate ngayBatDau = LocalDate.parse(txtNgayBatDau.getText(), dtf);
-			LocalDate ngayKetThuc = LocalDate.parse(txtNgayKetThuc.getText(), dtf);
+			LocalDate ngayBatDau = LocalDate.parse(layGiaTriNgayBatDau());
+			LocalDate ngayKetThuc = LocalDate.parse(layGiaTriNgayKetThuc());
 			String ghiChu = "Đang tiến hành";
 			NhanVien nv = listTPSanXuat.get(cboNhanVien.getSelectedIndex());
 			double tongTien = 0;
@@ -760,4 +754,42 @@ public class ThemHopDong_Dialog extends JDialog implements ActionListener {
 		}
 
 	}
+	  private void setDefaultDate() {
+	        // Tạo một đối tượng Calendar và đặt ngày mặc định
+	        Calendar calendar = Calendar.getInstance();
+	        calendar.set(LocalDate.now().getYear(), LocalDate.now().getMonthValue()-1, LocalDate.now().getDayOfMonth()); // Đặt ngày mặc định là 1 tháng 1 năm 2023
+
+	        // Lấy ngày từ đối tượng Calendar và đặt cho JDateChooser
+	        Date defaultDate = calendar.getTime();
+	        dateNgayBatDau.setDate(defaultDate);
+	    }
+	  private String layGiaTriNgayBatDau() {
+	        // Lấy giá trị ngày từ JDateChooser
+	        Date selectedDate = dateNgayBatDau.getDate();
+
+	        // Sử dụng Calendar để trích xuất thông tin về ngày, tháng và năm
+	        Calendar calendar = Calendar.getInstance();
+	        calendar.setTime(selectedDate);
+
+	        int day = calendar.get(Calendar.DAY_OF_MONTH);
+	        int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0
+	        int year = calendar.get(Calendar.YEAR);
+
+	        // Hiển thị giá trị trong ô văn bản
+	        return year+"-"+month+"-"+day;
+	    }private String layGiaTriNgayKetThuc() {
+	        // Lấy giá trị ngày từ JDateChooser
+	        Date selectedDate = dateNgayKetThuc.getDate();
+
+	        // Sử dụng Calendar để trích xuất thông tin về ngày, tháng và năm
+	        Calendar calendar = Calendar.getInstance();
+	        calendar.setTime(selectedDate);
+
+	        int day = calendar.get(Calendar.DAY_OF_MONTH);
+	        int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0
+	        int year = calendar.get(Calendar.YEAR);
+
+	        // Hiển thị giá trị trong ô văn bản
+	        return year+"-"+month+"-"+day;
+	    }
 }
