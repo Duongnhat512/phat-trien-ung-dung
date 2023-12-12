@@ -143,6 +143,10 @@ public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener,
 	}
 
 	public void showBarChart(double[] t, int row) {
+		if(row>=0)
+		{
+			
+		
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		dataset.setValue(t[0], "Lương trung bình", "T1");
 		dataset.setValue(t[1], "Lương trung bình", "T2");
@@ -156,8 +160,8 @@ public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener,
 		dataset.setValue(t[9], "Lương trung bình", "T10");
 		dataset.setValue(t[10], "Lương trung bình", "T11");
 		dataset.setValue(t[11], "Lương trung bình", "T12");
-		JFreeChart chart = ChartFactory.createBarChart("Biểu Đồ Cột Thể Hiện Sự Tăng Trưởng Thu Nhập"
-				+ " Năm " + cbNam.getSelectedItem().toString(),
+		JFreeChart chart = ChartFactory.createBarChart("Biểu Đồ Cột Thể Hiện Sự Tăng Trưởng Thu Nhập Của "+tableThongKe.getValueAt(row, 1).toString()+
+				 " Năm " + cbNam.getSelectedItem().toString(),
 				"Tháng", "Lương", dataset, PlotOrientation.VERTICAL, false, true, false);
 
 		CategoryPlot categoryPlot = chart.getCategoryPlot();
@@ -175,6 +179,42 @@ public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener,
 		panelBarChart.add(barpChartPanel, "cell 0 0,grow");
 		barpChartPanel.setLayout(new BorderLayout(0, 0));
 		panelBarChart.validate();
+		}
+		else
+		{
+			DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+			dataset.setValue(t[0], "Lương trung bình", "T1");
+			dataset.setValue(t[1], "Lương trung bình", "T2");
+			dataset.setValue(t[2], "Lương trung bình", "T3");
+			dataset.setValue(t[3], "Lương trung bình", "T4");
+			dataset.setValue(t[4], "Lương trung bình", "T5");
+			dataset.setValue(t[5], "Lương trung bình", "T6");
+			dataset.setValue(t[6], "Lương trung bình", "T7");
+			dataset.setValue(t[7], "Lương trung bình", "T8");
+			dataset.setValue(t[8], "Lương trung bình", "T9");
+			dataset.setValue(t[9], "Lương trung bình", "T10");
+			dataset.setValue(t[10], "Lương trung bình", "T11");
+			dataset.setValue(t[11], "Lương trung bình", "T12");
+			JFreeChart chart = ChartFactory.createBarChart("Biểu Đồ Cột Thể Hiện Sự Tăng Trưởng Thu Nhập"+
+					 " Năm " + cbNam.getSelectedItem().toString(),
+					"Tháng", "Lương", dataset, PlotOrientation.VERTICAL, false, true, false);
+
+			CategoryPlot categoryPlot = chart.getCategoryPlot();
+			// categoryPlot.setRangeGridlinePaint(Color.BLUE);
+			categoryPlot.setBackgroundPaint(Color.WHITE);
+			BarRenderer renderer = (BarRenderer) categoryPlot.getRenderer();
+			Color clr3 = new Color(204, 0, 51);
+			renderer.setSeriesPaint(0, clr3);
+
+			ChartPanel barpChartPanel = new ChartPanel(chart);
+			barpChartPanel.setBounds(10, 10, 585, 387);
+			panelBarChart.removeAll();
+			panelBarChart.setLayout(null);
+			panelBarChart.setLayout(new MigLayout("", "[585px]", "[387px]"));
+			panelBarChart.add(barpChartPanel, "cell 0 0,grow");
+			barpChartPanel.setLayout(new BorderLayout(0, 0));
+			panelBarChart.validate();
+		}
 	}
 
 	private void showPieChart(double tyle[], int row) {
