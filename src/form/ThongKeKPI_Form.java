@@ -8,7 +8,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -30,7 +33,9 @@ import com.toedter.calendar.JDateChooser;
 
 import bus.CongNhan_BUS;
 import bus.ThongKeKPI_BUS;
+import commons.MyButton;
 import commons.RoundPanel;
+import commons.RoundTextField;
 import commons.Table;
 import connectDB.ConnectDB;
 import entities.CongNhan;
@@ -55,6 +60,10 @@ import javax.swing.JButton;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -78,6 +87,9 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.RowFilter.Entry;
+import javax.swing.RowSorter;
+
 import java.awt.Cursor;
 import java.awt.Desktop;
 
@@ -107,7 +119,9 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener,MouseListe
 	private JComboBox cbThang;
 	private JComboBox cbNam;
 	private CongNhan_BUS congNhan_BUS;
-	private JButton btnPrint;
+	private MyButton btnPrint;
+	private RoundTextField txtTimKiem;
+	private TableRowSorter<DefaultTableModel> sorter;
 	
 	public ThongKeKPI_Form(int width, int height)
     { 
@@ -130,6 +144,8 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener,MouseListe
 	private void showPieChart(double tyle , int row){
         
         //create dataset
+		if(row>=0)
+		{
       DefaultPieDataset barDataset = new DefaultPieDataset( );
       barDataset.setValue( "Đạt KPI" , tyle );  
       barDataset.setValue( "Không đạt" , 100 - tyle );   
@@ -153,9 +169,38 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener,MouseListe
         panelBarChart.add(barChartPanel, "cell 0 0,grow");
         barChartPanel.setLayout(new BorderLayout(0, 0));
         panelBarChart.validate();
+		}
+		else
+		{
+			DefaultPieDataset barDataset = new DefaultPieDataset( );
+		      barDataset.setValue( "Đạt KPI" , tyle );  
+		      barDataset.setValue( "Không đạt" , 100 - tyle );   
+		      
+		      //create chart
+		       JFreeChart piechart = ChartFactory.createPieChart("Biểu Đồ Tròn Thể Hiện Mức Độ Hoàn Thành KPI Của "+" tháng "+cbThang.getSelectedItem().toString(),barDataset, false,true,false);//explain"
+		       		
+		      
+		        PiePlot piePlot =(PiePlot) piechart.getPlot();
+		      
+		       //changing pie chart blocks colors
+		        piePlot.setSectionPaint("Đạt KPI",new Color(102,255,102));
+		        piePlot.setSectionPaint("Không đạt", new Color(255,0,0));
+		        piePlot.setBackgroundPaint(Color.white);
+		        
+		        //create chartPanel to display chart(graph)
+		        ChartPanel barChartPanel = new ChartPanel(piechart);
+		        barChartPanel.setBounds(0, 0, 423, 388);
+		        panelBarChart.removeAll();
+		        panelBarChart.setLayout(new MigLayout("", "[414px]", "[407px]"));
+		        panelBarChart.add(barChartPanel, "cell 0 0,grow");
+		        barChartPanel.setLayout(new BorderLayout(0, 0));
+		        panelBarChart.validate();
+		}
     }
     private void showLineChart(double[] t,int row){
     //create dataset for the graph
+    	if(row>=0)
+    	{
      DefaultCategoryDataset dataset = new DefaultCategoryDataset();
     dataset.setValue(t[0], "Số Lượng", "T1");
     dataset.setValue(t[1], "Số Lượng", "T2");
@@ -192,6 +237,46 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener,MouseListe
     panelLineChart.add(lineChartPanel, "cell 0 0,grow");
     lineChartPanel.setLayout(new BorderLayout(0, 0));
     panelLineChart.validate();
+    	}
+    	else
+    	{
+    		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+    	    dataset.setValue(t[0], "Số Lượng", "T1");
+    	    dataset.setValue(t[1], "Số Lượng", "T2");
+    	    dataset.setValue(t[2], "Số Lượng", "T3");
+    	    dataset.setValue(t[3], "Số Lượng", "T4");
+    	    dataset.setValue(t[4], "Số Lượng", "T5");
+    	    dataset.setValue(t[5], "Số Lượng", "T6");
+    	    dataset.setValue(t[6], "Số Lượng", "T7");
+    	    dataset.setValue(t[7], "Số Lượng", "T8");
+    	    dataset.setValue(t[8], "Số Lượng", "T9");
+    	    dataset.setValue(t[9], "Số Lượng", "T10");
+    	    dataset.setValue(t[10], "Số Lượng", "T11");
+    	    dataset.setValue(t[11], "Số Lượng", "T12");
+    	    
+    	    //create chart
+    	    JFreeChart linechart = ChartFactory.createLineChart("Biểu đồ tăng trưởng KPI "+" năm "+cbNam.getSelectedItem().toString(),"Tháng","Tỷ lệ", 
+    	            dataset, PlotOrientation.VERTICAL, false,true,false);
+    	    
+    	    //create plot object
+    	     CategoryPlot lineCategoryPlot = linechart.getCategoryPlot();
+    	   // lineCategoryPlot.setRangeGridlinePaint(Color.BLUE);
+    	    lineCategoryPlot.setBackgroundPaint(Color.white);
+    	    
+    	    //create render object to change the moficy the line properties like color
+    	    LineAndShapeRenderer lineRenderer = (LineAndShapeRenderer) lineCategoryPlot.getRenderer();
+    	    Color lineChartColor = new Color(204,0,51);
+    	    lineRenderer.setSeriesPaint(0, lineChartColor);
+    	    
+    	     //create chartPanel to display chart(graph)
+    	    ChartPanel lineChartPanel = new ChartPanel(linechart);
+    	    lineChartPanel.setPreferredSize(new Dimension(HEIGHT, 410));
+    	    panelLineChart.removeAll();
+    	    panelLineChart.setLayout(new MigLayout("", "[774px]", "[372px]"));
+    	    panelLineChart.add(lineChartPanel, "cell 0 0,grow");
+    	    lineChartPanel.setLayout(new BorderLayout(0, 0));
+    	    panelLineChart.validate();
+    	}
 }
     public void initComponents()
     {
@@ -286,11 +371,15 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener,MouseListe
       
      
       
-      btnPrint = new JButton("Xuất ra excel");
+      btnPrint = new MyButton();
+		btnPrint.setText("Xuất Excel");
+		btnPrint.setRadius(20);
+		btnPrint.setBackground(Color.white);
+		btnPrint.setFocusPainted(false);
       btnPrint.setFont(new Font("Tahoma", Font.PLAIN, 15));
       btnPrint.setIcon(new ImageIcon(ThongKeKPI_Form.class.getResource("/icon/excel.png")));
 
-      btnPrint.setBounds(663, 10, 160, 38);
+      btnPrint.setBounds(1005, 10, 131, 38);
       pNorth.add(btnPrint);
       btnPrint.addActionListener(this);
       
@@ -305,12 +394,47 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener,MouseListe
       lbNam.setFont(new Font("Tahoma", Font.PLAIN, 15));
       lbNam.setBounds(215, 19, 58, 20);
       pNorth.add(lbNam);
+      txtTimKiem = new RoundTextField(10);
+		txtTimKiem.setText("Nhập dữ liệu nhân viên cần tìm...");
+		txtTimKiem.setForeground(Color.GRAY);
+		txtTimKiem.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		txtTimKiem.setColumns(10);
+		txtTimKiem.setBorder(new EmptyBorder(0, 15, 0, 0));
+		txtTimKiem.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (txtTimKiem.getText().isEmpty()) {
+					txtTimKiem.setText("Nhập dữ liệu nhân viên cần tìm...");
+					txtTimKiem.setForeground(Color.GRAY);
+				}
+				super.focusLost(e);
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (txtTimKiem.getText().equalsIgnoreCase("Nhập dữ liệu nhân viên cần tìm...")) {
+					txtTimKiem.setText("");
+					txtTimKiem.setForeground(Color.BLACK);
+				}
+				super.focusGained(e);
+			}
+		});
+		txtTimKiem.setBounds(492, 13, 408, 33);
+		pNorth.add(txtTimKiem);
+		txtTimKiem.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				searchEmployee();
+				if(tableThongKe.getRowCount()!=0)
+			      {
+			    	  thongKeTungNhanVienBieuDoTron(0);
+			    	  thongKeTungNhanVienBieuDoTangTruong(0);
+			      }
+			}
+		});
       tableThongKe.addMouseListener(this);
-      cbNam.setSelectedIndex(14);
-      cbThang.setSelectedIndex(10);
       cbThang.addActionListener(this);
       cbNam.addActionListener(this);
-//      tinhTangTruong(Integer.parseInt(cbNam.getSelectedItem().toString()));
       hienThiDSThongKe();
       if(tableThongKe.getRowCount()!=0)
       {
@@ -326,6 +450,22 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener,MouseListe
 		if(o.equals(cbThang) || o.equals(cbNam))
 		{			
 			hienThiDSThongKe();
+			if(tableThongKe.getRowCount()!=0)
+	        {
+				thongKeTungNhanVienBieuDoTron(0);
+		    	  thongKeTungNhanVienBieuDoTangTruong(0);
+	        }
+		 if(tableThongKe.getRowCount() == 0)
+		{
+           JOptionPane.showMessageDialog(this, "Tháng này chưa có chấm công!");
+           double[] t = new double[20];
+           for(int i = 0;i<19;i++)
+           {
+        	   t[i] = 0;
+           }
+           showLineChart(t, -1);
+           showPieChart(0,-1);
+		}
 		}
 		if (o.equals(btnPrint)) {
 			String projectDirectory = System.getProperty("user.dir");
@@ -465,5 +605,24 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener,MouseListe
 			System.out.println("File not found: " + filePath);
 		}
 	}
-}
+	private void searchEmployee() {
+		String searchText = txtTimKiem.getText().trim();
+		sorter = new TableRowSorter<>(model);
+		tableThongKe.setRowSorter(sorter);
+		RowFilter<DefaultTableModel, Object> idOrNameFilter = new RowFilter<DefaultTableModel, Object>() {
+			@Override
+			public boolean include(Entry<? extends DefaultTableModel, ? extends Object> entry) {
+				String text = searchText.toLowerCase();
+				for (int i = 0; i < entry.getValueCount(); i++) {
+					Object value = entry.getValue(i);
+					if (value != null && value.toString().toLowerCase().contains(text)) {
+						return true;
+					}
+				}
+				return false;
+			}
+		};
+		sorter.setRowFilter(idOrNameFilter);
+	}
 
+}
