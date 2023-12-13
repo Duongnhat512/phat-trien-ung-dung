@@ -592,7 +592,7 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 				e.printStackTrace();
 			}
 		} else {
-			System.out.println("File not found: " + filePath);
+			
 		}
 	}
 
@@ -810,8 +810,6 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 				for (int row = 0; row < rowCount; row++) {
 					Object cellValue = dftable.getValueAt(row, 3);
 					exportPdf(row, thang, nam);
-					// Xử lý giá trị trong ô tại hàng 'row' và cột 'col'
-					System.out.println("Giá trị tại hàng " + row + ", cột " + 4 + ": " + cellValue);
 					// Thực hiện xử lý khác ở đây...
 					CongNhan n = cn_bus.getCongNhanTheoID(cellValue + "");
 
@@ -1006,10 +1004,10 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 										e1.printStackTrace();
 									} // Mở file PDF
 								} else {
-									System.out.println("File không tồn tại!");
+									
 								}
 							} else {
-								System.out.println("Desktop không được hỗ trợ!");
+								
 							}
 						} else {
 

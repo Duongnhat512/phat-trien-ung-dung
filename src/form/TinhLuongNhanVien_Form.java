@@ -1045,10 +1045,10 @@ public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 										e1.printStackTrace();
 									} // Mở file PDF
 								} else {
-									System.out.println("File không tồn tại!");
+									
 								}
 							} else {
-								System.out.println("Desktop không được hỗ trợ!");
+								
 							}
 						} else {
 
