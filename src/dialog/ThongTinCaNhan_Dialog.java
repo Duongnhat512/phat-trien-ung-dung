@@ -16,6 +16,8 @@ import entities.CongNhan;
 import entities.NhanVien;
 
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -54,6 +56,7 @@ public class ThongTinCaNhan_Dialog extends JDialog {
 	private JLabel lblContent4;
 	private JLabel lblID;
 	private MyButton cancelButton;
+	private JLabel lblAvt;
 
 	/**
 	 * Create the dialog.
@@ -66,7 +69,7 @@ public class ThongTinCaNhan_Dialog extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		
-		JLabel lblAvt = new JLabel("");
+		lblAvt = new JLabel("");
 		lblAvt.setBounds(99, 10, 236, 223);
 		contentPanel.add(lblAvt);
 		{
@@ -351,6 +354,19 @@ public class ThongTinCaNhan_Dialog extends JDialog {
 			lblContent1.setText(cn.getPhanXuong().getTenPhanXuong());
 			lbl2.setText("Tay nghề:");
 			lblContent2.setText(cn.getTayNghe());
+			ImageIcon hienThiImageIcon = new ImageIcon("src\\images\\Unknown_person.jpg");
+			if (cn.getAnhDaiDien()!= null) {
+				hienThiImageIcon = new ImageIcon("src\\images\\" + cn.getAnhDaiDien());
+			}
+
+			// Lấy kích thước mới của JLabel
+			int labelWidth = lblAvt.getWidth();
+			int labelHeight = lblAvt.getHeight();
+
+			// Chỉnh kích thước ảnh theo JLabeL
+			Image themAnh = hienThiImageIcon.getImage().getScaledInstance(labelWidth, labelHeight, Image.SCALE_SMOOTH);
+			hienThiImageIcon = new ImageIcon(themAnh);
+			lblAvt.setIcon(hienThiImageIcon);
 		}
 		else {
 			lblID.setText(nv.getIdNhanVien());
@@ -372,6 +388,19 @@ public class ThongTinCaNhan_Dialog extends JDialog {
 			lblContent3.setText(nv.getHESOBAOHIEMXAHOI() + "");
 			lbl4.setText("Lương cơ bản:");
 			lblContent4.setText(String.format("%,.2f VND", nv.getLUONGCOBAN() * nv.getChucVu().getHeSoLuong()));
+			ImageIcon hienThiImageIcon = new ImageIcon("src\\images\\Unknown_person.jpg");
+			if (nv.getAnhDaiDien()!= null) {
+				hienThiImageIcon = new ImageIcon("src\\images\\" + nv.getAnhDaiDien());
+			}
+
+			// Lấy kích thước mới của JLabel
+			int labelWidth = lblAvt.getWidth();
+			int labelHeight = lblAvt.getHeight();
+
+			// Chỉnh kích thước ảnh theo JLabeL
+			Image themAnh = hienThiImageIcon.getImage().getScaledInstance(labelWidth, labelHeight, Image.SCALE_SMOOTH);
+			hienThiImageIcon = new ImageIcon(themAnh);
+			lblAvt.setIcon(hienThiImageIcon);
 			
 		}
 	}
