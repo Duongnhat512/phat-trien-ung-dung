@@ -380,7 +380,6 @@ public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 			e.printStackTrace();
 		}
 		btnEmail.setIcon(new ImageIcon(TinhLuongNhanVien_Form.class.getResource("/icon/mail.png")));
-//		visibleImage = ImageIO.read(new File(projectDirectory+"\\src\\icon\\icons8_eye_25px.png"))
 		btnEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnEmail.setBounds(1021, 23, 211, 30);
 		add(btnEmail);
@@ -456,6 +455,10 @@ public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 		double luongCb = 0, tongPhuCap = 0, tongThue = 0, tongBhxh = 0, luongThucTe = 0, tongThucLanh = 0;
 		dslnv = bl_bus.getAllTableTinhLuongTheoThang(phongBan, thang, nam);
 		lbldsCC.setText("Danh sách lương tháng " + thang + " - " + nam);
+		if(thang==LocalDate.now().getMonthValue() && nam==LocalDate.now().getYear()) {
+			JOptionPane.showMessageDialog(this, "Tháng hiện tại chưa đủ dữ liệu tính lương");
+			return;
+		}
 		if (dslnv.isEmpty()) {
 			dsnv = ccnv_bus.getDSChamCongNhanVien(thang, nam, phongBan);
 			if (dsnv.isEmpty()) {
@@ -704,7 +707,7 @@ public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 				e.printStackTrace();
 			}
 
-			Paragraph title = new Paragraph("Bảng Lương Công Nhân " + cbbThang.getSelectedItem() + " "
+			Paragraph title = new Paragraph("Bảng Lương Nhân Viên" + cbbThang.getSelectedItem() + " "
 					+ cbbNam.getSelectedItem() + "" + "" + "" + "" + "" + "" + "" + "", titleFont);
 			title.setAlignment(Element.ALIGN_CENTER);
 			document.add(title);

@@ -286,7 +286,7 @@ go
 
 INSERT INTO NhanVien (idNhanVien, hoTen, phai, ngaySinh, ngayBatDauCongTac, ngayKetThucCongTac, email, soDienThoai, idChucVu, heSoBaoHiemXaHoi, luongCoBan, tenTaiKhoan, idPhongBan, phuCap,anhDaiDien, cCCD)
 VALUES
-('NV0001', N'Nguyễn Thị Ánh', 0, '1985-11-25', '2007-07-17', null, 'anhnguyen@gmail.com', '0901234561', 'CV002', 0.05, 8000000, 'NV0001', 'PB001', 700000, 'Unknown_person.jpg','012345678901'),
+('NV0001', N'Nguyễn Thị Ánh', 0, '1985-11-25', '2007-07-17', null, 'duongnhat512@gmail.com', '0901234561', 'CV002', 0.05, 8000000, 'NV0001', 'PB001', 700000, 'Unknown_person.jpg','012345678901'),
     ('NV0002', N'Lê Văn Hùng', 1, '1986-02-12', '2008-09-05', NULL, 'hungle@gmail.com', '0901234562', 'CV002', 0.05, 8000000, 'NV0002', 'PB001', 700000,'Unknown_person.jpg','012345678902'),
     ('NV0003', N'Trần Thị Thảo', 0, '1982-08-31', '2005-10-09', NULL, 'thao.tran@gmail.com', '0901234563', 'CV003', 0.05, 8000000, 'NV0003', 'PB002', 1000000,'Unknown_person.jpg','012345678903'),
     ('NV0004', N'Vũ Văn Minh', 1, '1980-06-20', '2002-03-18', NULL, 'minhvu@gmail.com', '0901234564', 'CV003', 0.05, 8000000, 'NV0004', 'PB003', 1000000,'Unknown_person.jpg','012345678904'),
@@ -323,7 +323,7 @@ VALUES
 -- Tạo 20 bảng Công Nhân
 INSERT INTO CongNhan (idCongNhan, hoTen, phai, ngaySinh, ngayBatDauCongTac, ngayKetThucCongTac, idPhanXuong, email, soDienThoai, phuCap, tayNghe, tenTaiKhoan,anhDaiDien,cccd)
 VALUES
-('CN0001', N'Nguyễn Văn An', 1, '1980-01-01', '2005-05-10', NULL, 'PX001', 'nguyenvanan@gmail.com', '0323456780',700000, N'Giỏi', 'CN0001', 'Unknown_person.jpg','012345678922'),
+('CN0001', N'Nguyễn Văn An', 1, '1980-01-01', '2005-05-10', NULL, 'PX001', 'duongnhat512@gmail.com', '0323456780',700000, N'Giỏi', 'CN0001', 'Unknown_person.jpg','012345678922'),
 ('CN0002', N'Phạm Thị Bình', 0, '1985-03-15', '2008-11-20', NULL, 'PX002', 'binhpham@yahoo.com', '0323456781', 700000, N'Khá', 'CN0002', 'Unknown_person.jpg','012345678923'),
 ('CN0003', N'Vũ Văn Minh', 1, '1990-07-20', '2010-09-30', NULL, 'PX003', 'vuminh@gmail.com', '0323456782', 700000, N'Trung bình', 'CN0003', 'Unknown_person.jpg','012345678924'),
 ('CN0004', N'Trần Thị Mai', 0, '1988-05-05', '2009-12-05', NULL, 'PX001', 'maitran@yahoo.com', '0323456783', 700000, N'Giỏi', 'CN0004', 'Unknown_person.jpg','012345678925'),
@@ -1418,7 +1418,7 @@ VALUES
     ('LCN0005', '2023-12-05', 'CN0005', 2400000,3100000, 11, 2023),
     ('LCN0006', '2023-12-05', 'CN0006', 2376000, 3076000.0000, 11, 2023),
     ('LCN0007', '2023-12-05', 'CN0007', 2718000.0000, 3418000.0000,11, 2023),
-    ('LCN0008', '2023-11-05', 'CN0008', 3402000.0000, 4102000.0000, 10, 2023),
+    ('LCN0008', '2023-11-05', 'CN0008', 3402000.0000, 4102000.0000, 11, 2023),
     ('LCN0009', '2023-11-05', 'CN0001', 8962250.0000, 9662250.0000, 10, 2023),
     ('LCN0010', '2023-11-05', 'CN0002', 8001000.0000, 8701000.0000, 10, 2023),
     ('LCN0011', '2023-11-05', 'CN0003', 8280000.0000, 8980000.0000, 10, 2023),
