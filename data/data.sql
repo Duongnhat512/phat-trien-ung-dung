@@ -107,8 +107,8 @@ create table ChiTietHopDong
 	soLuong int,
 	thanhTien money
 )
-alter table ChiTietHopDong add constraint FK_ChiTietHopDong_HopDong foreign key (idHopDong) references HopDongSanPham(idHopDong) on delete cascade
-alter table ChiTietHopDong add constraint FK_ChiTietHopDong_SanPham foreign key (idSanPham) references SanPham(idSanPham) on delete cascade
+alter table ChiTietHopDong add constraint FK_ChiTietHopDong1_HopDong foreign key (idHopDong) references HopDongSanPham(idHopDong) 
+alter table ChiTietHopDong add constraint FK_ChiTietHopDong1_SanPham foreign key (idSanPham) references SanPham(idSanPham)
 
 create table CongDoanSP(
 	idCongDoan varchar(10) primary key not null,
@@ -343,19 +343,13 @@ VALUES
 ('CN0018', N'Lê Huy Hoàng', 1, '1996-09-28', '2017-11-20', NULL, 'PX003', 'hoang@gmail.com', '0323456788', 700000, N'Trung bình', 'CN0018', 'Unknown_person.jpg','012345678939'),
 ('CN0019', N'Phan Văn Hòa', 1, '1988-06-15', '2009-08-30', NULL, 'PX001', 'hoa@gmail.com', '0323456790', 700000, N'Giỏi', 'CN0019', 'Unknown_person.jpg','012345678940'),
 ('CN0020', N'Vũ Thị Thùy', 0, '1991-03-20', '2012-06-10', NULL, 'PX002', 'thuy@gmail.com', '0323456799', 700000, N'Khá', 'CN0020', 'Unknown_person.jpg','012345678941');
---Tạo 10 hop dong
-INSERT INTO HopDongSanPham (idHopDong, tenHopDong, ngayBatDau, ngayKetThuc, idNguoiQuanLy, ghiChu)
+--Tạo 4 hop dong
+INSERT INTO HopDongSanPham (idHopDong, tenHopDong, ngayBatDau, ngayKetThuc, idNguoiQuanLy, ghiChu, tongTien)
 VALUES
-    ('HD0001', N'Hợp đồng Áo Khoác Mùa Đông', '2023-08-31', '2023-11-30', 'NV0004', N'Đang tiến hành'),
-    ('HD0002', N'Hợp đồng Quần Jean Mùa Xuân', '2023-09-30', '2023-12-30', 'NV0004', N'Đang tiến hành'),
-    ('HD0003', N'Hợp đồng Đầm Dự Tiệc', '2023-09-20', '2023-12-20', 'NV0003', N'Đang tiến hành'),
-    ('HD0004', N'Hợp đồng Quần Kaki Mùa Hè', '2023-10-01', '2024-01-01', 'NV0004', N'Đang tiến hành'),
-    ('HD0005', N'Hợp đồng Áo Thun Mùa Hè', '2023-05-01', '2023-08-01', 'NV0004', N'Đã hoàn thành'),
-    ('HD0006', N'Hợp đồng Áo Sơ Mi Mùa Xuân', '2023-09-05', '2023-12-05', 'NV0004', N'Đang tiến hành'),
-    ('HD0007', N'Hợp đồng Áo Phông Mùa Hè', '2023-07-10', '2023-10-10', 'NV0003', N'Đang tiến hành'),
-    ('HD0008', N'Hợp đồng Đầm Công Sở', '2023-08-20', '2023-11-20', 'NV0004', N'Đang tiến hành'),
-    ('HD0009', N'Hợp đồng Quần Áo Thể Thao', '2023-07-31', '2023-10-31', 'NV0003', N'Đã hoàn thành'),
-    ('HD0010', N'Hợp đồng Áo Khoác Mùa Thu', '2023-10-10', '2024-01-10', 'NV0003', N'Đang tiến hành');
+    ('HD0001', N'Hợp đồng Áo Khoác Mùa Đông', '2023-08-31', '2023-11-30', 'NV0004', N'Đang tiến hành', 0),
+    ('HD0002', N'Hợp đồng Quần Jean Mùa Xuân', '2023-09-30', '2023-12-30', 'NV0004', N'Đang tiến hành', 0),
+    ('HD0003', N'Hợp đồng Đầm Dự Tiệc', '2023-09-20', '2023-12-20', 'NV0003', N'Đang tiến hành', 0),
+    ('HD0004', N'Hợp đồng Quần Kaki Mùa Hè', '2023-10-01', '2024-01-01', 'NV0004', N'Đang tiến hành', 0)
 
 -- Thêm 10 sản phẩm
 INSERT INTO SanPham (idSanPham, tenSanPham, donGia, chatLieu, donViTinh, ghiChu, anhSanPham)
@@ -1634,3 +1628,8 @@ begin
 	where idSanPham = (select inserted.idSanPham from inserted)
 end
 go
+ 
+insert into ChiTietHopDong values ('HD0001', 'SP0001', 100, 50000000)
+insert into ChiTietHopDong values ('HD0002', 'SP0001', 100, 50000000)
+insert into ChiTietHopDong values ('HD0003', 'SP0003', 1000, 600000000)
+insert into ChiTietHopDong values ('HD0004', 'SP0006', 100, 25000000)
