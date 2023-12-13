@@ -64,6 +64,8 @@ import java.awt.Container;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -418,6 +420,13 @@ public class ThongKeLuongNhanVien_Form extends JPanel implements ActionListener,
 		lbNam.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lbNam.setBounds(195, 19, 58, 20);
 		pNorth.add(lbNam);
+		txtTimKiem.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				searchEmployee();
+			}
+			
+		});
 		btnPrint.addActionListener(this);
 		tableThongKe.addMouseListener(this);
 		cbThang.addActionListener(this);

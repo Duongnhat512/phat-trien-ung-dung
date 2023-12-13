@@ -384,7 +384,7 @@ public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener,
 		pNorth.add(lbNam);
 
 		txtTimKiem = new RoundTextField(10);
-		txtTimKiem.setText("Nhập tên công nhân cần tìm...");
+		txtTimKiem.setText("Nhập dữ liệu công nhân cần tìm...");
 		txtTimKiem.setForeground(Color.GRAY);
 		txtTimKiem.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		txtTimKiem.setColumns(10);
