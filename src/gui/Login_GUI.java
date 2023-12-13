@@ -234,14 +234,15 @@ public class Login_GUI extends JFrame implements ActionListener{
 		//Đăng ký sự kiện
 		btnDangNhap.addActionListener(this);
 		
-		pRight.addKeyListener(new KeyAdapter() {
+		textTenDangNhap.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-//				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-//					if (kiemTraDangNhap()) {
-//						moTrangChu();
-//					}
-//				}
+				btnDangNhap.doClick();
+			}
+		});
+		passwordField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
 				btnDangNhap.doClick();
 			}
 		});

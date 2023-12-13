@@ -193,8 +193,6 @@ public class CongDoanSanPham_Form extends JPanel implements ActionListener, Focu
 						docDuLieuDataAllLenTableSP();
 					}
 				}
-        		
-        	
 		});
 
 		txtTim.setForeground(Color.GRAY);
@@ -206,6 +204,7 @@ public class CongDoanSanPham_Form extends JPanel implements ActionListener, Focu
 		cb_TrangThai.addItem("Sản phẩm cũ");
 		cb_TrangThai.addItem("Tất cả");
 		cb_TrangThai.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		cb_TrangThai.setSelectedIndex(2);
 		cb_TrangThai.setBounds(346, 10, 256, 30);
 		
 		panel_BangSP.add(cb_TrangThai);
