@@ -181,7 +181,7 @@ public class Login_GUI extends JFrame implements ActionListener{
 		pRight.add(lbQMK);
 		
 		JLabel lbLogo = new JLabel("");
-		lbLogo.setIcon(new ImageIcon(Login_GUI.class.getResource("/icon/logo_Login.png")));
+		lbLogo.setIcon(new ImageIcon(Login_GUI.class.getResource("/icon/logo_login.png")));
 		lbLogo.setBounds(161, 143, 412, 363);
 		panel.add(lbLogo);
 		String projectDirectory = System.getProperty("user.dir");
