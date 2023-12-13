@@ -238,7 +238,7 @@ public class SanPham_DAO {
 			stm.setString(4, sanPham.getChatLieu());
 			stm.setString(5, sanPham.getDonViTinh());
 			stm.setString(6, sanPham.getGhiChu());
-			stm.setString(7, sanPham.getIdSanPham());
+			stm.setString(7, sanPham.getAnhSanPham());
 			n = stm.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -258,12 +258,13 @@ public class SanPham_DAO {
 		PreparedStatement stm = null;
 		int n = 0;
 		try {
-			stm = con.prepareStatement("update SanPham set donGia = ?, chatLieu = ?, donViTinh = ?, ghiChu = ? where idSanPham = ?");
+			stm = con.prepareStatement("update SanPham set donGia = ?, chatLieu = ?, donViTinh = ?, ghiChu = ?, anhSanPham =? where idSanPham = ?");
 			stm.setDouble(1, sanPham.getDonGia());
 			stm.setString(2, sanPham.getChatLieu());
 			stm.setString(3, sanPham.getDonViTinh());
 			stm.setString(4, sanPham.getGhiChu());
-			stm.setString(5, sanPham.getIdSanPham());
+			stm.setString(5, sanPham.getAnhSanPham());
+			stm.setString(6, sanPham.getIdSanPham());
 			n = stm.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
