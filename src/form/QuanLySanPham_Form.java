@@ -98,7 +98,7 @@ public class QuanLySanPham_Form extends JPanel implements ActionListener{
 		btnLamMoi.setBackground(Color.WHITE);
 		
 		textTimKiem = new RoundTextField(10);
-		textTimKiem.setText("Nhập mã sản phẩm cần tìm.....");
+		textTimKiem.setText("Nhập tên sản phẩm cần tìm.....");
 		textTimKiem.setBorder(new EmptyBorder(0, 15, 0, 0));
 		textTimKiem.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		textTimKiem.setForeground(Color.GRAY);
@@ -107,14 +107,14 @@ public class QuanLySanPham_Form extends JPanel implements ActionListener{
 			@Override
 			public void focusLost(FocusEvent e) {
 				if(textTimKiem.getText().isEmpty()) {
-					textTimKiem.setText("Nhập mã sản phẩm cần tìm.....");
+					textTimKiem.setText("Nhập tên sản phẩm cần tìm.....");
 					textTimKiem.setForeground(Color.GRAY);
 				}
 			}
 			
 			@Override
 			public void focusGained(FocusEvent e) {
-				if(textTimKiem.getText().equals("Nhập mã sản phẩm cần tìm.....")) {
+				if(textTimKiem.getText().equals("Nhập tên sản phẩm cần tìm.....")) {
 					textTimKiem.setText("");
 					textTimKiem.setForeground(Color.BLACK);
 				}
