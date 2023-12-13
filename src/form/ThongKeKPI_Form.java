@@ -198,6 +198,36 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener,MouseListe
 		        panelBarChart.validate();
 		}
     }
+private void showPieChartTong(double tyle){
+        
+        //create dataset
+		
+     
+			DefaultPieDataset barDataset = new DefaultPieDataset( );
+		      barDataset.setValue( "Đạt KPI" , tyle );  
+		      barDataset.setValue( "Không đạt" , 100 - tyle );   
+		      
+		      //create chart
+		       JFreeChart piechart = ChartFactory.createPieChart("Biểu Đồ Tròn Thể Hiện Mức Độ Hoàn Thành KPI Của "+" tháng "+cbThang.getSelectedItem().toString(),barDataset, false,true,false);//explain"
+		       		
+		      
+		        PiePlot piePlot =(PiePlot) piechart.getPlot();
+		      
+		       //changing pie chart blocks colors
+		        piePlot.setSectionPaint("Đạt KPI",new Color(102,255,102));
+		        piePlot.setSectionPaint("Không đạt", new Color(255,0,0));
+		        piePlot.setBackgroundPaint(Color.white);
+		        
+		        //create chartPanel to display chart(graph)
+		        ChartPanel barChartPanel = new ChartPanel(piechart);
+		        barChartPanel.setBounds(0, 0, 423, 388);
+		        panelBarChart.removeAll();
+		        panelBarChart.setLayout(new MigLayout("", "[414px]", "[407px]"));
+		        panelBarChart.add(barChartPanel, "cell 0 0,grow");
+		        barChartPanel.setLayout(new BorderLayout(0, 0));
+		        panelBarChart.validate();
+	
+    }
     private void showLineChart(double[] t,int row){
     //create dataset for the graph
     	if(row>=0)
@@ -279,6 +309,47 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener,MouseListe
     	    panelLineChart.validate();
     	}
 }
+    private void showLineChartTong(double[] t){
+        //create dataset for the graph
+        	
+         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        dataset.setValue(t[0], "Số Lượng", "T1");
+        dataset.setValue(t[1], "Số Lượng", "T2");
+        dataset.setValue(t[2], "Số Lượng", "T3");
+        dataset.setValue(t[3], "Số Lượng", "T4");
+        dataset.setValue(t[4], "Số Lượng", "T5");
+        dataset.setValue(t[5], "Số Lượng", "T6");
+        dataset.setValue(t[6], "Số Lượng", "T7");
+        dataset.setValue(t[7], "Số Lượng", "T8");
+        dataset.setValue(t[8], "Số Lượng", "T9");
+        dataset.setValue(t[9], "Số Lượng", "T10");
+        dataset.setValue(t[10], "Số Lượng", "T11");
+        dataset.setValue(t[11], "Số Lượng", "T12");
+        
+        //create chart
+        JFreeChart linechart = ChartFactory.createLineChart("Biểu đồ tăng trưởng KPI của "+cbNam.getSelectedItem().toString(),"Tháng","Tỷ lệ", 
+                dataset, PlotOrientation.VERTICAL, false,true,false);
+        
+        //create plot object
+         CategoryPlot lineCategoryPlot = linechart.getCategoryPlot();
+       // lineCategoryPlot.setRangeGridlinePaint(Color.BLUE);
+        lineCategoryPlot.setBackgroundPaint(Color.white);
+        
+        //create render object to change the moficy the line properties like color
+        LineAndShapeRenderer lineRenderer = (LineAndShapeRenderer) lineCategoryPlot.getRenderer();
+        Color lineChartColor = new Color(204,0,51);
+        lineRenderer.setSeriesPaint(0, lineChartColor);
+        
+         //create chartPanel to display chart(graph)
+        ChartPanel lineChartPanel = new ChartPanel(linechart);
+        lineChartPanel.setPreferredSize(new Dimension(HEIGHT, 410));
+        panelLineChart.removeAll();
+        panelLineChart.setLayout(new MigLayout("", "[774px]", "[372px]"));
+        panelLineChart.add(lineChartPanel, "cell 0 0,grow");
+        lineChartPanel.setLayout(new BorderLayout(0, 0));
+        panelLineChart.validate();
+        	
+    }
     public void initComponents()
     {
       setPreferredSize(new Dimension(1250, 780));
@@ -448,11 +519,13 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener,MouseListe
       cbThang.addActionListener(this);
       cbNam.addActionListener(this);
       hienThiDSThongKe();
-      if(tableThongKe.getRowCount()!=0)
-      {
-    	  thongKeTungNhanVienBieuDoTron(0);
-    	  thongKeTungNhanVienBieuDoTangTruong(0);
-      }
+      tinhTangTruong(Integer.parseInt(cbNam.getSelectedItem().toString()));
+      hienThibieuDo();
+//      if(tableThongKe.getRowCount()!=0)
+//      {
+//    	  thongKeTungNhanVienBieuDoTron(0);
+//    	  thongKeTungNhanVienBieuDoTangTruong(0);
+//      }
     }
     
 	@Override
@@ -462,15 +535,19 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener,MouseListe
 		if(o.equals(btnLamMoi))
 		{
 			hienThiDSThongKe();
+			hienThibieuDo();
+			tinhTangTruong(Integer.parseInt(cbNam.getSelectedItem().toString()));
 		}
 		if(o.equals(cbThang) || o.equals(cbNam))
 		{			
 			hienThiDSThongKe();
-			if(tableThongKe.getRowCount()!=0)
-	        {
-				thongKeTungNhanVienBieuDoTron(0);
-		    	  thongKeTungNhanVienBieuDoTangTruong(0);
-	        }
+//			if(tableThongKe.getRowCount()!=0)
+//	        {
+//				thongKeTungNhanVienBieuDoTron(0);
+//		    	  thongKeTungNhanVienBieuDoTangTruong(0);
+//	        }
+			hienThibieuDo();
+			tinhTangTruong(Integer.parseInt(cbNam.getSelectedItem().toString()));
 		 if(tableThongKe.getRowCount() == 0)
 		{
            JOptionPane.showMessageDialog(this, "Tháng này chưa có chấm công!");
@@ -545,6 +622,73 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener,MouseListe
 	           t[thang-1] = tyle;
 	         }
 	    	showLineChart(t,row);
+	}
+	private void thongKeTongKPITron()
+	{
+		int month = Integer.parseInt(cbThang.getSelectedItem().toString());
+		int year = Integer.parseInt(cbNam.getSelectedItem().toString());
+		ArrayList<String> getListKPI = thongKeKPI_BUS.getListCNKPI(month,year);
+		String col[] = {"idCong Nhan","Hoten","thang","soLuongHT","SoLuongDG"};
+		DefaultTableModel model = new DefaultTableModel(col,0);
+	    JTable table = new JTable(model);
+	    for(int i = 0 ;i < table.getRowCount();i++)
+	    {
+	    	
+	    }
+	}
+	private void tinhTangTruong(int year)
+	{
+		double[] t = new double[20];
+		String col[] = {"idCong Nhan","Hoten","PhanXuong","soLuongDG","SoLuongHT"};
+		DefaultTableModel modeltest = new DefaultTableModel(col,0);
+		JTable tableTest = new JTable(modeltest);
+		for(int i = 1 ;i <= 12;i++)
+		{
+			modeltest.setRowCount(0);
+			ArrayList<String> listCN = thongKeKPI_BUS.getListCNKPI(i, year);
+			for (String string : listCN) {
+				modeltest.addRow(string.split(";"));
+			}
+			int soLuongCNdatKPI = 0;
+			try {
+				for (int j = 0; j < modeltest.getRowCount(); j++) {
+					int soLuongSPDC = Integer.parseInt(tableTest.getValueAt(j, 3).toString());
+					int soLuongSPHT = Integer.parseInt(tableTest.getValueAt(j, 4).toString());
+					
+					if (soLuongSPDC <= soLuongSPHT) {
+						soLuongCNdatKPI++;
+					}
+				} 
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			ArrayList<CongNhan> cn = congNhan_BUS.getDanhSachCongNhan();
+	    	double soLuongCN = cn.size();
+          
+	        t[i-1] = soLuongCNdatKPI;
+		}
+		showLineChartTong(t);
+	}
+	private void hienThibieuDo()
+	{
+		hienThiDSThongKe();
+    	double soLuongCNdatKPI = 0;
+    	for(int i = 0; i < tableThongKe.getRowCount();i++)
+    	{
+    		int soLuongSPDC = Integer.parseInt(tableThongKe.getValueAt(i, 3).toString());
+
+    		int soLuongSPHT = Integer.parseInt(tableThongKe.getValueAt(i, 4).toString());
+
+    		if(soLuongSPDC<=soLuongSPHT)
+    		{
+    			soLuongCNdatKPI++;
+    		}
+    	}
+    	ArrayList<CongNhan> cn = congNhan_BUS.getDanhSachCongNhan();
+    	double soLuongCN = cn.size();
+
+        double tyle = (soLuongCNdatKPI / soLuongCN)*100;
+    	showPieChartTong(tyle);
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {

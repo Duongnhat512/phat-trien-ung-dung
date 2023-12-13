@@ -412,6 +412,10 @@ public class TinhLuongCongNhan_Form extends JPanel implements ActionListener, Mo
 		double tongThoiGianLamViec = 0, tongSoLuongSanPham = 0, tongLuongHanhChanh = 0, tongLuongTangCa = 0,
 				tongPhuCap = 0, tongThucLanh = 0;
 		lbldsCC.setText("Danh sách lương tháng " + thang + " - " + nam);
+		if(thang==LocalDate.now().getMonthValue() && nam==LocalDate.now().getYear()) {
+			JOptionPane.showMessageDialog(this, "Tháng hiện tại chưa đủ dữ liệu tính lương");
+			return;
+		}
 		if (dslcn.isEmpty()) {
 			dscn = cccn_bus.getDSChamCongCongNhan(thang, nam, phanXuong);
 			if (dscn.isEmpty()) {
