@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-﻿--use master
---drop database QLLuongSanPham
-=======
+
 ﻿use master
->>>>>>> d85a3ba178ecbf380b6e7932f58d2d97ab84b1e1
 create database QLLuongSanPham
 go
 use QLLuongSanPham

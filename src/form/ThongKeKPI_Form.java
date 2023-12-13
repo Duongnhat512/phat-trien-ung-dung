@@ -546,6 +546,15 @@ public class ThongKeKPI_Form extends JPanel implements ActionListener,MouseListe
 	         }
 	    	showLineChart(t,row);
 	}
+	private void thongKeTongKPITron()
+	{
+		int month = Integer.parseInt(cbThang.getSelectedItem().toString());
+		int year = Integer.parseInt(cbNam.getSelectedItem().toString());
+		ArrayList<String> getListKPI = thongKeKPI_BUS.getListCNKPI(month,year);
+		String col[] = {"idCong Nhan","Hoten","thang","soLuongHT","SoLuongDG"};
+		DefaultTableModel model = new DefaultTableModel(col,0);
+	    JTable table = new JTable(model);
+	}
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
