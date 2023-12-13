@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -359,8 +360,9 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener 
 		gl_panelNorth_1.setHorizontalGroup(
 			gl_panelNorth_1.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelNorth_1.createSequentialGroup()
+					.addContainerGap()
 					.addComponent(txtTimKiemCC, GroupLayout.PREFERRED_SIZE, 380, GroupLayout.PREFERRED_SIZE)
-					.addGap(322)
+					.addGap(312)
 					.addComponent(btnChamCong, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
 					.addGap(10)
 					.addComponent(btnChamCongAll, GroupLayout.PREFERRED_SIZE, 207, GroupLayout.PREFERRED_SIZE)
@@ -556,6 +558,32 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				kiemTraComboBoxCaLam();
+			}
+		});
+		
+		// Đăng ký sự kiện cho textField tìm kiếm chấm công
+		txtTimKiemCC.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (txtTimKiemCC.getText().trim().isEmpty()) {
+					txtTimKiemCC.setText("Nhập tên công nhân cần tìm chấm công...");
+					txtTimKiemCC.setForeground(Color.GRAY);
+				}
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (txtTimKiemCC.getText().equals("Nhập tên công nhân cần tìm chấm công...")) {
+					txtTimKiemCC.setText("");
+					txtTimKiemCC.setForeground(Color.BLACK);
+				}
+			}
+		});
+		txtTimKiemCC.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				timKiemChamCongTheoTenCN(txtTimKiemCC.getText());
 			}
 		});
 
@@ -874,7 +902,17 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener 
 		cboPhanXuong.setSelectedItem("Tất cả");
 	}
 	
-//	private void 
+	private void timKiemChamCongTheoTenCN(String ten) {
+		ArrayList<BangChamCongCongNhan> temp = new ArrayList<BangChamCongCongNhan>();
+		temp.addAll(listChamCong);
+		listChamCong = new ArrayList<BangChamCongCongNhan>();
+		for (BangChamCongCongNhan bangChamCongCongNhan : temp) {
+			if (bangChamCongCongNhan.getCongDoanPhanCong().getCongNhan().getHoTen().trim().toUpperCase().contains(ten.trim().toUpperCase())) {
+				listChamCong.add(bangChamCongCongNhan);
+			}
+		}
+		docDuLieuLenTableChamCong(listChamCong);
+	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {

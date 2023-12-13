@@ -145,7 +145,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 		panelWest.setkEndColor(Color.decode("#000428"));
 		contentPane.add(panelWest, BorderLayout.WEST);
 		
-		Image logo = new ImageIcon(Main_GUI.class.getResource("/icon/logo.png")).getImage().getScaledInstance((int)(w*0.1), (int)(w*0.1), Image.SCALE_SMOOTH);
+		Image logo = new ImageIcon(Main_GUI.class.getResource("/icon/logo_ten.png")).getImage().getScaledInstance((int)(w*0.18), (int)(w*0.1), Image.SCALE_SMOOTH);
 		ImageIcon logoIcon = new ImageIcon(logo);
 		JPanel panelLogo = new JPanel();
 		panelLogo.setBackground(new Color(255, 255, 255));
@@ -158,7 +158,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 		JLabel lblLogo = new JLabel();
 		lblLogo.setIcon(logoIcon);
 //		lblLogo.setHorizontalAlignment(h)
-		panelLogo.add(lblLogo);
+		panelLogo.add(lblLogo, BorderLayout.CENTER);
 		lblLogo.setBounds(10, 10, 136, 130);
 //		panel.add(lblLogo);
 		
