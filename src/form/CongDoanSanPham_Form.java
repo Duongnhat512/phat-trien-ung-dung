@@ -97,6 +97,8 @@ public class CongDoanSanPham_Form extends JPanel implements ActionListener, Focu
 	private JComboBox<String> cb_TrangThai;
 
 	private ChiTietHopDong_BUS cthd_bus;
+	private JTextField txtCheckTen;
+	private JTextField txtCheckLuong;
 
 	public CongDoanSanPham_Form(int width, int height) {
 		this.width = width;
@@ -415,7 +417,7 @@ public class CongDoanSanPham_Form extends JPanel implements ActionListener, Focu
 		listCDSP = cdsp_bus.getCongDoanTheoSP(id);
 		for (CongDoanSanPham cdSP : listCDSP) {
 			modelCDSP.addRow(
-					new Object[] { cdSP.getTenCongDoan(), cdSP.getSanPham().getTenSanPham(), cdSP.getLuongCongDoan()
+					new Object[] { cdSP.getTenCongDoan(), cdSP.getSanPham().getTenSanPham(), (int)cdSP.getLuongCongDoan()
 
 					});
 		}
@@ -437,27 +439,27 @@ public class CongDoanSanPham_Form extends JPanel implements ActionListener, Focu
 
 		dialog.setLocationRelativeTo(null);
 		dialog.setResizable(false);
-		dialog.getContentPane().setLayout(null);
+		dialog.setLayout(null);
 
 		JLabel lblidSP = new JLabel("ID sản phẩm: ");
 		lblidSP.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		lblidSP.setBounds(10, 30, 152, 25);
-		dialog.getContentPane().add(lblidSP);
+		dialog.add(lblidSP);
 
 		JLabel lblTenSP = new JLabel("Tên sản phẩm: ");
 		lblTenSP.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		lblTenSP.setBounds(10, 90, 152, 25);
-		dialog.getContentPane().add(lblTenSP);
+		dialog.add(lblTenSP);
 
 		JLabel lblTenCongDoan = new JLabel("Tên công đoạn: ");
 		lblTenCongDoan.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		lblTenCongDoan.setBounds(10, 150, 152, 25);
-		dialog.getContentPane().add(lblTenCongDoan);
+		dialog.add(lblTenCongDoan);
 
 		JLabel lblLuongCongDoan = new JLabel("Lương công đoạn: ");
 		lblLuongCongDoan.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		lblLuongCongDoan.setBounds(10, 210, 152, 25);
-		dialog.getContentPane().add(lblLuongCongDoan);
+		dialog.add(lblLuongCongDoan);
 
 		txtIDSP = new JTextField();
 		txtIDSP.setEditable(false);
@@ -466,7 +468,7 @@ public class CongDoanSanPham_Form extends JPanel implements ActionListener, Focu
 		txtIDSP.setBorder(null);
 		txtIDSP.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		txtIDSP.setBounds(176, 30, 548, 25);
-		dialog.getContentPane().add(txtIDSP);
+		dialog.add(txtIDSP);
 		txtIDSP.setColumns(10);
 
 		txtTenSP = new JTextField();
@@ -478,50 +480,90 @@ public class CongDoanSanPham_Form extends JPanel implements ActionListener, Focu
 		txtTenSP.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		txtTenSP.setColumns(10);
 		txtTenSP.setBounds(176, 90, 548, 25);
-		dialog.getContentPane().add(txtTenSP);
+		dialog.add(txtTenSP);
 
-		txtTenCongDoan = new JTextField();
+
+		txtTenCongDoan = new JTextField("Nhập Tên Công Đoạn");
+		txtTenCongDoan.setForeground(Color.GRAY);
 		txtTenCongDoan.setBackground(null);
 		txtTenCongDoan.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(0, 0, 0)));
 		txtTenCongDoan.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		txtTenCongDoan.setColumns(10);
 		txtTenCongDoan.setBounds(172, 150, 548, 25);
-		dialog.getContentPane().add(txtTenCongDoan);
+		dialog.add(txtTenCongDoan);
 
-		txtLuongCD = new JTextField();
+		txtLuongCD = new JTextField("Nhập lương công đoạn");
+		txtLuongCD.setForeground(Color.GRAY);
 		txtLuongCD.setBackground(null);
 		txtLuongCD.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(0, 0, 0)));
 		txtLuongCD.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		txtLuongCD.setColumns(10);
 		txtLuongCD.setBounds(176, 210, 548, 25);
-		dialog.getContentPane().add(txtLuongCD);
+		dialog.add(txtLuongCD);
 
 		btnThemCD = new MyButton();
 		btnThemCD.setText("Thêm");
 		btnThemCD.setBackground(new Color(0, 255, 0));
 		btnThemCD.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		btnThemCD.setBounds(127, 285, 150, 30);
-		dialog.getContentPane().add(btnThemCD);
+		dialog.add(btnThemCD);
 
 		btnHuy = new MyButton();
 		btnHuy.setText("Hủy");
 		btnHuy.setBackground(new Color(255, 0, 0));
 		btnHuy.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		btnHuy.setBounds(431, 285, 150, 30);
-		dialog.getContentPane().add(btnHuy);
+		dialog.add(btnHuy);
 
 		btnCapNhatCD = new MyButton();
 		btnCapNhatCD.setText("Cập nhật");
 		btnCapNhatCD.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		btnCapNhatCD.setBackground(Color.GREEN);
 		btnCapNhatCD.setBounds(127, 285, 150, 30);
-		dialog.getContentPane().add(btnCapNhatCD);
+		dialog.add(btnCapNhatCD);
+		
+		txtCheckTen = new JTextField();
+		txtCheckTen.setBorder(null);
+		txtCheckTen.setBackground(null);
+		txtCheckTen.setForeground(new Color(255, 0, 0));
+		txtCheckTen.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		txtCheckTen.setBounds(172, 185, 552, 25);
+		dialog.add(txtCheckTen);
+		txtCheckTen.setColumns(10);
+		
+		txtCheckLuong = new JTextField();
+		txtCheckLuong.setBorder(null);
+		txtCheckLuong.setBackground(null);
+		txtCheckLuong.setForeground(new Color(255, 0, 0));
+		txtCheckLuong.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		txtCheckLuong.setColumns(10);
+		txtCheckLuong.setBounds(172, 246, 552, 25);
+		
+		txtTenCongDoan.addFocusListener(this);
+		txtLuongCD.addFocusListener(this);
+		dialog.add(txtCheckLuong);
 		btnCapNhatCD.addActionListener(this);
 		btnThemCD.addActionListener(this);
 		btnHuy.addActionListener(this);
 
 	}
-
+	private boolean validData() {
+		
+	
+		String tenCD = txtTenCongDoan.getText().trim();
+	
+		
+		if (!tenCD.matches("[\\p{Lu}][\\p{Ll}]*([\\s]*[\\p{Ll}][\\p{Ll}]*)*")) {
+			txtCheckTen.setText("Tên công đoạn ít nhất 1 âm, âm đầu có chữ cái đầu viết hoa!");
+			return false;
+		}
+		String luongCD = txtLuongCD.getText().trim();
+		if (!luongCD.matches("[1-9]{1}[0-9]{3,4}")) {
+			txtCheckLuong.setText("Lương công đoạn có 4 đến 5 chữ số!");
+			return false;
+		}
+		return true;
+	}
 	private String sinhMaCD() {
 		int stt = 1;
 		ArrayList<CongDoanSanPham> list = cdsp_bus.getDSCongDoan();
@@ -554,7 +596,13 @@ public class CongDoanSanPham_Form extends JPanel implements ActionListener, Focu
 
 		}
 		if (o.equals(btnHuy)) {
-			dialog.dispose();
+			int choice = JOptionPane.showConfirmDialog(null, "Bạn có chắc là muốn hủy không?", "Cảnh báo!", JOptionPane.YES_NO_OPTION);
+
+	        if (choice == JOptionPane.YES_OPTION) {
+	        	dialog.dispose();
+	        } else {
+	            return;
+	        }
 		}
 		if (o.equals(cb_TrangThai)) {
 			if(cb_TrangThai.getSelectedIndex()==0) {
@@ -579,46 +627,64 @@ public class CongDoanSanPham_Form extends JPanel implements ActionListener, Focu
 				btnThemCD.setVisible(false);
 				String tenCDSP = modelCDSP.getValueAt(r, 0).toString();
 				txtTenCongDoan.setText(tenCDSP);
+				txtTenCongDoan.setForeground(Color.BLACK);
 				String luongCD = modelCDSP.getValueAt(r, 2).toString();
 				txtLuongCD.setText(luongCD);
+				txtLuongCD.setForeground(Color.BLACK);
 				dialog.setModal(true);
 				dialog.setVisible(true);
 			}
 
 		}
 		if (o.equals(btnThemCD)) {
-			String maCD = sinhMaCD();
-			String tenCD = txtTenCongDoan.getText();
-			double luongCD = Double.parseDouble(txtLuongCD.getText());
-			String idSanPham = txtIDSP.getText();
-			SanPham sp = sp_bus.getSanPhamTheoID(idSanPham);
-			int tongSoLuong = sp_bus.getTongSoLuongDatSanPhamTheoID(idSanPham);
-			CongDoanSanPham cdsp = new CongDoanSanPham(maCD, tenCD,tongSoLuong, luongCD, sp);
-			cdsp_bus.create(cdsp);
-			modelCDSP.setRowCount(0);
-			docDuLieuDataLenTableCDSPTheoSP(idSanPham);
-			dialog.dispose();
-			int m = cdsp_bus.getCongDoanTheoSP(idSanPham).indexOf(cdsp);
-			tableCDSP.setRowSelectionInterval(m, m);
-			tableCDSP.scrollRectToVisible(tableCDSP.getCellRect(m, m, true));
-			hienThiThongTinCD();
+			if(validData()) {
+				String maCD = sinhMaCD();
+				String tenCD = txtTenCongDoan.getText();
+				double luongCD = Double.parseDouble(txtLuongCD.getText());
+				String idSanPham = txtIDSP.getText();
+				SanPham sp = sp_bus.getSanPhamTheoID(idSanPham);
+				int tongSoLuong = sp_bus.getTongSoLuongDatSanPhamTheoID(idSanPham);
+				CongDoanSanPham cdsp = new CongDoanSanPham(maCD, tenCD,tongSoLuong, luongCD, sp);
+				cdsp_bus.create(cdsp);
+				modelCDSP.setRowCount(0);
+				docDuLieuDataLenTableCDSPTheoSP(idSanPham);
+				JOptionPane.showMessageDialog(null, "Thêm thành công!");
+				dialog.dispose();
+				int m = cdsp_bus.getCongDoanTheoSP(idSanPham).indexOf(cdsp);
+				tableCDSP.setRowSelectionInterval(m, m);
+				tableCDSP.scrollRectToVisible(tableCDSP.getCellRect(m, m, true));
+				hienThiThongTinCD();
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Vui lòng nhập đúng và đầy đủ thông tin!");
+			
+			}
+			
 		}
 		if (o.equals(btnCapNhatCD)) {
-			String maCD = listCDSP.get(tableCDSP.getSelectedRow()).getIdCongDoan();
-			String tenCD = txtTenCongDoan.getText();
-			double luongCD = Double.parseDouble(txtLuongCD.getText());
-			String idSanPham = txtIDSP.getText();
-			SanPham sp = sp_bus.getSanPhamTheoID(idSanPham);
-			int tongSoLuong = sp_bus.getTongSoLuongDatSanPhamTheoID(idSanPham);
-			CongDoanSanPham cdsp = new CongDoanSanPham(maCD, tenCD,tongSoLuong, luongCD, sp);
-			cdsp_bus.update(cdsp);
-			modelCDSP.setRowCount(0);
-			docDuLieuDataLenTableCDSPTheoSP(idSanPham);
-			dialog.dispose();
-			int m = cdsp_bus.getCongDoanTheoSP(idSanPham).indexOf(cdsp);
-			tableCDSP.setRowSelectionInterval(m, m);
-			tableCDSP.scrollRectToVisible(tableCDSP.getCellRect(m, m, true));
-			hienThiThongTinCD();
+			if(validData()) {
+				String maCD = listCDSP.get(tableCDSP.getSelectedRow()).getIdCongDoan();
+				String tenCD = txtTenCongDoan.getText();
+				double luongCD = Double.parseDouble(txtLuongCD.getText());
+				String idSanPham = txtIDSP.getText();
+				SanPham sp = sp_bus.getSanPhamTheoID(idSanPham);
+				int tongSoLuong = sp_bus.getTongSoLuongDatSanPhamTheoID(idSanPham);
+				CongDoanSanPham cdsp = new CongDoanSanPham(maCD, tenCD,tongSoLuong, luongCD, sp);
+				cdsp_bus.update(cdsp);
+				modelCDSP.setRowCount(0);
+				docDuLieuDataLenTableCDSPTheoSP(idSanPham);
+				JOptionPane.showMessageDialog(null, "Cập nhật thành công!");
+				dialog.dispose();
+				int m = cdsp_bus.getCongDoanTheoSP(idSanPham).indexOf(cdsp);
+				tableCDSP.setRowSelectionInterval(m, m);
+				tableCDSP.scrollRectToVisible(tableCDSP.getCellRect(m, m, true));
+				hienThiThongTinCD();
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Vui lòng nhập đúng và đầy đủ thông tin!");
+				
+			}
+			
 		}
 	}
 
@@ -632,6 +698,20 @@ public class CongDoanSanPham_Form extends JPanel implements ActionListener, Focu
 				txtTim.setForeground(Color.BLACK);
 			}
 		}
+		if (o.equals(txtTenCongDoan)) {
+			txtCheckTen.setText("");
+			 if (txtTenCongDoan.getText().equals("Nhập Tên Công Đoạn")) {
+				 txtTenCongDoan.setText("");
+				 txtTenCongDoan.setForeground(Color.BLACK);
+            }
+		}
+		if (o.equals(txtLuongCD)) {
+			txtCheckLuong.setText("");
+			 if (txtLuongCD.getText().equals("Nhập lương công đoạn")) {
+				 txtLuongCD.setText("");
+				 txtLuongCD.setForeground(Color.BLACK);
+            }
+		}
 
 	}
 
@@ -643,6 +723,34 @@ public class CongDoanSanPham_Form extends JPanel implements ActionListener, Focu
 			if (txtTim.getText().trim().isEmpty()) {
 				txtTim.setText(" Nhập mã sản phẩm cần tìm...");
 				txtTim.setForeground(Color.GRAY);
+			}
+		}
+		if (o.equals(txtTenCongDoan)) {
+			String tenCD = txtTenCongDoan.getText().trim();
+			if (tenCD.isEmpty()) {
+				txtTenCongDoan.setText("Nhập Tên Công Đoạn");
+				txtTenCongDoan.setForeground(Color.GRAY);
+				return;
+            }
+			
+			if (!tenCD.matches("[\\p{Lu}][\\p{Ll}]*([\\s]*[\\p{Ll}][\\p{Ll}]*)*")) {
+				txtCheckTen.setText("Tên công đoạn ít nhất 1 âm, âm đầu có chữ cái đầu viết hoa!");
+			} else {
+				txtCheckTen.setText("");
+			}
+		}
+		if (o.equals(txtLuongCD)) {
+			String luongCD = txtLuongCD.getText().trim();
+			if (luongCD.isEmpty()) {
+				txtLuongCD.setText("Nhập lương công đoạn");
+				txtLuongCD.setForeground(Color.GRAY);
+				return;
+            }
+			
+			if (!luongCD.matches("[1-9]{1}[0-9]{3,4}")) {
+				txtCheckLuong.setText("Lương công đoạn có 4 đến 5 chữ số!");
+			} else {
+				txtCheckLuong.setText("");
 			}
 		}
 	}
