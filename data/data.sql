@@ -1,7 +1,5 @@
-﻿--use master
---drop database QLLuongSanPham
---﻿use master
---create database QLLuongSanPham
+
+create database QLLuongSanPham
 go
 use QLLuongSanPham
 go
