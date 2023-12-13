@@ -298,7 +298,7 @@ public class Password_GUI extends JFrame implements ActionListener {
 			message.setText(body);
 
 			Transport.send(message);
-			System.out.println("Email sent successfully!");
+			
 
 		} catch (MessagingException e) {
 			e.printStackTrace();
@@ -381,7 +381,6 @@ public class Password_GUI extends JFrame implements ActionListener {
 		}
 		if (o.equals(btnOTP)) {
 			otp = generateOTP();
-			System.out.println(1);
 			String tk = txtEmail.getText(); 
 			String email = "";
 			if(tk.contains("NV")) {

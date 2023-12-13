@@ -161,7 +161,7 @@ public class CongDoanSanPham_Form extends JPanel implements ActionListener, Focu
 
 		RoundPanel panellblBangSP = new RoundPanel();
 		panellblBangSP.setRound(30);
-		panellblBangSP.setBackground(Color.CYAN);
+		panellblBangSP.setBackground(new Color(153, 204, 255));
 		panellblBangSP.setBounds(10, 50, 592, 40);
 		panel_BangSP.add(panellblBangSP);
 		panellblBangSP.setLayout(new BorderLayout(0, 0));
@@ -193,8 +193,6 @@ public class CongDoanSanPham_Form extends JPanel implements ActionListener, Focu
 						docDuLieuDataAllLenTableSP();
 					}
 				}
-        		
-        	
 		});
 
 		txtTim.setForeground(Color.GRAY);
@@ -206,6 +204,7 @@ public class CongDoanSanPham_Form extends JPanel implements ActionListener, Focu
 		cb_TrangThai.addItem("Sản phẩm cũ");
 		cb_TrangThai.addItem("Tất cả");
 		cb_TrangThai.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		cb_TrangThai.setSelectedIndex(2);
 		cb_TrangThai.setBounds(346, 10, 256, 30);
 		
 		panel_BangSP.add(cb_TrangThai);
@@ -221,7 +220,7 @@ public class CongDoanSanPham_Form extends JPanel implements ActionListener, Focu
 		RoundPanel panellblTTCDSP = new RoundPanel();
 		panellblTTCDSP.setBounds(10, 10, 597, 40);
 		panellblTTCDSP.setRound(30);
-		panellblTTCDSP.setBackground(Color.CYAN);
+		panellblTTCDSP.setBackground(new Color(153, 204, 255));
 		panel_ThongTinCD.add(panellblTTCDSP);
 		panellblTTCDSP.setLayout(new BorderLayout(0, 0));
 
@@ -352,7 +351,7 @@ public class CongDoanSanPham_Form extends JPanel implements ActionListener, Focu
 		lblBangCongDoanSp.setHorizontalAlignment(SwingConstants.CENTER);
 
 		RoundPanel panelBangCongDoanSp = new RoundPanel();
-		panelBangCongDoanSp.setBackground(new Color(0, 255, 255));
+		panelBangCongDoanSp.setBackground(new Color(153, 204, 255));
 		panelBangCongDoanSp.setRound(30);
 		panelBangCongDoanSp.setBounds(10, 10, 1219, 40);
 		panelBangCongDoanSp.setLayout(new BorderLayout(0, 0));
@@ -439,27 +438,27 @@ public class CongDoanSanPham_Form extends JPanel implements ActionListener, Focu
 
 		dialog.setLocationRelativeTo(null);
 		dialog.setResizable(false);
-		dialog.setLayout(null);
+		dialog.getContentPane().setLayout(null);
 
 		JLabel lblidSP = new JLabel("ID sản phẩm: ");
 		lblidSP.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		lblidSP.setBounds(10, 30, 152, 25);
-		dialog.add(lblidSP);
+		dialog.getContentPane().add(lblidSP);
 
 		JLabel lblTenSP = new JLabel("Tên sản phẩm: ");
 		lblTenSP.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		lblTenSP.setBounds(10, 90, 152, 25);
-		dialog.add(lblTenSP);
+		dialog.getContentPane().add(lblTenSP);
 
 		JLabel lblTenCongDoan = new JLabel("Tên công đoạn: ");
 		lblTenCongDoan.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		lblTenCongDoan.setBounds(10, 150, 152, 25);
-		dialog.add(lblTenCongDoan);
+		dialog.getContentPane().add(lblTenCongDoan);
 
 		JLabel lblLuongCongDoan = new JLabel("Lương công đoạn: ");
 		lblLuongCongDoan.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		lblLuongCongDoan.setBounds(10, 210, 152, 25);
-		dialog.add(lblLuongCongDoan);
+		dialog.getContentPane().add(lblLuongCongDoan);
 
 		txtIDSP = new JTextField();
 		txtIDSP.setEditable(false);
@@ -468,7 +467,7 @@ public class CongDoanSanPham_Form extends JPanel implements ActionListener, Focu
 		txtIDSP.setBorder(null);
 		txtIDSP.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		txtIDSP.setBounds(176, 30, 548, 25);
-		dialog.add(txtIDSP);
+		dialog.getContentPane().add(txtIDSP);
 		txtIDSP.setColumns(10);
 
 		txtTenSP = new JTextField();
@@ -480,7 +479,7 @@ public class CongDoanSanPham_Form extends JPanel implements ActionListener, Focu
 		txtTenSP.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		txtTenSP.setColumns(10);
 		txtTenSP.setBounds(176, 90, 548, 25);
-		dialog.add(txtTenSP);
+		dialog.getContentPane().add(txtTenSP);
 
 
 		txtTenCongDoan = new JTextField("Nhập Tên Công Đoạn");
@@ -490,7 +489,7 @@ public class CongDoanSanPham_Form extends JPanel implements ActionListener, Focu
 		txtTenCongDoan.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		txtTenCongDoan.setColumns(10);
 		txtTenCongDoan.setBounds(172, 150, 548, 25);
-		dialog.add(txtTenCongDoan);
+		dialog.getContentPane().add(txtTenCongDoan);
 
 		txtLuongCD = new JTextField("Nhập lương công đoạn");
 		txtLuongCD.setForeground(Color.GRAY);
@@ -499,28 +498,28 @@ public class CongDoanSanPham_Form extends JPanel implements ActionListener, Focu
 		txtLuongCD.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		txtLuongCD.setColumns(10);
 		txtLuongCD.setBounds(176, 210, 548, 25);
-		dialog.add(txtLuongCD);
+		dialog.getContentPane().add(txtLuongCD);
 
 		btnThemCD = new MyButton();
 		btnThemCD.setText("Thêm");
 		btnThemCD.setBackground(new Color(0, 255, 0));
 		btnThemCD.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		btnThemCD.setBounds(127, 285, 150, 30);
-		dialog.add(btnThemCD);
+		dialog.getContentPane().add(btnThemCD);
 
 		btnHuy = new MyButton();
 		btnHuy.setText("Hủy");
 		btnHuy.setBackground(new Color(255, 0, 0));
 		btnHuy.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		btnHuy.setBounds(431, 285, 150, 30);
-		dialog.add(btnHuy);
+		dialog.getContentPane().add(btnHuy);
 
 		btnCapNhatCD = new MyButton();
 		btnCapNhatCD.setText("Cập nhật");
 		btnCapNhatCD.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		btnCapNhatCD.setBackground(Color.GREEN);
 		btnCapNhatCD.setBounds(127, 285, 150, 30);
-		dialog.add(btnCapNhatCD);
+		dialog.getContentPane().add(btnCapNhatCD);
 		
 		txtCheckTen = new JTextField();
 		txtCheckTen.setBorder(null);
@@ -528,7 +527,7 @@ public class CongDoanSanPham_Form extends JPanel implements ActionListener, Focu
 		txtCheckTen.setForeground(new Color(255, 0, 0));
 		txtCheckTen.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		txtCheckTen.setBounds(172, 185, 552, 25);
-		dialog.add(txtCheckTen);
+		dialog.getContentPane().add(txtCheckTen);
 		txtCheckTen.setColumns(10);
 		
 		txtCheckLuong = new JTextField();
@@ -541,7 +540,7 @@ public class CongDoanSanPham_Form extends JPanel implements ActionListener, Focu
 		
 		txtTenCongDoan.addFocusListener(this);
 		txtLuongCD.addFocusListener(this);
-		dialog.add(txtCheckLuong);
+		dialog.getContentPane().add(txtCheckLuong);
 		btnCapNhatCD.addActionListener(this);
 		btnThemCD.addActionListener(this);
 		btnHuy.addActionListener(this);

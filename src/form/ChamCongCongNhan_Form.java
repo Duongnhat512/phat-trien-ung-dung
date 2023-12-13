@@ -589,7 +589,6 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener 
 				}
 				else {
 					timKiemChamCongTheoTenCN(txtTimKiemCC.getText());
-					
 				}
 			}
 		});
@@ -854,14 +853,14 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener 
 			BangChamCongCongNhan bangCC = listChamCong.get(row);
 			int soLuongHoanThanh = 0;
 			try {
-				soLuongHoanThanh = Integer.parseInt(tableChamCong.getValueAt(row, 6).toString());
+				soLuongHoanThanh = Integer.parseInt(tableChamCong.getValueAt(row, 7).toString());
 				if (soLuongHoanThanh == bangCC.getSoLuongHoanThanh()) {
 					return false;
 				}
 				if (soLuongHoanThanh > (bangCC.getSoLuongHoanThanh()
 						+ bangCC.getCongDoanPhanCong().getSoLuongConLai())) {
 					JOptionPane.showMessageDialog(this, "Số lượng hoàn thành vượt quá số lượng còn lại của công nhân.");
-					tableChamCong.setValueAt("" + bangCC.getSoLuongHoanThanh(), row, 6);
+					tableChamCong.setValueAt("" + bangCC.getSoLuongHoanThanh(), row, 7);
 					return false;
 				} else {
 					if (JOptionPane.showConfirmDialog(this, "Bạn có muốn thay đổi không?", "Hỏi nhắc",
@@ -875,13 +874,13 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener 
 						JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
 						return true;
 					} else {
-						tableChamCong.setValueAt("" + bangCC.getSoLuongHoanThanh(), row, 6);
+						tableChamCong.setValueAt("" + bangCC.getSoLuongHoanThanh(), row, 7);
 						return false;
 					}
 				}
 			} catch (NumberFormatException e) {
 				JOptionPane.showMessageDialog(this, "Số lượng hoàn thành cần sửa phải là chữ số.");
-				tableChamCong.setValueAt("" + bangCC.getSoLuongHoanThanh(), row, 6);
+				tableChamCong.setValueAt("" + bangCC.getSoLuongHoanThanh(), row, 7);
 				return false;
 			}
 		} else {

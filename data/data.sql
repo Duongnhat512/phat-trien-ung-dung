@@ -1,4 +1,4 @@
-
+use master
 create database QLLuongSanPham
 go
 use QLLuongSanPham

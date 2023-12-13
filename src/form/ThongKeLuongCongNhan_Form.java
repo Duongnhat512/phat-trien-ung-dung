@@ -609,7 +609,7 @@ public class ThongKeLuongCongNhan_Form extends JPanel implements ActionListener,
 				e.printStackTrace();
 			}
 		} else {
-			System.out.println("File not found: " + filePath);
+			
 		}
 	}
 	private void searchEmployee() {
