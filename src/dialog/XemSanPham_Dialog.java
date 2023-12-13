@@ -137,7 +137,7 @@ public class XemSanPham_Dialog extends JDialog implements ActionListener{
 		panel_1.setRound(10);
 		panel_1.setOpaque(false);
 		textGhiChu = new JTextArea();
-		textGhiChu.setBounds(175, 236, 85, 45);
+		textGhiChu.setBounds(175, 236, 274, 45);
 		textGhiChu.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		textGhiChu.setBorder(new EmptyBorder(5, 5, 5, 5));
 		lblNewLabel = new JLabel("ID sản phẩm:");
