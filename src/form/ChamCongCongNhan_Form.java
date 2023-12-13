@@ -290,10 +290,10 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener 
 		// Cài đặt header cho table Chấm công
 		tableChamCong.setModel(new DefaultTableModel(new Object[][] {
 
-		}, new String[] { "ID c\u00F4ng nh\u00E2n", "Ng\u00E0y ch\u1EA5m c\u00F4ng", "Ph\u00E2n x\u01B0\u1EDFng",
+		}, new String[] { "ID c\u00F4ng nh\u00E2n", "Tên công nhân", "Ng\u00E0y ch\u1EA5m c\u00F4ng", "Ph\u00E2n x\u01B0\u1EDFng",
 				"S\u1EA3n ph\u1EA9m", "C\u00F4ng \u0111o\u1EA1n", "Số lượng được giao",
 				"S\u1ED1 l\u01B0\u1EE3ng ho\u00E0n th\u00E0nh" }) {
-			boolean[] canEdit = new boolean[] { false, false, false, false, false, false, true };
+			boolean[] canEdit = new boolean[] { false, false, false, false, false, false, false, true };
 
 			public boolean isCellEditable(int rowIndex, int columnIndex) {
 				return canEdit[columnIndex];
@@ -583,7 +583,14 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener 
 		txtTimKiemCC.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				timKiemChamCongTheoTenCN(txtTimKiemCC.getText());
+				locDuLieuChamCongTheoNgay();
+				if (txtTimKiemCC.getText().trim().isEmpty()) {
+					docDuLieuLenTableChamCong(listChamCong);
+				}
+				else {
+					timKiemChamCongTheoTenCN(txtTimKiemCC.getText());
+					
+				}
 			}
 		});
 
@@ -672,8 +679,8 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener 
 		DefaultTableModel dm = (DefaultTableModel) tableChamCong.getModel();
 		dm.getDataVector().removeAllElements();
 		for (BangChamCongCongNhan bangChamCongCongNhan : listChamCong) {
-			dm.addRow(new Object[] { bangChamCongCongNhan.getCongDoanPhanCong().getCongNhan().getIdCongNhan(),
-					dtf.format(bangChamCongCongNhan.getNgayChamCong()),
+			dm.addRow(new Object[] { bangChamCongCongNhan.getCongDoanPhanCong().getCongNhan().getIdCongNhan(), bangChamCongCongNhan.getCongDoanPhanCong().getCongNhan().getHoTen(),
+					dtf.format(bangChamCongCongNhan.getNgayChamCong()), 
 					bangChamCongCongNhan.getCongDoanPhanCong().getCongNhan().getPhanXuong().getTenPhanXuong(),
 					bangChamCongCongNhan.getCongDoanPhanCong().getCongDoanSP().getSanPham().getTenSanPham(),
 					bangChamCongCongNhan.getCongDoanPhanCong().getCongDoanSP().getTenCongDoan(),
