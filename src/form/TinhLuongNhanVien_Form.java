@@ -455,7 +455,7 @@ public class TinhLuongNhanVien_Form extends JPanel implements ActionListener, Mo
 		double luongCb = 0, tongPhuCap = 0, tongThue = 0, tongBhxh = 0, luongThucTe = 0, tongThucLanh = 0;
 		dslnv = bl_bus.getAllTableTinhLuongTheoThang(phongBan, thang, nam);
 		lbldsCC.setText("Danh sách lương tháng " + thang + " - " + nam);
-		if(thang==LocalDate.now().getMonthValue() && nam==LocalDate.now().getYear()) {
+		if(thang==LocalDate.now().getMonthValue() && nam==LocalDate.now().getYear() || nam>LocalDate.now().getYear()) {
 			JOptionPane.showMessageDialog(this, "Tháng hiện tại chưa đủ dữ liệu tính lương");
 			return;
 		}

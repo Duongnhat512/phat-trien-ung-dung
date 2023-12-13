@@ -1,13 +1,30 @@
+<<<<<<< HEAD
+/form/
+=======
+<<<<<<< HEAD
+/commons/
+/dao/
+/entities/
+/form/
+/gui/
+/dialog/
+=======
+>>>>>>> fd6e2eec99ea7c05e30580607bcda5afcb4f7ab5
 /bus/
 /commons/
 /connectDB/
 /dao/
 /dialog/
 /entities/
-/form/
 /gui/
 <<<<<<< HEAD
 /icon/
 /images/
 =======
+<<<<<<< HEAD
+/icon/
+/images/
+=======
 >>>>>>> eaf9f735e5383365d2daee37fe186e79ad868500
+>>>>>>> ee5fc8af791778d5f71a9ed189abced702c25580
+>>>>>>> fd6e2eec99ea7c05e30580607bcda5afcb4f7ab5
