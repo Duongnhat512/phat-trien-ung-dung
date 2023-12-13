@@ -11,6 +11,21 @@ public class SanPham_BUS {
 	public ArrayList<SanPham> getAllSanPham(){
 		return sanPham_DAO.getAllSanPham();
 	}
+	public ArrayList<SanPham> getAllSanPhamMoi(){
+		return sanPham_DAO.getAllSanPhamMoi();
+	}
+	public ArrayList<SanPham> getAllSanPhamCu(){
+		return sanPham_DAO.getAllSanPhamCu();
+	}
+	public ArrayList<SanPham> getListSanPhamMoiTheoID(String id){
+		return sanPham_DAO.getListSanPhamMoiTheoID(id);
+	}
+	public ArrayList<SanPham> getListSanPhamCuTheoID(String id){
+		return sanPham_DAO.getListSanPhamCuTheoID(id);
+	}
+	public ArrayList<SanPham> getListSanPhamTheoID(String id){
+		return sanPham_DAO.getListSanPhamTheoID(id);
+	}
 	public SanPham getSanPhamTheoID(String id){
 		return sanPham_DAO.getSanPhamTheoID(id);
 	}
@@ -20,4 +35,8 @@ public class SanPham_BUS {
 	public boolean capNhatSanPham(SanPham sanPham) {
 		return sanPham_DAO.capNhatSanPham(sanPham);
 	}
+	public int getTongSoLuongDatSanPhamTheoID(String id) {
+		return sanPham_DAO.getTongSoLongDatSanPhamTheoID(id);
+	}
+
 }

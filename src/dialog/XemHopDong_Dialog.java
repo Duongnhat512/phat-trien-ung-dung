@@ -119,7 +119,7 @@ public class XemHopDong_Dialog extends JDialog implements ActionListener{
 	 * Create the dialog.
 	 */
 	public XemHopDong_Dialog(String idHD) {
-		setTitle("Thêm hợp đồng");
+		setTitle("Xem hợp đồng");
 		initComponents();
 		hd = hopDongSanPham_BUS.getHopDongSanPhamTheoID(idHD);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);

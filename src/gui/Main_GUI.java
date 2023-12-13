@@ -193,7 +193,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 		lblTenNV.setBorder(new EmptyBorder(0, 0, 0, 5));
 		lblTenNV.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTenNV.setFont(new Font("SansSerif", Font.PLAIN, 18));
-		lblTenNV.setBounds(10, 10, 518, 31);
+		lblTenNV.setBounds(20, 3, 518, 45);
 		panelCNort.add(lblTenNV);
 		
 		btnDangXuat = new MyButton();
@@ -217,7 +217,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 		});
 		lblNewLabel.setIcon(new ImageIcon(Main_GUI.class.getResource("/icon/icons8_help_30px_1.png")));
 		lblNewLabel.setFont(new Font("SansSerif", Font.ITALIC, 15));
-		lblNewLabel.setBounds(1064, 10, 87, 31);
+		lblNewLabel.setBounds(1099, 10, 87, 31);
 		panelCNort.add(lblNewLabel);
 		
 //		 avt nhân viên

@@ -74,7 +74,7 @@ public class XemSanPham_Dialog extends JDialog implements ActionListener{
 	}
 	
 	public void initComponents(String id) {
-		setTitle("Thêm sản phẩm");
+		setTitle("Xem sản phẩm");
 		setBounds(100, 100, 509, 467);
 		setLocationRelativeTo(null);
 		setResizable(false);
@@ -163,6 +163,7 @@ public class XemSanPham_Dialog extends JDialog implements ActionListener{
 		lblGhiCh.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		
 		textIDSP = new JTextField();
+		textIDSP.setDisabledTextColor(new Color(0, 0, 0));
 		textIDSP.setEditable(false);
 		textIDSP.setEnabled(false);
 		textIDSP.setBackground(new Color(240, 240, 240));

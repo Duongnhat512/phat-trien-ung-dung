@@ -42,6 +42,7 @@ import bus.TaiKhoanNganHang_BUS;
 import bus.TaiKhoan_BUS;
 import commons.MyButton;
 import commons.RoundPanel;
+import commons.RoundTextField;
 import commons.Table;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -70,7 +71,7 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 
 	private DefaultTableModel model;
 
-	private JTextField txtTimKiem;
+	private RoundTextField txtTimKiem;
 	private JTextField txtHienThiID;
 	private JTextField txtHienThiHoTen;
 	private JTextField txtHienThiPhai;
@@ -463,17 +464,21 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 		panelThaoTac.setLayout(null);
 		
 		btnThem = new MyButton();
+		
 		btnThem.setRadius(20);
 		btnThem.setFocusPainted(false);
 		btnThem.setBackground(new Color(255, 255, 255));
 		btnThem.setText("Thêm nhân viên");
+		ImageIcon iconThem = new ImageIcon("src/icon/add.png");
+		btnThem.setIcon(iconThem);
 		btnThem.setBounds(10, 10, 160, 49);
 		btnThem.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-
 		panelThaoTac.add(btnThem);
 
 		btnCapNhat = new MyButton();
 		btnCapNhat.setFocusPainted(false);
+		ImageIcon iconCapNhat = new ImageIcon("src/icon/update_1.png");
+		btnCapNhat.setIcon(iconCapNhat);
 		btnCapNhat.setRadius(20);
 		btnCapNhat.setBackground(new Color(255, 255, 255));
 		btnCapNhat.setBorderColor(new Color(255, 255, 255));
@@ -483,14 +488,18 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 
 		panelThaoTac.add(btnCapNhat);
 
-		txtTimKiem = new JTextField("Nhập mã nhân viên cần tìm VD: NV0001");
+		txtTimKiem = new RoundTextField(30);
+		txtTimKiem.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		txtTimKiem.setText("Nhập mã nhân viên cần tìm...");
 		txtTimKiem.setForeground(Color.GRAY);
-		txtTimKiem.setBounds(765, 22, 224, 30);
+		txtTimKiem.setBounds(658, 15, 331, 39);
 		txtTimKiem.setColumns(10);
 
 		panelThaoTac.add(txtTimKiem);
 
 		btnTimKiem = new MyButton();
+		ImageIcon iconTimKiem = new ImageIcon("src/icon/search.png");
+		btnTimKiem.setIcon(iconTimKiem);
 		btnTimKiem.setFocusPainted(false);
 		btnTimKiem.setBackground(new Color(255, 255, 255));
 		btnTimKiem.setBorderColor(new Color(255, 255, 255));
@@ -500,6 +509,8 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 		btnTimKiem.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 
 		btnLamMoi = new MyButton();
+		ImageIcon iconLamMoi = new ImageIcon("src/icon/update.png");
+		btnLamMoi.setIcon(iconLamMoi);
 		btnLamMoi.setFocusPainted(false);
 		btnLamMoi.setBackground(new Color(255, 255, 255));
 		btnLamMoi.setBorderColor(new Color(255, 255, 255));
@@ -522,12 +533,12 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 			cbLocPB.addItem(phongBan.getTenPhongBan());
 		}
 		cbLocPB.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		cbLocPB.setBounds(607, 20, 148, 30);
+		cbLocPB.setBounds(500, 19, 148, 30);
 		panelThaoTac.add(cbLocPB);
 		
 		JLabel lblLocPB = new JLabel("Lọc theo phòng ban:");
 		lblLocPB.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lblLocPB.setBounds(449, 20, 148, 30);
+		lblLocPB.setBounds(350, 19, 140, 30);
 		panelThaoTac.add(lblLocPB);
 		
 		
@@ -1191,7 +1202,7 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 	}
 	private boolean kiemTraSDT() {
 		int dem = 0;
-		NhanVien nhanVien = nv_bus.getNhanVienDangLamTheoID(txtID.getText());
+		NhanVien nhanVien = nv_bus.getNhanVienTheoID(txtID.getText());
 		ArrayList<CongNhan> listCN = cn_bus.getDanhSachCongNhan();
 		ArrayList<String> listSDT = new ArrayList<String>();
 		String sdt =txtSDT.getText();
@@ -1210,13 +1221,16 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 		if(nhanVien==null) {
 			return dem < 1;
 		}
-		else {
+		else if(nhanVien.getSoDienThoai().equals(sdt)) {
 			return dem < 2;
+		}
+		else {
+			return dem < 1;
 		}
 	}
 	private boolean kiemTraTKNH() {
 		int dem = 0;
-		NhanVien nhanVien = nv_bus.getNhanVienDangLamTheoID(txtID.getText());
+		NhanVien nhanVien = nv_bus.getNhanVienTheoID(txtID.getText());
 		ArrayList<CongNhan> listCN = cn_bus.getDanhSachCongNhan();
 		ArrayList<String> listTKNH = new ArrayList<String>();
 		String tkNH =txtSoNH.getText();
@@ -1235,13 +1249,16 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 		if(nhanVien==null) {
 			return dem < 1;
 		}
-		else {
+		else if(nhanVien.getTaiKhoan().getTaiKhoanNganHang().getSoTaiKhoan().equals(tkNH)) {
 			return dem < 2;
+		}
+		else {
+			return dem < 1;
 		}
 	}
 	private boolean kiemTraEmail() {
 		int dem = 0;
-		NhanVien nhanVien = nv_bus.getNhanVienDangLamTheoID(txtID.getText());
+		NhanVien nhanVien = nv_bus.getNhanVienTheoID(txtID.getText());
 		ArrayList<CongNhan> listCN = cn_bus.getDanhSachCongNhan();
 		ArrayList<String> listEmail = new ArrayList<String>();
 		String email =txtEmail.getText();
@@ -1260,14 +1277,17 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 		if(nhanVien==null) {
 			return dem < 1;
 		}
-		else {
+		else if(nhanVien.getEmail().equals(email)) {
 			return dem < 2;
+		}
+		else {
+			return dem < 1;
 		}
 	}
 	private boolean kiemTraCCCD() {
 		int dem = 0;
 		
-		NhanVien nv = nv_bus.getNhanVienDangLamTheoID(txtID.getText());
+		NhanVien nv = nv_bus.getNhanVienTheoID(txtID.getText());
 		ArrayList<CongNhan> listCN = cn_bus.getDanhSachCongNhan();
 		ArrayList<String> listCCCD = new ArrayList<String>();
 		String cCCD =txtCCCD.getText();
@@ -1286,8 +1306,11 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 		if(nv==null) {
 			return dem < 1;
 		}
-		else {
+		else if(nv.getcCCD().equals(cCCD)) {
 			return dem < 2;
+		}
+		else {
+			return dem < 1;
 		}
 	}
 	private boolean validData() {
@@ -1407,23 +1430,30 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 			if (validData()) {
 				NhanVien nv = layTTNVTuTextField();
 				String soNH = txtSoNH.getText();
-				TaiKhoanNganHang tknh = new TaiKhoanNganHang(soNH, "Sacombank", nv.getHoTen() ,"Chi nhánh Gò Vấp, HCM");
+				TaiKhoanNganHang tknh = new TaiKhoanNganHang(soNH,nv.getHoTen());
 				TaiKhoan tk = new TaiKhoan(nv.getIdNhanVien(),"1111",loaiTaiKhoan(),tknh);
 				
-				tknh_bus.create(tknh);
-				tk_bus.create(tk);
-				nv.setTaiKhoan(tk);
-				nv_bus.create(nv);
-				JOptionPane.showMessageDialog(null, "Thêm thành công!");
-				dl_ThemCapNhatNV.dispose();
-				model.setRowCount(0);
-				docDuLieuTuDataVaoTable();
-				String maNV = nv.getIdNhanVien();
-				NhanVien nv2 = nv_bus.getNhanVienDangLamTheoID(maNV);
-				int m = nv_bus.getdsNVDangLam().indexOf(nv2);
-				tableNhanVien.setRowSelectionInterval(m, m);
-				tableNhanVien.scrollRectToVisible(tableNhanVien.getCellRect(m, m, true));
-				hienThiThongTinNV(nv2);
+				int choice = JOptionPane.showConfirmDialog(null, "Bạn có chắc thông tin cần thêm đã đúng?", "Cảnh báo!", JOptionPane.YES_NO_OPTION);
+
+		        if (choice == JOptionPane.YES_OPTION) {
+		        	tknh_bus.create(tknh);
+					tk_bus.create(tk);
+					nv.setTaiKhoan(tk);
+					nv_bus.create(nv);
+					JOptionPane.showMessageDialog(null, "Thêm thành công!");
+					dl_ThemCapNhatNV.dispose();
+					model.setRowCount(0);
+					docDuLieuTuDataVaoTable();
+					String maNV = nv.getIdNhanVien();
+					NhanVien nv2 = nv_bus.getNhanVienDangLamTheoID(maNV);
+					int m = nv_bus.getdsNVDangLam().indexOf(nv2);
+					tableNhanVien.setRowSelectionInterval(m, m);
+					tableNhanVien.scrollRectToVisible(tableNhanVien.getCellRect(m, m, true));
+					hienThiThongTinNV(nv2);
+		        } else {
+		            return;
+		        }
+				
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "Vui lòng nhập đúng và đầy đủ thông tin cần nhập!");
@@ -1444,7 +1474,7 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 		}
 		if (o.equals(btnTimKiem)) {
 			String ma = txtTimKiem.getText();
-			if (ma.equals("Nhập mã nhân viên cần tìm VD: NV0001")) {
+			if (ma.equals("Nhập mã nhân viên cần tìm...")) {
 				JOptionPane.showMessageDialog(this, "Vui lòng nhập mã nhân viên!");
 			} else {
 
@@ -1463,7 +1493,7 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 					hienThiThongTinNV(nv);
 				} else {
 					JOptionPane.showMessageDialog(this, "Không tìm thấy nhân viên có mã " + ma + "!");
-					txtTimKiem.setText("Nhập mã nhân viên cần tìm VD: NV0001");
+					txtTimKiem.setText("Nhập mã nhân viên cần tìm...");
 					txtTimKiem.setForeground(Color.GRAY);
 				}
 
@@ -1481,35 +1511,44 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 			}
 		}
 		if (o.equals(btnCapNhatNhanVien)) {
+			
+			
 			if(validData()) {
 				NhanVien nv_old = nv_bus.getNhanVienDangLamTheoID(txtID.getText());
 				
 				NhanVien nv_new = layTTNVTuTextField();
 				
 				String soTKNH = txtSoNH.getText();
-				tk_bus.updateTaiKhoan(nv_new.getIdNhanVien(), loaiTaiKhoan(),null);
-				TaiKhoanNganHang tknh_old = nv_old.getTaiKhoan().getTaiKhoanNganHang();
-				tknh_bus.update(tknh_old, soTKNH);
-				tk_bus.updateTaiKhoan(nv_new.getIdNhanVien(), loaiTaiKhoan(),soTKNH);
+				int choice = JOptionPane.showConfirmDialog(null, "Bạn có chắc thông tin cần cập nhật đã đúng?", "Cảnh báo!", JOptionPane.YES_NO_OPTION);
+
+		        if (choice == JOptionPane.YES_OPTION) {
+		        	tk_bus.updateTaiKhoan(nv_new.getIdNhanVien(), loaiTaiKhoan(),null);
+					TaiKhoanNganHang tknh_old = nv_old.getTaiKhoan().getTaiKhoanNganHang();
+					tknh_bus.update(tknh_old, soTKNH);
+					tk_bus.updateTaiKhoan(nv_new.getIdNhanVien(), loaiTaiKhoan(),soTKNH);
+					
+					
+					
+					TaiKhoan tk = tk_bus.getTaiKhoan(nv_new.getIdNhanVien());
+					nv_new.setTaiKhoan(tk);
+					nv_bus.update(nv_new);
+					JOptionPane.showMessageDialog(null, "Cập nhật thành công!");
+					dl_ThemCapNhatNV.dispose();
+					String maNV = nv_new.getIdNhanVien();
+					NhanVien nv2 = nv_bus.getNhanVienDangLamTheoID(maNV);
+					model.setRowCount(0);
+					docDuLieuTuDataVaoTable();
+					if (nv2 == null) {
+						return;
+					}
+					int m = nv_bus.getdsNVDangLam().indexOf(nv2);
+					tableNhanVien.setRowSelectionInterval(m, m);
+					tableNhanVien.scrollRectToVisible(tableNhanVien.getCellRect(m, m, true));
+					hienThiThongTinNV(nv2);
+		        } else {
+		            return;
+		        }
 				
-				
-				
-				TaiKhoan tk = tk_bus.getTaiKhoan(nv_new.getIdNhanVien());
-				nv_new.setTaiKhoan(tk);
-				nv_bus.update(nv_new);
-				JOptionPane.showMessageDialog(null, "Cập nhật thành công!");
-				dl_ThemCapNhatNV.dispose();
-				String maNV = nv_new.getIdNhanVien();
-				NhanVien nv2 = nv_bus.getNhanVienDangLamTheoID(maNV);
-				model.setRowCount(0);
-				docDuLieuTuDataVaoTable();
-				if (nv2 == null) {
-					return;
-				}
-				int m = nv_bus.getdsNVDangLam().indexOf(nv2);
-				tableNhanVien.setRowSelectionInterval(m, m);
-				tableNhanVien.scrollRectToVisible(tableNhanVien.getCellRect(m, m, true));
-				hienThiThongTinNV(nv2);
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "Vui lòng nhập đúng và đầy đủ thông tin cần nhập!");
@@ -1565,7 +1604,7 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 		if(o.equals(btnLamMoi)) {
 			model.setRowCount(0);
 			docDuLieuTuDataVaoTable();
-			txtTimKiem.setText("Nhập mã nhân viên cần tìm VD: NV0001");
+			txtTimKiem.setText("Nhập mã nhân viên cần tìm...");
 			txtTimKiem.setForeground(Color.GRAY);
 			txtHienThiID.setText("");
 			txtHienThiHoTen.setText("");
@@ -1677,7 +1716,7 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 		// TODO Auto-generated method stub
 		Object o = e.getSource();
 		if (o.equals(txtTimKiem)) {
-			 if (txtTimKiem.getText().equals("Nhập mã nhân viên cần tìm VD: NV0001")) {
+			 if (txtTimKiem.getText().equals("Nhập mã nhân viên cần tìm...")) {
 				 txtTimKiem.setText("");
 				 txtTimKiem.setForeground(Color.BLACK);
              }
@@ -1725,7 +1764,7 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 		Object o = e.getSource();
 		if (o.equals(txtHoTen)) {
 			String hoTen = txtHoTen.getText().trim();
-			if (hoTen.isEmpty()) {
+			if (hoTen.trim().isEmpty()) {
 				txtHoTen.setText("Nhập họ tên");
 				txtHoTen.setForeground(Color.GRAY);
 				return;
@@ -1739,7 +1778,7 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 		}
 		if (o.equals(txtSoNH)) {
 			String soNH = txtSoNH.getText().trim();
-			if (soNH.isEmpty()) {
+			if (soNH.trim().isEmpty()) {
 				txtSoNH.setText("Nhập số tài khoản ngân hàng");
 				txtSoNH.setForeground(Color.GRAY);
 				return;
@@ -1755,7 +1794,7 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 		}
 		if (o.equals(txtSDT)) {
 			String sDT = txtSDT.getText().trim();
-			if (sDT.isEmpty()) {
+			if (sDT.trim().isEmpty()) {
 				txtSDT.setText("Nhập số điện thoại");
 				txtSDT.setForeground(Color.GRAY);
 				return;
@@ -1772,7 +1811,7 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 		}
 		if (o.equals(txtEmail)) {
 			String email = txtEmail.getText().trim();
-			if (email.isEmpty()) {
+			if (email.trim().isEmpty()) {
 				txtEmail.setText("Nhập email");
 				txtEmail.setForeground(Color.GRAY);
 				return;
@@ -1788,7 +1827,7 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 		}
 		if (o.equals(txtCCCD)) {
 			String cCCD = txtCCCD.getText().trim();
-			if (cCCD.isEmpty()) {
+			if (cCCD.trim().isEmpty()) {
 				txtCCCD.setText("Nhập căn cước công dân");
 				txtCCCD.setForeground(Color.GRAY);
 				return;
@@ -1804,8 +1843,8 @@ public class QuanLyNhanVien_Form extends JPanel implements ActionListener, Mouse
 			}
 		}
 		if (o.equals(txtTimKiem)) {
-			if (txtTimKiem.getText().isEmpty()) {
-				txtTimKiem.setText("Nhập mã nhân viên cần tìm VD: NV0001");
+			if (txtTimKiem.getText().trim().isEmpty()) {
+				txtTimKiem.setText("Nhập mã nhân viên cần tìm...");
 				txtTimKiem.setForeground(Color.GRAY);
             }
 		}

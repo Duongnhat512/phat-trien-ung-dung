@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+﻿<<<<<<< HEAD
 ﻿--use master
 --drop database QLLuongSanPham
 =======
@@ -121,7 +121,6 @@ create table CongDoanSP(
 	soLuongSanPham int,
 	luongCongDoan money,
 	idSanPham varchar(10),
-	thuTuUuTien varchar(3)
 )
 alter table CongDoanSP add constraint FK_CongDoanSP_SanPham foreign key (idSanPham) references SanPham(idSanPham)
 create table CongDoanPhanCong(
@@ -380,38 +379,38 @@ VALUES
 
 --tHÊM 4 công đoạn
 
-INSERT INTO CongDoanSP (idCongDoan, tenCongDoan, soLuongSanPham, luongCongDoan, idSanPham, thuTuUuTien)
+INSERT INTO CongDoanSP (idCongDoan, tenCongDoan, soLuongSanPham, luongCongDoan, idSanPham)
 VALUES
-    ('CDSP0001', N'Chuẩn bị nguyên vật liệu', 100, 50000, 'SP0001', 1),
-    ('CDSP0002', N'Cắt vải', 120, 30000,  'SP0001', 2),
-    ('CDSP0003', N'May áo khoác', 90, 35000,  'SP0001', 3),
-    ('CDSP0004', N'Chuẩn bị vải jean', 130, 25000,  'SP0002',1),
-    ('CDSP0005', N'Cắt vải jean', 110, 20000,  'SP0002',2),
-    ('CDSP0006', N'May quần jean', 85, 30000,  'SP0002',3),
-	('CDSP0007', N'Chuẩn bị vải satin', 80, 20000,  'SP0003', 1),
-	('CDSP0008', N'Cắt vải satin', 70, 18000, 'SP0003', 2),
-	('CDSP0009', N'May đầm dự tiệc', 50, 25000,  'SP0003', 3),
-	('CDSP0010', N'Chuẩn bị vải kaki', 95, 18000, 'SP0004', 1),
-    ('CDSP0011', N'Cắt vải kaki', 85, 15000, 'SP0004', 2),
-    ('CDSP0012', N'May quần kaki', 70, 20000, 'SP0004', 3),
-    ('CDSP0013', N'Chuẩn bị vải cotton', 120, 15000, 'SP0005', 1),
-    ('CDSP0014', N'Cắt vải cotton', 100, 12000, 'SP0005', 2),
-    ('CDSP0015', N'May áo thun', 80, 18000, 'SP0005', 3),
-    ('CDSP0016', N'Chuẩn bị vải lụa', 110, 25000, 'SP0006', 1),
-    ('CDSP0017', N'Cắt vải lụa', 95, 22000, 'SP0006', 2),
-    ('CDSP0018', N'May áo sơ mi', 75, 28000, 'SP0006', 3),
-    ('CDSP0019', N'Chuẩn bị vải công sở', 105, 20000, 'SP0008', 1),
-    ('CDSP0020', N'Cắt vải công sở', 90, 17000, 'SP0008', 2),
-    ('CDSP0021', N'May đầm công sở', 70, 23000, 'SP0008', 3),
-    ('CDSP0022', N'Chuẩn bị vải polyester', 100, 10000, 'SP0009', 1),
-    ('CDSP0023', N'Cắt vải polyester', 85, 13000, 'SP0009', 2),
-    ('CDSP0024', N'May quần thể thao', 65, 10000, 'SP0009', 3),
-    ('CDSP0025', N'Chuẩn bị vải len', 115, 20000, 'SP0010', 1),
-    ('CDSP0026', N'Cắt vải len', 100, 17000, 'SP0010', 2),
-    ('CDSP0027', N'May áo khoác', 80, 22000, 'SP0010', 3),
-	 ('CDSP0028', N'Chuẩn bị vải cotton', 120, 15000, 'SP0007', 1),
-    ('CDSP0029', N'Cắt vải cotton', 100, 12000, 'SP0007', 2),
-    ('CDSP0030', N'May áo phông', 80, 18000, 'SP0007', 3)
+    ('CDSP0001', N'Chuẩn bị nguyên vật liệu', 100, 50000, 'SP0001'),
+    ('CDSP0002', N'Cắt vải', 120, 30000,  'SP0001'),
+    ('CDSP0003', N'May áo khoác', 90, 35000,  'SP0001'),
+    ('CDSP0004', N'Chuẩn bị vải jean', 130, 25000,  'SP0002'),
+    ('CDSP0005', N'Cắt vải jean', 110, 20000,  'SP0002'),
+    ('CDSP0006', N'May quần jean', 85, 30000,  'SP0002'),
+	('CDSP0007', N'Chuẩn bị vải satin', 80, 20000,  'SP0003'),
+	('CDSP0008', N'Cắt vải satin', 70, 18000, 'SP0003'),
+	('CDSP0009', N'May đầm dự tiệc', 50, 25000,  'SP0003'),
+	('CDSP0010', N'Chuẩn bị vải kaki', 95, 18000, 'SP0004'),
+    ('CDSP0011', N'Cắt vải kaki', 85, 15000, 'SP0004'),
+    ('CDSP0012', N'May quần kaki', 70, 20000, 'SP0004'),
+    ('CDSP0013', N'Chuẩn bị vải cotton', 120, 15000, 'SP0005'),
+    ('CDSP0014', N'Cắt vải cotton', 100, 12000, 'SP0005'),
+    ('CDSP0015', N'May áo thun', 80, 18000, 'SP0005'),
+    ('CDSP0016', N'Chuẩn bị vải lụa', 110, 25000, 'SP0006'),
+    ('CDSP0017', N'Cắt vải lụa', 95, 22000, 'SP0006'),
+    ('CDSP0018', N'May áo sơ mi', 75, 28000, 'SP0006'),
+    ('CDSP0019', N'Chuẩn bị vải công sở', 105, 20000, 'SP0008'),
+    ('CDSP0020', N'Cắt vải công sở', 90, 17000, 'SP0008'),
+    ('CDSP0021', N'May đầm công sở', 70, 23000, 'SP0008'),
+    ('CDSP0022', N'Chuẩn bị vải polyester', 100, 10000, 'SP0009'),
+    ('CDSP0023', N'Cắt vải polyester', 85, 13000, 'SP0009'),
+    ('CDSP0024', N'May quần thể thao', 65, 10000, 'SP0009'),
+    ('CDSP0025', N'Chuẩn bị vải len', 115, 20000, 'SP0010'),
+    ('CDSP0026', N'Cắt vải len', 100, 17000, 'SP0010'),
+    ('CDSP0027', N'May áo khoác', 80, 22000, 'SP0010'),
+	 ('CDSP0028', N'Chuẩn bị vải cotton', 120, 15000, 'SP0007'),
+    ('CDSP0029', N'Cắt vải cotton', 100, 12000, 'SP0007'),
+    ('CDSP0030', N'May áo phông', 80, 18000, 'SP0007')
 --THÊM CONG DOAN PHAN CONG
 -- Bảng phân công cho sản phẩm SP0001
 -- Công đoạn 1
@@ -1629,7 +1628,6 @@ begin
 	where idHopDong = (select idHopDong from inserted)
 end
 go
-
 go
 create trigger trigger_ThemSanPhamCongDoan
 on ChiTietHopDong

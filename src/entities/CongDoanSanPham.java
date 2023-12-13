@@ -8,31 +8,24 @@ public class CongDoanSanPham {
 	private int soLuongSanPham;
 	private double luongCongDoan;
 	private SanPham sanPham;
-	private String thiTuUuTien;
+
 	
 	public CongDoanSanPham() {
 		super();
 	}
 	
-	public CongDoanSanPham(String idCongDoan, String tenCongDoan, double luongCongDoan, SanPham sanPham) {
-		super();
-		this.idCongDoan = idCongDoan;
-		this.tenCongDoan = tenCongDoan;
-		this.luongCongDoan = luongCongDoan;
-		this.sanPham = sanPham;
-	}
-	
+
 	
 	
 	public CongDoanSanPham(String idCongDoan, String tenCongDoan, int soLuongSanPham, double luongCongDoan,
-			SanPham sanPham, String thiTuUuTien) {
+			SanPham sanPham) {
 		super();
 		this.idCongDoan = idCongDoan;
 		this.tenCongDoan = tenCongDoan;
 		this.soLuongSanPham = soLuongSanPham;
 		this.luongCongDoan = luongCongDoan;
 		this.sanPham = sanPham;
-		this.thiTuUuTien = thiTuUuTien;
+	
 	}
 
 	public String getIdCongDoan() {
@@ -65,12 +58,7 @@ public class CongDoanSanPham {
 	public void setSanPham(SanPham sanPham) {
 		this.sanPham = sanPham;
 	}
-	public String getThiTuUuTien() {
-		return thiTuUuTien;
-	}
-	public void setThiTuUuTien(String thiTuUuTien) {
-		this.thiTuUuTien = thiTuUuTien;
-	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(idCongDoan);

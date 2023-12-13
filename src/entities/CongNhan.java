@@ -19,7 +19,7 @@ public class CongNhan {
       private TaiKhoan taiKhoan;
       private String anhDaiDien;
       private String cCCD;
-      private double phuCap;
+      private final double phuCap = 700000;
 	public String getIdCongNhan() {
 		return idCongNhan;
 	}
@@ -117,9 +117,7 @@ public class CongNhan {
 	public double getPhuCap() {
 		return phuCap;
 	}
-	public void setPhuCap(double phuCap) {
-		this.phuCap = phuCap;
-	}
+	
 	public CongNhan(String idCongNhan, String hoTen, boolean phai, LocalDate ngaySinh, LocalDate ngayBatDauCongTac,
 			LocalDate ngayKetThucCongTac, PhanXuong phanXuong, String email, String soDienThoai, String tayNghe,
 			TaiKhoan taiKhoan, String anhDaiDien, String cCCD, double phuCap) {
@@ -137,7 +135,7 @@ public class CongNhan {
 		this.taiKhoan = taiKhoan;
 		this.anhDaiDien = anhDaiDien;
 		this.cCCD = cCCD;
-		this.phuCap = phuCap;
+		
 	}
 	
 	public CongNhan(String idCongNhan, String hoTen, boolean phai, LocalDate ngaySinh, LocalDate ngayBatDauCongTac,
