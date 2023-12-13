@@ -40,6 +40,7 @@ import bus.TaiKhoanNganHang_BUS;
 import bus.TaiKhoan_BUS;
 import commons.MyButton;
 import commons.RoundPanel;
+import commons.RoundTextField;
 import commons.Table;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -68,7 +69,7 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 
 	private DefaultTableModel model;
 
-	private JTextField txtTimKiem;
+	private RoundTextField txtTimKiem;
 	private JTextField txtHienThiID;
 	private JTextField txtHienThiHoTen;
 	private JTextField txtHienThiPhai;
@@ -423,6 +424,9 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 		panelThaoTac.setLayout(null);
 		
 		btnThem = new MyButton();
+		btnThem.setFocusPainted(false);
+		ImageIcon iconThem = new ImageIcon("src/icon/add.png");
+		btnThem.setIcon(iconThem);
 		btnThem.setBackground(new Color(255, 255, 255));
 		btnThem.setBorderColor(new Color(255, 255, 255));
 		btnThem.setRadius(20);
@@ -432,6 +436,9 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 		panelThaoTac.add(btnThem);
 
 		btnCapNhat = new MyButton();
+		btnCapNhat.setFocusPainted(false);
+		ImageIcon iconCapNhat = new ImageIcon("src/icon/update_1.png");
+		btnCapNhat.setIcon(iconCapNhat);
 		btnCapNhat.setBackground(new Color(255, 255, 255));
 		btnCapNhat.setBorderColor(new Color(255, 255, 255));
 		btnCapNhat.setRadius(20);
@@ -442,15 +449,20 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 		setLayout(new BorderLayout(0, 0));
 		panelThaoTac.add(btnCapNhat);
 
-		txtTimKiem = new JTextField("Nhập mã công nhân cần tìm VD: CN0001");
+		txtTimKiem = new RoundTextField(30);
+		txtTimKiem.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		txtTimKiem.setText("Nhập mã công nhân cần tìm...");
 		txtTimKiem.setForeground(Color.GRAY);
-		txtTimKiem.setBounds(765, 22, 224, 30);
+		txtTimKiem.setBounds(658, 15, 331, 39);
 
 
 		panelThaoTac.add(txtTimKiem);
 		txtTimKiem.setColumns(10);
 
 		btnTimKiem = new MyButton();
+		btnTimKiem.setFocusPainted(false);
+		ImageIcon iconTimKiem = new ImageIcon("src/icon/search.png");
+		btnTimKiem.setIcon(iconTimKiem);
 		btnTimKiem.setBackground(new Color(255, 255, 255));
 		btnTimKiem.setBorderColor(new Color(255, 255, 255));
 		btnTimKiem.setRadius(20);
@@ -461,6 +473,9 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 		
 		
 		btnLamMoi = new MyButton();
+		ImageIcon iconLamMoi = new ImageIcon("src/icon/update.png");
+		btnLamMoi.setIcon(iconLamMoi);
+		btnLamMoi.setFocusPainted(false);
 		btnLamMoi.setBackground(new Color(255, 255, 255));
 		btnLamMoi.setBorderColor(new Color(255, 255, 255));
 		btnLamMoi.setRadius(20);
@@ -476,12 +491,12 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 			cbLocPX.addItem(phanXuong.getTenPhanXuong());
 		}
 		cbLocPX.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		cbLocPX.setBounds(607, 20, 148, 30);
+		cbLocPX.setBounds(500, 19, 148, 30);
 		panelThaoTac.add(cbLocPX);
 		
 		JLabel lblLocPB = new JLabel("Lọc theo phân xưởng:");
 		lblLocPB.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lblLocPB.setBounds(449, 20, 148, 30);
+		lblLocPB.setBounds(350, 20, 148, 30);
 		panelThaoTac.add(lblLocPB);
 		
 		this.add(panel_CongNhan);
@@ -777,7 +792,7 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 		panel_Center.add(lblNewLabel_5);
 
 		px_bus = new PhanXuong_BUS();
-		ArrayList<PhanXuong> list = px_bus.getDanhSachPhanXuong();
+		ArrayList<PhanXuong> list = px_bus.getdsPX();
 		for (PhanXuong px : list) {
 			cb_PhanXuong.addItem(px.getTenPhanXuong());
 		}
@@ -1218,7 +1233,7 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 		String sdt = txtSDT.getText();
 		String cccd = txtCCCD.getText();
 		String tayNghe = cb_TayNghe.getSelectedItem().toString();
-		String avatar = null;
+		String avatar = "Unknown_person.jpg";
 		if (url!= null) {
 			File absoluteFile = new File(url);
 			avatar = absoluteFile.getName();
@@ -1243,7 +1258,7 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 	}
 	private boolean kiemTraSDT() {
 		int dem = 0;
-		CongNhan congNhan = cn_bus.getCongNhanDangLamTheoID(txtID.getText());
+		CongNhan congNhan = cn_bus.getCongNhanTheoID(txtID.getText());
 		ArrayList<CongNhan> listCN = cn_bus.getDanhSachCongNhan();
 		ArrayList<String> listSDT = new ArrayList<String>();
 		String sdt =txtSDT.getText();
@@ -1262,13 +1277,16 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 		if(congNhan==null) {
 			return dem < 1;
 		}
-		else {
+		else if(congNhan.getSoDienThoai().equals(sdt)) {
 			return dem < 2;
+		}
+		else {
+			return dem < 1;
 		}
 	}
 	private boolean kiemTraTKNH() {
 		int dem = 0;
-		CongNhan congNhan = cn_bus.getCongNhanDangLamTheoID(txtID.getText());
+		CongNhan congNhan = cn_bus.getCongNhanTheoID(txtID.getText());
 		ArrayList<CongNhan> listCN = cn_bus.getDanhSachCongNhan();
 		ArrayList<String> listTKNH = new ArrayList<String>();
 		String tkNH =txtSoNH.getText();
@@ -1287,13 +1305,16 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 		if(congNhan==null) {
 			return dem < 1;
 		}
-		else {
+		else if(congNhan.getTaiKhoan().getTaiKhoanNganHang().getSoTaiKhoan().equals(tkNH)) {
 			return dem < 2;
+		}
+		else {
+			return dem < 1;
 		}
 	}
 	private boolean kiemTraEmail() {
 		int dem = 0;
-		CongNhan congNhan = cn_bus.getCongNhanDangLamTheoID(txtID.getText());
+		CongNhan congNhan = cn_bus.getCongNhanTheoID(txtID.getText());
 		ArrayList<CongNhan> listCN = cn_bus.getDanhSachCongNhan();
 		ArrayList<String> listEmail = new ArrayList<String>();
 		String email =txtEmail.getText();
@@ -1312,14 +1333,17 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 		if(congNhan==null) {
 			return dem < 1;
 		}
-		else {
+		else if(congNhan.getEmail().equals(email)) {
 			return dem < 2;
+		}
+		else {
+			return dem < 1;
 		}
 	}
 	private boolean kiemTraCCCD() {
 		int dem = 0;
 		
-		CongNhan cn = cn_bus.getCongNhanDangLamTheoID(txtID.getText());
+		CongNhan cn = cn_bus.getCongNhanTheoID(txtID.getText());
 		ArrayList<CongNhan> listCN = cn_bus.getDanhSachCongNhan();
 		ArrayList<String> listCCCD = new ArrayList<String>();
 		String cCCD =txtCCCD.getText();
@@ -1338,8 +1362,11 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 		if(cn==null) {
 			return dem < 1;
 		}
-		else {
+		else if(cn.getcCCD().equals(cCCD)) {
 			return dem < 2;
+		}
+		else {
+			return dem < 1;
 		}
 	}
 	@Override
@@ -1354,23 +1381,30 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 			if(validData()) {
 				CongNhan cn = layTTCNTuTextField();
 				String soNH = txtSoNH.getText();
-				TaiKhoanNganHang tknh = new TaiKhoanNganHang(soNH, "Sacombank", cn.getHoTen() ,"Chi nhánh Gò Vấp, HCM");
+				TaiKhoanNganHang tknh = new TaiKhoanNganHang(soNH,  cn.getHoTen() );
 				TaiKhoan tk = new TaiKhoan(cn.getIdCongNhan(),"1111","CN",tknh);
 				cn.setTaiKhoan(tk);
-				JOptionPane.showMessageDialog(null, "Thêm thành công!");
-				tknh_bus.create(tknh);
-				tk_bus.create(tk);
-				cn_bus.create(cn);
+				int choice = JOptionPane.showConfirmDialog(null, "Bạn có chắc thông tin cần thêm đã đúng?", "Cảnh báo!", JOptionPane.YES_NO_OPTION);
+
+		        if (choice == JOptionPane.YES_OPTION) {
+		        	JOptionPane.showMessageDialog(null, "Thêm thành công!");
+					tknh_bus.create(tknh);
+					tk_bus.create(tk);
+					cn_bus.create(cn);
+					
+					dl_ThemCapNhatCN.dispose();
+					model.setRowCount(0);
+					docDuLieuTuDataVaoTable();
+					String maCN = cn.getIdCongNhan();
+					CongNhan cn2 = cn_bus.getCongNhanDangLamTheoID(maCN);
+					int m = cn_bus.getDanhSachCongNhanDangLam().indexOf(cn2);
+					tableCongNhan.setRowSelectionInterval(m, m);
+					tableCongNhan.scrollRectToVisible(tableCongNhan.getCellRect(m, m, true));
+					hienThiThongTinCN(cn2);
+		        } else {
+		            return;
+		        }
 				
-				dl_ThemCapNhatCN.dispose();
-				model.setRowCount(0);
-				docDuLieuTuDataVaoTable();
-				String maCN = cn.getIdCongNhan();
-				CongNhan cn2 = cn_bus.getCongNhanDangLamTheoID(maCN);
-				int m = cn_bus.getDanhSachCongNhanDangLam().indexOf(cn2);
-				tableCongNhan.setRowSelectionInterval(m, m);
-				tableCongNhan.scrollRectToVisible(tableCongNhan.getCellRect(m, m, true));
-				hienThiThongTinCN(cn2);
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "Vui lòng nhập đúng và đầy đủ thông tin cần nhập!");
@@ -1391,7 +1425,7 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 		}
 		if (o.equals(btnTimKiem)) {
 			String ma = txtTimKiem.getText();
-			if (ma.equals("Nhập mã công nhân cần tìm VD: CN0001")) {
+			if (ma.equals("Nhập mã công nhân cần tìm...")) {
 				JOptionPane.showMessageDialog(this, "Vui lòng nhập mã công nhân!");
 				
 			} else {
@@ -1410,7 +1444,7 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 					hienThiThongTinCN(cn);
 				} else {
 					JOptionPane.showMessageDialog(this, "Không tìm thấy công nhân có mã " + ma+"!");
-					txtTimKiem.setText("Nhập mã công nhân cần tìm VD: CN0001");
+					txtTimKiem.setText("Nhập mã công nhân cần tìm...");
 					txtTimKiem.setForeground(Color.GRAY);
 				}
 
@@ -1434,29 +1468,36 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 				CongNhan cn_new = layTTCNTuTextField();
 				
 				String soTKNH = txtSoNH.getText();
-				tk_bus.updateTaiKhoan(cn_new.getIdCongNhan(),"CN", null);
-				TaiKhoanNganHang tknh_old = cn_old.getTaiKhoan().getTaiKhoanNganHang();
-				tknh_bus.update(tknh_old, soTKNH);
-				tk_bus.updateTaiKhoan(cn_new.getIdCongNhan(), "CN",soTKNH);
+				int choice = JOptionPane.showConfirmDialog(null, "Bạn có chắc thông tin cần cập nhật đã đúng?", "Cảnh báo!", JOptionPane.YES_NO_OPTION);
+
+		        if (choice == JOptionPane.YES_OPTION) {
+		        	tk_bus.updateTaiKhoan(cn_new.getIdCongNhan(),"CN", null);
+					TaiKhoanNganHang tknh_old = cn_old.getTaiKhoan().getTaiKhoanNganHang();
+					tknh_bus.update(tknh_old, soTKNH);
+					tk_bus.updateTaiKhoan(cn_new.getIdCongNhan(), "CN",soTKNH);
+					
+					
+					
+					TaiKhoan tk = tk_bus.getTaiKhoan(cn_new.getIdCongNhan());
+					cn_new.setTaiKhoan(tk);
+					cn_bus.update(cn_new);
+					JOptionPane.showMessageDialog(null, "Cập nhật thành công!");
+					dl_ThemCapNhatCN.dispose();
+					String maCN = cn_new.getIdCongNhan();
+					CongNhan cn2 = cn_bus.getCongNhanDangLamTheoID(maCN);
+					model.setRowCount(0);
+					docDuLieuTuDataVaoTable();
+					if (cn2 == null) {
+						return;
+					}
+					int m = cn_bus.getDanhSachCongNhanDangLam().indexOf(cn2);
+					tableCongNhan.setRowSelectionInterval(m, m);
+					tableCongNhan.scrollRectToVisible(tableCongNhan.getCellRect(m, m, true));
+					hienThiThongTinCN(cn2);
+		        } else {
+		            return;
+		        }
 				
-				
-				
-				TaiKhoan tk = tk_bus.getTaiKhoan(cn_new.getIdCongNhan());
-				cn_new.setTaiKhoan(tk);
-				cn_bus.update(cn_new);
-				JOptionPane.showMessageDialog(null, "Cập nhật thành công!");
-				dl_ThemCapNhatCN.dispose();
-				String maCN = cn_new.getIdCongNhan();
-				CongNhan cn2 = cn_bus.getCongNhanDangLamTheoID(maCN);
-				model.setRowCount(0);
-				docDuLieuTuDataVaoTable();
-				if (cn2 == null) {
-					return;
-				}
-				int m = cn_bus.getDanhSachCongNhanDangLam().indexOf(cn2);
-				tableCongNhan.setRowSelectionInterval(m, m);
-				tableCongNhan.scrollRectToVisible(tableCongNhan.getCellRect(m, m, true));
-				hienThiThongTinCN(cn2);
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "Vui lòng nhập đúng và đầy đủ thông tin cần nhập!");
@@ -1466,7 +1507,7 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 		if(o.equals(btnLamMoi)) {
 			model.setRowCount(0);
 			docDuLieuTuDataVaoTable();
-			txtTimKiem.setText("Nhập mã công nhân cần tìm VD: CN0001");
+			txtTimKiem.setText("Nhập mã công nhân cần tìm...");
 			txtTimKiem.setForeground(Color.GRAY);
 			txtHienThiID.setText("");
 			txtHienThiHoTen.setText("");
@@ -1600,7 +1641,7 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 		// TODO Auto-generated method stub
 		Object o = e.getSource();
 		if (o.equals(txtTimKiem)) {
-			 if (txtTimKiem.getText().equals("Nhập mã công nhân cần tìm VD: CN0001")) {
+			 if (txtTimKiem.getText().equals("Nhập mã công nhân cần tìm...")) {
 				 txtTimKiem.setText("");
 				 txtTimKiem.setForeground(Color.BLACK);
              }
@@ -1648,7 +1689,7 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 		Object o = e.getSource();
 		if (o.equals(txtHoTen)) {
 			String hoTen = txtHoTen.getText().trim();
-			if (hoTen.isEmpty()) {
+			if (hoTen.trim().isEmpty()) {
 				txtHoTen.setText("Nhập họ tên");
 				txtHoTen.setForeground(Color.GRAY);
 				return;
@@ -1662,7 +1703,7 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 		}
 		if (o.equals(txtSoNH)) {
 			String soNH = txtSoNH.getText().trim();
-			if (soNH.isEmpty()) {
+			if (soNH.trim().isEmpty()) {
 				txtSoNH.setText("Nhập số tài khoản ngân hàng");
 				txtSoNH.setForeground(Color.GRAY);
 				return;
@@ -1678,7 +1719,7 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 		}
 		if (o.equals(txtSDT)) {
 			String sDT = txtSDT.getText().trim();
-			if (sDT.isEmpty()) {
+			if (sDT.trim().isEmpty()) {
 				txtSDT.setText("Nhập số điện thoại");
 				txtSDT.setForeground(Color.GRAY);
 				return;
@@ -1695,7 +1736,7 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 		}
 		if (o.equals(txtEmail)) {
 			String email = txtEmail.getText().trim();
-			if (email.isEmpty()) {
+			if (email.trim().isEmpty()) {
 				txtEmail.setText("Nhập email");
 				txtEmail.setForeground(Color.GRAY);
 				return;
@@ -1711,7 +1752,7 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 		}
 		if (o.equals(txtCCCD)) {
 			String cCCD = txtCCCD.getText().trim();
-			if (cCCD.isEmpty()) {
+			if (cCCD.trim().isEmpty()) {
 				txtCCCD.setText("Nhập căn cước công dân");
 				txtCCCD.setForeground(Color.GRAY);
 				return;
@@ -1727,8 +1768,8 @@ public class QuanLyCongNhan_Form extends JPanel implements ActionListener, Mouse
 			}
 		}
 		if (o.equals(txtTimKiem)) {
-			if (txtTimKiem.getText().isEmpty()) {
-				txtTimKiem.setText("Nhập mã công nhân cần tìm VD: CN0001");
+			if (txtTimKiem.getText().trim().isEmpty()) {
+				txtTimKiem.setText("Nhập mã công nhân cần tìm...");
 				txtTimKiem.setForeground(Color.GRAY);
             }
 		}

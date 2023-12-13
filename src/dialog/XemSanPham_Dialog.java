@@ -13,20 +13,25 @@ import javax.swing.border.EmptyBorder;
 
 import commons.MyButton;
 import commons.RoundPanel;
+import entities.SanPham;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.border.MatteBorder;
+
+import bus.SanPham_BUS;
+
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
 
-public class XemSanPham_Dialog extends JDialog {
+public class XemSanPham_Dialog extends JDialog implements ActionListener{
 
 	private final JPanel contentPanel = new JPanel();
 	private int width = 900;
@@ -50,38 +55,26 @@ public class XemSanPham_Dialog extends JDialog {
 	private JLabel lblThongBaoDonViTinh;
 	
 	//
+	private SanPham sp = new SanPham();
+	private JLabel lblThongBao;
 	
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			XemSanPham_Dialog dialog = new XemSanPham_Dialog();
-			
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void openThemSanPham_Dialog(int width, int height) {
+	public void openThemSanPham_Dialog(int width, int height, String id) {
 		this.width = width;
 		this.height = height;
-		new XemSanPham_Dialog().setVisible(true);
+		new XemSanPham_Dialog(id).setVisible(true);
 	}
 
 	/**
 	 * Create the dialog.
 	 */
-	public XemSanPham_Dialog() {
+	public XemSanPham_Dialog(String id) {
 		getContentPane().setForeground(new Color(255, 255, 255));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		initComponents();
+		initComponents(id);
 	}
 	
-	public void initComponents() {
-		setTitle("Thêm sản phẩm");
+	public void initComponents(String id) {
+		setTitle("Xem sản phẩm");
 		setBounds(100, 100, 509, 467);
 		setLocationRelativeTo(null);
 		setResizable(false);
@@ -95,7 +88,7 @@ public class XemSanPham_Dialog extends JDialog {
 				btnCapNhat.setRadius(10);
 				btnCapNhat.setForeground(new Color(0, 0, 0));
 				btnCapNhat.setIcon(new ImageIcon(XemSanPham_Dialog.class.getResource("/icon/update.png")));
-				btnCapNhat.setText("Thêm");
+				btnCapNhat.setText("Cập nhật");
 				btnCapNhat.setFont(new Font("SansSerif", Font.PLAIN, 15));
 				btnCapNhat.setFocusPainted(false);
 				btnCapNhat.setActionCommand("OK");
@@ -116,11 +109,11 @@ public class XemSanPham_Dialog extends JDialog {
 			gl_buttonPane.setHorizontalGroup(
 				gl_buttonPane.createParallelGroup(Alignment.LEADING)
 					.addGroup(gl_buttonPane.createSequentialGroup()
-						.addGap(259)
-						.addComponent(btnCapNhat, GroupLayout.PREFERRED_SIZE, 98, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
+						.addGap(268)
+						.addComponent(btnCapNhat, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
+						.addGap(18)
 						.addComponent(btnHuy, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(431, Short.MAX_VALUE))
+						.addContainerGap(397, Short.MAX_VALUE))
 			);
 			gl_buttonPane.setVerticalGroup(
 				gl_buttonPane.createParallelGroup(Alignment.LEADING)
@@ -170,6 +163,7 @@ public class XemSanPham_Dialog extends JDialog {
 		lblGhiCh.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		
 		textIDSP = new JTextField();
+		textIDSP.setDisabledTextColor(new Color(0, 0, 0));
 		textIDSP.setEditable(false);
 		textIDSP.setEnabled(false);
 		textIDSP.setBackground(new Color(240, 240, 240));
@@ -197,7 +191,6 @@ public class XemSanPham_Dialog extends JDialog {
 		textChatLieu.setColumns(10);
 		
 		textDonViTinh = new JTextField();
-		textDonViTinh.setEditable(false);
 		textDonViTinh.setBackground(new Color(240, 240, 240));
 		textDonViTinh.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		textDonViTinh.setFont(new Font("SansSerif", Font.PLAIN, 15));
@@ -219,16 +212,15 @@ public class XemSanPham_Dialog extends JDialog {
 		lblThongBaoDonViTinh = new JLabel();
 		lblThongBaoDonViTinh.setForeground(Color.RED);
 		lblThongBaoDonViTinh.setFont(new Font("SansSerif", Font.ITALIC, 15));
+		
+		lblThongBao = new JLabel("");
+		lblThongBao.setForeground(Color.RED);
+		lblThongBao.setFont(new Font("SansSerif", Font.ITALIC, 15));
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_1.createSequentialGroup()
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(lblGhiCh, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE)
-							.addGap(61)
-							.addComponent(textGhiChu))
 						.addGroup(gl_panel_1.createSequentialGroup()
 							.addGap(10)
 							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE)
@@ -253,7 +245,14 @@ public class XemSanPham_Dialog extends JDialog {
 							.addContainerGap()
 							.addComponent(lblnVTnh, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE)
 							.addGap(61)
-							.addComponent(textDonViTinh, GroupLayout.PREFERRED_SIZE, 274, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(textDonViTinh, GroupLayout.PREFERRED_SIZE, 274, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(lblGhiCh, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE)
+							.addGap(61)
+							.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(textGhiChu)
+								.addComponent(lblThongBao, GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE))))
 					.addGap(167)
 					.addComponent(lblThongBaoDonViTinh, GroupLayout.PREFERRED_SIZE, 274, GroupLayout.PREFERRED_SIZE)
 					.addGap(60))
@@ -293,19 +292,108 @@ public class XemSanPham_Dialog extends JDialog {
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING, false)
 						.addGroup(gl_panel_1.createSequentialGroup()
 							.addComponent(textGhiChu, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
-							.addGap(7)
-							.addComponent(lblThongBaoDonViTinh, GroupLayout.PREFERRED_SIZE, 13, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panel_1.createSequentialGroup()
+									.addGap(7)
+									.addComponent(lblThongBaoDonViTinh, GroupLayout.PREFERRED_SIZE, 13, GroupLayout.PREFERRED_SIZE))
+								.addGroup(gl_panel_1.createSequentialGroup()
+									.addGap(18)
+									.addComponent(lblThongBao, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))))
 						.addComponent(lblGhiCh))
-					.addContainerGap(47, Short.MAX_VALUE))
+					.addContainerGap(15, Short.MAX_VALUE))
 		);
 		panel_1.setLayout(gl_panel_1);
 		contentPanel.setLayout(gl_contentPanel);
 		getContentPane().setLayout(groupLayout);
 		
+		layDuLieuSanPham(id);
+		duaDuLieuLenTextField();
 		
+		btnCapNhat.addActionListener(this);
+		btnHuy.addActionListener(this);
 	}
 	
-	private void themSanPhan() {
-		
+	/**
+	 * Lấy dữ liệu sản phẩm
+	 * @param id
+	 */
+	private void layDuLieuSanPham(String id) {
+		SanPham_BUS sPham_BUS = new SanPham_BUS();
+		sp = sPham_BUS.getSanPhamTheoID(id);
 	}
+	
+	/**
+	 * Đưa dữ liệu lên textfield
+	 */
+	private void duaDuLieuLenTextField() {
+		textIDSP.setText(sp.getIdSanPham());
+		textTenSP.setText(sp.getTenSanPham());
+		textDonGia.setText(sp.getDonGia() + "");
+		textChatLieu.setText(sp.getChatLieu());
+		textDonViTinh.setText(sp.getDonViTinh());
+		textGhiChu.setText(sp.getGhiChu());
+	}
+	
+	public SanPham getDataSanPham() {
+		SanPham sp = null;
+		String idSP = textIDSP.getText();
+		String tenSP = textTenSP.getText();
+		double donGia = 0;
+		try {
+			donGia = Double.parseDouble(textDonGia.getText());
+			if (donGia <= 0) {
+				lblThongBao.setText("Đơn giá sản phầm phải là số dương!");
+				textDonGia.selectAll();
+				textDonGia.requestFocus();
+				return null;
+			}
+		} catch (NumberFormatException e) {
+			lblThongBao.setText("Đơn giá sản phầm phải là chữ số!");
+			textDonGia.selectAll();
+			textDonGia.requestFocus();
+			return null;
+		}
+		String chatLieu = textChatLieu.getText();
+		if(chatLieu.trim().isEmpty()) {
+			lblThongBao.setText("Chất liệu không được để trống!");
+			textChatLieu.selectAll();
+			textChatLieu.requestFocus();
+			return null;
+		}
+		String donViTinh = textDonViTinh.getText();
+		if (donViTinh.trim().isEmpty()) {
+			lblThongBao.setText("Đơn vị tính không được để trống!");
+			textDonViTinh.selectAll();
+			textDonViTinh.requestFocus();
+			return null;
+		}
+		String ghiChu = textGhiChu.getText();
+		
+		sp = new SanPham(idSP, tenSP, donGia, chatLieu, donViTinh, ghiChu, ghiChu);
+		return sp;
+	}
+	
+	private void capNhatSanPham() {
+		SanPham temp = getDataSanPham();
+		if (temp != null) {
+			if (JOptionPane.showConfirmDialog(this, "Bạn có muốn thay đổi không?", "Hỏi nhắc", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				SanPham_BUS sPham_BUS = new SanPham_BUS();
+				sPham_BUS.capNhatSanPham(temp);
+				JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
+			}
+		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object o = e.getSource();
+		if (o.equals(btnHuy)) {
+			this.dispose();
+		}
+		else if (o.equals(btnCapNhat)) {
+			capNhatSanPham();
+		}
+	}
+
 }
