@@ -220,4 +220,56 @@ public class SanPham_DAO {
 		return n;
 	}
 	
+	/**
+	 * Thêm sản phẩm
+	 * @param sanPham
+	 * @return
+	 */
+	public boolean themSanPham(SanPham sanPham) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stm = null;
+		int n = 0;
+		try {
+			stm = con.prepareStatement("insert into SanPham values(?, ?, ?, ?, ?, ?, ?)");
+			stm.setString(1, sanPham.getIdSanPham());
+			stm.setString(2, sanPham.getTenSanPham());
+			stm.setDouble(3, sanPham.getDonGia());
+			stm.setString(4, sanPham.getChatLieu());
+			stm.setString(5, sanPham.getDonViTinh());
+			stm.setString(6, sanPham.getGhiChu());
+			stm.setString(7, sanPham.getIdSanPham());
+			n = stm.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return n > 1;
+	}
+	
+	/**
+	 * Cập nhật thông tin sản phẩm
+	 * @param sanPham
+	 * @return
+	 */
+	public boolean capNhatSanPham(SanPham sanPham) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stm = null;
+		int n = 0;
+		try {
+			stm = con.prepareStatement("update SanPham set donGia = ?, chatLieu = ?, donViTinh = ?, ghiChu = ? where idSanPham = ?");
+			stm.setDouble(1, sanPham.getDonGia());
+			stm.setString(2, sanPham.getChatLieu());
+			stm.setString(3, sanPham.getDonViTinh());
+			stm.setString(4, sanPham.getGhiChu());
+			stm.setString(5, sanPham.getIdSanPham());
+			n = stm.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return n > 1;
+	}
+	
 }

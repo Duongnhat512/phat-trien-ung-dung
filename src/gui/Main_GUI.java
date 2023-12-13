@@ -115,6 +115,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 	private int[] currentIndex = new int[2];
 	private JLabel lblTenNV;
 	private MyButton btnDangXuat;
+	private JLabel lblNewLabel;
 	
 //	public static void main(String[] args) {
 //		mainFrame.setVisible(true);
@@ -190,9 +191,9 @@ public class Main_GUI extends JFrame implements ActionListener{
 		lblTenNV = new JLabel("");
 //		lblTenNV.setIcon(new ImageIcon(Main_GUI.class.getResource("/icon/picture_30px.png")));
 		lblTenNV.setBorder(new EmptyBorder(0, 0, 0, 5));
-		lblTenNV.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblTenNV.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTenNV.setFont(new Font("SansSerif", Font.PLAIN, 18));
-		lblTenNV.setBounds(668, 10, 518, 31);
+		lblTenNV.setBounds(20, 3, 518, 45);
 		panelCNort.add(lblTenNV);
 		
 		btnDangXuat = new MyButton();
@@ -205,6 +206,19 @@ public class Main_GUI extends JFrame implements ActionListener{
 		btnDangXuat.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		btnDangXuat.setBounds(1196, 3, 45, 45);
 		panelCNort.add(btnDangXuat);
+		
+		lblNewLabel = new JLabel("Hỗ trợ?");
+		lblNewLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblNewLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				moLinkHoTro();
+			}
+		});
+		lblNewLabel.setIcon(new ImageIcon(Main_GUI.class.getResource("/icon/icons8_help_30px_1.png")));
+		lblNewLabel.setFont(new Font("SansSerif", Font.ITALIC, 15));
+		lblNewLabel.setBounds(1099, 10, 87, 31);
+		panelCNort.add(lblNewLabel);
 		
 //		 avt nhân viên
 //		btnAvt = new MyButton();
@@ -228,9 +242,6 @@ public class Main_GUI extends JFrame implements ActionListener{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		currentIndex[0] = 0;
-		currentIndex[1] = 0;
 		
 		trangChu_Form = new TrangChu_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());
 		quanLyCongNhan_Form = new QuanLyCongNhan_Form(panelCenter.getWidth(), panelCenter.getHeight()-panelCNort.getHeight());

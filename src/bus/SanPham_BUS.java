@@ -29,6 +29,12 @@ public class SanPham_BUS {
 	public SanPham getSanPhamTheoID(String id){
 		return sanPham_DAO.getSanPhamTheoID(id);
 	}
+	public boolean themSanPham(SanPham sanPham) {
+		return sanPham_DAO.themSanPham(sanPham);
+	}
+	public boolean capNhatSanPham(SanPham sanPham) {
+		return sanPham_DAO.capNhatSanPham(sanPham);
+	}
 	public int getTongSoLuongDatSanPhamTheoID(String id) {
 		return sanPham_DAO.getTongSoLongDatSanPhamTheoID(id);
 	}

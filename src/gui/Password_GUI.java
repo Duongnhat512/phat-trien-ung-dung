@@ -54,6 +54,7 @@ import java.util.TimerTask;
 import javax.imageio.ImageIO;
 import javax.mail.*;
 import javax.mail.internet.*;
+import java.awt.Toolkit;
 
 public class Password_GUI extends JFrame implements ActionListener {
 
@@ -96,6 +97,7 @@ public class Password_GUI extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public Password_GUI() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Password_GUI.class.getResource("/icon/logo.png")));
 		tk_bus = new TaiKhoan_BUS();
 		cn_bus = new CongNhan_BUS();
 		nv_bus = new NhanVien_BUS();
@@ -264,7 +266,7 @@ public class Password_GUI extends JFrame implements ActionListener {
 		Login_GUI login_GUI = new Login_GUI();
 		login_GUI.openLogin_GUI();
 		;
-		frame.dispose();
+		this.dispose();
 	}
 
 	public static void sendEmail(String toEmail, String subject, String body) {

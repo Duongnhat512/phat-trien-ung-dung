@@ -90,6 +90,7 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener 
 	private ArrayList<CongDoanPhanCong> listPhanCong = new ArrayList<CongDoanPhanCong>();
 	private ArrayList<BangChamCongCongNhan> listChamCong = new ArrayList<BangChamCongCongNhan>();
 	private MyButton btnLamMoi;
+	private RoundTextField txtTimKiemCC;
 
 	/**
 	 * Create the panel.
@@ -347,20 +348,40 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener 
 		btnCapNhat.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		btnCapNhat.setFocusPainted(false);
 		btnCapNhat.setBackground(Color.WHITE);
+		
+		txtTimKiemCC = new RoundTextField(10);
+		txtTimKiemCC.setText("Nhập tên công nhân cần tìm chấm công...");
+		txtTimKiemCC.setForeground(Color.GRAY);
+		txtTimKiemCC.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		txtTimKiemCC.setColumns(10);
+		txtTimKiemCC.setBorder(new EmptyBorder(0, 15, 0, 0));
 		GroupLayout gl_panelNorth_1 = new GroupLayout(panelNorth_1);
-		gl_panelNorth_1.setHorizontalGroup(gl_panelNorth_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelNorth_1.createSequentialGroup().addGap(702)
-						.addComponent(btnChamCong, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
-						.addGap(10)
-						.addComponent(btnChamCongAll, GroupLayout.PREFERRED_SIZE, 207, GroupLayout.PREFERRED_SIZE)
-						.addGap(10)
-						.addComponent(btnCapNhat, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)));
-		gl_panelNorth_1.setVerticalGroup(gl_panelNorth_1.createParallelGroup(Alignment.LEADING)
-				.addComponent(btnChamCong, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
-				.addGroup(gl_panelNorth_1.createSequentialGroup().addGap(1).addComponent(btnChamCongAll,
-						GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE))
-				.addGroup(gl_panelNorth_1.createSequentialGroup().addGap(2).addComponent(btnCapNhat,
-						GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)));
+		gl_panelNorth_1.setHorizontalGroup(
+			gl_panelNorth_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelNorth_1.createSequentialGroup()
+					.addComponent(txtTimKiemCC, GroupLayout.PREFERRED_SIZE, 380, GroupLayout.PREFERRED_SIZE)
+					.addGap(322)
+					.addComponent(btnChamCong, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(btnChamCongAll, GroupLayout.PREFERRED_SIZE, 207, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(btnCapNhat, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE))
+		);
+		gl_panelNorth_1.setVerticalGroup(
+			gl_panelNorth_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelNorth_1.createSequentialGroup()
+					.addGroup(gl_panelNorth_1.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panelNorth_1.createParallelGroup(Alignment.BASELINE)
+							.addComponent(btnChamCong, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+							.addComponent(txtTimKiemCC, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panelNorth_1.createSequentialGroup()
+							.addGap(1)
+							.addComponent(btnChamCongAll, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panelNorth_1.createSequentialGroup()
+							.addGap(2)
+							.addComponent(btnCapNhat, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
+		);
 		panelNorth_1.setLayout(gl_panelNorth_1);
 
 		panelNorth = new JPanel();
@@ -413,29 +434,37 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener 
 		panelNorth.add(cboPhanXuong);
 
 		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
-				.createSequentialGroup().addGap(19)
-				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(19)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(panelSouth, GroupLayout.PREFERRED_SIZE, 1221, GroupLayout.PREFERRED_SIZE)
 						.addComponent(panelNorth, GroupLayout.PREFERRED_SIZE, 1221, GroupLayout.PREFERRED_SIZE)
 						.addGroup(groupLayout.createSequentialGroup()
-								.addComponent(panelCenter, GroupLayout.PREFERRED_SIZE, 674, GroupLayout.PREFERRED_SIZE)
-								.addGap(10).addComponent(panelCenter_1, GroupLayout.PREFERRED_SIZE, 537,
-										GroupLayout.PREFERRED_SIZE))
-						.addComponent(panelNorth_1, GroupLayout.PREFERRED_SIZE, 1221, GroupLayout.PREFERRED_SIZE)
-						.addComponent(panelSouth, GroupLayout.PREFERRED_SIZE, 1221, GroupLayout.PREFERRED_SIZE))
-				.addGap(19)));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
-				.createSequentialGroup().addGap(8)
-				.addComponent(panelNorth, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
-				.addPreferredGap(ComponentPlacement.UNRELATED)
-				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup().addGap(2).addComponent(panelCenter,
-								GroupLayout.PREFERRED_SIZE, 358, GroupLayout.PREFERRED_SIZE))
+							.addComponent(panelCenter, GroupLayout.PREFERRED_SIZE, 674, GroupLayout.PREFERRED_SIZE)
+							.addGap(10)
+							.addComponent(panelCenter_1, GroupLayout.PREFERRED_SIZE, 537, GroupLayout.PREFERRED_SIZE))
+						.addComponent(panelNorth_1, GroupLayout.PREFERRED_SIZE, 1221, GroupLayout.PREFERRED_SIZE))
+					.addGap(19))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(8)
+					.addComponent(panelNorth, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(2)
+							.addComponent(panelCenter, GroupLayout.PREFERRED_SIZE, 358, GroupLayout.PREFERRED_SIZE))
 						.addComponent(panelCenter_1, GroupLayout.PREFERRED_SIZE, 358, GroupLayout.PREFERRED_SIZE))
-				.addGap(10)
-				.addComponent(panelNorth_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-						GroupLayout.PREFERRED_SIZE)
-				.addGap(9).addComponent(panelSouth, GroupLayout.PREFERRED_SIZE, 284, GroupLayout.PREFERRED_SIZE)));
+					.addGap(10)
+					.addComponent(panelNorth_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(panelSouth, GroupLayout.PREFERRED_SIZE, 284, GroupLayout.PREFERRED_SIZE)
+					.addGap(35))
+		);
 
 		btnLamMoi = new MyButton();
 		btnLamMoi.setIcon(new ImageIcon(ChamCongCongNhan_Form.class.getResource("/icon/reset.png")));
@@ -834,14 +863,19 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener 
 		capNhatSoLuongHoanThanh(row);
 		currentRowChamCong = row;
 	}
-
-	private void lamMoiDanhSachPhanCong() {
+	
+	/**
+	 * Làm mới toàn bộ danh sách
+	 */
+	private void lamMoiToanBoDanhSach() {
 		layDanhSachPhanCong();
 		docDuLieuLenTablePhanCong(listPhanCong);
 		cboCaLam.setSelectedItem("Tất cả");
 		cboPhanXuong.setSelectedItem("Tất cả");
 	}
-
+	
+//	private void 
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
@@ -859,7 +893,7 @@ public class ChamCongCongNhan_Form extends RoundPanel implements ActionListener 
 			capNhatSLHoanThanhKhiNhanNut();
 		}
 		if (o.equals(btnLamMoi)) {
-			lamMoiDanhSachPhanCong();
+			lamMoiToanBoDanhSach();
 		}
 	}
 }
