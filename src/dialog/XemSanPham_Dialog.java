@@ -60,7 +60,6 @@ public class XemSanPham_Dialog extends JDialog implements ActionListener{
 	//
 	private SanPham sp = new SanPham();
 	private JLabel lblThongBao;
-	private JButton btnGoAnh;
 	private JLabel avatarSP;
 	
 	public void openThemSanPham_Dialog(int width, int height, String id) {
@@ -217,7 +216,7 @@ public class XemSanPham_Dialog extends JDialog implements ActionListener{
 		
 		
 		JButton btnChonAnh = new JButton("Chọn ảnh");
-		btnChonAnh.setBounds(558, 260, 75, 21);
+		btnChonAnh.setBounds(558, 260, 90, 20);
 		btnChonAnh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fileChooser = new JFileChooser();
@@ -243,8 +242,7 @@ public class XemSanPham_Dialog extends JDialog implements ActionListener{
 			}
 		});
 		
-		btnGoAnh = new JButton("Gỡ ảnh");
-		btnGoAnh.setBounds(558, 287, 75, 21);
+	
 		getContentPane().setLayout(null);
 		getContentPane().add(buttonPane);
 		getContentPane().add(contentPanel);
@@ -267,8 +265,7 @@ public class XemSanPham_Dialog extends JDialog implements ActionListener{
 		panel_1.add(lblThongBaoDonViTinh);
 		panel_1.add(avatarSP);
 		panel_1.add(btnChonAnh);
-		panel_1.add(btnGoAnh);
-		
+
 		layDuLieuSanPham(id);
 		duaDuLieuLenTextField();
 		
@@ -375,6 +372,7 @@ public class XemSanPham_Dialog extends JDialog implements ActionListener{
 		}
 		else if (o.equals(btnCapNhat)) {
 			capNhatSanPham();
+			this.dispose();
 		}
 	}
 }

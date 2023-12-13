@@ -56,7 +56,6 @@ public class ThemSanPham_Dialog extends JDialog {
 	private SanPham_BUS sp_Bus = new SanPham_BUS();
 	private JLabel lblThongBao;
 	private JLabel avatarSP;
-	private JButton btnGoAnh;
 	private JButton btnChonAnh;
 
 	/**
@@ -238,7 +237,8 @@ public class ThemSanPham_Dialog extends JDialog {
 		avatarSP.setBounds(650, 30, 200, 300);
 		
 		
-		ImageIcon avatarIcon = new ImageIcon("src\\images\\avatarSP.png");
+
+		ImageIcon avatarIcon = new ImageIcon("");
 
 		// Lấy kích thước mới của JLabel
 		int labelWidth = avatarSP.getWidth();
@@ -281,7 +281,6 @@ public class ThemSanPham_Dialog extends JDialog {
 			}
 		});
 		
-		btnGoAnh = new JButton("Gỡ ảnh");
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
@@ -327,7 +326,7 @@ public class ThemSanPham_Dialog extends JDialog {
 						.addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup()
 							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 							.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING, false)
-								.addComponent(btnGoAnh, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						
 								.addComponent(btnChonAnh, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 							.addGap(102))))
 		);
@@ -376,7 +375,7 @@ public class ThemSanPham_Dialog extends JDialog {
 							.addGap(18)
 							.addComponent(btnChonAnh)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(btnGoAnh)))
+						))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		panel_1.setLayout(gl_panel_1);
@@ -438,7 +437,7 @@ public class ThemSanPham_Dialog extends JDialog {
 			return null;
 		}
 		String ghiChu = textGhiChu.getText();
-		String avatar = "avatarSP.png";
+		String avatar = "";
 		if (url != null) {
 			File absoluteFile = new File(url);
 			avatar = absoluteFile.getName();
